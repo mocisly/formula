@@ -1,0 +1,214 @@
+\documentclass[../main.tex]{subfiles}
+\begin{document}
+本章主要参考\cite{cassels}。
+
+% Reference: https://www1.cmc.edu/pages/faculty/lenny/papers/GNT_lecture_notes.pdf
+\section{格与基本域}
+\subsection{格基、行列式与对偶格}\index{格基、行列式与对偶格|hyperpage}
+满秩格 $\Lambda=B\mathbb Z^n\subset\mathbb R^n$，其中 $B\in\mathbb R^{n\times n}$ 可逆。基本平行多面体与余体积为
+\[
+P=B[0,1)^n,\qquad\det\Lambda:=\operatorname{vol}P=|\det B|.
+\]
+格基变换为 $B\mapsto BU$，$U\in\operatorname{GL}_n(\mathbb Z)$、$\det U=\pm1$，不改变格或余体积。
+\[
+\Lambda^*=\{y:\langle y,x\rangle\in\mathbb Z,\ \forall x\in\Lambda\}
+=B^{-\mathsf T}\mathbb Z^n,\qquad \det\Lambda^*=(\det\Lambda)^{-1}.
+\]
+若满秩子格 $\Lambda'\subseteq\Lambda$，则 $[\Lambda:\Lambda']=\det\Lambda'/\det\Lambda$。
+\subsection{格点计数与Blichfeldt原理}\index{格点计数与Blichfeldt原理|hyperpage}
+对有界 Jordan 可测集 $S$，若 $\operatorname{vol}(\partial S)=0$，则
+\[
+\#(tS\cap\Lambda)=\frac{\operatorname{vol}(S)}{\det\Lambda}t^n+o(t^n)
+\quad(t\to\infty).
+\]
+若可测集 $S$ 满足 $\operatorname{vol}(S)>\det\Lambda$，则存在不同的 $x,y\in S$ 使 $x-y\in\Lambda$（Blichfeldt 原理）。它不要求 $S$ 本身含非零格点。
+\section{Minkowski定理与极小值}
+\subsection{凸体定理与短向量界}\index{凸体定理与短向量界|hyperpage}
+若 $K\subset\mathbb R^n$ 是关于原点对称的可测凸集，且
+\[
+\operatorname{vol}(K)>2^n\det\Lambda,
+\]
+则 $K$ 含非零格点。若 $K$ 还紧致，可将严格大于放宽为大于等于。
+令 $v_n=\pi^{n/2}/\Gamma(n/2+1)$ 为单位 Euclid 球体积，则最短非零向量长度满足
+\[
+\lambda_1(\Lambda):=\min_{0\ne v\in\Lambda}\|v\|_2
+\le2\left(\frac{\det\Lambda}{v_n}\right)^{1/n}.
+\]
+需同时检查凸性、原点对称性和体积条件；任意大体积集合未必在原点附近含格点。
+\subsection{逐次极小值与Minkowski第二定理}\index{逐次极小值与Minkowski第二定理|hyperpage}
+设 $K$ 为原点位于内部的紧致、原点对称凸体。定义
+\[
+\lambda_i(K,\Lambda)=\inf\{\lambda>0:
+\dim\operatorname{span}(\lambda K\cap\Lambda)\ge i\},\quad 1\le i\le n.
+\]
+则 $0<\lambda_1\le\cdots\le\lambda_n$，且
+\[
+\frac{2^n}{n!}\det\Lambda\le
+\operatorname{vol}(K)\prod_{i=1}^n\lambda_i(K,\Lambda)
+\le2^n\det\Lambda.
+\]
+实现逐次极小值的独立向量不一定组成整个格的一组格基，不能将线性无关与整基混淆。
+\section{二次型与逼近}
+\subsection{正定二次型与Hermite常数}\index{正定二次型与Hermite常数|hyperpage}
+对实对称正定矩阵 $A=B^{\mathsf T}B$，有 $Q(z)=z^{\mathsf T}Az=\|Bz\|^2$，对应格 $B\mathbb Z^n$ 的余体积为 $\sqrt{\det A}$。
+\[
+\gamma_n=\sup_\Lambda\frac{\lambda_1(\Lambda)^2}{(\det\Lambda)^{2/n}},\qquad
+\min_{0\ne z\in\mathbb Z^n}Q(z)\le\gamma_n(\det A)^{1/n}.
+\]
+$\gamma_1=1$、$\gamma_2=2/\sqrt3$，Minkowski 球界给出 $\gamma_n\le4v_n^{-2/n}$。
+\subsection{Dirichlet同时逼近定理}\index{Dirichlet同时逼近定理|hyperpage}
+对任意 $\alpha_1,\ldots,\alpha_n\in\mathbb R$ 及整数 $Q\ge1$，存在整数 $p_1,\ldots,p_n,q$，使
+\[
+1\le q\le Q^n,\qquad\max_i|q\alpha_i-p_i|\le Q^{-1}.
+\]
+特别地，对无理数 $\alpha$，存在无穷多个既约分数 $p/q$（$q>0$）满足 $|\alpha-p/q|<1/q^2$。
+此为逼近的存在性结论，不保证任一指定分母都可达到该误差。
+\section{格上的Fourier分析}
+\subsection{Poisson求和与格的theta级数}\index{Poisson求和与格的theta级数|hyperpage}
+采用\hyperref[sec:harmonic-fourier]{调和分析章中傅里叶分析部分}的角频率变换 $\widehat f(\xi)=\int_{\mathbb R^n}f(x)e^{-ix\cdot\xi}\,\mathrm dx$。对 Schwartz 函数 $f$，
+\[
+\sum_{v\in\Lambda}f(v)=\frac1{\det\Lambda}\sum_{w\in\Lambda^*}\widehat f(2\pi w).
+\]
+注意对偶格定义中没有 $2\pi$，所以变换参数处必须出现 $2\pi$。取 Gaussian 得到
+\[
+\Theta_\Lambda(t):=\sum_{v\in\Lambda}e^{-\pi t\|v\|^2}
+=\frac{t^{-n/2}}{\det\Lambda}\Theta_{\Lambda^*}(1/t),\qquad t>0.
+\]
+该变换关系连接格点计数、Gaussian 积分和解析数论中的函数方程。
+\section{格的代数与几何计算补充}
+\subsection{Gram矩阵、子格与对偶运算}\index{Gram矩阵、子格与对偶运算|hyperpage}
+格基 $b_1,\ldots,b_n$ 的 Gram 矩阵为 $G=(\langle b_i,b_j\rangle)$，故 $\det\Lambda=\sqrt{\det G}$。整数矩阵 $A$ 满秩时，$BA\mathbb Z^n$ 是指数 $|\det A|$ 的子格；Smith 标准形给出
+\[
+\Lambda/(BA\mathbb Z^n)\cong\bigoplus_i\mathbb Z/d_i\mathbb Z,\qquad d_i\mid d_{i+1}.
+\]
+对可通约满秩格（和与交仍为满秩格），
+\[
+(\Lambda_1+\Lambda_2)^*=\Lambda_1^*\cap\Lambda_2^*,\quad
+(\Lambda_1\cap\Lambda_2)^*=\Lambda_1^*+\Lambda_2^*,\quad
+\det(\Lambda_1\cap\Lambda_2)\det(\Lambda_1+\Lambda_2)=\det\Lambda_1\det\Lambda_2.
+\]
+\subsection{Voronoi胞腔、堆积与覆盖}\index{Voronoi胞腔、堆积与覆盖|hyperpage}
+\[
+V(\Lambda)=\{x:\|x\|\le\|x-v\|,\ \forall v\in\Lambda\},\qquad
+\rho(\Lambda)=\lambda_1(\Lambda)/2,\qquad
+\mu(\Lambda)=\sup_x\min_{v\in\Lambda}\|x-v\|.
+\]
+Voronoi 胞腔的平移铺满空间，体积为 $\det\Lambda$；其内切球半径为 $\rho$，外接球半径为 $\mu$。格球堆积密度与覆盖密度为
+\[
+\delta(\Lambda)=\frac{v_n\lambda_1^n}{2^n\det\Lambda},\qquad
+\vartheta(\Lambda)=\frac{v_n\mu^n}{\det\Lambda},\qquad
+\mu\le\tfrac12\sum_i\|b_i\|.
+\]
+正方格密度 $\pi/4$，六角格密度 $\pi/(2\sqrt3)$；后一格达到二维最密圆堆积密度。
+\subsection{极体、转移下界与Hermite界}\index{极体、转移下界与Hermite界|hyperpage}
+对原点对称凸体 $K$，极体为 $K^\circ=\{y:\langle x,y\rangle\le1,\ \forall x\in K\}$。逐次极小值满足转移下界
+\[
+\lambda_i(K,\Lambda)\lambda_{n-i+1}(K^\circ,\Lambda^*)\ge1.
+\]
+因为两组格向量配对为整数，若乘积严格小于一会迫使维数不相容的正交关系。欧氏情形又由 Hermite 界得
+\[
+\lambda_1(\Lambda)\lambda_1(\Lambda^*)\le\gamma_n,\qquad
+\mu(\Lambda)\lambda_1(\Lambda^*)\ge\tfrac12.
+\]
+后者可由对偶最短向量对应的格超平面间距得到；这些界联系原格中的短向量、对偶格和覆盖空洞。
+\subsection{格基约化与LLL近似保证}\index{格基约化与LLL近似保证|hyperpage}
+Gram--Schmidt 正交化写为 $b_i=b_i^*+\sum_{j<i}\mu_{ij}b_j^*$，$\det\Lambda=\prod_i\|b_i^*\|$。$\delta$-LLL 约化基（$1/4<\delta<1$）满足
+\[
+|\mu_{ij}|\le\tfrac12,\qquad
+\delta\|b_{i-1}^*\|^2\le\|b_i^*\|^2+\mu_{i,i-1}^2\|b_{i-1}^*\|^2.
+\]
+令 $\alpha=(\delta-1/4)^{-1}$，有
+\[
+\|b_1\|\le\alpha^{(n-1)/2}\lambda_1(\Lambda),\qquad
+\|b_1\|\le\alpha^{(n-1)/4}(\det\Lambda)^{1/n}.
+\]
+取 $\delta=3/4$ 时 $\alpha=2$。这给近似短向量，并不保证首向量一定是最短向量。
+\section{Diophantine逼近补充}
+\subsection{连分数、收敛分数与误差}\index{连分数、收敛分数与误差|hyperpage}
+无理数 $\alpha=[a_0;a_1,a_2,\ldots]$ 的收敛分数满足
+\begin{gather*}
+p_k=a_kp_{k-1}+p_{k-2},\quad q_k=a_kq_{k-1}+q_{k-2},\\
+p_{-2}=0,\ p_{-1}=1,\quad q_{-2}=1,\ q_{-1}=0,\qquad
+p_kq_{k-1}-p_{k-1}q_k=(-1)^{k-1}.
+\end{gather*}
+令尾数 $\alpha_{k+1}=[a_{k+1};a_{k+2},\ldots]$，则
+\[
+\alpha=\frac{p_k\alpha_{k+1}+p_{k-1}}{q_k\alpha_{k+1}+q_{k-1}},\quad
+\left|\alpha-\frac{p_k}{q_k}\right|=\frac1{q_k(q_k\alpha_{k+1}+q_{k-1})}
+<\frac1{q_kq_{k+1}}.
+\]
+若既约 $p/q$ 满足 $|\alpha-p/q|<1/(2q^2)$，则为某个收敛分数（Legendre 判别）。
+\subsection{Hurwitz、坏逼近数与Pell方程}\index{Hurwitz、坏逼近数与Pell方程|hyperpage}
+每个无理数有无穷多个既约分数使 $|\alpha-p/q|<1/(\sqrt5q^2)$，常数 $\sqrt5$ 不能一致增大。坏逼近数满足
+\[
+\inf_{q\ge1}q\,\|q\alpha\|_{\mathbb R/\mathbb Z}>0
+\iff\sup_{k\ge1}a_k<\infty.
+\]
+二次无理数当且仅当连分数最终周期。非平方正整数 $D$ 的 Pell 方程 $x^2-Dy^2=1$ 有最小正基本解 $x_1+y_1\sqrt D>1$，全部正解由
+\[
+x_k+y_k\sqrt D=(x_1+y_1\sqrt D)^k\quad(k\ge1)
+\]
+生成，且可由 $\sqrt D$ 的连分数寻找。
+\subsection{多线性型与格构造}\index{多线性型与格构造|hyperpage}
+给定 $A\in\mathbb R^{m\times n}$ 及整数 $Q\ge1$，抽屉原理给出 $q\in\mathbb Z^n\setminus\{0\}$、$p\in\mathbb Z^m$，使
+\[
+\|q\|_\infty\le Q^m,\qquad\|Aq-p\|_\infty\le Q^{-n}.
+\]
+可用格 $\Lambda_A=\{(q,Aq-p):q\in\mathbb Z^n,p\in\mathbb Z^m\}$ 描述，其余体积为 $1$。对角伸缩保持行列式时，把逼近不等式转为轴平行凸体中的短格点问题；不同范数与伸缩应同步记录。
+\section{凸格点计数与平均公式补充}
+\subsection{Ehrhart多项式与互反律}\index{Ehrhart多项式与互反律|hyperpage}
+若 $P\subset\mathbb R^n$ 为满维整数顶点多面体，则 $L_P(t)=\#(tP\cap\mathbb Z^n)$ 对非负整数 $t$ 为次数 $n$ 的多项式，
+\[
+L_P(t)=\operatorname{vol}(P)t^n+\tfrac12\operatorname{vol}_{\mathbb Z}(\partial P)t^{n-1}+\cdots+1.
+\]
+边界体积按各面的诱导格作归一化。Ehrhart--Macdonald 互反为 $L_{P^\circ}(t)=(-1)^nL_P(-t)$（$t\ge1$）；有理顶点时一般为拟多项式。二维 Pick 公式给出
+\[
+\operatorname{Area}(P)=I+B/2-1,
+\]
+$I$ 为内部格点数、$B$ 为边界格点数；需 $P$ 为简单整数格多边形。
+\subsection{本原格点与Möbius反演}\index{本原格点与Möbius反演|hyperpage}
+非零整数向量本原指各坐标最大公因数为 $1$。对有界、分段光滑边界的区域 $S$、$n\ge2$，
+\[
+\#\{v\in tS\cap\mathbb Z^n:\gcd(v_1,\ldots,v_n)=1\}
+=\frac{\operatorname{vol}(S)}{\zeta(n)}t^n+o(t^n).
+\]
+密度因子来自 $\sum_{d\ge1}\mu(d)d^{-n}=1/\zeta(n)$，其中 $\mu$ 为数论 Möbius 函数；原点须剔除。二维可见格点密度为 $6/\pi^2$。
+\subsection{Siegel均值与随机幺模格}\index{Siegel均值与随机幺模格|hyperpage}
+在 $X_n=SL_n(\mathbb R)/SL_n(\mathbb Z)$（$n\ge2$）上取归一化不变概率测度 $\mu$。对非负可积 $f$，Siegel 均值公式为
+\[
+\int_{X_n}\sum_{v\in\Lambda\setminus\{0\}}f(v)\,\mathrm d\mu(\Lambda)
+=\int_{\mathbb R^n}f(x)\,\mathrm dx.
+\]
+若只对本原向量求和，则右端乘 $1/\zeta(n)$。这给随机幺模格的平均格点数；它是平均公式，不表示每个格或每个区域的实际计数都等于体积。
+
+\section{极体转移、投影格与最近点补充}
+格的几何基础参见\cite{cassels}，算法参见\cite{lattices}，差体积界参见\cite{schneider}。
+\subsection{Mahler极体转移上界}\index{Mahler极体转移上界|hyperpage}
+原点对称凸体 $K\subset\mathbb R^d$ 有非空内部，$L$ 为满秩格，极体与对偶格按本章约定。对 $1\le i\le d$，
+\[
+1\le\lambda_i(K,L)\lambda_{d+1-i}(K^\circ,L^*)\le(d!)^2.
+\]
+此为一般凸体的经典转移界，可由 Minkowski 第二定理与 Mahler 体积积下界得到。更精细的转移定理及特殊凸体可有更强常数；极体必须相对于原点定义。
+\subsection{本原子格与投影格的行列式}\index{本原子格与投影格的行列式|hyperpage}
+令 $V$ 为由 $L$ 中向量张成的 $k$ 维子空间，$S=L\cap V$，$\pi$ 为到 $V^\perp$ 的正交投影。则
+\[
+\det L=\det S\,\det(\pi L),\qquad
+(\pi L)^*=L^*\cap V^\perp.
+\]
+各行列式在相应维数的欧氏体积下计算。$S$ 是本原子格；若只取其有限指数真子格，行列式关系须加入指数因子。
+\subsection{Babai最近平面与误差控制}\index{Babai最近平面与误差控制|hyperpage}
+设 $b_1,\ldots,b_d$ 为格基，正交化向量为 $b_i^*$。由 $i=d$ 向一递减，更新
+\[
+c_i=\left\lfloor\frac{\langle r,b_i^*\rangle}{\|b_i^*\|^2}\right\rceil,
+\qquad r\leftarrow r-c_i b_i,\qquad r_{\rm initial}=t.
+\]
+输出 $v=\sum_i c_i b_i$，有 $\|t-v\|\le\tfrac12(\sum_i\|b_i^*\|^2)^{1/2}$。对 $3/4$-LLL 约化基还得到 $\|t-v\|\le2^{d/2}\operatorname{dist}(t,L)$；一般基上的逐步舍入不保证最近点最优。
+\subsection{Rogers--Shephard差体积界}\index{Rogers-Shephard差体积界|hyperpage}
+满维凸体 $K$ 的差体 $K-K=\{x-y:x,y\in K\}$ 满足
+\[
+2^d\operatorname{Vol}(K)\le\operatorname{Vol}(K-K)
+\le\binom{2d}{d}\operatorname{Vol}(K).
+\]
+下界等号当且仅当 $K$ 关于某点中心对称，上界等号当且仅当 $K$ 为单纯形。差体将平移差转为对称凸体，在格点排斥与平移堆积中经常使用。
+\clearpage
+\end{document}

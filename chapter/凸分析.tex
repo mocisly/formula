@@ -1,0 +1,359 @@
+\documentclass[../main.tex]{subfiles}
+\begin{document}
+本章主要参考\cite{convex,chambolle}。
+
+% Reference: https://stanford.edu/~boyd/cvxbook/
+\section{凸集与凸函数}
+\subsection{凸集、凸包与分离}\index{凸集、凸包与分离|hyperpage}
+$C\subseteq\mathbb R^n$ 为凸集当且仅当 $\theta x+(1-\theta)y\in C$ 对任意 $x,y\in C$、$0\le\theta\le1$ 成立。
+\[
+\operatorname{conv}S=\left\{\sum_{i=1}^m\theta_ix_i:x_i\in S,\ \theta_i\ge0,\ \sum_i\theta_i=1,\ m<\infty\right\}.
+\]
+闭半空间 $\{x:a^{\mathsf T}x\le b\}$、仿射集和凸锥均为常用凸集。非空闭凸集 $C$ 与外部点 $x_0$ 可严格分离：存在 $a\ne0,b$ 使 $a^{\mathsf T}x\le b<a^{\mathsf T}x_0$ 对所有 $x\in C$ 成立。
+\subsection{凸性的一阶与二阶判别}\index{凸性的一阶与二阶判别|hyperpage}
+凸函数满足
+\[
+f(\theta x+(1-\theta)y)\le\theta f(x)+(1-\theta)f(y).
+\]
+在开凸定义域上，可微函数凸当且仅当 $f(y)\ge f(x)+\nabla f(x)^{\mathsf T}(y-x)$；$C^2$ 函数凸当且仅当 $\nabla^2f(x)\succeq0$。
+若 $m>0$，强凸性的一阶条件为
+\[
+f(y)\ge f(x)+\nabla f(x)^{\mathsf T}(y-x)+\frac m2\|y-x\|^2.
+\]
+$C^2$ 情形等价于 $\nabla^2f\succeq mI$。强凸函数若有极小点，则极小点唯一。
+\subsection{Jensen不等式与保凸运算}\index{Jensen不等式与保凸运算|hyperpage}
+\[
+f\!\left(\sum_i\theta_ix_i\right)\le\sum_i\theta_if(x_i),\qquad
+\theta_i\ge0,\quad\sum_i\theta_i=1.
+\]
+对可积随机向量且相关期望存在，$f(E[X])\le E[f(X)]$。凸函数的非负加权和、逐点上确界、与仿射映射的复合均为凸函数。
+\section{次梯度与共轭}
+\subsection{次微分与最优性条件}\index{次微分与最优性条件|hyperpage}
+对真凸函数 $f:\mathbb R^n\to(-\infty,+\infty]$（不取 $-\infty$ 且非恒为 $+\infty$），在 $f(x)<\infty$ 处定义
+\[
+\partial f(x)=\{g:f(y)\ge f(x)+g^{\mathsf T}(y-x),\ \forall y\}.
+\]
+可微时 $\partial f(x)=\{\nabla f(x)\}$，且 $x$ 是全局极小点当且仅当 $0\in\partial f(x)$。
+\[
+\partial|x|=\begin{cases}\{1\},&x>0,\\{[-1,1]},&x=0,\\\{-1\},&x<0.\end{cases}
+\]
+对闭凸集 $C$，法锥 $N_C(x)=\{v:v^{\mathsf T}(y-x)\le0,\ \forall y\in C\}$。若 $f$ 在 $C$ 附近可微凸，则 $x\in C$ 最优当且仅当 $-\nabla f(x)\in N_C(x)$。
+\subsection{Fenchel共轭与双共轭}\index{Fenchel共轭与双共轭|hyperpage}
+\[
+f^*(y)=\sup_x\{y^{\mathsf T}x-f(x)\},\qquad
+f(x)+f^*(y)\ge y^{\mathsf T}x.
+\]
+Fenchel--Young 等号当且仅当 $y\in\partial f(x)$；若 $f$ 真、下半连续且凸，则 $f^{**}=f$，此时也等价于 $x\in\partial f^*(y)$。
+\[
+f(x)=\tfrac12\|x\|_2^2\Longrightarrow f^*(y)=\tfrac12\|y\|_2^2,\qquad
+f(x)=\|x\|\Longrightarrow f^*(y)=\delta_{\{\|y\|_*\le1\}}(y).
+\]
+$\|\cdot\|_*$ 为对偶范数，$\delta_C$ 在 $C$ 内为零、外为 $+\infty$，不同于概率中的指示函数。
+\section{对偶与数值方法}
+\subsection{Lagrange对偶、Slater条件与KKT}\index{Lagrange对偶、Slater条件与KKT|hyperpage}
+考虑 $\min f_0(x)$，约束 $f_i(x)\le0$（$i=1,\ldots,m$）、$Ax=b$。定义
+\[
+L(x,\lambda,\nu)=f_0(x)+\sum_i\lambda_if_i(x)+\nu^{\mathsf T}(Ax-b),\qquad
+g(\lambda,\nu)=\inf_x L(x,\lambda,\nu).
+\]
+对偶问题为 $\max_{\lambda\ge0,\nu}g(\lambda,\nu)$，弱对偶给出 $d^*\le p^*$。
+若所有 $f_i$ 在 $\mathbb R^n$ 上有限、可微且凸，存在 $Ax=b,f_i(x)<0$ 的严格可行点，且最优值有限，则强对偶成立；最优解存在时，KKT 条件为其充分必要条件：
+\begin{gather*}
+\nabla f_0(x)+\sum_i\lambda_i\nabla f_i(x)+A^{\mathsf T}\nu=0,\\
+f_i(x)\le0,\quad Ax=b,\quad\lambda_i\ge0,\quad\lambda_if_i(x)=0.
+\end{gather*}
+缺少凸性时，KKT 条件通常不能保证全局最优；必要性还需相应约束资格条件。
+\subsection{投影与邻近算子}\index{投影与邻近算子|hyperpage}
+非空闭凸集上的欧氏投影唯一，且
+\[
+P_C(x)=\operatorname*{arg\,min}_{z\in C}\tfrac12\|z-x\|^2,\qquad
+\langle x-P_Cx,z-P_Cx\rangle\le0\quad(\forall z\in C).
+\]
+真、下半连续凸函数 $f$ 的邻近算子（$\tau>0$）为
+\[
+\operatorname{prox}_{\tau f}(x)=\operatorname*{arg\,min}_z
+\left[f(z)+\frac1{2\tau}\|z-x\|^2\right],\qquad
+\frac{x-\operatorname{prox}_{\tau f}(x)}\tau\in\partial f(\operatorname{prox}_{\tau f}(x)).
+\]
+$\operatorname{prox}_{\delta_C}=P_C$；$f(x)=\|x\|_1$ 时逐坐标软阈值为 $\operatorname{sign}(x_i)\max(|x_i|-\tau,0)$。
+\[
+\operatorname{prox}_{\tau f}(x)+\tau\operatorname{prox}_{f^*/\tau}(x/\tau)=x.
+\]
+\subsection{梯度下降与邻近梯度}\index{梯度下降与邻近梯度|hyperpage}
+若凸可微 $f$ 的梯度为 $L$-Lipschitz（$L>0$），则
+\[
+f(y)\le f(x)+\nabla f(x)^{\mathsf T}(y-x)+\tfrac L2\|y-x\|^2,
+\qquad x_{k+1}=x_k-\eta\nabla f(x_k).
+\]
+取 $0<\eta\le1/L$ 保证函数值不增；最优解 $x^*$ 存在时，取 $\eta=1/L$ 有
+\[
+f(x_k)-f(x^*)\le\frac{L\|x_0-x^*\|^2}{2k}\quad(k\ge1).
+\]
+对复合目标 $f+h$，$h$ 真、下半连续且凸，邻近梯度迭代为 $x_{k+1}=\operatorname{prox}_{\eta h}(x_k-\eta\nabla f(x_k))$。
+% Further references: https://web.stanford.edu/~boyd/cvxbook/ ; https://stanford.edu/~boyd/papers/prox_algs.html
+\section{凸几何与锥补充}
+\subsection{Carathéodory、Radon与Helly定理}\index{Carathéodory、Radon与Helly定理|hyperpage}
+在 $\mathbb R^n$ 中，凸包中的每一点至多需要 $n+1$ 个点表示：
+\[
+x\in\operatorname{conv}S\Longrightarrow x=\sum_{i=1}^{n+1}\theta_ix_i,\quad
+\theta_i\ge0,\quad\sum_i\theta_i=1.
+\]
+任意 $n+2$ 个点可分成两组，使两组凸包相交（Radon）。有限族凸集若任意至多 $n+1$ 个的交非空，则全体交非空（Helly）。多面体的有界情形是有限个顶点的凸包。
+\subsection{支撑函数、规范与极集}\index{支撑函数、规范与极集|hyperpage}
+定义支撑函数 $\sigma_C(y)=\sup_{x\in C}\langle y,x\rangle=\delta_C^*(y)$。有
+\[
+\sigma_{C+D}=\sigma_C+\sigma_D,\qquad
+\sigma_{AC}(y)=\sigma_C(A^{\mathsf T}y),\qquad
+C^\circ=\{y:\sigma_C(y)\le1\}.
+\]
+若 $C$ 闭凸且含零，则 $C^{\circ\circ}=C$。其规范为 $\gamma_C(x)=\inf\{t>0:x\in tC\}$；当 $C$ 为含零内点的对称凸体时，它是范数，且 $\gamma_C=\sigma_{C^\circ}$。对闭凸锥 $K$，定义正对偶锥 $K^*=\{y:\langle y,x\rangle\ge0,\ \forall x\in K\}$，则 $K^{**}=K$。
+\subsection{切锥、衰退锥与Moreau锥分解}\index{切锥、衰退锥与Moreau锥分解|hyperpage}
+对闭凸集 $C$ 与 $x\in C$，
+\[
+T_C(x)=\overline{\{t(y-x):t\ge0,y\in C\}},\qquad
+N_C(x)=\{v:\langle v,d\rangle\le0,\ \forall d\in T_C(x)\}.
+\]
+衰退锥 $\operatorname{rec}C=\{d:x+td\in C,\ \forall x\in C,t\ge0\}$。若 $C=\{x:Ax\le b\}\ne\varnothing$，则 $\operatorname{rec}C=\{d:Ad\le0\}$。令负极锥 $K^-=-K^*$，则
+\[
+x=P_Kx+P_{K^-}x,\qquad\langle P_Kx,P_{K^-}x\rangle=0.
+\]
+\section{凸函数与共轭计算补充}
+\subsection{上图、透视与衰退函数}\index{上图、透视与衰退函数|hyperpage}
+$f$ 凸当且仅当 $\operatorname{epi}f=\{(x,t):t\ge f(x)\}$ 凸；下半连续当且仅当上图闭。透视函数
+\[
+g(x,t)=t f(x/t)\quad(t>0)
+\]
+保持凸性，例如 $\|x\|^2/t$ 以及相对熵 $x\log(x/t)$。真闭凸函数的衰退函数可写为
+\[
+f^\infty(d)=\lim_{t\to\infty}\frac{f(x+td)-f(x)}t\quad(x\in\operatorname{dom}f),
+\]
+与基点无关。$f$ 在其定义域相对内部连续，并在那里有非空次微分。
+\subsection{次微分演算与单调性}\index{次微分演算与单调性|hyperpage}
+对真凸函数，若 $\operatorname{ri}(\operatorname{dom}f)\cap\operatorname{ri}(\operatorname{dom}g)\ne\varnothing$，则
+\[
+\partial(f+g)(x)=\partial f(x)+\partial g(x).
+\]
+若 $A\mathbb R^n$ 与 $\operatorname{ri}(\operatorname{dom}f)$ 相交，则 $\partial(f\circ A)(x)=A^{\mathsf T}\partial f(Ax)$。对有限个处处可微凸函数的最大值，
+\[
+\partial\max_i f_i(x)=\operatorname{conv}\{\nabla f_i(x):f_i(x)=\max_jf_j(x)\}.
+\]
+任意 $u\in\partial f(x),v\in\partial f(y)$ 满足 $\langle u-v,x-y\rangle\ge0$；闭真凸函数的次微分是极大单调算子。$m$-强凸时右端可加强为 $m\|x-y\|^2$。
+\subsection{常用共轭表与矩阵公式}\index{常用共轭表与矩阵公式|hyperpage}
+\begin{align*}
+\left(\frac1p\|x\|_p^p\right)^*(y)&=\frac1q\|y\|_q^q\quad(1<p<\infty),\\
+(e^x)^*(y)&=y\log y-y\quad(y\ge0),\\
+\left(\log\sum_ie^{x_i}\right)^*(y)&=\sum_i y_i\log y_i\quad(y\ge0,\ \sum_i y_i=1).
+\end{align*}
+后两式在所列域外为 $+\infty$，约定 $0\log0=0$。平移与缩放满足
+\[
+[f(\cdot-a)]^*(y)=f^*(y)+\langle a,y\rangle,\qquad
+(\alpha f)^*(y)=\alpha f^*(y/\alpha)\quad(\alpha>0).
+\]
+对对称正定矩阵，以迹内积配对，$f(X)=-\log\det X$，则
+\[
+\nabla f(X)=-X^{-1},\qquad D^2f(X)[H,H]=\operatorname{tr}(X^{-1}HX^{-1}H),
+\]
+且 $f^*(Y)=-n-\log\det(-Y)$（$Y\prec0$），其余为 $+\infty$。矩阵核范数的共轭是谱范数单位球的示性函数。
+\subsection{下确界卷积与Fenchel对偶}\index{下确界卷积与Fenchel对偶|hyperpage}
+定义 $(f\mathbin\square g)(x)=\inf_z\{f(z)+g(x-z)\}$，则
+\[
+(f\mathbin\square g)^*=f^*+g^*.
+\]
+对 $\inf_x[f(x)+g(Ax)]$，Fenchel 对偶为
+\[
+\sup_y[-f^*(-A^{\mathsf T}y)-g^*(y)].
+\]
+若 $A(\operatorname{ri}\operatorname{dom}f)\cap\operatorname{ri}\operatorname{dom}g\ne\varnothing$ 且原最优值有限，则强对偶成立并取得对偶最优解。最优配对满足 $-A^{\mathsf T}y\in\partial f(x)$、$y\in\partial g(Ax)$。
+\section{规划模型与算法补充}
+\subsection{Farkas择一、线性规划与锥规划}\index{Farkas择一、线性规划与锥规划|hyperpage}
+以下两者恰有一个成立：$Ax=b,x\ge0$ 有解；或存在 $y$ 使 $A^{\mathsf T}y\ge0,b^{\mathsf T}y<0$。标准线性规划的对偶为
+\[
+\min_{Ax=b,x\ge0}c^{\mathsf T}x
+\quad\longleftrightarrow\quad
+\max_{A^{\mathsf T}y\le c}b^{\mathsf T}y.
+\]
+有限最优值存在时两边相等；互补松弛为 $x_i(c-A^{\mathsf T}y)_i=0$。闭凸锥规划把 $x\ge0$ 改为 $x\in K$，对偶改成 $c-A^{\mathsf T}y\in K^*$。半正定规划使用 $K=\mathbb S_+^n$、$K^*=K$、内积 $\langle X,Y\rangle=\operatorname{tr}(XY)$。
+\subsection{Moreau包络与近端映射性质}\index{Moreau包络与近端映射性质|hyperpage}
+对真闭凸 $f$、$\tau>0$，
+\[
+e_\tau f(x)=\inf_z\left\{f(z)+\frac{\|z-x\|^2}{2\tau}\right\},\qquad
+\nabla e_\tau f(x)=\frac{x-\operatorname{prox}_{\tau f}(x)}\tau.
+\]
+包络的梯度为 $1/\tau$-Lipschitz。近端映射坚定非扩张：
+\[
+\|Px-Py\|^2\le\langle Px-Py,x-y\rangle\quad(P=\operatorname{prox}_{\tau f}).
+\]
+例如 $\operatorname{prox}_{\tau\|\cdot\|_2}(x)=(1-\tau/\|x\|_2)_+x$（$x=0$ 取零）；矩阵核范数近端映射将奇异值逐个减 $\tau$ 并截断为非负。
+\subsection{加速近端梯度与强凸收敛}\index{加速近端梯度与强凸收敛|hyperpage}
+设 $F=f+h$，$f$ 凸且梯度 $L$-Lipschitz，$h$ 真闭凸。取 $t_1=1,y_1=x_0$，FISTA 为
+\begin{align*}
+x_k&=\operatorname{prox}_{h/L}(y_k-L^{-1}\nabla f(y_k)),\\
+t_{k+1}&=\tfrac12(1+\sqrt{1+4t_k^2}),\qquad
+y_{k+1}=x_k+\frac{t_k-1}{t_{k+1}}(x_k-x_{k-1}).
+\end{align*}
+有 $F(x_k)-F(x^*)\le2L\|x_0-x^*\|^2/(k+1)^2$。若光滑 $f$ 还 $m$-强凸，则普通梯度法步长 $1/L$ 满足
+\[
+f(x_k)-f(x^*)\le(1-m/L)^k[f(x_0)-f(x^*)].
+\]
+\subsection{Bregman距离、镜像下降与ADMM}\index{Bregman距离、镜像下降与ADMM|hyperpage}
+可微严格凸 $\psi$ 定义 $D_\psi(x,y)=\psi(x)-\psi(y)-\langle\nabla\psi(y),x-y\rangle$。镜像下降为
+\[
+x_{k+1}=\operatorname*{arg\,min}_{x\in C}\{\eta_k\langle g_k,x\rangle+D_\psi(x,x_k)\}.
+\]
+概率单纯形上取负熵，得到 $x_{k+1,i}\propto x_{k,i}e^{-\eta_kg_{k,i}}$。对 $\min f(x)+g(z)$、$Ax+Bz=c$，缩放形式 ADMM 为
+\begin{align*}
+x^{k+1}&\in\operatorname*{arg\,min}_x\{f(x)+\tfrac\rho2\|Ax+Bz^k-c+u^k\|^2\},\\
+z^{k+1}&\in\operatorname*{arg\,min}_z\{g(z)+\tfrac\rho2\|Ax^{k+1}+Bz-c+u^k\|^2\},\\
+u^{k+1}&=u^k+Ax^{k+1}+Bz^{k+1}-c,\qquad\rho>0.
+\end{align*}
+其收敛结论需真闭凸目标、鞍点存在及子问题可解等条件；不能无条件保证非凸问题的全局收敛。
+
+% References: https://www.ceremade.dauphine.fr/~chambolle/data/medias/optimisation/coursopti2024.pdf
+% https://lcondat.github.io/publis/Condat_SIAM_Review.pdf
+\section{次微分的图结构与参数极限}
+\subsection{循环单调性与凸势}\index{循环单调性与凸势|hyperpage}
+图上的有限循环 $(x_i,p_i)$、$x_{m+1}=x_1$ 满足
+\[
+\sum_{i=1}^m\langle p_i,x_{i+1}-x_i\rangle\le0
+\]
+时称算子循环单调。实 Hilbert 空间中，极大循环单调算子恰为某真、下半连续凸函数的次微分。一般极大单调算子未必循环单调，因此未必来自凸能量。
+\subsection{近似次梯度与误差修正}\index{近似次梯度与误差修正|hyperpage}
+定义 $p\in\partial_\varepsilon f(x)$ 为 $f(y)\ge f(x)+\langle p,y-x\rangle-\varepsilon$ 对所有 $y$ 成立。对真闭凸 $f$、$\varepsilon>0$ 及任意 $\lambda>0$，可选 $q\in\partial f(y)$ 使
+\[
+\|y-x\|\le\lambda,\qquad\|q-p\|\le\varepsilon/\lambda.
+\]
+这是 Brøndsted--Rockafellar 逼近；它把函数值误差转成点和次梯度的联合误差，但不保证在原点 $x$ 的次微分中找到同样近的元素。
+\subsection{Danskin最大值微分}\index{Danskin最大值微分|hyperpage}
+设 $Y$ 紧，$h(x,y)$ 联合连续，$h(\cdot,y)$ 凸且 $C^1$，梯度联合连续。令 $f(x)=\max_{y\in Y}h(x,y)$、$Y(x)=\operatorname*{arg\,max}_yh(x,y)$，则有限维中
+\[
+f'(x;d)=\max_{y\in Y(x)}\langle\nabla_xh(x,y),d\rangle,\qquad
+\partial f(x)=\operatorname{conv}\{\nabla_xh(x,y):y\in Y(x)\}.
+\]
+唯一活动极大点时 $f$ 可微，梯度由该点给出；不能无条件微分任意选定的非活动分支。
+\subsection{Mosco收敛与近端稳定性}\index{Mosco收敛与近端稳定性|hyperpage}
+Hilbert 空间中 $f_n\to f$ 的 Mosco 条件为
+\begin{gather*}
+x_n\rightharpoonup x\Rightarrow f(x)\le\liminf_nf_n(x_n),\\
+\forall x\ \exists x_n\to x:\quad\limsup_nf_n(x_n)\le f(x).
+\end{gather*}
+对真闭凸函数，该收敛蕴含每个 $\tau>0,x$ 的 $\operatorname{prox}_{\tau f_n}x\to\operatorname{prox}_{\tau f}x$。反向还需固定函数的加法常数；单凭近端映射无法区分 $f$ 与 $f+c$。
+\section{近端分裂与原始对偶算法}
+本节算法在有限维欧氏空间讨论，目标取真闭凸函数，并假定所需最优点或鞍点存在。
+\subsection{近端点算法与函数值界}\index{近端点算法与函数值界|hyperpage}
+令 $x_{k+1}=\operatorname{prox}_{\tau_k f}(x_k)$，$\tau_k\ge\tau_0>0$，则迭代收敛到某极小点，且
+\[
+f(x_N)-f_*\le\frac{\|x_0-x_*\|^2}{2\sum_{k=0}^{N-1}\tau_k}.
+\]
+该估计假设每个近端子问题精确求解；有误差的实现需要控制误差累积。其算子基础见\hyperref[sec:fa-monotone]{单调算子}。
+\subsection{Douglas--Rachford反射分裂}\index{Douglas-Rachford反射分裂|hyperpage}
+对 $\min(f+g)$，取 $\gamma>0$、$0<\lambda<2$，迭代
+\[
+x_k=\operatorname{prox}_{\gamma f}z_k,\quad
+y_k=\operatorname{prox}_{\gamma g}(2x_k-z_k),\quad
+z_{k+1}=z_k+\lambda(y_k-x_k).
+\]
+若 $0\in\partial f(x)+\partial g(x)$ 有解，则 $z_k$ 收敛到固定点，影子 $x_k$ 收敛到原问题极小点。$z_k$ 本身一般不是原问题的可行或最优变量。
+\subsection{Dykstra交集投影}\index{Dykstra交集投影|hyperpage}
+对非空交的闭凸集 $C,D$，从 $x_0$、$p_0=q_0=0$ 出发，
+\begin{align*}
+y_k&=P_C(x_k+p_k),&p_{k+1}&=x_k+p_k-y_k,\\
+x_{k+1}&=P_D(y_k+q_k),&q_{k+1}&=y_k+q_k-x_{k+1}.
+\end{align*}
+有 $x_k\to P_{C\cap D}x_0$。修正量 $p_k,q_k$ 是算法的一部分；普通交替投影一般只求交集中的点，不必给出初始点的最近交点。
+\subsection{Chambolle--Pock原始对偶迭代}\index{Chambolle-Pock原始对偶迭代|hyperpage}
+对 $\min_xG(x)+F(Kx)$，取 $\tau\sigma\|K\|^2<1$、$\bar x^0=x^0$，
+\begin{align*}
+y^{k+1}&=\operatorname{prox}_{\sigma F^*}(y^k+\sigma K\bar x^k),\\
+x^{k+1}&=\operatorname{prox}_{\tau G}(x^k-\tau K^*y^{k+1}),\\
+\bar x^{k+1}&=2x^{k+1}-x^k.
+\end{align*}
+鞍点存在时迭代收敛，有界测试集上的遍历原始对偶间隙为 $O(1/N)$。这里固定外推参数为一；任意改变步长和外推并不保留同一收敛保证。
+\section{光滑性、误差界与可计算下降}
+\subsection{Baillon--Haddad余强制性}\index{Baillon-Haddad余强制性|hyperpage}
+若凸可微 $f$ 在整个 Hilbert 空间上梯度 $L$-Lipschitz，$L>0$，则
+\[
+\langle\nabla f(x)-\nabla f(y),x-y\rangle
+\ge\frac1L\|\nabla f(x)-\nabla f(y)\|^2.
+\]
+这称 $1/L$-余强制性，并使 $I-\gamma\nabla f$ 在 $0\le\gamma\le2/L$ 时非扩张。一般 Lipschitz 的非梯度算子不自动满足该不等式。
+\subsection{Polyak--Łojasiewicz误差控制}\index{Polyak-Łojasiewicz误差控制|hyperpage}
+若可微函数满足 $\frac12\|\nabla f(x)\|^2\ge\mu(f(x)-f_*)$，$\mu>0$，且梯度 $L$-Lipschitz，则步长 $1/L$ 的梯度法满足
+\[
+f(x_k)-f_*\le(1-\mu/L)^k(f(x_0)-f_*).
+\]
+强凸函数满足该 PL 条件，但 PL 不要求函数本身凸，也不保证极小点唯一。应先确保有限 $f_*$ 及所分析区域中的条件成立。
+\subsection{Frank--Wolfe间隙与无投影步}\index{Frank-Wolfe间隙与无投影步|hyperpage}
+对紧凸集 $C$ 上光滑凸 $f$，定义
+\[
+s_k\in\operatorname*{arg\,min}_{s\in C}\langle\nabla f(x_k),s\rangle,\quad
+g_k=\langle\nabla f(x_k),x_k-s_k\rangle\ge f(x_k)-f_*.
+\]
+取 $x_{k+1}=(1-\gamma_k)x_k+\gamma_ks_k$、$\gamma_k=2/(k+2)$。若梯度 $L$-Lipschitz、$\operatorname{diam}C=D$，则 $f(x_k)-f_*\le2LD^2/(k+2)$（$k\ge1$）。线性极小化子问题需可解。
+\subsection{坐标下降与随机坐标界}\index{坐标下降与随机坐标界|hyperpage}
+若第 $i$ 坐标有光滑常数 $L_i>0$，更新 $x^+=x-L_i^{-1}\partial_if(x)e_i$ 给出
+\[
+f(x^+)\le f(x)-\frac{|\partial_if(x)|^2}{2L_i}.
+\]
+均匀抽取 $n$ 个坐标时，条件期望下降至少为 $\frac1{2n}\sum_i|\partial_if(x)|^2/L_i$。若 $f$ 还为 $\mu$-强凸，则期望函数差每步至多乘 $1-\mu/(nL_{\max})$。这是无约束、精确偏导模型中的保证。
+\section{谱凸函数、矩阵锥与凸体}
+\subsection{谱函数微分与Ky Fan变分式}\index{谱函数微分与Ky Fan变分式|hyperpage}
+对称矩阵 $X$ 上，若 $\phi\in C^1(\mathbb R)$，则 $D\operatorname{tr}\phi(X)[H]=\operatorname{tr}(\phi'(X)H)$。若 $\phi$ 凸，$X\mapsto\operatorname{tr}\phi(X)$ 凸。按降序排列特征值，有
+\[
+\sum_{j=1}^k\lambda_j(X)=\max_{0\preceq Y\preceq I,\ \operatorname{tr}Y=k}\operatorname{tr}(XY).
+\]
+活动最大化矩阵给出该凸函数的次梯度；重特征值处不能任意指定唯一梯度。
+\subsection{对数行列式的自协调界}\index{对数行列式的自协调界|hyperpage}
+对正定 $X$、对称 $H$，$F(X)=-\log\det X$ 满足
+\[
+D^3F(X)[H,H,H]=-2\operatorname{tr}((X^{-1}H)^3),\qquad
+|D^3F[H,H,H]|\le2(D^2F[H,H])^{3/2}.
+\]
+另有 $|DF[H]|\le\sqrt n(D^2F[H,H])^{1/2}$，给出参数 $n$ 的自协调屏障。Newton 步的全局分析需控制局部范数与正定可行性，不能只靠 Hessian 正定。
+\subsection{Schur补与二次锥提升}\index{Schur补与二次锥提升|hyperpage}
+若 $C\succ0$，则
+\[
+\begin{pmatrix}A&B\\B^{\mathsf T}&C\end{pmatrix}\succeq0
+\iff A-BC^{-1}B^{\mathsf T}\succeq0.
+\]
+例如 $y>0$ 时，$\|x\|^2\le ty$ 等价于 $\begin{pmatrix}t&x^{\mathsf T}\\x&yI\end{pmatrix}\succeq0$，也可表成旋转二阶锥。$C$ 奇异时需要广义逆及值域条件，不能直接照写 $C^{-1}$。
+\subsection{Brunn--Minkowski与混合体积}\index{Brunn-Minkowski与混合体积|hyperpage}
+对 $\mathbb R^d$ 中凸体及 $0\le t\le1$，
+\[
+|(1-t)K+tL|^{1/d}\ge(1-t)|K|^{1/d}+t|L|^{1/d}.
+\]
+混合体积由多项式 $|K+tL|=\sum_{j=0}^d\binom djV(K[d-j],L[j])t^j$ 定义。取单位球 $B$，有 $\left.\frac{\mathrm d}{\mathrm dt}|K+tB|\right|_{0+}=P(K)$。体积与表面积归一化在此采用通常欧氏约定。
+
+\section{极小极大、二次约束与凸松弛补充}
+凸规划参见\cite{boyd}，极小极大交换的精确假设参见\cite{sion}。
+\subsection{Sion极小极大交换}\index{Sion极小极大交换|hyperpage}
+若 $X$ 非空紧凸，$Y$ 非空凸，$f(\cdot,y)$ 下半连续且拟凸，$f(x,\cdot)$ 上半连续且拟凹，则
+\[
+\min_{x\in X}\sup_{y\in Y}f(x,y)
+=\sup_{y\in Y}\min_{x\in X}f(x,y).
+\]
+空间取 Hausdorff 线性拓扑空间的子集。一般总有左侧不小于右侧的弱极小极大界；等式需要这里的紧性、凸性和半连续性。
+\subsection{单个二次约束的S引理}\index{单个二次约束的S引理|hyperpage}
+实二次函数 $q_i(x)=x^{\mathsf T}A_ix+2b_i^{\mathsf T}x+c_i$，$A_i$ 对称。若存在 $\bar x$ 使 $q_1(\bar x)<0$，则
+\[
+\bigl(q_1(x)\le0\Rightarrow q_0(x)\ge0\bigr)
+\iff\exists\lambda\ge0:\quad
+\begin{pmatrix}A_0+\lambda A_1&b_0+\lambda b_1\\
+(b_0+\lambda b_1)^{\mathsf T}&c_0+\lambda c_1\end{pmatrix}\succeq0.
+\]
+这是单约束、严格可行情形；多项二次约束一般不能继续用同样的充分必要证书。
+\subsection{半正定规划的互补矩阵条件}\index{半正定规划的互补矩阵条件|hyperpage}
+原问题 $\min\langle C,X\rangle$、$\mathcal A(X)=b$、$X\succeq0$ 的对偶为 $\max b^{\mathsf T}y$、$Z=C-\mathcal A^*y\succeq0$。可行解的间隙满足
+\[
+\langle C,X\rangle-b^{\mathsf T}y=\operatorname{tr}(XZ)\ge0,
+\qquad\operatorname{tr}(XZ)=0\iff XZ=0.
+\]
+若原问题严格可行、最优值有限，则无对偶间隙且对偶取得最优值。原问题也取得最优时，原对偶可行性加 $XZ=0$ 刻画最优配对。
+\subsection{双线性项的McCormick凸包络}\index{双线性项的McCormick凸包络|hyperpage}
+在矩形 $l_x\le x\le u_x$、$l_y\le y\le u_y$ 上，曲面 $z=xy$ 的图的凸包由下列四个不等式及矩形界给出：
+\begin{align*}
+z&\ge l_xy+l_yx-l_xl_y,&z&\ge u_xy+u_yx-u_xu_y,\\
+z&\le u_xy+l_yx-u_xl_y,&z&\le l_xy+u_yx-l_xu_y.
+\end{align*}
+下方两平面的最大值为凸包络，上方两平面的最小值为凹包络。对多个共享变量的双线性项，逐项松弛通常只是整体问题凸包的外逼近。
+\clearpage
+\end{document}

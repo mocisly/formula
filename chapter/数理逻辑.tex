@@ -1,0 +1,297 @@
+\documentclass[../main.tex]{subfiles}
+\begin{document}
+本章主要参考\cite{freund}。
+
+本章默认经典一阶逻辑、非空论域及带等号语言；直觉主义、模态与二阶逻辑另行说明。$\Gamma\vdash\varphi$ 表示形式可证，$\Gamma\models\varphi$ 表示语义后承，二者的等价需要可靠性与完备性定理。基础命题运算另见\hyperref[chap:discrete-mathematics]{离散数学}，集合与基数另见\hyperref[chap:set-theory]{集合论}。
+% References: https://math.berkeley.edu/~antonio/math125A/mathlogicP1.pdf
+% https://ic.openlogicproject.org/ic-print.pdf
+\section{命题演算与范式}
+\subsection{真值语义与常用等价}\index{真值语义与常用等价|hyperpage}
+赋值 $v$ 把命题变元映到 $\{0,1\}$，并递归延拓为
+\[
+v(\neg P)=1-v(P),\quad v(P\land Q)=\min(v(P),v(Q)),\quad
+v(P\lor Q)=\max(v(P),v(Q)),
+\]
+\[
+P\to Q\equiv\neg P\lor Q,\quad
+P\leftrightarrow Q\equiv(P\to Q)\land(Q\to P),\quad
+\neg(P\land Q)\equiv\neg P\lor\neg Q.
+\]
+经典逻辑有 $P\lor\neg P\equiv\top$、$\neg\neg P\equiv P$、$P\to Q\equiv\neg Q\to\neg P$。$\equiv$ 表示在全部赋值下同真值，不是对象语言中的等号。
+\subsection{析取、合取与代数标准形}\index{析取、合取与代数标准形|hyperpage}
+对 $n$ 个变元的布尔函数 $f$，令 $\ell_i^a=P_i$（$a_i=1$）、$\ell_i^a=\neg P_i$（$a_i=0$），则
+\[
+f\equiv\bigvee_{a:f(a)=1}\bigwedge_i\ell_i^a,\qquad
+f\equiv\bigwedge_{a:f(a)=0}\bigvee_i\neg\ell_i^a.
+\]
+空析取为 $\bot$、空合取为 $\top$。在 $\mathbb F_2$ 上可唯一写成代数标准形 $f(x)=\bigoplus_{S\subseteq[n]}c_S\prod_{i\in S}x_i$，其中 $c_S=\bigoplus_{T\subseteq S}f(\bm1_T)$。真值表有 $2^n$ 行，布尔函数共有 $2^{2^n}$ 个。
+\subsection{可满足性、后承与Tseitin编码}\index{可满足性、后承与Tseitin编码|hyperpage}
+\[
+\Gamma\models\varphi\iff\Gamma\cup\{\neg\varphi\}\text{ 不可满足},\qquad
+\models\varphi\iff\neg\varphi\text{ 不可满足}.
+\]
+有限公式可转为合取范式，但保持原变量的等价变换可能指数增长。引入子公式变量可得到线性规模的等可满足 CNF；例如 $z\leftrightarrow(x\land y)$ 编码为
+\[
+(\neg z\lor x)\land(\neg z\lor y)\land(z\lor\neg x\lor\neg y).
+\]
+存在量化辅助变量后恢复原公式；等可满足不等于在新增变量的任意赋值下等价。
+\subsection{归结、单位传播与Horn规则}\index{归结、单位传播与Horn规则|hyperpage}
+把子句视为文字集合，命题归结规则为
+\[
+\frac{C\lor P\qquad D\lor\neg P}{C\lor D}.
+\]
+有限 CNF 不可满足当且仅当可归结出空子句。单位传播由 $P$ 删除含 $P$ 的子句、在其余子句删除 $\neg P$。至多一个正文字的 Horn 子句等价于 $(P_1\land\cdots\land P_k)\to Q$ 或蕴含 $\bot$，可用前向链推导判断可满足性。
+\section{一阶语言、量词与代换}
+\subsection{结构、项与满足关系}\index{结构、项与满足关系|hyperpage}
+语言指定常元、函数符号及关系符号的元数，结构 $\mathcal M$ 给出论域及符号解释。对变量赋值 $s$，满足关系递归定义，特别地
+\[
+\mathcal M,s\models\forall x\varphi\iff\forall a\in M,\ \mathcal M,s[x\mapsto a]\models\varphi,
+\]
+\[
+\mathcal M,s\models\exists x\varphi\iff\exists a\in M,\ \mathcal M,s[x\mapsto a]\models\varphi.
+\]
+无自由变量的公式称句子，其真假与赋值无关。项的解释满足
+\[
+f(t_1,\ldots,t_n)^{\mathcal M}[s]
+=f^{\mathcal M}(t_1^{\mathcal M}[s],\ldots,t_n^{\mathcal M}[s]).
+\]
+\subsection{量词等价与自由变量条件}\index{量词等价与自由变量条件|hyperpage}
+\begin{gather*}
+\neg\forall x\varphi\equiv\exists x\neg\varphi,\qquad
+\neg\exists x\varphi\equiv\forall x\neg\varphi,\\
+\forall x(\varphi\land\psi)\equiv\forall x\varphi\land\forall x\psi,\qquad
+\exists x(\varphi\lor\psi)\equiv\exists x\varphi\lor\exists x\psi.
+\end{gather*}
+若 $x$ 不自由出现于 $\psi$，可将量词越过相应 $\land,\lor$：如 $(\exists x\varphi)\land\psi\equiv\exists x(\varphi\land\psi)$。一般只有 $\exists x\forall y\theta\Rightarrow\forall y\exists x\theta$，反向不成立；同种量词可交换。
+\subsection{代换引理、变量改名与等号}\index{代换引理、变量改名与等号|hyperpage}
+若项 $t$ 可自由代入 $\varphi$ 中的 $x$（不造成变量捕获），则
+\[
+\mathcal M,s\models\varphi[t/x]
+\iff\mathcal M,s[x\mapsto t^{\mathcal M}[s]]\models\varphi.
+\]
+约束变量可先改名以满足条件。等号按真正相等解释，满足 $\forall x(x=x)$ 及代换原则 $x=y\to(\varphi(x)\leftrightarrow\varphi(y))$，其中替换同样应避免捕获。
+\subsection{前束范式、Skolem化与合一}\index{前束范式、Skolem化与合一|hyperpage}
+每个经典一阶公式可在适当改名后变为 $Q_1x_1\cdots Q_nx_n\,\theta$，$\theta$ 无量词。Skolem 化例如
+\[
+\forall x\exists y\forall z\exists w\,R(x,y,z,w)
+\quad\leadsto\quad\forall x\forall z\,R(x,f(x),z,g(x,z)).
+\]
+新函数依赖此前的全称变量；在扩充语言中保持等可满足性，而非简单的原语言逻辑等价。合一求使 $\sigma(s)=\sigma(t)$ 的代换；有限项合一须进行出现检查，$x=f(x)$ 没有有限项合一解。最一般合一子允许其他合一子由其再代换得到。
+\section{形式证明、完备性与紧致性}
+\subsection{Hilbert公理与量词推理}\index{Hilbert公理与量词推理|hyperpage}
+经典命题部分可用如下公理模式及假言推理建立：
+\begin{gather*}
+P\to(Q\to P),\\
+[P\to(Q\to R)]\to[(P\to Q)\to(P\to R)],\\
+(\neg Q\to\neg P)\to(P\to Q),\qquad
+\frac{P\quad P\to Q}{Q}.
+\end{gather*}
+量词公理包括 $\forall x\varphi\to\varphi[t/x]$；全称推广由 $\Gamma\vdash\varphi$ 推出 $\Gamma\vdash\forall x\varphi$ 要求 $x$ 不自由出现在仍使用的假设中。忽略这一条件会产生错误证明。
+\subsection{演绎定理、自然演绎与Cut}\index{演绎定理、自然演绎与Cut|hyperpage}
+句子假设或满足标准变量限制时，演绎定理为 $\Gamma,\varphi\vdash\psi\iff\Gamma\vdash\varphi\to\psi$。自然演绎的蕴含引入消去对应
+\[
+\frac{\Gamma,\varphi\vdash\psi}{\Gamma\vdash\varphi\to\psi},\qquad
+\frac{\Gamma\vdash\varphi\to\psi\quad\Gamma\vdash\varphi}{\Gamma\vdash\psi}.
+\]
+序列演算的 Cut 形式为 $\frac{\Gamma\Rightarrow\Delta,A\quad A,\Pi\Rightarrow\Lambda}{\Gamma,\Pi\Rightarrow\Delta,\Lambda}$。经典一阶逻辑可消 Cut；这给相应无 Cut 系统的子公式性质，不意味着算术等全部非逻辑理论都有同样的无条件消去结论。
+\subsection{可靠性、完备性与一致性}\index{可靠性、完备性与一致性|hyperpage}
+对经典一阶逻辑的标准证明系统，
+\[
+\Gamma\vdash\varphi\iff\Gamma\models\varphi,\qquad
+\Gamma\text{ 一致}\iff\Gamma\text{ 有模型}.
+\]
+一致指不能推出 $\bot$。理论 $T$ 的句法完备性则指对每个句子 $\varphi$，$T\vdash\varphi$ 或 $T\vdash\neg\varphi$；它与逻辑系统的语义完备性是不同概念。故一阶完备性与算术不完备性并不矛盾。
+\subsection{紧致定理与非标准元素}\index{紧致定理与非标准元素|hyperpage}
+\[
+T\text{ 有模型}\iff\text{每个有限 }T_0\subset T\text{ 有模型}.
+\]
+若 $T\models\varphi$，则已有某个有限 $T_0\subset T$ 满足 $T_0\models\varphi$。向算术真理论加入常元 $c$ 及所有 $c>\bar n$，每个有限子集均可满足，所以存在含大于所有标准数码的元素的非标准模型。外部的标准自然数集合不必在该模型内可定义。
+\section{模型论的结构与构造}
+\subsection{初等子结构与Tarski--Vaught判别}\index{初等子结构与Tarski-Vaught判别|hyperpage}
+$\mathcal M\preccurlyeq\mathcal N$ 指 $M\subseteq N$，且对带 $M$ 中参数的任意公式在两结构中同真值。子结构 $M\subset N$ 为初等子结构当且仅当
+\[
+\mathcal N\models\exists x\varphi(x,\bar a)\Rightarrow
+\exists b\in M:\mathcal N\models\varphi(b,\bar a)\quad(\bar a\in M).
+\]
+同构蕴含初等等价，但反向一般不成立；普通子群、子环等代数子结构也不一定初等。
+\subsection{Löwenheim--Skolem与基数限制}\index{Löwenheim-Skolem与基数限制|hyperpage}
+若无限结构 $\mathcal M$ 的语言基数为 $\kappa$，$A\subset M$，则存在 $A\subset N\preccurlyeq M$，且
+\[
+|N|\le\max(|A|,\kappa,\aleph_0).
+\]
+若理论有无限模型，则对每个 $\lambda\ge\max(\kappa,\aleph_0)$ 有基数 $\lambda$ 的模型。因此可数一阶语言无法唯一刻画一个无限结构的所有基数。模型内部的不可数与模型外部的可数性也不是同一断言。
+\subsection{超积与Łoś定理}\index{超积与Łoś定理|hyperpage}
+对指标集 $I$ 的超滤 $U$，超积 $\prod_i\mathcal M_i/U$ 按 $a\sim b\iff\{i:a_i=b_i\}\in U$ 取商。对任意一阶公式，
+\[
+\prod_i\mathcal M_i/U\models\varphi([a_i^1],\ldots,[a_i^n])
+\iff\{i:\mathcal M_i\models\varphi(a_i^1,\ldots,a_i^n)\}\in U.
+\]
+相同结构的超积为超幂，与原结构初等等价。非主超滤的存在用到适当选择原则；一阶 Łoś 定理不能直接当作完全二阶语义的传递定理。
+\subsection{类型、饱和与量词消去}\index{类型、饱和与量词消去|hyperpage}
+参数集 $A$ 上的类型为可共同满足的公式族 $p(x)$；有限部分在 $\mathcal M$ 中可满足时，可在某初等扩张中整体实现。$\kappa$-饱和要求实现所有小于 $\kappa$ 个参数上的完全一元类型。
+
+理论 $T$ 量词消去指每个公式 $\varphi$ 有无量词 $\psi$ 使 $T\models\forall\bar x(\varphi\leftrightarrow\psi)$。固定特征的代数闭域、实闭有序域、无端点稠密线序具有标准语言下的量词消去，并有相应可判定性；Presburger 算术在加入同余谓词后也可量词消去。
+\section{可计算性与算术层级}
+\subsection{原始递归与无界最小化}\index{原始递归与无界最小化|hyperpage}
+原始递归函数由零、后继、投影经复合和原始递归生成：
+\[
+f(0,\bar x)=g(\bar x),\qquad f(n+1,\bar x)=h(n,f(n,\bar x),\bar x).
+\]
+它们全定义。再允许无界最小化 $\mu y[g(\bar x,y)=0]$ 得到部分递归函数（要求搜索前的计算均有定义）；与 Turing 可计算的部分函数相同。无界搜索可能不停止，不能因此把所有部分递归函数当作全函数。
+\subsection{可枚举、可判定与停机问题}\index{可枚举、可判定与停机问题|hyperpage}
+\[
+A\text{ 可枚举}\iff A=\{x:\exists s\ R(x,s)\},\quad R\text{ 可取原始递归},
+\]
+\[
+A\text{ 可判定}\iff A\text{ 与 }\mathbb N\setminus A\text{ 均可枚举}.
+\]
+有效程序编号 $\varphi_e$ 的对角停机集 $K=\{e:\varphi_e(e)\downarrow\}$ 可枚举但不可判定；任意可枚举集可多一归约到 $K$。Church--Turing 论题把非形式的有效计算与上述形式模型对应，本身不是纯形式定理。
+\subsection{归约、Rice定理与跳跃}\index{归约、Rice定理与跳跃|hyperpage}
+多一归约 $A\le_mB$ 指存在全可计算 $f$ 使 $x\in A\iff f(x)\in B$。Turing 归约 $A\le_TB$ 允许以 $B$ 为判定预言机。定义
+\[
+A'=\{e:\varphi_e^A(e)\downarrow\},\qquad A<_TA'.
+\]
+Rice 定理：部分可计算函数的任何非平凡外延性质，其程序指标集均不可判定。程序长度、某段代码是否出现等语法性质不属于该定理的适用范围。
+\subsection{算术层级与Post定理}\index{算术层级与Post定理|hyperpage}
+$\Sigma_n^0$ 公式以存在量词块开始、$\Pi_n^0$ 以全称块开始，含 $n$ 个交替无界量词块，矩阵为有界算术公式；$\Delta_n^0=\Sigma_n^0\cap\Pi_n^0$ 表示可由两类公式定义的集合。对 $n\ge0$，
+\[
+\Sigma_{n+1}^0=\{\text{相对 }0^{(n)}\text{ 可枚举的集合}\},\qquad
+\Delta_{n+1}^0=\{\text{相对 }0^{(n)}\text{ 可判定的集合}\}.
+\]
+$0^{(0)}$ 可取空集，$0^{(n+1)}=(0^{(n)})'$。每层严格扩张；特别地 $\Sigma_1^0$ 为可枚举集、$\Delta_1^0$ 为可判定集。
+\section{形式算术与不完备性}
+\subsection{Peano公理与归纳模式}\index{Peano公理与归纳模式|hyperpage}
+语言含 $0,S,+,\cdot$，基本公理包含后继单射、零非后继、非零数有前驱及
+\[
+x+0=x,\quad x+S(y)=S(x+y),\qquad
+x\cdot0=0,\quad x\cdot S(y)=x\cdot y+x.
+\]
+PA 对每个一阶公式 $\varphi(n,\bar a)$ 加入其全称闭包形式的归纳公理
+\[
+[\varphi(0,\bar a)\land\forall n(\varphi(n,\bar a)\to\varphi(S(n),\bar a))]
+\to\forall n\varphi(n,\bar a).
+\]
+不含归纳模式的标准七公理 Robinson 算术记 $Q$。一阶归纳是公式模式，不是一次量化全部子集的二阶公理。
+\subsection{语法算术化与对角引理}\index{语法算术化与对角引理|hyperpage}
+给符号串、公式和证明有效编码为自然数，写 $\ulcorner\varphi\urcorner$。对可有效公理化理论，标准可证性谓词可取
+\[
+\operatorname{Pr}_T(y)\equiv\exists p\,\operatorname{Proof}_T(p,y),
+\]
+证明证书可使验证关系原始递归。对任意只有 $x$ 自由的算术公式 $\theta(x)$，存在句子 $G$ 使
+\[
+Q\vdash G\leftrightarrow\theta(\ulcorner G\urcorner).
+\]
+编码和数码代入均为形式化的一部分；对角引理描述可证明的等价，不是无约束地定义会导致矛盾的真值谓词。
+\subsection{第一不完备性与真理不可定义}\index{第一不完备性与真理不可定义|hyperpage}
+若 $T$ 一致、可有效公理化并包含 $Q$，则存在句子 $R$ 使
+\[
+T\nvdash R,\qquad T\nvdash\neg R.
+\]
+这里用 Rosser 加强形式，仅一致性就足够。算术真理论 $\operatorname{Th}(\mathbb N)$ 完备且一致，但不可有效公理化。Tarski 不可定义定理断言不存在算术公式 $\operatorname{Tr}(x)$ 使每个算术句子均满足
+\[
+\mathbb N\models\operatorname{Tr}(\ulcorner\varphi\urcorner)\leftrightarrow\varphi.
+\]
+\subsection{可导性条件、第二不完备性与Löb定理}\index{可导性条件、第二不完备性与Löb定理|hyperpage}
+对包含 PA 的有效理论及标准可证性谓词，使用简写 $\Box\varphi=\operatorname{Pr}_T(\ulcorner\varphi\urcorner)$，可导性条件为
+\[
+T\vdash\varphi\Rightarrow T\vdash\Box\varphi,\quad
+T\vdash\Box(\varphi\to\psi)\to(\Box\varphi\to\Box\psi),\quad
+T\vdash\Box\varphi\to\Box\Box\varphi.
+\]
+若 $T$ 一致，则 $T\nvdash\operatorname{Con}(T)$，其中 $\operatorname{Con}(T)=\neg\operatorname{Pr}_T(\ulcorner0=1\urcorner)$。Löb 定理为 $T\vdash\Box\varphi\to\varphi\Rightarrow T\vdash\varphi$。改变证明谓词或一致性表达式时必须重新检查条件。
+\section{集合论公理、选择与相对一致性}
+\subsection{外延、基础构造与无穷公理}\index{外延、基础构造与无穷公理|hyperpage}
+ZF 以属于关系为唯一非逻辑基本符号。外延公理为
+\[
+\forall a\forall b[\forall x(x\in a\leftrightarrow x\in b)\to a=b].
+\]
+配对、并集与幂集分别保证 $\{a,b\}$、$\bigcup a$、$\mathcal P(a)$ 为集合，且 $x\in\bigcup a\iff\exists y\in a\,(x\in y)$、$x\in\mathcal P(a)\iff x\subseteq a$。无穷公理保证存在集合 $I$ 满足 $\varnothing\in I$ 及 $x\in I\Rightarrow x\cup\{x\}\in I$。
+\subsection{分离、替代与正则公理}\index{分离、替代与正则公理|hyperpage}
+分离公理模式允许从已有集合截取可定义部分：
+\[
+\forall a\exists b\forall x[x\in b\leftrightarrow(x\in a\land\varphi(x,\bar p))].
+\]
+替代模式要求 $\varphi$ 在 $a$ 上函数性，继而保证像集存在：
+\[
+[\forall x\in a\ \exists!y\,\varphi(x,y,\bar p)]
+\Rightarrow\exists b\forall y[y\in b\leftrightarrow\exists x\in a\,\varphi(x,y,\bar p)].
+\]
+参数作全称闭包，新集合变量不得自由出现在限定公式中。正则公理为 $a\ne\varnothing\Rightarrow\exists b\in a\,(a\cap b=\varnothing)$。无约束概括 $\{x:\varphi(x)\}$ 不是 ZF 的公理。
+\subsection{选择公理与等价原则}\index{选择公理与等价原则|hyperpage}
+选择公理表为：任意集合指标的非空集合族 $\{A_i\}_{i\in I}$ 有选择函数，即
+\[
+\prod_{i\in I}A_i\ne\varnothing\quad\text{若全部 }A_i\ne\varnothing.
+\]
+在 ZF 上它等价于良序定理和 Zorn 引理；后者要求偏序集每条链有上界，便有极大元。ZFC 为 ZF 加选择公理；可数选择、依赖选择及完全选择的强度不同，不能无条件互换。
+\subsection{连续统假设与强迫的基本形式}\index{连续统假设与强迫的基本形式|hyperpage}
+连续统假设为 $2^{\aleph_0}=\aleph_1$。Gödel--Cohen 相对一致性结果给
+\[
+\operatorname{Con}(\mathrm{ZFC})\Rightarrow
+\operatorname{Con}(\mathrm{ZFC}+\mathrm{CH})\land\operatorname{Con}(\mathrm{ZFC}+\neg\mathrm{CH}).
+\]
+若 $M$ 是可数传递 ZFC 模型，$\mathbb P\in M$ 为偏序集，$G$ 为 $M$-一般滤子，则扩张 $M[G]$ 满足 ZFC，且有真理引理
+\[
+M[G]\models\varphi(\tau_1^G,\ldots,\tau_n^G)
+\iff\exists p\in G:\ p\Vdash_M\varphi(\tau_1,\ldots,\tau_n).
+\]
+这里一般性指遇到 $M$ 中每个稠密集；这是有明确模型假设的构造，不能据此声称 ZFC 已证明自身存在传递模型。
+\section{其他逻辑与证明的类型结构}
+\subsection{直觉主义与Kripke语义}\index{直觉主义与Kripke语义|hyperpage}
+直觉主义一般不接受排中律和双重否定消去。Kripke 偏序模型中，原子命题的迫真向上保持，且
+\[
+w\Vdash P\to Q\iff\forall v\ge w\,(v\Vdash P\Rightarrow v\Vdash Q),\qquad
+w\Vdash\neg P\iff\forall v\ge w\,(v\nVdash P).
+\]
+$\bot$ 无世界迫真。蕴含应检查全部未来世界，不能用经典真值表在当前世界直接计算。在直觉主义系统中加入双重否定消去，可得到相应经典系统。
+\subsection{模态逻辑的框架与公理}\index{模态逻辑的框架与公理|hyperpage}
+可达关系框架 $(W,R)$ 上，$w\models\Box P$ 当且仅当每个 $wRv$ 都有 $v\models P$，$\Diamond P\equiv\neg\Box\neg P$。正常模态逻辑 K 的公理为
+\[
+\Box(P\to Q)\to(\Box P\to\Box Q),\qquad
+\vdash P\Rightarrow\vdash\Box P.
+\]
+公理 T：$\Box P\to P$ 对应自反性；公理 4：$\Box P\to\Box\Box P$ 对应传递性；公理 5：$\Diamond P\to\Box\Diamond P$ 对应 Euclid 性。S5 可由等价关系框架给语义。必然化规则用于定理，不能直接用于任意未解除假设。
+\subsection{Lambda演算与Curry--Howard对应}\index{Lambda演算与Curry-Howard对应|hyperpage}
+避免变量捕获的 $\beta$ 归约为 $(\lambda x.t)u\to t[u/x]$；$\eta$ 归约 $\lambda x.(t\,x)\to t$ 要求 $x$ 不自由出现在 $t$ 中。简单类型规则包含
+\[
+\frac{\Gamma,x:A\vdash t:B}{\Gamma\vdash\lambda x.t:A\to B},\qquad
+\frac{\Gamma\vdash f:A\to B\quad\Gamma\vdash u:A}{\Gamma\vdash f\,u:B}.
+\]
+Curry--Howard 对应把蕴含、合取、析取对应到函数、积、和类型，把证明归一化对应到程序归约。简单类型 Lambda 演算强正规化；无类型演算则可能无限归约，二者不能混同。
+\subsection{二阶完全语义与Henkin语义}\index{二阶完全语义与Henkin语义|hyperpage}
+二阶逻辑还量化论域的子集、关系和函数；完全语义中一元关系变量遍历全部 $\mathcal P(M)$。二阶归纳为
+\[
+\forall X[(X(0)\land\forall n(X(n)\to X(Sn)))\to\forall nX(n)].
+\]
+配合二阶 Peano 公理，在完全语义下可范畴刻画标准自然数，但没有有效、可靠且完备的全二阶证明系统，紧致性也失效。Henkin 语义只遍历指定关系域，可转成多类一阶理论并恢复相应完备性；不能把两种语义的结论混用。
+\section{插值、可定义性与模型省略补充}
+以下采用经典一阶逻辑，相关定理与证明入口参见\cite{freund}。
+\subsection{Craig插值定理}\index{Craig插值定理|hyperpage}
+若句子 $\varphi\models\psi$，则存在只使用两式共有的非逻辑符号的句子 $\theta$，使
+\[
+\varphi\models\theta,\qquad\theta\models\psi,\qquad
+\operatorname{Lang}(\theta)\subseteq
+\operatorname{Lang}(\varphi)\cap\operatorname{Lang}(\psi).
+\]
+等号作为逻辑符号处理。插值式不要求唯一；不能把任意共享字母的命题直接称为插值式，必须验证两侧后承。
+\subsection{Beth隐定义与显定义}\index{Beth隐定义与显定义|hyperpage}
+理论 $T$ 的语言为 $L\cup\{R\}$。若同一 $L$-结构至多有一个使 $T$ 成立的 $R$-展开，则存在 $L$-公式 $\theta(\bar x)$，使
+\[
+T\models\forall\bar x\,[R(\bar x)\leftrightarrow\theta(\bar x)].
+\]
+等价的隐定义判据是在两份关系符号 $R,R'$、共享 $L$ 的语言中，$T(R)\cup T(R')\models\forall\bar x(R\leftrightarrow R')$。一阶逻辑中隐定义因此可显式化。
+\subsection{Herbrand有限实例判据}\index{Herbrand有限实例判据|hyperpage}
+在无等号、至少有一个闭项的语言中，设 $S$ 为全称闭包的子句集。则
+\[
+S\text{ 不可满足}\iff
+\text{存在有限个闭项代换实例，其命题合取不可满足}.
+\]
+无常量时可先添加一个新常量。一般公式须先作保可满足性的 Skolem 化；带等号时需加入等号与同余规则，不能只把等式视为互不相关的命题字母。
+\subsection{可数理论的非主类型省略}\index{可数理论的非主类型省略|hyperpage}
+可数语言中的一致理论 $T$，给定可数个非主的有限元类型 $p_i(\bar x)$，存在可数模型 $M\models T$，对每个 $i$ 有
+\[
+\forall\bar a\in M^{|\bar x|}\ \exists\varphi\in p_i:
+M\models\neg\varphi(\bar a).
+\]
+非主指不存在与 $T$ 相容的单个公式蕴含该类型全部公式。语言可数性和非主性不可省；省略只涉及指定类型，并不意味着模型省略全部类型。
+\clearpage
+\end{document}

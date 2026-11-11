@@ -1,0 +1,371 @@
+\documentclass[../main.tex]{subfiles}
+\begin{document}
+本章主要参考\cite{variation,brezis}。
+
+本章默认实值能量及实函数空间，先列光滑极值的必要条件，再给存在性与极限方法。凸性与函数空间工具见\hyperref[chap:convex-analysis]{凸分析}和\hyperref[chap:functional-analysis]{泛函分析}；必要条件、充分条件与存在性不能相互替代。
+% References: https://people.maths.ox.ac.uk/ball/Teaching/MIGSAA2019.pdf
+% https://www.math.cmu.edu/~rcristof/pdf/Teaching/Spring2016/Cristoferi-Calculus_of_Variations-Lecture%20notes.pdf
+\section{泛函微分与经典Euler方程}
+\subsection{可容许类、局部极小与一阶变分}\index{可容许类、局部极小与一阶变分|hyperpage}
+对 $J:\mathcal A\subset X\to\mathbb R\cup\{+\infty\}$，局部极小要求某邻域内 $J(u)\le J(v)$。若 $u$ 为内点且方向 $v$ 可双向变化，则
+\[
+\delta J(u)[v]=\left.\frac{\mathrm d}{\mathrm d\varepsilon}J(u+\varepsilon v)\right|_{\varepsilon=0}=0.
+\]
+Fréchet 可微要求 $J(u+h)=J(u)+DJ(u)[h]+o(\|h\|)$；仅方向导数存在不保证 Fréchet 可微。经典弱局部极小常按 $C^1$ 距离定义，强局部极小按 $C^0$ 距离定义，故后者的要求更强。
+\subsection{基本引理与Euler--Lagrange方程}\index{基本引理与Euler-Lagrange方程|hyperpage}
+若 $g\in L^1_{\rm loc}(a,b)$ 且 $\int g\eta=0$ 对所有 $\eta\in C_c^\infty(a,b)$ 成立，则 $g=0$ a.e.。对 $J[y]=\int_a^bL(x,y,y')\,\mathrm dx$，
+\[
+\delta J[y](\eta)=\int_a^b(L_y\eta+L_{y'}\eta')\,\mathrm dx
+=[L_{y'}\eta]_a^b+\int_a^b\left(L_y-\frac{\mathrm d}{\mathrm dx}L_{y'}\right)\eta\,\mathrm dx.
+\]
+固定端点的光滑驻点满足 $L_y-\frac{\mathrm d}{\mathrm dx}L_{y'}=0$。弱形式可在可积条件下成立，即使 $y$ 无经典二阶导数。
+\subsection{向量值、高阶导数与场方程}\index{向量值、高阶导数与场方程|hyperpage}
+对 $y=(y_1,\ldots,y_m)$，每个分量满足 $L_{y_i}-\frac{\mathrm d}{\mathrm dx}L_{y_i'}=0$。若依赖至 $r$ 阶导数，
+\[
+\sum_{j=0}^r(-1)^j\frac{\mathrm d^j}{\mathrm dx^j}L_{y^{(j)}}=0.
+\]
+多维泛函 $J[u]=\int_\Omega F(x,u,Du)\,\mathrm dx$ 的分量方程为
+\[
+F_{u_\alpha}-\sum_{i=1}^n\partial_iF_{u_{\alpha,i}}=0.
+\]
+更高阶偏导的公式为 $\sum_{|\beta|\le r}(-1)^{|\beta|}D^\beta F_{D^\beta u}=0$，按所选多重指标变量约定使用。
+\subsection{循环坐标、Beltrami与Hamilton形式}\index{循环坐标、Beltrami与Hamilton形式|hyperpage}
+若 $L$ 不显含 $y$，则 $L_{y'}$ 守恒；若不显含 $x$，则 $L-y'L_{y'}$ 守恒。令 $p=L_{y'}$，当速度到动量的映射可局部求逆时，
+\[
+H(x,y,p)=p\cdot y'-L,\qquad y'=H_p,\quad p'=-H_y,\quad H_x=-L_x.
+\]
+Legendre 变换的局部可逆性可由 $\det L_{y'y'}\ne0$ 保证；全局凸共轭还要求相应凸性。
+\section{边界、约束与守恒}
+\subsection{自然边界与移动端点横截条件}\index{自然边界与移动端点横截条件|hyperpage}
+固定 $x=b$ 而 $y(b)$ 自由时，自然条件为 $L_{y'}(b)=0$。若端点在曲线 $y=\psi(x)$ 上移动，则边界一阶项为
+\[
+L_{y'}\delta y+(L-y'L_{y'})\delta x=0,
+\quad L+L_{y'}(\psi'-y')=0.
+\]
+第二式在相应移动端点取值。高阶泛函 $L(x,y,y',y'')$ 若端点 $y,y'$ 均自由，则有 $L_{y''}=0$、$L_{y'}-\frac{\mathrm d}{\mathrm dx}L_{y''}=0$。
+\subsection{多维自然边界与边界能量}\index{多维自然边界与边界能量|hyperpage}
+对 $J[u]=\int_\Omega F(x,u,\nabla u)+\int_{\partial\Omega}B(x,u)$，自由边界值的变分给出
+\[
+F_u-\operatorname{div}F_{\nabla u}=0\quad\text{于 }\Omega,\qquad
+F_{\nabla u}\cdot n+B_u=0\quad\text{于 }\partial\Omega.
+\]
+指定 Dirichlet 边界上的变分为零；只有其余自由边界部分满足自然条件。边界本身形状也变化时，需额外的形状导数。
+\subsection{等周约束与乘子规则}\index{等周约束与乘子规则|hyperpage}
+对 $G_i[u]=c_i$，若 $DG_i(u)$ 线性独立，约束极小点存在乘子 $\lambda_i$ 使
+\[
+DJ(u)+\sum_i\lambda_iDG_i(u)=0.
+\]
+积分约束可用增广 Lagrangian $L+\sum_i\lambda_iM_i$ 求 Euler 方程。若约束资格失败，须使用可能含 $\lambda_0=0$ 的异常乘子形式 $\lambda_0DJ+\sum_i\lambda_iDG_i=0$，乘子不全为零。
+\subsection{角点条件与Noether守恒量}\index{角点条件与Noether守恒量|hyperpage}
+分段光滑极值曲线在可移动内角点满足 Weierstrass--Erdmann 条件
+\[
+[L_{y'}]_-^+=0,\qquad[L-y'L_{y'}]_-^+=0.
+\]
+若无穷小变换 $\delta x=\tau$、$\delta y=\xi$ 使作用量改变为全导数 $\mathrm dB/\mathrm dx$，则沿 Euler 解有
+\[
+\frac{\mathrm d}{\mathrm dx}\{L_{y'}\cdot\xi+(L-L_{y'}\cdot y')\tau-B\}=0.
+\]
+角点位置固定时不一定具有第二个自由角点条件；Noether 式要求真正的变分对称性。
+\section{二阶变分与局部充分条件}
+\subsection{二阶变分与Legendre条件}\index{二阶变分与Legendre条件|hyperpage}
+对标量一阶泛函，固定端点变分满足
+\[
+\delta^2J[y](\eta)=\int_a^b\left(L_{yy}\eta^2+2L_{yy'}\eta\eta'+L_{y'y'}\eta'^2\right)\,\mathrm dx\ge0
+\]
+是局部极小的必要条件。于是 $L_{y'y'}\ge0$（Legendre）；向量值情形要求速度 Hessian 半正定。严格正定的速度 Hessian 本身仍不足以排除长区间上的共轭点。
+\subsection{Jacobi方程与共轭点}\index{Jacobi方程与共轭点|hyperpage}
+令 $P=L_{y'y'}$、$Q=L_{yy}-\frac{\mathrm d}{\mathrm dx}L_{yy'}$，则
+\[
+\delta^2J=\int_a^b(P\eta'^2+Q\eta^2)\,\mathrm dx,\qquad
+-(Pz')'+Qz=0.
+\]
+若非零 Jacobi 解满足 $z(a)=z(c)=0$，称 $c$ 与 $a$ 共轭。$P>0$、无共轭点等条件可用于证明二阶型正定；若进一步有 $\delta^2J[\eta]\ge c\|\eta\|_{H^1}^2$ 且二阶 Fréchet 导数连续，则驻点为严格局部极小。
+\subsection{Weierstrass剩余与强极小}\index{Weierstrass剩余与强极小|hyperpage}
+\[
+E(x,y,p,q)=L(x,y,q)-L(x,y,p)-L_p(x,y,p)(q-p).
+\]
+强局部极小在适当光滑条件下必须满足 $E(x,y,y',q)\ge0$ 对所有可容许斜率 $q$。$L$ 对速度凸是这一点态条件的充分保证；对整个 $(y,p)$ 联合凸时，固定端点驻点是全局极小，严格凸性可给唯一性。
+\subsection{典型曲线、最速降线与悬链线}\index{典型曲线、最速降线与悬链线|hyperpage}
+弧长泛函 $\int\sqrt{1+y'^2}$ 的固定端点极小曲线为直线。以向下为正的高度 $y>0$，最速降线的作用量为 $\int\sqrt{(1+y'^2)/(2gy)}\,\mathrm dx$，其解为摆线
+\[
+x=a(\theta-\sin\theta),\qquad y=a(1-\cos\theta),\quad a>0.
+\]
+悬链线由重力势能及固定长度约束导出 $y=a\cosh((x-b)/a)+c$。这些模型的物理坐标、端点与约束决定可容许曲线，不能仅由 Euler 方程认定所有驻点都是所求全局极小。
+\section{直接法、弱极限与非凸能量}
+\subsection{直接法与强制性}\index{直接法与强制性|hyperpage}
+自反 Banach 空间 $X$ 上，若 $\mathcal A$ 非空弱序列闭，$J$ 有下界、弱序列下半连续，且次水平集有界，则极小化序列有弱收敛子列，并有
+\[
+u_j\rightharpoonup u\in\mathcal A,\qquad
+J(u)\le\liminf_jJ(u_j)=\inf_{\mathcal A}J.
+\]
+可用 $J(u)\ge c\|u\|^p-C$ 保证强制性。$W^{1,p}$ 在 $1<p<\infty$ 自反；$p=1$ 时通常改在 $BV$ 及弱星紧性中处理。
+\subsection{凸积分泛函的存在性}\index{凸积分泛函的存在性|hyperpage}
+有界 Lipschitz 域上取 $u\in u_0+W_0^{1,p}$、$1<p<\infty$。若 Carathéodory 被积函数 $F(x,A)$ 对 $A$ 凸，且
+\[
+c|A|^p-a(x)\le F(x,A)\le C(1+|A|^p),\quad c>0,\ a\in L^1,
+\]
+则 $\int F(x,Du)$ 弱下半连续并取得极小值。严格凸性结合相同迹边界及 Poincaré 不等式给唯一性。依赖 $u$ 的一般情形还需增长、紧嵌入及下界等条件。
+\subsection{秩一凸、拟凸与多凸}\index{秩一凸、拟凸与多凸|hyperpage}
+对矩阵 $A\in\mathbb R^{m\times n}$，Morrey 拟凸性为
+\[
+F(A)\le\frac1{|Q|}\int_QF(A+D\varphi)\,\mathrm dx\quad(\varphi\in C_c^\infty(Q;\mathbb R^m)).
+\]
+秩一凸要求 $t\mapsto F(A+t\,a\otimes b)$ 凸；多凸要求 $F(A)=G(\text{全部子式}(A))$，$G$ 凸。标准情形有
+\[
+\text{凸}\Rightarrow\text{多凸}\Rightarrow\text{拟凸}\Rightarrow\text{秩一凸}.
+\]
+向量多维情形不能任意反向；$C^2$ 秩一凸的 Legendre--Hadamard 条件为 $D^2F(A)[a\otimes b,a\otimes b]\ge0$。
+\subsection{松弛、振荡与Young测度}\index{松弛、振荡与Young测度|hyperpage}
+相对指定拓扑的松弛定义为 $\bar J(u)=\inf_{u_j\to u}\liminf_jJ(u_j)$。有界函数列经选取子列，其振荡可由概率测度族 $\nu_x$ 记录，适当测试下
+\[
+g(u_j)\rightharpoonup \int g(z)\,\mathrm d\nu_x(z),\qquad
+u(x)=\int z\,\mathrm d\nu_x(z).
+\]
+须给出足够可积性以排除集中；梯度生成的 Young 测度还受拟凸 Jensen 不等式约束。凸标量模型中的松弛常与凸包络有关，向量梯度问题通常涉及拟凸包络。
+\section{变分PDE、自由边界与几何能量}
+\subsection{Dirichlet原理与Rayleigh商}\index{Dirichlet原理与Rayleigh商|hyperpage}
+\[
+J(u)=\tfrac12\int_\Omega|\nabla u|^2-\langle f,u\rangle
+\quad\Longrightarrow\quad-\Delta u=f.
+\]
+在固定迹的 $H^1$ 可容许类上用直接法或 Lax--Milgram 求解。齐次 Dirichlet 第一特征值满足
+\[
+\lambda_1=\min_{0\ne u\in H_0^1}\frac{\int|\nabla u|^2}{\int u^2},\qquad
+\lambda_k=\min_{\dim V=k}\max_{0\ne u\in V}\frac{\int|\nabla u|^2}{\int u^2}.
+\]
+后式中的子空间位于 $H_0^1$，域须满足保证紧嵌入的条件，如有界 Lipschitz 域。
+\subsection{障碍问题与变分不等式}\index{障碍问题与变分不等式|hyperpage}
+取非空闭凸集 $K=\{v\in H_0^1(\Omega):v\ge\psi\ \text{a.e.}\}$。Dirichlet 能量极小点等价于
+\[
+\int_\Omega\nabla u\cdot\nabla(v-u)\ge\langle f,v-u\rangle\quad(\forall v\in K).
+\]
+光滑情形写为 $u\ge\psi$、$-\Delta u-f\ge0$、$(u-\psi)(-\Delta u-f)=0$。接触集与非接触集边界为自由边界，其正则性不由互补式自动保证。
+\subsection{全变差与有限周长}\index{全变差与有限周长|hyperpage}
+\[
+|Du|(\Omega)=\sup_{\substack{\phi\in C_c^1(\Omega;\mathbb R^n)\\|\phi|\le1}}
+\int_\Omega u\operatorname{div}\phi,\qquad
+P(E;\Omega)=|D\bm1_E|(\Omega).
+\]
+全变差对 $L^1$ 收敛下半连续；$BV$ 中余面积公式为 $|Du|(\Omega)=\int_{\mathbb R}P(\{u>t\};\Omega)\,\mathrm dt$。光滑区域的周长等于边界面积；等周不等式为 $P(E)\ge n\omega_n^{1/n}|E|^{(n-1)/n}$，适用于有限体积、有限周长集。
+\subsection{极小曲面与弹性曲线}\index{极小曲面与弹性曲线|hyperpage}
+图形面积 $A[u]=\int_\Omega\sqrt{1+|\nabla u|^2}$ 的 Euler 方程为
+\[
+\operatorname{div}\frac{\nabla u}{\sqrt{1+|\nabla u|^2}}=0.
+\]
+平面闭曲线弯曲能 $\frac12\int\kappa^2\,\mathrm ds+\lambda\int\mathrm ds$ 在标准带符号曲率约定下的驻点满足 $\kappa''+\frac12\kappa^3-\lambda\kappa=0$。端点、切向及封闭约束改变边界条件；曲面二阶变分见\hyperref[chap:differential-geometry]{微分几何}。
+\section{变分极限、梯度流与近似}
+\subsection{Gamma收敛与极小点收敛}\index{Gamma收敛与极小点收敛|hyperpage}
+在度量空间中，$J_\varepsilon$ Gamma 收敛到 $J$ 要求
+\begin{gather*}
+u_\varepsilon\to u\Rightarrow J(u)\le\liminf_{\varepsilon\to0}J_\varepsilon(u_\varepsilon),\\
+\forall u\ \exists u_\varepsilon\to u:\quad
+\limsup_{\varepsilon\to0}J_\varepsilon(u_\varepsilon)\le J(u).
+\end{gather*}
+第二行为恢复序列。若等强制且有近极小序列，则其聚点为 $J$ 的极小点，并有极小值收敛；极小点唯一时可得整个近极小序列收敛。必须明确采用的拓扑。
+\subsection{Modica--Mortola相场极限}\index{Modica-Mortola相场极限|hyperpage}
+取有界 Lipschitz 域、双井势 $W(s)=(1-s^2)^2/4$，定义
+\[
+J_\varepsilon(u)=\int_\Omega\left(\frac\varepsilon2|\nabla u|^2+\frac{W(u)}\varepsilon\right)\,\mathrm dx,
+\qquad c_W=\int_{-1}^1\sqrt{2W(s)}\,\mathrm ds=\frac{2\sqrt2}{3}.
+\]
+其 $L^1$ Gamma 极限在 $u=2\bm1_E-1$ 时为 $c_WP(E;\Omega)$，其余为 $+\infty$。一维最优过渡满足 $\varepsilon u'=\sqrt{2W(u)}$，解为 $u(x)=\tanh(x/(\sqrt2\varepsilon))$（平移后）。
+\subsection{梯度流与最小化运动}\index{梯度流与最小化运动|hyperpage}
+Hilbert 空间的光滑梯度流 $u'=-\nabla J(u)$ 满足
+\[
+\frac{\mathrm d}{\mathrm dt}J(u(t))=-\|u'(t)\|^2.
+\]
+隐式时间离散为 $u^{k+1}\in\operatorname*{arg\,min}_v\{J(v)+\|v-u^k\|^2/(2\tau)\}$，并给出 $J(u^{k+1})+\|u^{k+1}-u^k\|^2/(2\tau)\le J(u^k)$。用 $L^2$ 度量对 Dirichlet 能量取梯度流得到热方程；改变度量会改变演化方程。
+\subsection{Ritz逼近、Céa与有限元能量误差}\index{Ritz逼近、Céa与有限元能量误差|hyperpage}
+对有界、强制且对称双线性型 $a$，$J(v)=\tfrac12a(v,v)-\ell(v)$。有限维子空间 $V_h$ 上解满足 $a(u_h,v_h)=\ell(v_h)$，且
+\[
+a(u-u_h,v_h)=0,\qquad
+J(u_h)-J(u)=\tfrac12\|u-u_h\|_a^2,
+\]
+\[
+\|u-u_h\|_a=\inf_{v_h\in V_h}\|u-v_h\|_a,\qquad
+\|u-u_h\|\le(M/\alpha)\inf_{v_h\in V_h}\|u-v_h\|.
+\]
+逼近空间稠密时收敛；数值算法的驻点容差不能替代离散化误差控制。
+\section{最优控制与传输的变分形式}
+\subsection{Pontryagin极大原理的最小化约定}\index{Pontryagin极大原理的最小化约定|hyperpage}
+对 $\dot x=f(t,x,a)$，代价 $\int_0^TL(t,x,a)\,\mathrm dt+\Phi(x(T))$，正常乘子形式取 $H=p\cdot f+L$，则必要条件为
+\[
+\dot x=H_p,\qquad\dot p=-H_x,\qquad
+a(t)\in\operatorname*{arg\,min}_{a\in U}H(t,x(t),p(t),a),\quad p(T)=\nabla\Phi(x(T)).
+\]
+这里终点状态自由、终时固定；终点约束会改变横截条件。异常极值需引入成本乘子，且此必要条件一般不保证全局最优。
+\subsection{Hamilton--Jacobi--Bellman与变分验证}\index{Hamilton-Jacobi-Bellman与变分验证|hyperpage}
+值函数 $V(t,x)$ 在可微验证条件下满足
+\[
+V_t+\inf_{a\in U}\{L(t,x,a)+\nabla V\cdot f(t,x,a)\}=0,\qquad V(T,x)=\Phi(x).
+\]
+不可微时使用黏性解。沿使下确界取得的可容许反馈控制，链式积分给出代价等于 $V$；对其他控制给出代价至少为 $V$。验证还需存在性、增长与终端条件。
+\subsection{线性二次控制与Riccati方程}\index{线性二次控制与Riccati方程|hyperpage}
+对 $\dot x=Ax+Bu$、成本 $\frac12\int(x^{\mathsf T}Qx+u^{\mathsf T}Ru)+\frac12x(T)^{\mathsf T}Sx(T)$，取 $Q,S\succeq0,R\succ0$，则
+\[
+-\dot P=A^{\mathsf T}P+PA-PBR^{-1}B^{\mathsf T}P+Q,\quad P(T)=S,
+\qquad u_*=-R^{-1}B^{\mathsf T}Px.
+\]
+值函数为 $V(t,x)=\frac12x^{\mathsf T}P(t)x$。无限时域代数 Riccati 方程还需可稳定、可检测等条件才有适当稳定解。
+\subsection{最优传输与Benamou--Brenier公式}\index{最优传输与Benamou-Brenier公式|hyperpage}
+二阶矩有限的欧氏概率测度满足动态传输公式
+\[
+W_2(\mu_0,\mu_1)^2=\inf_{\rho,v}\int_0^1\int_{\mathbb R^d}|v_t|^2\,\mathrm d\rho_t\,\mathrm dt,
+\quad\partial_t\rho+\operatorname{div}(\rho v)=0,
+\]
+端点为 $\rho_0=\mu_0,\rho_1=\mu_1$，连续性方程按分布意义解释。源测度对 Lebesgue 绝对连续时，二次成本最优映射为 $T=\nabla\varphi$、$\varphi$ 凸；若源、目标有光滑正密度且映射足够光滑，则 $g(\nabla\varphi)\det D^2\varphi=f$。
+% References: https://www.math.cmu.edu/cna/2010CNASummerSchoolFiles/lecturenotes/savare_lecture2.pdf
+% https://arxiv.org/abs/1609.03890
+% https://www.math.cmu.edu/users/nw0z/publications/08-CNA-017/017abs/08-CNA-017.pdf
+\section{近极小、山路与非线性驻点}
+\subsection{Ekeland变分原理}\index{Ekeland变分原理|hyperpage}
+完备度量空间上，真、下半连续且有下界的 $J$，若 $J(x_0)\le\inf J+\varepsilon^2$，则存在 $x_\varepsilon$ 使
+\begin{gather*}
+d(x_\varepsilon,x_0)\le\varepsilon,\qquad J(x_\varepsilon)\le J(x_0),\\
+J(y)>J(x_\varepsilon)-\varepsilon d(y,x_\varepsilon)\quad(y\ne x_\varepsilon).
+\end{gather*}
+若空间为 Banach 空间且 $J$ 为 $C^1$，可得 $\|DJ(x_\varepsilon)\|\le\varepsilon$。原理将函数值近极小转成稳定近驻点，不要求 $J$ 凸。
+\subsection{Palais--Smale条件与山路水平}\index{Palais-Smale条件与山路水平|hyperpage}
+设 $J\in C^1(X,\mathbb R)$、$J(0)=0$，在球面 $\|u\|=r$ 上 $J\ge\alpha>0$，且存在 $\|e\|>r$、$J(e)<0$。定义
+\[
+\Gamma=\{\gamma\in C([0,1],X):\gamma(0)=0,\gamma(1)=e\},\quad
+c=\inf_{\gamma\in\Gamma}\max_{t\in[0,1]}J(\gamma(t)).
+\]
+若任何 $J(u_n)\to c$、$DJ(u_n)\to0$ 的序列均有强收敛子列，即满足 $(PS)_c$，则 $c\ge\alpha$ 为临界值。山路几何本身不代替紧性条件。
+\subsection{Nehari约束与纤维极值}\index{Nehari约束与纤维极值|hyperpage}
+有界域上取 $J(u)=\frac12\|\nabla u\|_2^2-\frac1q\|u\|_q^q$、$u\in H_0^1$，其中 $2<q<2^*$；$d\le2$ 时可取任意有限 $q>2$。Nehari 集满足
+\[
+\mathcal N=\{u\ne0:DJ(u)[u]=0\}
+=\{u\ne0:\|\nabla u\|_2^2=\|u\|_q^q\}.
+\]
+每个非零 $u$ 的射线极大点为 $t(u)u$，$t(u)=(\|\nabla u\|_2^2/\|u\|_q^q)^{1/(q-2)}$。自然约束的论证还需检查约束正则性，不能把任意约束驻点都当成自由驻点。
+\subsection{Pohozaev恒等式}\index{Pohozaev恒等式|hyperpage}
+若 $u$ 足够光滑，$-\Delta u=f(u)$ 于有界光滑域，$u=0$ 于边界，令 $F(s)=\int_0^sf(t)\,\mathrm dt$，则
+\[
+\frac{d-2}2\int_\Omega|\nabla u|^2-d\int_\Omega F(u)
++\frac12\int_{\partial\Omega}(x\cdot n)(\partial_nu)^2\,\mathrm dS=0.
+\]
+结合 $\int|\nabla u|^2=\int u f(u)$ 可研究临界指数及星形域的非存在性。边界项和正则性均不可忽略，尤其不能对任意弱解直接使用经典法导数。
+\section{形状导数与边界灵敏度}
+本节取光滑域及光滑速度场 $V$，$\Omega_t=(I+tV)(\Omega)$，边界外法向为 $n$。
+\subsection{体积、表面积与平均曲率}\index{体积、表面积与平均曲率|hyperpage}
+形状一阶变分为
+\[
+\left.\frac{\mathrm d}{\mathrm dt}|\Omega_t|\right|_0=\int_{\partial\Omega}V\cdot n\,\mathrm dS,
+\qquad
+\left.\frac{\mathrm d}{\mathrm dt}|\partial\Omega_t|\right|_0
+=\int_{\partial\Omega}H(V\cdot n)\,\mathrm dS.
+\]
+取 $H=\operatorname{div}_{\partial\Omega}n$，半径 $R$ 的球有 $H=(d-1)/R>0$。固定体积的光滑面积驻点满足 $H$ 常数；换用平均主曲率约定时需相应除以 $d-1$。
+\subsection{Poisson柔顺度与能量导数}\index{Poisson柔顺度与能量导数|hyperpage}
+令 $-\Delta u=f$、$u|_{\partial\Omega}=0$，$f$ 为固定环境中的光滑源。柔顺度 $C(\Omega)=\int_\Omega fu=\int_\Omega|\nabla u|^2$ 满足
+\[
+DC(\Omega)[V]=\int_{\partial\Omega}(\partial_nu)^2(V\cdot n)\,\mathrm dS.
+\]
+极小能量 $E(\Omega)=\min_v[\frac12\int|\nabla v|^2-\int fv]=-C(\Omega)/2$，故其形状导数为上述边界积分的 $-1/2$ 倍。若源随域一起运输，公式需另加相应项。
+\subsection{简单特征值的Hadamard公式}\index{简单特征值的Hadamard公式|hyperpage}
+对 Dirichlet 特征对 $-\Delta u=\lambda u$、$\int_\Omega u^2=1$，若 $\lambda$ 简单，则
+\[
+D\lambda(\Omega)[V]=-\int_{\partial\Omega}(\partial_nu)^2(V\cdot n)\,\mathrm dS.
+\]
+向外扩张导致相应一阶变化非正。重特征值通常要分析特征子空间上的矩阵分裂，不能任意选一个特征函数代入就声称唯一导数。
+\subsection{物质导数与Hadamard结构}\index{物质导数与Hadamard结构|hyperpage}
+对随域变化的状态 $u_t$，记 $\dot u=\left.\partial_t[u_t\circ(I+tV)]\right|_0$，形状导数满足
+\[
+u'=\dot u-\nabla u\cdot V.
+\]
+在适当形状可微性和边界正则性下，域泛函的一阶导数只依赖 $V\cdot n$，可写 $DJ(\Omega)[V]=\langle g,V\cdot n\rangle_{\partial\Omega}$。边界密度 $g$ 可能只是分布，不应总默认其为普通连续函数。
+\section{均匀化、松弛与惩罚极限}
+\subsection{周期二次型与单胞修正}\index{周期二次型与单胞修正|hyperpage}
+设 $A(y)$ 为 $Q=(0,1)^d$ 周期、对称一致椭圆矩阵。零均值周期修正子满足
+\[
+-\operatorname{div}_y(A(y)(e_j+\nabla\chi_j))=0,
+\quad (A_{\rm hom})_{ij}=\int_Q(e_i+\nabla\chi_i)\cdot A(e_j+\nabla\chi_j).
+\]
+$\frac12\int\nabla u\cdot A(x/\varepsilon)\nabla u$ 的均匀化极限为相应 $A_{\rm hom}$ 能量。对层状标量系数 $A(y)=a(y_1)I$，沿层法向的有效系数为调和平均，沿层切向为算术平均。
+\subsection{凸积分能量的单胞公式}\index{凸积分能量的单胞公式|hyperpage}
+若 $F(y,\xi)$ 为周期 Carathéodory 函数，对 $\xi$ 凸并满足双侧 $p$ 阶增长与强制性，$1<p<\infty$，则
+\[
+F_{\rm hom}(\xi)=\inf_{\substack{\phi\in W_{\rm per}^{1,p}(Q)\\\int_Q\phi=0}}
+\int_QF(y,\xi+\nabla\phi)\,\mathrm dy.
+\]
+在有界 Lipschitz 域及适当固定迹可容许类中，$\int F(x/\varepsilon,\nabla u)$ 对强 $L^p$ 拓扑 Gamma 收敛到 $\int F_{\rm hom}(\nabla u)$。非凸向量问题通常需要多胞公式，不能无条件保留单胞形式。
+\subsection{一维双井梯度的显式松弛}\index{一维双井梯度的显式松弛|hyperpage}
+一维取 $W(p)=(p^2-1)^2$，其凸包络为
+\[
+W^{**}(p)=\begin{cases}0,&|p|\le1,\\(p^2-1)^2,&|p|>1.\end{cases}
+\]
+固定端点的 $W^{1,4}$ 弱松弛能量为 $\bar J(u)=\int_a^bW^{**}(u')$。$|p|<1$ 的零能量密度可由斜率 $\pm1$ 的细尺度振荡逼近；极限梯度本身不必位于原来的两口井中。
+\subsection{距离惩罚与闭凸约束}\index{距离惩罚与闭凸约束|hyperpage}
+Hilbert 空间中，令 $K$ 非空闭凸，$J$ 真、下半连续且有下界。则
+\[
+J_\lambda(u)=J(u)+\frac\lambda2\operatorname{dist}(u,K)^2
+\quad\xrightarrow[\lambda\to\infty]{\rm Gamma}\quad J(u)+\delta_K(u)
+\]
+于强拓扑成立。极小点收敛还需等强制等紧性；函数值极限本身不保证近极小点存在强收敛子列。
+\section{Wasserstein梯度流与熵方法}
+\subsection{JKO最小化运动}\index{JKO最小化运动|hyperpage}
+对二阶矩概率空间 $\mathcal P_2$ 上的能量，时间离散为
+\[
+\rho^{k+1}\in\operatorname*{arg\,min}_\rho
+\left\{\mathcal E(\rho)+\frac{W_2(\rho,\rho^k)^2}{2\tau}\right\},
+\quad
+\mathcal E(\rho^{k+1})+\frac{W_2(\rho^{k+1},\rho^k)^2}{2\tau}\le\mathcal E(\rho^k).
+\]
+构造收敛流需能量的下半连续性、次水平紧性及合适凸性或斜率条件；不能只凭形式极小化符号断言任意能量都生成唯一流。
+\subsection{自由能、Fokker--Planck与Fisher耗散}\index{自由能、Fokker-Planck与Fisher耗散|hyperpage}
+取 $\mathcal E(\rho)=\int\rho\log\rho+\int V\rho$，形式一阶变分为 $\log\rho+1+V$。对足够正则、衰减的正概率密度，
+\[
+\rho_t=\operatorname{div}\left(\rho\nabla\frac{\delta\mathcal E}{\delta\rho}\right)
+=\Delta\rho+\operatorname{div}(\rho\nabla V),
+\]
+\[
+\frac{\mathrm d}{\mathrm dt}\mathcal E(\rho_t)
+=-\int\rho_t|\nabla(\log\rho_t+V)|^2.
+\]
+右端为相对平衡态的 Fisher 信息。边界情形需无通量等条件，保证分部积分无额外通量。
+\subsection{EVI与流的收缩}\index{EVI与流的收缩|hyperpage}
+满足演化变分不等式的 $\lambda$-凸梯度流具有
+\[
+\frac12\frac{\mathrm d}{\mathrm dt}W_2(\rho_t,\nu)^2
++\frac\lambda2W_2(\rho_t,\nu)^2\le\mathcal E(\nu)-\mathcal E(\rho_t).
+\]
+两条此类流满足 $W_2(\rho_t,\sigma_t)\le e^{-\lambda t}W_2(\rho_0,\sigma_0)$。例如全空间上述自由能在 $D^2V\succeq\lambda I$ 及通常存在性条件下有这一结构；这里的凸性沿传输测地线理解。
+\subsection{强凸势的Talagrand与对数Sobolev界}\index{强凸势的Talagrand与对数Sobolev界|hyperpage}
+若 $V\in C^2(\mathbb R^d)$、$D^2V\succeq\lambda I$、$\lambda>0$，令 $\pi=Z^{-1}e^{-V}\,\mathrm dx$。对相关量有限的概率密度，
+\[
+\frac\lambda2W_2(\rho,\pi)^2\le D(\rho\Vert\pi)
+\le\frac1{2\lambda}\int\rho\left|\nabla\log\frac\rho\pi\right|^2.
+\]
+结合耗散得到 $D(\rho_t\Vert\pi)\le e^{-2\lambda t}D(\rho_0\Vert\pi)$。两侧分别为传输与对数 Sobolev 估计；一般非凸势不自动具有同样常数。
+
+\section{弹性、状态约束与传输对偶补充}
+弹性和能量方法参见\cite{variation}，传输对偶参见\cite{villani}。
+\subsection{Piola应力与Cauchy应力变换}\index{Piola应力与Cauchy应力变换|hyperpage}
+形变 $y$ 满足 $F=\nabla y$、$J=\det F>0$，储能密度为 $W(F)$。参考构形中 $P=DW(F)$，当前构形应力为
+\[
+\sigma=J^{-1}PF^{\mathsf T},\qquad -\operatorname{Div}P=f.
+\]
+客观性 $W(QF)=W(F)$（$Q\in SO(d)$）推出 $PF^{\mathsf T}$ 对称。对光滑梯度场有 Piola 恒等式 $\operatorname{Div}(\operatorname{cof}\nabla y)=0$；一般矩阵场未必满足。
+\subsection{Poisson状态控制的伴随梯度}\index{Poisson状态控制的伴随梯度|hyperpage}
+令 $-\Delta u=v$、$u|_{\partial\Omega}=0$，并最小化 $j(v)=\tfrac12\|u-u_d\|_2^2+\tfrac\alpha2\|v\|_2^2$，$\alpha>0$。解伴随方程 $-\Delta p=u-u_d$、$p|_{\partial\Omega}=0$ 后，
+\[
+Dj(v)[h]=\int_\Omega(\alpha v+p)h.
+\]
+无控制约束时 $\alpha v+p=0$；逐点盒约束 $a\le v\le b$ 时，$v=\min(b,\max(a,-p/\alpha))$ 几乎处处成立。伴随状态避免逐方向求解状态灵敏度。
+\subsection{Modica整空间梯度界}\index{Modica整空间梯度界|hyperpage}
+设 $W\in C^2(\mathbb R)$、$W\ge0$，有界充分光滑的整空间解满足 $\Delta u=W'(u)$，则
+\[
+\frac12|\nabla u|^2\le W(u)\qquad\text{于 }\mathbb R^d.
+\]
+一维单调异宿解在适当端态条件下可取等号。这是整空间有界解的点态估计；有限区域若不给合适边界信息，不应直接作同样断言。
+\subsection{紧空间上的Kantorovich对偶}\index{紧空间上的Kantorovich对偶|hyperpage}
+紧度量空间 $X,Y$、连续代价 $c$ 及概率 $\mu,\nu$ 下，
+\[
+\min_{\pi\in\Pi(\mu,\nu)}\int c\,\mathrm d\pi
+=\sup_{\varphi(x)+\psi(y)\le c(x,y)}
+\left(\int\varphi\,\mathrm d\mu+\int\psi\,\mathrm d\nu\right).
+\]
+可取 $c$-变换 $\varphi^c(y)=\inf_x[c(x,y)-\varphi(x)]$。最优配对满足 $\varphi(x)+\psi(y)=c(x,y)$ 于最优计划几乎处处；这与要求存在单一传输映射不同。
+\clearpage
+\end{document}

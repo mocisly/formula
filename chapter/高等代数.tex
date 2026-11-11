@@ -1,0 +1,1009 @@
+\documentclass[../main.tex]{subfiles}
+\begin{document}
+本章主要参考\cite{matrix,shoup}。
+
+% References: https://ocw.mit.edu/courses/res-18-011-algebra-i-student-notes-fall-2021/mit18_701f21_full_lec_new.pdf
+% https://mathworld.wolfram.com/Eckart-YoungTheorem.html
+% https://math.ucla.edu/~sharifi/notes/algebra-ch08.html
+% https://math.uwaterloo.ca/~hwolkowi/matrixcookbook
+% https://ocw.mit.edu/courses/6-972-algebraic-techniques-and-semidefinite-optimization-spring-2006/resources/lecture_06/
+% https://web.stanford.edu/~marykw/classes/CS250_W19/Netwons_Identities.pdf
+% https://math.mit.edu/~dav/polarA.pdf
+% https://www.cs.cornell.edu/~bindel/class/cs6210-f16/lec/2016-10-28.pdf
+% https://web.stanford.edu/~restrin/files/refresher.pdf
+% https://math.mit.edu/~fox/paper-semialgebraic.pdf
+本章除特别说明外，在实数域或复数域 $F$ 上讨论有限维向量空间与多项式。$A^*$ 表示共轭转置，$A^{\mathsf T}$ 表示转置；实矩阵上的正交性采用标准欧氏内积。
+\section{多项式}
+\subsection{带余除法、整除与最大公因式}\index{带余除法、整除与最大公因式|hyperpage}
+设 $f,g\in F[x]$，$g\ne0$，唯一存在 $q,r\in F[x]$ 使
+\[
+f=qg+r,\qquad r=0\ \text{或}\ \deg r<\deg g.
+\]
+$r=0$ 时称 $g$ 整除 $f$，记为 $g\mid f$。若 $f,g$ 不全为零，其首一最大公因式 $d=\gcd(f,g)$ 可用 Euclid 算法求得，且存在 $u,v\in F[x]$ 满足
+\[
+uf+vg=d,\qquad
+\gcd(f,g)=1\iff\exists u,v:\ uf+vg=1.
+\]
+带余除法每一步都有 $\gcd(f,g)=\gcd(g,r)$（均取首一形式）。若最小公倍式也取首一形式，则
+\[
+\gcd(f,g)\operatorname{lcm}(f,g)=\frac{fg}{\operatorname{lc}(fg)}
+\quad(f,g\ne0),
+\]
+其中 $\operatorname{lc}$ 表示首项系数。
+\subsection{根、重数与导数判据}\index{根、重数与导数判据|hyperpage}
+对 $\alpha\in F$，余式定理与因式定理给出
+\[
+f(x)=(x-\alpha)q(x)+f(\alpha),\qquad
+f(\alpha)=0\iff(x-\alpha)\mid f(x).
+\]
+设 $f\ne0$，$\alpha$ 为其恰好 $m$ 重根，则
+\[
+f(x)=(x-\alpha)^m g(x),\qquad g(\alpha)\ne0.
+\]
+在实数域或复数域上，重数的导数判据为
+\[
+f(\alpha)=f'(\alpha)=\cdots=f^{(m-1)}(\alpha)=0,\qquad
+f^{(m)}(\alpha)\ne0.
+\]
+非常数多项式在复数域中无重根当且仅当 $\gcd(f,f')=1$；实系数情形同样按全部复根判断。
+这些导数判据依赖特征为零的条件，不能不加条件推广到任意正特征域。
+\subsection{复数域与实数域上的因式分解}\index{复数域与实数域上的因式分解|hyperpage}
+代数学基本定理表明：复系数 $n$ 次多项式（$n\ge1$）可写为
+\[
+f(x)=a_n\prod_{i=1}^s(x-\alpha_i)^{m_i},\qquad
+a_n\ne0,\quad\sum_{i=1}^s m_i=n,
+\]
+其中 $\alpha_i$ 两两不同，$m_i$ 为各根重数。
+若 $f$ 为实系数多项式，非实根 $\alpha$ 与 $\overline\alpha$ 同时出现且重数相同，并有
+\[
+(x-\alpha)(x-\overline\alpha)
+=x^2-2\operatorname{Re}(\alpha)x+|\alpha|^2.
+\]
+因此实系数非常数多项式可以分解成实一次因子与实不可约二次因子的乘积；首一二次式 $x^2+px+q$ 在实数域上不可约当且仅当 $p^2-4q<0$。
+\subsection{对称多项式与Newton恒等式}\index{对称多项式与Newton恒等式|hyperpage}
+对变量 $\alpha_1,\ldots,\alpha_n$，定义初等对称多项式与幂和
+\[
+e_0=1,\qquad
+e_j=\sum_{1\le i_1<\cdots<i_j\le n}\alpha_{i_1}\cdots\alpha_{i_j},\qquad
+s_k=\sum_{i=1}^n\alpha_i^k.
+\]
+任意关于 $\alpha_1,\ldots,\alpha_n$ 的对称多项式，均可唯一表示为 $e_1,\ldots,e_n$ 的多项式。
+若
+\[
+\prod_{i=1}^n(t-\alpha_i)=t^n+c_1t^{n-1}+\cdots+c_n,
+\]
+则 $c_j=(-1)^je_j$，Newton 恒等式为
+\begin{align*}
+s_k+\sum_{j=1}^{k-1}c_js_{k-j}+kc_k&=0\quad(1\le k\le n),\\
+s_k+\sum_{j=1}^nc_js_{k-j}&=0\quad(k>n).
+\end{align*}
+空和取零。相应系数公式为
+\begin{align*}
+c_1&=-s_1,\\
+c_2&=\frac{s_1^2-s_2}{2}\quad(n\ge2),\\
+c_3&=\frac{-s_1^3+3s_1s_2-2s_3}{6}\quad(n\ge3).
+\end{align*}
+对任意 $n$ 阶方阵 $A$，取 $c_j$ 为 $p_A(t)=\det(tI-A)$ 的系数，则 $s_k=\operatorname{tr}(A^k)$，因此可由矩阵幂的迹递推求出特征多项式。该关系不要求 $A$ 可对角化，特征值在复数域中按代数重数计。
+\subsection{整系数多项式的有理根判据}\index{整系数多项式的有理根判据|hyperpage}
+设 $f(x)=a_nx^n+\cdots+a_0\in\mathbb Z[x]$，$a_n\ne0$。若既约有理数 $p/q$ 为根，$q>0$、$\gcd(|p|,q)=1$，则
+\[
+p\mid a_0,\qquad q\mid a_n.
+\]
+对 $p=0$，直接检查 $a_0=0$；非零有理根的分子、分母可据此有限枚举。
+特别地，首一整系数多项式的有理根必为整数。次数为 $2$ 或 $3$ 的多项式在 $\mathbb Q$ 上不可约当且仅当无有理根；次数更高时，无有理根并不足以保证不可约。Gauss 引理与 Eisenstein 判别见环论章。
+\subsection{结式、Sylvester矩阵与公根判据}\index{结式、Sylvester矩阵与公根判据|hyperpage}
+设 $f(x)=a_m\prod_{i=1}^m(x-\alpha_i)$、$g(x)=b_n\prod_{j=1}^n(x-\beta_j)$，$m,n\ge1$，首项系数非零，根在复数域中按重数列出。结式定义为
+\begin{align*}
+\operatorname{Res}(f,g)
+&=a_m^n\prod_{i=1}^m g(\alpha_i)\\
+&=a_m^n b_n^m\prod_{i=1}^m\prod_{j=1}^n(\alpha_i-\beta_j).
+\end{align*}
+Sylvester 矩阵 $\operatorname{Syl}(f,g)$ 为 $(m+n)$ 阶方阵：前 $n$ 行是降幂系数行 $(a_m,\ldots,a_0)$ 逐次右移并补零，后 $m$ 行是 $(b_n,\ldots,b_0)$ 逐次右移并补零。按此行序，
+\begin{gather*}
+\operatorname{Res}(f,g)=\det\operatorname{Syl}(f,g),\\
+\operatorname{Res}(g,f)=(-1)^{mn}\operatorname{Res}(f,g),\\
+\operatorname{Res}(f,g)=0\iff f,g\text{ 有公共复根}
+\iff\gcd(f,g)\ne1.
+\end{gather*}
+例如 $f=a_2x^2+a_1x+a_0$、$g=b_1x+b_0$（$a_2b_1\ne0$）时，
+\[
+\operatorname{Res}(f,g)=
+\begin{vmatrix}a_2&a_1&a_0\\b_1&b_0&0\\0&b_1&b_0\end{vmatrix}
+=a_2b_0^2-a_1b_1b_0+a_0b_1^2.
+\]
+公根可以为非实复数；代入参数后若首项系数消失，应先重新确定多项式次数。
+\subsection{多项式判别式与三次方程的实根}\index{多项式判别式与三次方程的实根|hyperpage}
+设 $f(x)=a_m\prod_{i=1}^m(x-\alpha_i)$，$m\ge2$、$a_m\ne0$，定义
+\[
+\operatorname{Disc}(f)=a_m^{2m-2}\prod_{i<j}(\alpha_i-\alpha_j)^2
+=\frac{(-1)^{m(m-1)/2}}{a_m}\operatorname{Res}(f,f').
+\]
+在实数域或复数域上，$\operatorname{Disc}(f)=0$ 当且仅当 $f$ 有重根。
+\begin{align*}
+\operatorname{Disc}(ax^2+bx+c)&=b^2-4ac\quad(a\ne0),\\
+\operatorname{Disc}(ax^3+bx^2+cx+d)
+&=b^2c^2-4ac^3-4b^3d-27a^2d^2+18abcd\quad(a\ne0),\\
+\operatorname{Disc}(x^3+px+q)&=-4p^3-27q^2.
+\end{align*}
+对实系数三次多项式，记其判别式为 $\Delta$，则
+\[
+\begin{array}{c|c}
+\Delta>0&\text{三个互异实根}\\
+\Delta<0&\text{一个实根与一对非实共轭根}\\
+\Delta=0&\text{存在重根}
+\end{array}
+\]
+该实根数判据限定于三次多项式。对 $n\ge2$ 阶矩阵，$\operatorname{Disc}(p_A)\ne0$ 保证特征值互异，从而在复数域上可对角化；反向不成立。
+\subsection{Sturm序列与区间实根计数}\index{Sturm序列与区间实根计数|hyperpage}
+设 $f\in\mathbb R[x]$ 为非常数多项式，先令
+\[
+h=\frac{f}{\gcd(f,f')},
+\]
+其中最大公因式取首一形式。$h$ 无重根，且与 $f$ 有相同的不同实根。构造 Sturm 序列
+\[
+g_0=h,\qquad g_1=h',\qquad
+g_{j+1}=-\operatorname{rem}(g_{j-1},g_j),
+\]
+在余式首次为零时停止，只保留此前的非零多项式；最后一项为非零常数。
+对实数 $x$，令 $V(x)$ 为 $g_0(x),\ldots,g_s(x)$ 忽略零项后的符号变化次数。若 $a<b$ 且 $f(a)f(b)\ne0$，则
+\[
+N_{(a,b)}(f)=V(a)-V(b),
+\]
+其中 $N_{(a,b)}$ 统计不同实根的个数，不计重数。全部不同实根的个数为
+\[
+N_{\mathbb R}(f)=V(-\infty)-V(+\infty).
+\]
+无穷端点的符号由各非零多项式的首项确定：
+\[
+\operatorname{sgn}g_j(+\infty)=\operatorname{sgn}\operatorname{lc}(g_j),\qquad
+\operatorname{sgn}g_j(-\infty)=(-1)^{\deg g_j}\operatorname{sgn}\operatorname{lc}(g_j).
+\]
+各步必须使用负余式；每项可乘正数，但不能任意变号或逐项强制首一化。若端点恰为根，应先另行处理端点或使用单侧极限。
+\section{行列式}
+\subsection{行列式的概念与基本公式按行（列）展开定理}\index{行列式的概念与基本公式按行（列）展开定理|hyperpage}
+设 $A=(a_{ij})_{n\times n}$，$S_n$ 为所有 $n$ 阶排列，$\tau(\sigma)$ 为逆序数。
+\[
+\det A=\sum_{\sigma\in S_n}(-1)^{\tau(\sigma)}\prod_{i=1}^na_{i,\sigma(i)},\qquad
+\begin{vmatrix}a&b\\c&d\end{vmatrix}=ad-bc.
+\]
+设 $M_{ij}$ 为删去第 $i$ 行、第 $j$ 列后的余子式，$A_{ij}=(-1)^{i+j}M_{ij}$ 为代数余子式，则
+\[
+\det A=\sum_{j=1}^na_{ij}A_{ij}=\sum_{i=1}^na_{ij}A_{ij},\qquad
+\sum_{j=1}^na_{ij}A_{kj}=0\quad(i\ne k).
+\]
+\[
+\det A^{\mathsf T}=\det A,\quad \det(AB)=\det A\det B,\quad
+\det(\lambda A)=\lambda^n\det A.
+\]
+交换两行（列）行列式变号；某行（列）乘 $c$，行列式乘 $c$；一行（列）加上另一行（列）的倍数，行列式不变。三角矩阵的行列式为对角元之积。
+\subsection{Vandermonde行列式}\index{Vandermonde行列式|hyperpage}
+对 $x_1,\ldots,x_n\in F$，
+\[
+\det\bigl(x_i^{j-1}\bigr)_{i,j=1}^n
+=\begin{vmatrix}
+1&x_1&\cdots&x_1^{n-1}\\
+1&x_2&\cdots&x_2^{n-1}\\
+\vdots&\vdots&&\vdots\\
+1&x_n&\cdots&x_n^{n-1}
+\end{vmatrix}
+=\prod_{1\le i<j\le n}(x_j-x_i).
+\]
+它非零当且仅当各 $x_i$ 两两不同；每一行对应一个节点，乘积中的差应保持 $x_j-x_i$ 的顺序。
+\par\pagebreak[0]\begin{samepage}
+\subsection{Cauchy--Binet公式}\index{Cauchy-Binet公式|hyperpage}
+设 $A\in F^{n\times m}$、$B\in F^{m\times n}$，$m\ge n$，则
+\[
+\det(AB)=\sum_{\substack{I\subseteq\{1,\ldots,m\}\\|I|=n}}
+\det A_{[:,I]}\det B_{[I,:]}.
+\]
+$A_{[:,I]}$ 表示选取 $I$ 中各列，$B_{[I,:]}$ 表示选取相应各行，指标均按递增顺序排列。$m=n$ 时退化为 $\det(AB)=\det A\det B$；$m<n$ 时 $AB$ 的秩小于 $n$，行列式为零。
+\par\end{samepage}\pagebreak[0]
+\subsection{行列式引理与秩一更新}\index{行列式引理与秩一更新|hyperpage}
+设 $A\in F^{n\times n}$ 可逆，$u,v\in F^n$，则
+\[
+\det(A+uv^{\mathsf T})=\det A\left(1+v^{\mathsf T}A^{-1}u\right).
+\]
+因此更新后的矩阵可逆当且仅当 $1+v^{\mathsf T}A^{-1}u\ne0$。这里 $uv^{\mathsf T}$ 为秩至多为 $1$ 的矩阵；复数情形该代数恒等式仍使用转置，若采用 $uv^*$，须将右端的 $v^{\mathsf T}$ 同时换成 $v^*$。
+\section{矩阵}
+\subsection{矩阵的概念、线性运算与矩阵乘法}\index{矩阵的概念、线性运算与矩阵乘法|hyperpage}
+对同型矩阵 $A,B$，$(A+B)_{ij}=a_{ij}+b_{ij}$，$(cA)_{ij}=ca_{ij}$。
+对 $A\in\mathbb R^{m\times n}$、$B\in\mathbb R^{n\times p}$，
+\[
+(AB)_{ij}=\sum_{k=1}^na_{ik}b_{kj},\quad (AB)^{\mathsf T}=B^{\mathsf T}A^{\mathsf T},\quad
+(AB)^{-1}=B^{-1}A^{-1}\quad(A,B\text{ 均可逆}).
+\]
+乘法一般不可交换。方阵可逆当且仅当 $\det A\ne0$；$AA^{-1}=A^{-1}A=I$。
+\subsection{伴随矩阵}\index{伴随矩阵|hyperpage}
+伴随矩阵由代数余子式矩阵转置得到：
+\[
+\operatorname{adj}A=(A_{ji}),\qquad
+A\operatorname{adj}A=\operatorname{adj}A\,A=(\det A)I,\qquad
+A^{-1}=\frac{\operatorname{adj}A}{\det A}\quad(\det A\ne0).
+\]
+对 $n\ge2$，$\det(\operatorname{adj}A)=(\det A)^{n-1}$，且
+\[
+\operatorname{rank}(\operatorname{adj}A)=
+\begin{cases}n,&\operatorname{rank}A=n,\\1,&\operatorname{rank}A=n-1,\\0,&\operatorname{rank}A\le n-2.\end{cases}
+\]
+\subsection{矩阵的秩}\index{矩阵的秩|hyperpage}
+$\operatorname{rank}A$ 等于最大非零子式的阶数，也等于行秩、列秩和阶梯形矩阵中非零行数。
+\begin{align*}
+\operatorname{rank}A&=\operatorname{rank}A^{\mathsf T}\le\min(m,n),\\
+\operatorname{rank}(A+B)&\le\operatorname{rank}A+\operatorname{rank}B,\\
+\operatorname{rank}A+\operatorname{rank}B-n
+&\le\operatorname{rank}(AB)\le\min(\operatorname{rank}A,\operatorname{rank}B).
+\end{align*}
+最后一式中 $A$ 有 $n$ 列、$B$ 有 $n$ 行。可逆矩阵的左右乘法保持秩不变。
+\subsection{分块矩阵与Schur补}\index{分块矩阵与Schur补|hyperpage}
+只要各分块尺寸匹配，分块矩阵乘法与普通矩阵乘法同形：
+\[
+\begin{pmatrix}A&B\\C&D\end{pmatrix}
+\begin{pmatrix}E&F\\G&H\end{pmatrix}
+=\begin{pmatrix}AE+BG&AF+BH\\CE+DG&CF+DH\end{pmatrix}.
+\]
+对方阵 $M=\begin{pmatrix}A&B\\C&D\end{pmatrix}$，若 $A$ 可逆，定义 Schur 补 $S=D-CA^{-1}B$，则
+\[
+\det M=\det A\det S.
+\]
+若 $S$ 也可逆，则
+\[
+M^{-1}=\begin{pmatrix}
+A^{-1}+A^{-1}BS^{-1}CA^{-1}&-A^{-1}BS^{-1}\\
+-S^{-1}CA^{-1}&S^{-1}
+\end{pmatrix}.
+\]
+易错点：分块乘积的顺序不能交换；此求逆公式要求 $A$ 和 $S$ 可逆。
+\subsection{Sherman--Morrison秩一求逆公式}\index{Sherman-Morrison秩一求逆公式|hyperpage}
+设 $A\in F^{n\times n}$ 可逆，$u,v\in F^n$，且 $s=1+v^{\mathsf T}A^{-1}u\ne0$，则
+\[
+(A+uv^{\mathsf T})^{-1}
+=A^{-1}-\frac{A^{-1}uv^{\mathsf T}A^{-1}}{1+v^{\mathsf T}A^{-1}u}.
+\]
+分母是标量。若 $s=0$，行列式引理表明更新后的矩阵奇异，不能使用此求逆公式。
+\subsection{Woodbury低秩求逆公式}\index{Woodbury低秩求逆公式|hyperpage}
+设 $A\in F^{n\times n}$ 可逆，$U\in F^{n\times k}$、$V\in F^{k\times n}$，令 $K=I_k+VA^{-1}U$。由行列式恒等式，
+\[
+\det(A+UV)=\det A\det K,
+\]
+故 $A+UV$ 可逆当且仅当 $K$ 可逆，此时
+\[
+(A+UV)^{-1}=A^{-1}-A^{-1}UK^{-1}VA^{-1}.
+\]
+若另有可逆 $C\in F^{k\times k}$，且 $C^{-1}+VA^{-1}U$ 可逆，则常用形式为
+\[
+(A+UCV)^{-1}
+=A^{-1}-A^{-1}U(C^{-1}+VA^{-1}U)^{-1}VA^{-1}.
+\]
+不想要求 $C$ 可逆时，可在前一公式中将 $U$ 换为 $UC$，此时须检查 $I_k+VA^{-1}UC$ 可逆。所有矩阵乘积应按原顺序计算。
+\section{向量与向量空间}
+\subsection{向量的相关性}\index{向量的相关性|hyperpage}
+\[
+\bm\alpha_1,\ldots,\bm\alpha_s\text{ 线性相关}\iff
+\exists(c_1,\ldots,c_s)\ne\bm0:\ \sum_{i=1}^sc_i\bm\alpha_i=\bm0.
+\]
+只有零系数组合得到零向量时称线性无关。令 $A=(\bm\alpha_1,\ldots,\bm\alpha_s)$，则
+\[
+\text{线性无关}\iff\operatorname{rank}A=s,\qquad
+\bm\beta\in\operatorname{span}\{\bm\alpha_i\}\iff
+\operatorname{rank}(A,\bm\beta)=\operatorname{rank}A.
+\]
+\subsection{向量空间}\index{向量空间|hyperpage}
+子空间对加法和数乘封闭并含零向量；基是张成空间的线性无关向量组。
+\[
+\bm v=\sum_{i=1}^nc_i\bm e_i,\quad [\bm v]_{\mathcal E}=(c_1,\ldots,c_n)^{\mathsf T},\quad
+\dim(U+V)=\dim U+\dim V-\dim(U\cap V).
+\]
+线性映射 $T:V\to W$（$V$ 有限维）满足秩--零度定理
+\[
+\dim\ker T+\dim\operatorname{im}T=\dim V.
+\]
+若基矩阵满足 $\mathcal F=\mathcal E P$，则坐标满足 $[\bm v]_{\mathcal E}=P[\bm v]_{\mathcal F}$。
+\subsection{商空间与线性映射同构定理}\index{商空间与线性映射同构定理|hyperpage}
+设 $U\subseteq V$ 为子空间，商空间由陪集 $v+U$ 组成，运算为
+\[
+(v+U)+(w+U)=(v+w)+U,\qquad a(v+U)=av+U.
+\]
+自然投影 $\pi:V\to V/U$ 满足 $\pi(v)=v+U$、$\ker\pi=U$，且
+\[
+\dim(V/U)=\dim V-\dim U.
+\]
+对线性映射 $T:V\to W$，诱导映射
+\[
+\widetilde T:V/\ker T\longrightarrow\operatorname{im}T,\qquad
+v+\ker T\longmapsto T(v)
+\]
+是良定义的线性同构。由此得到 $V/\ker T\cong\operatorname{im}T$。
+若 $\dim V=n$、$\dim W=m$，选择有序基后还有
+\[
+\operatorname{Hom}_F(V,W)\cong F^{m\times n},\qquad
+\dim\operatorname{Hom}_F(V,W)=mn.
+\]
+后一矩阵表示依赖基的选择，而商空间同构由 $T$ 自然诱导。
+\section{线性映射与内积空间}
+\subsection{线性映射的矩阵表示与换基}\index{线性映射的矩阵表示与换基|hyperpage}
+设 $T:V\to W$ 线性，$\dim V=n$、$\dim W=m$，在有序基 $\mathcal E,\mathcal F$ 下的矩阵为 $A\in F^{m\times n}$，则
+\[
+[T(v)]_{\mathcal F}=A[v]_{\mathcal E}.
+\]
+若 $\mathcal E'=\mathcal E P$、$\mathcal F'=\mathcal F Q$，其中 $P,Q$ 为相应阶数的可逆矩阵，则
+\[
+[T]_{\mathcal F'\leftarrow\mathcal E'}=Q^{-1}AP.
+\]
+对线性算子 $T:V\to V$，两端使用同一组基时得到相似变换 $A'=P^{-1}AP$。
+若 $S:W\to Z$ 在相容基下矩阵为 $B$，则 $S\circ T$ 的矩阵为 $BA$，顺序与复合顺序一致。
+\subsection{直和分解与投影算子}\index{直和分解与投影算子|hyperpage}
+子空间 $U,W\subseteq V$ 满足
+\[
+V=U\oplus W\iff V=U+W\ \text{且}\ U\cap W=\{0\}.
+\]
+此时每个 $v\in V$ 唯一写成 $v=u+w$。定义沿 $W$ 到 $U$ 的投影 $E(v)=u$，则
+\[
+E^2=E,\qquad\operatorname{im}E=U,\qquad\ker E=W.
+\]
+反之，任何满足 $E^2=E$ 的线性算子都给出
+\[
+V=\operatorname{im}E\oplus\ker E,\qquad
+v=Ev+(I-E)v.
+\]
+在标准实欧氏空间中，$E$ 为正交投影当且仅当 $E^2=E$ 且 $E^{\mathsf T}=E$；一般幂等算子只保证直和，不保证两个子空间正交。
+\subsection{对偶空间、对偶基与双对偶}\index{对偶空间、对偶基与双对偶|hyperpage}
+有限维向量空间 $V$ 的代数对偶记为 $V^\vee=\operatorname{Hom}_F(V,F)$，其元素为线性泛函。若 $e_1,\ldots,e_n$ 是 $V$ 的基，则对偶基 $e^1,\ldots,e^n$ 由
+\[
+e^i(e_j)=\delta_{ij}
+\]
+唯一确定，并有
+\[
+v=\sum_{i=1}^ne^i(v)e_i,\qquad
+\phi=\sum_{i=1}^n\phi(e_i)e^i,\qquad \dim V^\vee=n.
+\]
+自然映射 $J:V\to V^{\vee\vee}$ 定义为
+\[
+J(v)(\phi)=\phi(v).
+\]
+有限维时 $J$ 为同构，不依赖基或内积的选择。本章以 $\vee$ 标记代数对偶，以区别矩阵的共轭转置 $A^*$。
+\subsection{对偶映射与转置矩阵}\index{对偶映射与转置矩阵|hyperpage}
+设 $T:V\to W$ 线性，定义 $T^\vee:W^\vee\to V^\vee$ 为
+\[
+T^\vee(\phi)=\phi\circ T.
+\]
+若 $T$ 在基 $\mathcal E,\mathcal F$ 下的矩阵为 $A$，则在对应的对偶基下，
+\[
+[T^\vee]_{\mathcal E^\vee\leftarrow\mathcal F^\vee}=A^{\mathsf T},\qquad
+\operatorname{rank}T^\vee=\operatorname{rank}T.
+\]
+若 $S:W\to Z$，则 $(S\circ T)^\vee=T^\vee\circ S^\vee$。
+即使 $F=\mathbb C$，代数对偶映射的矩阵也是转置，而不是共轭转置；它与内积定义的伴随算子不同。
+\subsection{零化子及其维数关系}\index{零化子及其维数关系|hyperpage}
+对 $U\subseteq V$，定义
+\[
+U^\circ=\{\phi\in V^\vee:\phi(u)=0\ \text{对所有 }u\in U\}.
+\]
+若 $U$ 为子空间，$\dim V=n$，则
+\begin{gather*}
+\dim U^\circ=n-\dim U,\qquad (V/U)^\vee\cong U^\circ,\\
+(U+W)^\circ=U^\circ\cap W^\circ,\qquad
+(U\cap W)^\circ=U^\circ+W^\circ.
+\end{gather*}
+最后两式中 $U,W$ 均为 $V$ 的子空间。在 $V\cong V^{\vee\vee}$ 的自然识别下，$(U^\circ)^\circ=U$。对 $T:V\to W$，有
+\[
+\ker T^\vee=(\operatorname{im}T)^\circ,\qquad
+\operatorname{im}T^\vee=(\ker T)^\circ.
+\]
+两式右端分别位于 $W^\vee$ 与 $V^\vee$；零化子由线性泛函定义，不需要预先选择内积。
+\subsection{Gram矩阵与内积的坐标表达}\index{Gram矩阵与内积的坐标表达|hyperpage}
+对实内积空间中的向量 $v_1,\ldots,v_k$，定义 Gram 矩阵
+\[
+G=(\langle v_i,v_j\rangle)_{i,j=1}^k.
+\]
+对任意 $c\in\mathbb R^k$，有
+\[
+c^{\mathsf T}Gc=\left\|\sum_{i=1}^kc_iv_i\right\|^2\ge0.
+\]
+因此 $G$ 半正定，且
+\[
+\det G>0\iff v_1,\ldots,v_k\text{ 线性无关}.
+\]
+若这些向量为一组基，$v,w$ 的坐标列向量分别为 $x,y$，则
+\[
+\langle v,w\rangle=x^{\mathsf T}Gy,\qquad \|v\|^2=x^{\mathsf T}Gx.
+\]
+在复内积空间中约定内积对第一变量共轭线性、对第二变量线性，相应表达式改为 $x^*Gy$，且 $G=G^*$。
+\par\pagebreak[0]\begin{samepage}
+\subsection{Schmidt正交化}\index{Schmidt正交化|hyperpage}
+对实内积空间中的线性无关向量组 $\bm\alpha_1,\ldots,\bm\alpha_n$，令
+\[
+\bm\beta_1=\bm\alpha_1,\qquad
+\bm\beta_k=\bm\alpha_k-\sum_{j=1}^{k-1}
+\frac{\langle\bm\alpha_k,\bm\beta_j\rangle}{\langle\bm\beta_j,\bm\beta_j\rangle}\bm\beta_j,
+\qquad \bm e_k=\frac{\bm\beta_k}{\|\bm\beta_k\|}.
+\]
+$\{\bm e_k\}$ 为同一张成空间的标准正交基。
+对该基张成的子空间 $U$，$\operatorname{proj}_U\bm v=\sum_k\langle\bm v,\bm e_k\rangle\bm e_k$。
+\par\end{samepage}\pagebreak[0]
+\subsection{共轭转置、Hermitian矩阵与酉矩阵}\index{共轭转置、Hermitian矩阵与酉矩阵|hyperpage}
+对复矩阵，$A^*=\overline A^{\mathsf T}$，并有
+\[
+(AB)^*=B^*A^*,\qquad (A^{-1})^*=(A^*)^{-1}\quad(A\text{ 可逆}).
+\]
+$A=A^*$ 称 Hermitian 矩阵，$U^*U=UU^*=I$ 称酉矩阵。Hermitian 矩阵有实特征值，且可酉对角化：
+\[
+A=U\Lambda U^*,\qquad
+\Lambda=\operatorname{diag}(\lambda_1,\ldots,\lambda_n),\quad\lambda_i\in\mathbb R.
+\]
+更一般地，复方阵可酉对角化当且仅当它正规，即 $AA^*=A^*A$。实对称矩阵的正交对角化是其中的实数版本。
+按本节复内积约定，标准正交基下的投影为 $\operatorname{proj}_U v=\sum_i e_i\langle e_i,v\rangle$，应注意共轭的位置。
+\subsection{正交补与四个基本子空间}\index{正交补与四个基本子空间|hyperpage}
+在有限维实或复内积空间 $V$ 中，对子空间 $U$ 定义
+\[
+U^\perp=\{v\in V:\langle u,v\rangle=0\ \text{对所有 }u\in U\}.
+\]
+则有正交直和与维数关系
+\[
+V=U\oplus U^\perp,\qquad
+\dim U+\dim U^\perp=\dim V,\qquad (U^\perp)^\perp=U.
+\]
+对标准内积下的 $A\in\mathbb C^{m\times n}$，四个基本子空间满足
+\begin{align*}
+(\ker A)^\perp&=\operatorname{im}A^*, &
+(\operatorname{im}A)^\perp&=\ker A^*,\\
+\mathbb C^n&=\ker A\oplus\operatorname{im}A^*, &
+\mathbb C^m&=\operatorname{im}A\oplus\ker A^*.
+\end{align*}
+以上直和均为正交直和；实矩阵情形将共轭转置换为转置。正交补是原内积空间中的子空间，零化子则位于代数对偶空间中。
+\subsection{伴随算子与一般基下的矩阵}\index{伴随算子与一般基下的矩阵|hyperpage}
+设 $T:V\to W$ 为有限维内积空间之间的线性映射，约定复内积对第一变量共轭线性、对第二变量线性。唯一存在伴随算子 $T^\dagger:W\to V$ 满足
+\[
+\langle Tx,y\rangle_W=\langle x,T^\dagger y\rangle_V.
+\]
+若 $T$ 的矩阵为 $A$，两组基的 Gram 矩阵分别为 $G_V,G_W$，则
+\[
+[T^\dagger]=G_V^{-1}A^*G_W.
+\]
+两组基均标准正交时，才直接化为 $[T^\dagger]=A^*$。代数对偶映射作用于对偶空间，伴随算子则由内积确定，二者的定义域、值域不同。
+尺寸相容时，
+\begin{gather*}
+(S\circ T)^\dagger=T^\dagger\circ S^\dagger,\qquad
+(T^\dagger)^\dagger=T,\\
+(aT+bS)^\dagger=\overline a\,T^\dagger+\overline b\,S^\dagger.
+\end{gather*}
+在实数域中共轭不起作用。还满足
+\[
+\langle x,T^\dagger Tx\rangle_V=\|Tx\|_W^2\ge0,
+\]
+所以 $T^\dagger T$ 自伴且半正定。
+\section{张量积、Kronecker积与矩阵方程}
+\subsection{有限维向量空间的张量积}\index{有限维向量空间的张量积|hyperpage}
+若 $V,W$ 的基分别为 $e_1,\ldots,e_m$ 与 $f_1,\ldots,f_n$，则 $V\otimes_FW$ 的一组基为 $\{e_i\otimes f_j\}$，并有
+\[
+\dim(V\otimes_FW)=mn,\qquad
+\left(\sum_i x_ie_i\right)\otimes\left(\sum_jy_jf_j\right)
+=\sum_{i,j}x_iy_j(e_i\otimes f_j).
+\]
+一般张量为纯张量的有限和，不一定能写成单个 $v\otimes w$。对线性映射 $S:V\to V'$、$T:W\to W'$，有
+\[
+(S\otimes T)(v\otimes w)=S(v)\otimes T(w).
+\]
+按 $e_1\otimes f_1,\ldots,e_1\otimes f_n,e_2\otimes f_1,\ldots$ 的顺序排列张量基时，其矩阵由 Kronecker 积给出。一般模上的张量积见模论章。
+\subsection{Kronecker积的运算与谱}\index{Kronecker积的运算与谱|hyperpage}
+设 $A=(a_{ij})\in F^{m\times n}$、$B\in F^{p\times q}$，定义
+\[
+A\otimes B=(a_{ij}B)_{i,j}\in F^{mp\times nq}.
+\]
+尺寸相容时，有
+\begin{align*}
+(A\otimes B)(C\otimes D)&=(AC)\otimes(BD),\\
+(A\otimes B)^{\mathsf T}&=A^{\mathsf T}\otimes B^{\mathsf T},\\
+(A\otimes B)^{-1}&=A^{-1}\otimes B^{-1}\quad(A,B\text{ 可逆}),\\
+\operatorname{rank}(A\otimes B)&=\operatorname{rank}A\operatorname{rank}B.
+\end{align*}
+复数情形共轭转置也满足 $(A\otimes B)^*=A^*\otimes B^*$。
+当 $A$ 为 $n$ 阶方阵、$B$ 为 $m$ 阶方阵时，
+\[
+\det(A\otimes B)=(\det A)^m(\det B)^n,\qquad
+\operatorname{tr}(A\otimes B)=\operatorname{tr}A\operatorname{tr}B.
+\]
+若特征值分别为 $\lambda_i,\mu_j$，则 $A\otimes B$ 的特征值为全部 $\lambda_i\mu_j$，均按代数重数计。一般不能交换 $A\otimes B$ 的两个因子。
+\subsection{列向量化与Sylvester矩阵方程}\index{列向量化与Sylvester矩阵方程|hyperpage}
+$\operatorname{vec}(X)$ 按列依次堆叠，例如
+\[
+\operatorname{vec}\begin{pmatrix}x_{11}&x_{12}\\x_{21}&x_{22}\end{pmatrix}
+=(x_{11},x_{21},x_{12},x_{22})^{\mathsf T}.
+\]
+对 $A\in F^{m\times n}$、$X\in F^{n\times p}$、$B\in F^{p\times q}$，
+\[
+\operatorname{vec}(AXB)=(B^{\mathsf T}\otimes A)\operatorname{vec}(X),\qquad
+\|\operatorname{vec}(X)\|_2=\|X\|_F.
+\]
+第一式在复数域上仍使用 $B^{\mathsf T}$，不能自行改为 $B^*$。同型矩阵还满足 $\operatorname{tr}(X^*Y)=\operatorname{vec}(X)^*\operatorname{vec}(Y)$。
+若 $A\in F^{m\times m}$、$B\in F^{n\times n}$，则 $AX+XB=C$（$X,C\in F^{m\times n}$）等价于
+\[
+(I_n\otimes A+B^{\mathsf T}\otimes I_m)\operatorname{vec}(X)
+=\operatorname{vec}(C).
+\]
+对每个 $C$ 都存在唯一解的充要条件为
+\[
+\lambda_i(A)+\lambda_j(B)\ne0\quad\text{对所有 }i,j,
+\]
+即 $\sigma(A)\cap(-\sigma(B))=\varnothing$，其中谱在复数域中考虑。若该条件不成立，对给定 $C$ 应按线性方程组的相容性另行讨论。
+\section{线性方程组}
+\subsection{线性方程组有解无解的判定}\index{线性方程组有解无解的判定|hyperpage}
+对 $A\bm x=\bm b$，$A\in\mathbb R^{m\times n}$，增广矩阵为 $(A,\bm b)$。
+\[
+\begin{cases}
+\operatorname{rank}A<\operatorname{rank}(A,\bm b)&\Longrightarrow\text{无解},\\
+\operatorname{rank}A=\operatorname{rank}(A,\bm b)=n&\Longrightarrow\text{唯一解},\\
+\operatorname{rank}A=\operatorname{rank}(A,\bm b)<n&\Longrightarrow\text{无穷多解}.
+\end{cases}
+\]
+齐次方程恒有零解，有非零解当且仅当 $\operatorname{rank}A<n$。
+\subsection{线性方程组解的性质和结构}\index{线性方程组解的性质和结构|hyperpage}
+设 $r=\operatorname{rank}A$，齐次解空间维数为 $n-r$。若 $\bm\eta_1,\ldots,\bm\eta_{n-r}$ 是其基，$\bm x_p$ 是非齐次方程的一个特解，则
+\[
+\bm x=\sum_{i=1}^{n-r}c_i\bm\eta_i\quad\text{（齐次）},\qquad
+\bm x=\bm x_p+\sum_{i=1}^{n-r}c_i\bm\eta_i\quad\text{（非齐次）}.
+\]
+两个非齐次解之差为齐次解；一个非齐次解加任意齐次解仍为非齐次解。
+\subsection{Cramer法则求解方程组的唯一解}\index{Cramer法则求解方程组的唯一解|hyperpage}
+若 $A$ 为 $n$ 阶方阵且 $D=\det A\ne0$，以 $\bm b$ 替换 $A$ 第 $i$ 列得到 $A_i$，则
+\[
+x_i=\frac{D_i}{D},\qquad D_i=\det A_i,\qquad i=1,\ldots,n.
+\]
+当 $D=0$ 时该法则不适用，应使用秩判定及消元法。
+\subsection{最小二乘法与正交投影}\index{最小二乘法与正交投影|hyperpage}
+对 $A\in\mathbb R^{m\times n}$、$\bm b\in\mathbb R^m$，最小二乘问题及其正规方程为
+\[
+\min_{\bm x}\|A\bm x-\bm b\|_2^2,\qquad
+A^{\mathsf T}A\widehat{\bm x}=A^{\mathsf T}\bm b.
+\]
+若 $A$ 列满秩，则唯一解与列空间上的正交投影为
+\[
+\widehat{\bm x}=(A^{\mathsf T}A)^{-1}A^{\mathsf T}\bm b,\qquad
+P=A(A^{\mathsf T}A)^{-1}A^{\mathsf T},\quad\widehat{\bm b}=P\bm b.
+\]
+$P^{\mathsf T}=P$，$P^2=P$，且残差 $\bm b-\widehat{\bm b}$ 与 $A$ 的每一列正交。实际数值计算通常用 QR 或 SVD 解最小二乘问题，以避免显式求逆。
+\section{特征值、标准形与矩阵函数}
+\subsection{特征值与特征向量}\index{特征值与特征向量|hyperpage}
+讨论特征值时，$A$ 为 $n$ 阶方阵；实矩阵的全部特征值必要时在复数域中按代数重数计。
+\[
+A\bm v=\lambda\bm v\ (\bm v\ne\bm0),\quad
+\det(\lambda I-A)=0,\quad E_\lambda=\ker(A-\lambda I).
+\]
+按代数重数计，$\sum_i\lambda_i=\operatorname{tr}A$，$\prod_i\lambda_i=\det A$。
+不同特征值的特征向量线性无关，且
+\[
+1\le\dim E_\lambda\le\lambda\text{ 的代数重数},\qquad
+A=P\Lambda P^{-1}\iff A\text{ 有 }n\text{ 个线性无关特征向量}.
+\]
+实对称矩阵特征值均实，存在正交矩阵 $Q$ 使 $Q^{\mathsf T}AQ=\Lambda$。
+\subsection{Cayley--Hamilton定理与最小多项式}\index{Cayley-Hamilton定理与最小多项式|hyperpage}
+设 $p_A(t)=\det(tI-A)$，则 Cayley--Hamilton 定理给出
+\[
+p_A(A)=0.
+\]
+在 $F$ 上，使 $m_A(A)=0$ 的最低次数首一多项式称为最小多项式，并满足
+\[
+m_A\mid p_A,\qquad
+f(A)=0\iff m_A\mid f\quad(f\in F[t]).
+\]
+最小多项式与特征多项式有相同的根，但重数可能不同。在所讨论的数域 $F$ 上，
+\[
+A\text{ 可对角化}\iff
+m_A(t)\text{ 是互异一次因子的乘积}.
+\]
+不能只检查是否有重因子，还须保证在 $F$ 上分裂。例如实矩阵可能在复数域可对角化，但在实数域不可对角化。
+特别地，对二阶矩阵有
+\[
+A^2-(\operatorname{tr}A)A+(\det A)I=0,
+\qquad A^{-1}=\frac{(\operatorname{tr}A)I-A}{\det A}\quad(\det A\ne0).
+\]
+一般地，若 $\deg m_A=d$，则每个矩阵多项式都能约化为 $I,A,\ldots,A^{d-1}$ 的线性组合。
+\subsection{多项式矩阵的Smith标准形}\index{多项式矩阵的Smith标准形|hyperpage}
+设 $M(t)\in F[t]^{m\times n}$ 在有理函数域 $F(t)$ 上的秩为 $r$。存在多项式幺模矩阵 $U(t),V(t)$，使
+\[
+U(t)M(t)V(t)=\operatorname{diag}(s_1(t),\ldots,s_r(t),0),\qquad
+s_1\mid s_2\mid\cdots\mid s_r.
+\]
+右端按 $m\times n$ 的矩形对角矩阵理解，$s_i$ 非零且取首一形式；幺模要求 $\det U,\det V\in F\setminus\{0\}$，故其逆仍为多项式矩阵。
+令 $\Delta_0=1$，$\Delta_k$ 为所有 $k$ 阶子式的首一最大公因式（$1\le k\le r$），则
+\[
+s_k=\frac{\Delta_k}{\Delta_{k-1}}.
+\]
+各 $s_i$ 唯一，称不变因子。对整数矩阵同样存在 Smith 标准形，但变换矩阵须为整数幺模矩阵（行列式为 $\pm1$），非零对角元取正整数，$\Delta_k$ 取各 $k$ 阶子式的非负最大公因数。
+对 $tI-A$，行列式为非零多项式 $p_A(t)$，所以没有零对角元。删去其中等于 $1$ 的单位因子，得到非恒定不变因子 $d_1\mid\cdots\mid d_s$，满足
+\[
+p_A(t)=\prod_{i=1}^s d_i(t),\qquad m_A(t)=d_s(t).
+\]
+此处的多项式矩阵等价变换不同于常数矩阵的相似变换；二者通过下一节的有理标准形联系起来。
+\subsection{相伴矩阵与有理标准形}\index{相伴矩阵与有理标准形|hyperpage}
+对首一多项式 $f(t)=t^d+c_{d-1}t^{d-1}+\cdots+c_0$（$d\ge1$），定义 $d$ 阶相伴矩阵 $C(f)$（companion matrix，亦称友矩阵）为
+\[
+C(f)_{ij}=\begin{cases}
+1,&i=j+1,\ 1\le j<d,\\
+-c_{i-1},&j=d,\\
+0,&\text{其余情形}.
+\end{cases}
+\]
+例如
+\[
+C(t^3+c_2t^2+c_1t+c_0)=
+\begin{pmatrix}0&0&-c_0\\1&0&-c_1\\0&1&-c_2\end{pmatrix},\qquad
+p_{C(f)}=m_{C(f)}=f.
+\]
+$d=1$ 时 $C(t+c_0)=(-c_0)$。相伴矩阵 $C(f)$ 与前述由代数余子式定义的伴随矩阵 $\operatorname{adj}A$ 是不同构造。
+若 $d_1,\ldots,d_s$ 为 $tI-A$ 的非恒定不变因子，则在原数域 $F$ 上存在可逆 $P$，使
+\[
+P^{-1}AP=\operatorname{diag}\bigl(C(d_1),\ldots,C(d_s)\bigr),\qquad
+\sum_{i=1}^s\deg d_i=n.
+\]
+这称有理标准形，不要求特征多项式在 $F$ 上分裂。两个同阶矩阵在 $F$ 上相似，当且仅当其非恒定不变因子依次相同。
+例如 $A=\lambda I_2$ 的不变因子为 $(t-\lambda,t-\lambda)$，而 $J_2(\lambda)$ 仅有一个非恒定不变因子 $(t-\lambda)^2$；它们有相同特征多项式，却不相似。
+\subsection{初等因子、核维数与Jordan块}\index{初等因子、核维数与Jordan块|hyperpage}
+将各不变因子分解为首一不可约多项式的幂：
+\[
+d_i(t)=\prod_j p_j(t)^{e_{ij}}.
+\]
+忽略零指数后，全部 $p_j^{e_{ij}}$ 称为初等因子；它们也唯一确定矩阵的相似类。对任意 $f\in F[t]$，有
+\[
+\dim\ker f(A)=\sum_{i=1}^s\deg\gcd(f,d_i),\qquad
+\operatorname{rank}f(A)=n-\sum_{i=1}^s\deg\gcd(f,d_i).
+\]
+在复数域上，不可约因子均为 $t-\lambda$，初等因子 $(t-\lambda)^e$ 对应一个大小为 $e$ 的 Jordan 块，因而
+\[
+p_A(t)=\prod_{\lambda}\prod_j(t-\lambda)^{s_{\lambda,j}},\qquad
+m_A(t)=\prod_{\lambda}(t-\lambda)^{\max_j s_{\lambda,j}}.
+\]
+在实数域上可能出现不可约二次因子，不能将它们直接写成实数 Jordan 一次因子。结构定理的模论解释见第\ref{chap:module-theory}章。
+\subsection{Jordan标准形与广义特征空间}\index{Jordan标准形与广义特征空间|hyperpage}
+在复数域上，任意方阵均存在可逆矩阵 $P$，使
+\[
+A=PJP^{-1},\qquad
+J=\operatorname{diag}\bigl(J_{s_1}(\lambda_1),\ldots,J_{s_r}(\lambda_r)\bigr).
+\]
+其中 $J_s(\lambda)=\lambda I_s+N_s$，$N_s$ 的上副对角元为 $1$、其余为 $0$，且 $N_s^s=0$。Jordan 块在排列次序之外唯一；实矩阵在此处允许使用复数基。
+对固定特征值 $\lambda$，广义特征空间为 $\ker(A-\lambda I)^n$，其维数等于 $\lambda$ 的代数重数。令
+\[
+d_j=\dim\ker(A-\lambda I)^j,\qquad d_0=0,
+\]
+则对 $j\ge1$，
+\begin{align*}
+\text{大小至少为 }j\text{ 的块数}&=d_j-d_{j-1},\\
+\text{大小恰好为 }j\text{ 的块数}&=2d_j-d_{j-1}-d_{j+1}.
+\end{align*}
+特别地，$d_1$ 是该特征值的 Jordan 块总数；最小多项式中 $(t-\lambda)$ 的指数等于最大 Jordan 块的大小。所有块大小均为 $1$ 时矩阵可对角化。
+\subsection{矩阵多项式、矩阵幂与矩阵指数}\index{矩阵多项式、矩阵幂与矩阵指数|hyperpage}
+若 $A=P\Lambda P^{-1}$，则对多项式 $f$ 及整数 $k\ge0$，
+\[
+f(A)=Pf(\Lambda)P^{-1},\qquad A^k=P\Lambda^kP^{-1}.
+\]
+对 $J_s(\lambda)=\lambda I_s+N_s$，$\lambda\ne0$ 时有
+\[
+J_s(\lambda)^k=
+\sum_{j=0}^{\min(k,s-1)}\binom kj\lambda^{k-j}N_s^j.
+\]
+$\lambda=0$ 时直接使用 $J_s(0)^k=N_s^k$，且 $k\ge s$ 时为零；零次幂始终取单位矩阵。
+矩阵指数对任意方阵定义为
+\[
+e^{tA}=\sum_{k=0}^\infty\frac{t^kA^k}{k!},\qquad
+e^{tJ_s(\lambda)}=e^{\lambda t}\sum_{j=0}^{s-1}\frac{t^jN_s^j}{j!}.
+\]
+并有 $e^{tA}=Pe^{tJ}P^{-1}$、$(e^{tA})^{-1}=e^{-tA}$。当 $AB=BA$ 时，
+\[
+e^{A+B}=e^Ae^B.
+\]
+可交换是上述乘积公式的充分条件；一般矩阵不能直接套用标量指数运算法则。
+\subsection{谱投影与矩阵函数的直接表达}\index{谱投影与矩阵函数的直接表达|hyperpage}
+设 $A$ 在复数域上可对角化，不同特征值为 $\lambda_1,\ldots,\lambda_r$。由插值多项式构造谱投影
+\[
+E_i=\prod_{j\ne i}\frac{A-\lambda_jI}{\lambda_i-\lambda_j},\qquad i=1,\ldots,r.
+\]
+若 $r=1$，空乘积取单位矩阵。它们满足
+\begin{gather*}
+E_iE_j=\delta_{ij}E_i,\qquad \sum_{i=1}^rE_i=I,\\
+\operatorname{im}E_i=\ker(A-\lambda_iI),\qquad
+A=\sum_{i=1}^r\lambda_iE_i.
+\end{gather*}
+因此对任意多项式 $f$ 以及矩阵指数，有
+\[
+f(A)=\sum_{i=1}^rf(\lambda_i)E_i,\qquad
+e^{tA}=\sum_{i=1}^re^{t\lambda_i}E_i.
+\]
+各特征值可以有大于 $1$ 的重数，但矩阵必须可对角化。一般谱投影不保证正交；若 $A$ 正规，则 $E_i^*=E_i$，这些投影为正交谱投影。
+\par\pagebreak[0]\begin{samepage}
+\subsection{Rayleigh商与特征值的极值性质}\index{Rayleigh商与特征值的极值性质|hyperpage}
+设 $A$ 为实对称矩阵，最小、最大特征值为 $\lambda_{\min},\lambda_{\max}$。对 $x\ne0$，定义
+\[
+R_A(x)=\frac{x^{\mathsf T}Ax}{x^{\mathsf T}x}.
+\]
+则
+\begin{gather*}
+\lambda_{\min}\le R_A(x)\le\lambda_{\max},\\
+\min_{x\ne0}R_A(x)=\lambda_{\min},\qquad
+\max_{x\ne0}R_A(x)=\lambda_{\max},\\
+\lambda_{\min}\|x\|_2^2\le x^{\mathsf T}Ax
+\le\lambda_{\max}\|x\|_2^2.
+\end{gather*}
+左右两端等号分别在最小、最大特征值对应特征子空间中的非零向量处取得。
+Hermitian 矩阵的相应结论成立，只需将转置换为共轭转置。
+\par\end{samepage}\pagebreak[0]
+\subsection{Courant--Fischer原理与特征值交错}\index{Courant-Fischer原理与特征值交错|hyperpage}
+设 $A=A^*\in\mathbb C^{n\times n}$，特征值按 $\lambda_1\le\cdots\le\lambda_n$ 排列，并记 $R_A(x)=x^*Ax/(x^*x)$。对 $1\le k\le n$，
+\[
+\lambda_k
+=\min_{\dim S=k}\ \max_{0\ne x\in S}R_A(x)
+=\max_{\dim S=n-k+1}\ \min_{0\ne x\in S}R_A(x).
+\]
+优化中的 $S$ 遍历相应维数的线性子空间。若 $W\in\mathbb C^{n\times m}$、$W^*W=I_m$，$W^*AW$ 的特征值为 $\mu_1\le\cdots\le\mu_m$，则
+\[
+\lambda_j\le\mu_j\le\lambda_{j+n-m},\qquad 1\le j\le m.
+\]
+特别地，删去同一行、列得到的 $n-1$ 阶主子矩阵满足 Cauchy 交错关系
+\[
+\lambda_j\le\mu_j\le\lambda_{j+1},\qquad 1\le j<n.
+\]
+这些结论依赖实对称或 Hermitian 条件，并且上式统一使用特征值的升序排列。
+\subsection{判断矩阵之间的关系}\index{判断矩阵之间的关系|hyperpage}
+\begin{align*}
+\text{等价： }&B=PAQ,\quad P,Q\text{ 可逆}\iff\operatorname{rank}A=\operatorname{rank}B
+\quad\text{（同型矩阵）},\\
+\text{相似： }&B=P^{-1}AP,\quad P\text{ 可逆},\\
+\text{合同： }&B=P^{\mathsf T}AP,\quad P\text{ 可逆}.
+\end{align*}
+相似矩阵有相同的特征多项式、特征值、迹、行列式及秩；仅特征值相同不足以保证相似。
+实对称矩阵合同当且仅当正、负、零惯性指数分别相同。
+\subsection{矩阵分解：LU、QR与SVD}\index{矩阵分解：LU、QR与SVD|hyperpage}
+若 $n$ 阶矩阵的所有顺序主子式非零，可写为 $A=LU$，其中 $L$ 为单位下三角、$U$ 为上三角矩阵。一般可逆矩阵可通过行置换作 $PA=LU$。
+对列满秩 $A\in\mathbb R^{m\times n}$（$m\ge n$），薄 QR 分解为
+\[
+A=QR,\qquad Q^{\mathsf T}Q=I_n,\qquad R\in\mathbb R^{n\times n}\text{ 为可逆上三角矩阵}.
+\]
+最小二乘解可由三角方程 $R\widehat{\bm x}=Q^{\mathsf T}\bm b$ 求得。
+任意实矩阵均有奇异值分解
+\[
+A=U\Sigma V^{\mathsf T},\qquad U^{\mathsf T}U=I_m,\quad V^{\mathsf T}V=I_n,
+\]
+其中 $\Sigma\in\mathbb R^{m\times n}$ 的非零对角元为 $\sigma_1\ge\cdots\ge\sigma_r>0$，$r=\operatorname{rank}A$，且 $\sigma_i^2$ 是 $A^{\mathsf T}A$ 的正特征值。
+\par\pagebreak[0]\begin{samepage}
+\[
+A^+=V\Sigma^+U^{\mathsf T},\qquad \widehat{\bm x}_{\min}=A^+\bm b.
+\]
+$\Sigma^+$ 将非零奇异值取倒数后转置形状，零仍为零；$A^+\bm b$ 是最小范数的最小二乘解，$AA^+$ 是列空间的正交投影。
+\par\end{samepage}\pagebreak[0]
+\subsection{Schur分解与实Schur形式}\index{Schur分解与实Schur形式|hyperpage}
+任意 $A\in\mathbb C^{n\times n}$ 均存在酉矩阵 $U$，使
+\[
+A=UTU^*,\qquad T\text{ 为上三角矩阵},\qquad U^*U=I.
+\]
+$T$ 的对角元按代数重数列出全部特征值，因而
+\[
+p_A(t)=\prod_{i=1}^n(t-t_{ii}).
+\]
+该分解不要求 $A$ 可对角化；$A$ 正规当且仅当其 Schur 上三角矩阵 $T$ 为对角矩阵。
+对实方阵，可取正交矩阵 $Q$ 得到实 Schur 形式 $A=QTQ^{\mathsf T}$，其中 $T$ 为块上三角矩阵，对角块为实一阶块及对应非实共轭特征值对的实二阶块。
+实矩阵具有非实特征值时，不能要求用实正交变换将其化为普通实上三角矩阵。
+\subsection{极分解与正定平方根}\index{极分解与正定平方根|hyperpage}
+对任意复方阵 $A$，存在酉矩阵 $W$ 与唯一的 Hermitian 半正定矩阵 $H$，使
+\[
+A=WH,\qquad H=(A^*A)^{1/2}.
+\]
+若 $A=U\Sigma V^*$ 为方阵的 SVD，则可取
+\[
+H=V\Sigma V^*,\qquad W=UV^*.
+\]
+当 $A$ 可逆时，$H\succ0$ 且酉因子也唯一，满足
+\[
+W=AH^{-1}=A(A^*A)^{-1/2}.
+\]
+当 $A$ 奇异时，$H$ 仍唯一，酉因子 $W$ 一般不唯一。左极分解可写为
+\[
+A=KW,\qquad K=(AA^*)^{1/2}=U\Sigma U^*.
+\]
+对实方阵可将酉矩阵取为实正交矩阵。这里的平方根指唯一的 Hermitian 半正定平方根，不是对各矩阵元素分别开方。
+\subsection{矩阵范数与谱半径}\index{矩阵范数与谱半径|hyperpage}
+对 $A\in F^{m\times n}$，由向量 $p$ 范数诱导的矩阵范数为
+\[
+\|A\|_p=\max_{x\ne0}\frac{\|Ax\|_p}{\|x\|_p}.
+\]
+常用公式为
+\begin{align*}
+\|A\|_1&=\max_j\sum_i|a_{ij}|, &
+\|A\|_\infty&=\max_i\sum_j|a_{ij}|,\\
+\|A\|_2&=\sigma_{\max}(A)=\sqrt{\lambda_{\max}(A^*A)}, &
+\|A\|_F&=\sqrt{\sum_{i,j}|a_{ij}|^2}=\sqrt{\operatorname{tr}(A^*A)}.
+\end{align*}
+Frobenius 范数通常不是上述向量范数诱导的算子范数。对 $p=1,2,\infty$，尺寸相容时有 $\|AB\|_p\le\|A\|_p\|B\|_p$，并有
+\[
+\|A\|_2\le\|A\|_F\le\sqrt{\operatorname{rank}A}\,\|A\|_2,\qquad
+\|A\|_2\le\sqrt{\|A\|_1\|A\|_\infty}.
+\]
+若 $A$ 为方阵，谱半径与诱导矩阵范数满足
+\[
+\rho(A)=\max_{\lambda\in\sigma(A)}|\lambda|\le\|A\|_p.
+\]
+当 $A$ 正规时，$\rho(A)=\|A\|_2$；一般非正规矩阵未必有此等号。
+\subsection{Gershgorin圆盘与特征值定位}\index{Gershgorin圆盘与特征值定位|hyperpage}
+设 $A=(a_{ij})\in\mathbb C^{n\times n}$，定义行圆盘
+\[
+r_i=\sum_{j\ne i}|a_{ij}|,\qquad
+D_i=\{z\in\mathbb C:|z-a_{ii}|\le r_i\}.
+\]
+则所有特征值都位于圆盘之并中：
+\[
+\sigma(A)\subseteq\bigcup_{i=1}^nD_i.
+\]
+对转置矩阵应用同一定理，还可得到半径为 $\sum_{j\ne i}|a_{ji}|$ 的列圆盘界，因此谱同时位于行圆盘之并与列圆盘之并内。
+若某 $k$ 个行圆盘的并与其余行圆盘的并不相交，则该区域恰含 $k$ 个特征值，按代数重数计。
+对 Hermitian 矩阵，特征值为实数，可使用区间定位
+\[
+\sigma(A)\subseteq\bigcup_{i=1}^n[a_{ii}-r_i,\ a_{ii}+r_i].
+\]
+若 $|a_{ii}|>r_i$ 对所有 $i$ 成立，则 $A$ 可逆；若进一步 $A$ 为 Hermitian 且 $a_{ii}>r_i$ 对所有 $i$ 成立，则 $A$ 正定。
+\subsection{Moore--Penrose广义逆与解的结构}\index{Moore-Penrose广义逆与解的结构|hyperpage}
+对实矩阵 $A\in\mathbb R^{m\times n}$，其广义逆 $A^+\in\mathbb R^{n\times m}$ 由下列四个条件唯一确定：
+\begin{align*}
+AA^+A&=A, & A^+AA^+&=A^+,\\
+(AA^+)^{\mathsf T}&=AA^+, & (A^+A)^{\mathsf T}&=A^+A.
+\end{align*}
+线性方程组的相容条件与全部解为
+\begin{gather*}
+Ax=b\text{ 有解}\iff AA^+b=b,\\
+x=A^+b+(I_n-A^+A)z,\qquad z\in\mathbb R^n\quad\text{（有解时）}.
+\end{gather*}
+若方程不相容，同一表达式给出全部最小二乘解；其中 $z=0$ 给出唯一的最小欧氏范数解。
+$AA^+$ 投影到 $A$ 的列空间，$I_n-A^+A$ 投影到 $\ker A$，两者尺寸不同。
+\par\pagebreak[0]\begin{samepage}
+\subsection{截断SVD与最佳低秩近似}\index{截断SVD与最佳低秩近似|hyperpage}
+设 $\operatorname{rank}A=r>0$，非零奇异值为 $\sigma_1\ge\cdots\ge\sigma_r>0$，写成
+\[
+A=\sum_{i=1}^r\sigma_i u_iv_i^{\mathsf T},\qquad
+A_k=\sum_{i=1}^k\sigma_i u_iv_i^{\mathsf T}\quad(0\le k<r).
+\]
+$k=0$ 时空和取零矩阵；以下分别采用前述谱范数与 Frobenius 范数。
+Eckart--Young 定理给出
+\begin{align*}
+\min_{\operatorname{rank}B\le k}\|A-B\|_2
+&=\|A-A_k\|_2=\sigma_{k+1},\\
+\min_{\operatorname{rank}B\le k}\|A-B\|_F
+&=\|A-A_k\|_F=\sqrt{\sum_{i=k+1}^r\sigma_i^2}.
+\end{align*}
+因此截断 SVD 在两种范数下均为最佳近似，但不应无条件声称最佳近似唯一。$k\ge r$ 时取 $A_k=A$，误差为零；$A=0$ 时亦直接取零矩阵。
+\par\end{samepage}\pagebreak[0]
+\section{双线性型与交错型}
+\subsection{双线性型的矩阵与换基}\index{双线性型的矩阵与换基|hyperpage}
+设 $\beta:V\times W\to F$ 对两个变量都线性，$\dim V=n$、$\dim W=m$。取有序基 $e_i,f_j$，令 $B=(\beta(e_i,f_j))\in F^{n\times m}$，则
+\[
+\beta(v,w)=x^{\mathsf T}By,\qquad x=[v]_{\mathcal E},\quad y=[w]_{\mathcal F}.
+\]
+换基 $\mathcal E'=\mathcal E P$、$\mathcal F'=\mathcal F Q$ 后，矩阵为 $B'=P^{\mathsf T}BQ$。
+若 $V=W$ 且两端采用同一组基，换基变为合同 $B'=P^{\mathsf T}BP$。
+对称双线性型满足 $B^{\mathsf T}=B$。令 $q(v)=\beta(v,v)$，在本章的实数域或复数域上，有极化公式
+\[
+\beta(u,v)=\frac12\bigl(q(u+v)-q(u)-q(v)\bigr).
+\]
+复双线性型仍使用转置；Hermitian 型对第一变量共轭线性，使用共轭转置，二者不可混用。
+\subsection{左右根空间与非退化性}\index{左右根空间与非退化性|hyperpage}
+对 $\beta:V\times W\to F$，定义左右根空间
+\begin{align*}
+\operatorname{rad}_L\beta&=\{v:\beta(v,w)=0\ \text{对所有 }w\in W\},\\
+\operatorname{rad}_R\beta&=\{w:\beta(v,w)=0\ \text{对所有 }v\in V\}.
+\end{align*}
+若 $B\in F^{n\times m}$ 为其矩阵、秩为 $r$，则在相应坐标中
+\[
+\operatorname{rad}_L\beta=\ker B^{\mathsf T},\qquad
+\operatorname{rad}_R\beta=\ker B,
+\]
+两者维数分别为 $n-r,m-r$。诱导的线性映射 $V\to W^\vee$、$W\to V^\vee$ 分别为 $v\mapsto\beta(v,\cdot)$、$w\mapsto\beta(\cdot,w)$。
+当 $V=W$ 时，双线性型非退化的等价条件为
+\[
+\operatorname{rad}_L\beta=\operatorname{rad}_R\beta=\{0\}
+\iff\det B\ne0\iff V\longrightarrow V^\vee\text{ 为同构}.
+\]
+对称或交错型的左右根空间相同，通常简称根空间。
+\subsection{交错型的偶秩与辛标准形}\index{交错型的偶秩与辛标准形|hyperpage}
+双线性型 $\omega:V\times V\to F$ 若满足 $\omega(v,v)=0$，称为交错型。在 $F=\mathbb R$ 或 $\mathbb C$ 上，这等价于矩阵 $B^{\mathsf T}=-B$，其秩必为偶数 $2r$，且存在可逆 $P$ 使
+\[
+P^{\mathsf T}BP=\operatorname{diag}(J_2,\ldots,J_2,0_{n-2r}),\qquad
+J_2=\begin{pmatrix}0&1\\-1&0\end{pmatrix},
+\]
+其中有 $r$ 个 $J_2$ 块。若非退化，则 $n=2r$，可取辛基 $e_1,\ldots,e_r,f_1,\ldots,f_r$，使
+\[
+\omega(e_i,e_j)=\omega(f_i,f_j)=0,\qquad
+\omega(e_i,f_j)=\delta_{ij},\qquad \omega(f_i,e_j)=-\delta_{ij}.
+\]
+按此辛基顺序，矩阵为 $J=\begin{pmatrix}0&I_r\\-I_r&0\end{pmatrix}$，保持该型的可逆矩阵满足 $S^{\mathsf T}JS=J$，称辛矩阵。
+对实辛矩阵还可由 $J$ 定义相应的辛几何结构；这里的标准形由合同变换给出，不是相似对角化。
+\section{二次型}
+\subsection{用配方法化二次型为标准型}\index{用配方法化二次型为标准型|hyperpage}
+实二次型写为 $q(\bm x)=\bm x^{\mathsf T}A\bm x$，取 $A=A^{\mathsf T}$。非退化替换 $\bm x=P\bm y$ 后，
+\[
+q=\bm y^{\mathsf T}(P^{\mathsf T}AP)\bm y.
+\]
+当 $a_{11}\ne0$ 时配方为
+\[
+q=a_{11}\left(x_1+\sum_{j=2}^n\frac{a_{1j}}{a_{11}}x_j\right)^2
++\sum_{i,j=2}^n\left(a_{ij}-\frac{a_{1i}a_{1j}}{a_{11}}\right)x_ix_j.
+\]
+递归配方得到标准型；若所有对角项为零但有 $a_{ij}\ne0$，可先取 $x_i=u+v,x_j=u-v$ 产生平方项。
+也可用正交替换得到 $q=\sum_i\lambda_i y_i^2$。
+\subsection{惯性标准形与Sylvester惯性定律}\index{惯性标准形与Sylvester惯性定律|hyperpage}
+对实对称矩阵 $A\in\mathbb R^{n\times n}$，存在可逆矩阵 $P$，使
+\[
+P^{\mathsf T}AP=\operatorname{diag}(I_p,-I_q,0_{n-p-q}),\qquad
+\operatorname{rank}A=p+q.
+\]
+$p,q$ 分别为正、负惯性指数，$n-p-q$ 为零惯性指数，在可逆合同变换下均不变。
+因此两个同阶实对称矩阵合同，当且仅当它们的正、负、零惯性指数分别相同；合同变换一般不保持各特征值的具体数值。
+相应二次型为
+\[
+x_1^2+\cdots+x_p^2-x_{p+1}^2-\cdots-x_{p+q}^2.
+\]
+\begin{samepage}
+\subsection{正定矩阵}\index{正定矩阵|hyperpage}
+对实对称矩阵 $A$，下列条件等价：
+\[
+\bm x^{\mathsf T}A\bm x>0\ (\bm x\ne\bm0)
+\iff\lambda_i>0\ (\forall i)
+\iff\Delta_k>0\ (k=1,\ldots,n),
+\]
+其中 $\Delta_k$ 为前 $k$ 行列的顺序主子式。正定时存在可逆上三角矩阵 $R$ 使 $A=R^{\mathsf T}R$。
+负定等价于 $(-1)^k\Delta_k>0$；半正定等价于所有特征值非负，亦等价于所有主子式非负（仅检查顺序主子式不足）。
+\end{samepage}
+\par\pagebreak[0]\begin{samepage}
+\subsection{Schur补与分块正定判据}\index{Schur补与分块正定判据|hyperpage}
+设实对称分块矩阵为
+\[
+M=\begin{pmatrix}B&C\\C^{\mathsf T}&D\end{pmatrix},\qquad B=B^{\mathsf T},\quad D=D^{\mathsf T}.
+\]
+若 $B$ 可逆，令 $S=D-C^{\mathsf T}B^{-1}C$，则
+\[
+\begin{pmatrix}I&0\\-C^{\mathsf T}B^{-1}&I\end{pmatrix}
+M
+\begin{pmatrix}I&-B^{-1}C\\0&I\end{pmatrix}
+=\begin{pmatrix}B&0\\0&S\end{pmatrix}.
+\]
+左右两侧的消元矩阵互为转置，因而这是合同变换，给出
+\[
+M\succ0\iff B\succ0\ \text{且}\ D-C^{\mathsf T}B^{-1}C\succ0.
+\]
+其中 $A\succ0$ 表示实对称矩阵 $A$ 正定。若 $B\succ0$，还有
+\[
+M\succeq0\iff D-C^{\mathsf T}B^{-1}C\succeq0.
+\]
+若 $B$ 奇异，不能使用上式中的 $B^{-1}$；半正定情形须另加条件后才可用广义逆推广。
+\par\end{samepage}
+\section{矩阵微分、行列式界与谱扰动补充}
+本节的矩阵公式与归一化参见\cite{matrix}；Hermitian 特征值按递减次序排列。
+\subsection{Jacobi行列式微分与逆矩阵微分}\index{Jacobi行列式微分与逆矩阵微分|hyperpage}
+对可微矩阵路径 $A(t)$，即使奇异也有
+\[
+\frac{\mathrm d}{\mathrm dt}\det A=\operatorname{tr}(\operatorname{adj}(A)A').
+\]
+若 $A$ 可逆，则 $(A^{-1})'=-A^{-1}A'A^{-1}$；实对称正定时，
+\[
+\frac{\mathrm d}{\mathrm dt}\log\det A=\operatorname{tr}(A^{-1}A').
+\]
+复矩阵的对数行列式需选取局部分支；跨越零行列式不能继续使用该导数表达。
+\subsection{Hadamard与Fischer行列式界}\index{Hadamard与Fischer行列式界|hyperpage}
+列向量为 $a_i$ 的复方阵满足 $|\det A|\le\prod_i\|a_i\|_2$。对 Hermitian 正定分块矩阵，
+\[
+0<\det\begin{pmatrix}B&C\\C^*&D\end{pmatrix}\le\det B\det D.
+\]
+第一式非零等号对应列向量两两正交，第二式等号当且仅当 $C=0$。这些界可用 Gram 矩阵及 Schur 补得到，正定假设保证块行列式可比较。
+\subsection{Weyl特征值扰动界}\index{Weyl特征值扰动界|hyperpage}
+对同阶 Hermitian 矩阵 $A,E$，有
+\[
+\lambda_j(A)+\lambda_n(E)\le\lambda_j(A+E)
+\le\lambda_j(A)+\lambda_1(E),\quad1\le j\le n,
+\]
+从而 $|\lambda_j(A+E)-\lambda_j(A)|\le\|E\|_2$。进一步有 Hoffman--Wielandt 界
+\[
+\sum_{j=1}^n|\lambda_j(A+E)-\lambda_j(A)|^2\le\|E\|_F^2.
+\]
+这里的次序匹配依赖 Hermitian 性；一般非正规矩阵的谱对扰动可能敏感得多。
+\subsection{正定度量下的广义特征值}\index{正定度量下的广义特征值|hyperpage}
+若 $A=A^*$、$B=B^*\succ0$，则 $Ax=\lambda Bx$ 等价于
+\[
+(B^{-1/2}AB^{-1/2})y=\lambda y,\qquad y=B^{1/2}x.
+\]
+全部特征值为实，可取 $B$-正交归一特征基，且最小、最大特征值分别为 $x^*Ax/(x^*Bx)$ 在 $x\ne0$ 上的最小、最大值。$B$ 仅半正定时会出现无穷特征值等额外现象。
+\clearpage
+\end{document}

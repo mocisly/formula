@@ -1,0 +1,387 @@
+\documentclass[../main.tex]{subfiles}
+\begin{document}
+本章主要参考\cite{durrett,brezis}。
+
+本章独立汇总测度的构造、积分、分解、乘积、条件化与弱收敛；实变量微分及 Sobolev 估计另见\hyperref[chap:real-analysis]{实分析}。除另作说明，函数均可测，几乎处处相等的函数在积分空间中视为同一元素。
+% References: https://ocw.mit.edu/courses/18-125-measure-and-integration-fall-2003/pages/lecture-notes/
+% https://math.mit.edu/~dws/boulder/IMA-transport-Lecture-Notes.pdf
+\section{可测结构与测度构造}
+\subsection{生成代数、Borel集与可测映射}\index{生成代数、Borel集与可测映射|hyperpage}
+\[
+\sigma(\mathcal C)=\bigcap_{\substack{\mathcal A\supseteq\mathcal C\\\mathcal A\text{ 为 }\sigma\text{-代数}}}\mathcal A,
+\qquad\mathcal B(X)=\sigma\{U\subset X:U\text{ 开}\}.
+\]
+映射 $T:(X,\mathcal A)\to(Y,\mathcal B)$ 可测指 $T^{-1}(B)\in\mathcal A$ 对所有 $B\in\mathcal B$ 成立。若 $\mathcal B=\sigma(\mathcal C)$，只需验证生成族中的原像；$\mathcal B(\mathbb R)=\sigma\{(-\infty,a):a\in\mathbb Q\}$。
+\subsection{Dynkin定理与单调类}\index{Dynkin定理与单调类|hyperpage}
+$\pi$ 系统对有限交封闭；$\lambda$ 系统含 $X$，对补集和可数不交并封闭。若 $\mathcal P$ 为 $\pi$ 系统，则
+\[
+\lambda(\mathcal P)=\sigma(\mathcal P).
+\]
+两个有限测度若总质量相等且在生成 $\sigma$-代数的 $\pi$ 系统上一致，则处处一致。由代数 $\mathcal R$ 生成的单调类等于 $\sigma(\mathcal R)$；该原则也用于把简单函数上的积分恒等式推广到有界可测函数。
+\subsection{预测度、外测度与Carathéodory延拓}\index{预测度、外测度与Carathéodory延拓|hyperpage}
+代数上的预测度 $\mu_0$ 对并仍在代数内的可数不交并可加。定义
+\[
+\mu^*(E)=\inf_{E\subseteq\bigcup_jA_j,\ A_j\in\mathcal R}\sum_j\mu_0(A_j).
+\]
+外测度为零于空集、单调且可数次可加。Carathéodory 条件为
+\[
+A\in\mathcal M_{\mu^*}\iff
+\mu^*(E)=\mu^*(E\cap A)+\mu^*(E\setminus A)\quad(\forall E\subset X).
+\]
+$\mu^*|_{\mathcal M_{\mu^*}}$ 为完备测度并延拓 $\mu_0$；预测度 $\sigma$-有限时，在 $\sigma(\mathcal R)$ 上的延拓唯一。
+\subsection{连续性、完备化与零测集}\index{连续性、完备化与零测集|hyperpage}
+\begin{gather*}
+E_n\uparrow E\Rightarrow\mu(E_n)\uparrow\mu(E),\qquad
+E_n\downarrow E,\ \mu(E_1)<\infty\Rightarrow\mu(E_n)\downarrow\mu(E),\\
+\bar{\mathcal A}=\{A\mathbin\triangle N:A\in\mathcal A,\ N\subset Z\in\mathcal A,\ \mu(Z)=0\}.
+\end{gather*}
+完备化测度满足 $\bar\mu(A\triangle N)=\mu(A)$。若 $\sum_n\mu(E_n)<\infty$，则 $\mu(\limsup E_n)=0$；这是不需要独立性的 Borel--Cantelli 方向。
+\section{积分及极限交换}
+\subsection{简单函数逼近与可积性}\index{简单函数逼近与可积性|hyperpage}
+非负函数总可由非负简单函数递增逼近，积分定义为
+\[
+\int f\,\mathrm d\mu=\sup_{0\le s\le f,\ s\text{ 简单}}\int s\,\mathrm d\mu,
+\qquad\int\sum_i a_i\bm1_{A_i}\,\mathrm d\mu=\sum_i a_i\mu(A_i)
+\]
+（第二式的 $A_i$ 两两不交）。实函数可积当且仅当 $\int|f|<\infty$，此时 $\int f=\int f^+-\int f^-$；$\infty-\infty$ 不定义。复函数分别积分实部与虚部。
+\subsection{收敛定理与级数积分}\index{收敛定理与级数积分|hyperpage}
+\begin{gather*}
+0\le f_n\uparrow f\Rightarrow\int f_n\uparrow\int f,\qquad
+\int\liminf f_n\le\liminf\int f_n\quad(f_n\ge0),\\
+f_n\to f\ \text{a.e.},\quad |f_n|\le g\in L^1
+\Rightarrow\|f_n-f\|_1\to0.
+\end{gather*}
+非负级数可逐项积分；一般级数若 $\sum_n\int|f_n|<\infty$，则 $\sum_nf_n$ a.e. 绝对收敛且 $\int\sum_nf_n=\sum_n\int f_n$。反向 Fatou 估计需要共同可积上界等条件。
+\subsection{层蛋糕、分布函数与积分绝对连续性}\index{层蛋糕、分布函数与积分绝对连续性|hyperpage}
+对 $p>0$，
+\[
+\int|f|^p=p\int_0^\infty t^{p-1}\mu(|f|>t)\,\mathrm dt,\qquad
+\mu(|f|>t)\le t^{-p}\|f\|_p^p.
+\]
+若 $f\in L^1$，则 $\forall\varepsilon>0\ \exists\delta>0$，使 $\mu(A)<\delta\Rightarrow\int_A|f|<\varepsilon$；此结论不要求 $\mu(X)<\infty$。另有 $\int_{|f|>K}|f|\to0$。
+\subsection{Hölder、Minkowski与Lp结构}\index{Hölder、Minkowski与Lp结构|hyperpage}
+对 $1\le p\le\infty$、$1/p+1/q=1$，
+\[
+\|fg\|_1\le\|f\|_p\|g\|_q,\qquad
+\|f+g\|_p\le\|f\|_p+\|g\|_p.
+\]
+$L^p$ 完备；$0<\mu(X)<\infty$ 时 $\|f\|_p\le\mu(X)^{1/p-1/r}\|f\|_r$（$p\le r$）。$0<p<1$ 时一般只有 $\|f+g\|_p^p\le\|f\|_p^p+\|g\|_p^p$，不能沿用范数三角不等式。$\sigma$-有限空间上 $(L^p)^*=L^q$（$1\le p<\infty$，端点 $p=1$ 取 $q=\infty$）。
+\section{乘积、推前与条件测度}
+\subsection{乘积测度与Tonelli--Fubini}\index{乘积测度与Tonelli-Fubini|hyperpage}
+对两个 $\sigma$-有限测度空间，矩形规则 $(\mu\otimes\nu)(A\times B)=\mu(A)\nu(B)$ 唯一确定乘积测度。对非负 $f$ 或 $f\in L^1(\mu\otimes\nu)$，
+\[
+\int f\,\mathrm d(\mu\otimes\nu)
+=\int_X\left(\int_Yf(x,y)\,\mathrm d\nu(y)\right)\mathrm d\mu(x).
+\]
+非负情形允许无穷值；可积情形保证截面几乎处处可积。完备化后的乘积 $\sigma$-代数可能严格大于原乘积 $\sigma$-代数，截面结论相应按几乎处处解释。
+\subsection{推前、密度变换与Jacobian}\index{推前、密度变换与Jacobian|hyperpage}
+\[
+T_\#\mu(B)=\mu(T^{-1}B),\quad
+\int g\,\mathrm d(T_\#\mu)=\int g\circ T\,\mathrm d\mu,\quad
+(S\circ T)_\#\mu=S_\#(T_\#\mu).
+\]
+若 $T:U\to V$ 为欧氏开集间的 $C^1$ 微分同胚，$\mu=f(x)\,\mathrm dx$，则
+\[
+\frac{\mathrm d(T_\#\mu)}{\mathrm dy}(y)
+=f(T^{-1}y)|\det DT^{-1}(y)|.
+\]
+非单射映射需按各逆分支求和，不能直接以单个逆函数替代。
+\subsection{概率核与核的复合}\index{概率核与核的复合|hyperpage}
+概率核 $K(x,B)$ 对固定 $x$ 为概率测度、对固定 $B$ 为可测函数。定义
+\[
+(\mu K)(B)=\int K(x,B)\,\mathrm d\mu(x),\qquad
+(KL)(x,C)=\int L(y,C)K(x,\mathrm dy).
+\]
+核满足结合律 $(\mu K)L=\mu(KL)$。联合测度可由 $\pi(\mathrm dx,\mathrm dy)=\mu(\mathrm dx)K(x,\mathrm dy)$ 构造，且 $\int f\,\mathrm d\pi=\int\int f(x,y)K(x,\mathrm dy)\mu(\mathrm dx)$，对非负或可积 $f$ 成立。
+\subsection{分解定理与正则条件分布}\index{分解定理与正则条件分布|hyperpage}
+标准 Borel 空间上的联合概率 $\pi$、第一边际 $\mu$ 存在概率核 $K$，使
+\[
+\pi(A\times B)=\int_AK(x,B)\,\mathrm d\mu(x),\qquad
+E[g(Y)\mid X]=\int g(y)K(X,\mathrm dy).
+\]
+核在 $\mu$-a.e. 意义下唯一。此为测度分解（disintegration）及正则条件分布；标准 Borel 等正则性条件不能在任意可测空间上直接删除。条件在零概率事件 $X=x$ 上的值依赖核的版本。
+\section{符号、复测度与Radon--Nikodym理论}
+\subsection{Hahn--Jordan分解与全变差}\index{Hahn-Jordan分解与全变差|hyperpage}
+有限符号测度存在 Hahn 分解 $X=P\sqcup N$，在 $P$ 的可测子集上非负、在 $N$ 上非正。于是
+\[
+\nu=\nu^+-\nu^-,\quad\nu^+\perp\nu^-,\qquad
+|\nu|(A)=\sup_{A=\bigsqcup_jA_j}\sum_j|\nu(A_j)|.
+\]
+实情形 $|\nu|=\nu^++\nu^-$；复测度同样用分割定义全变差。对有限复测度有极分解 $\mathrm d\nu=h\,\mathrm d|\nu|$，其中 $|h|=1$，$|\nu|$-a.e.。
+\subsection{Radon--Nikodym与Lebesgue分解}\index{Radon-Nikodym与Lebesgue分解|hyperpage}
+若 $\mu,\nu$ 为 $\sigma$-有限正测度，$\nu\ll\mu$，则 $\nu=h\mu$，$h=\mathrm d\nu/\mathrm d\mu\ge0$。对有限符号或复测度，
+\[
+\nu=h\mu+\nu_s,\quad h\in L^1(\mu),\quad\nu_s\perp\mu,
+\qquad |h\mu|=|h|\mu.
+\]
+分解及密度在相应几乎处处意义下唯一。绝对连续与互相奇异是关于两测度的关系，不能由是否有 Lebesgue 密度以外的单一表象判断。
+\subsection{密度链式法则与测度等价}\index{密度链式法则与测度等价|hyperpage}
+对链式绝对连续的 $\sigma$-有限正测度，
+\[
+\frac{\mathrm d\lambda}{\mathrm d\mu}
+=\frac{\mathrm d\lambda}{\mathrm d\nu}\frac{\mathrm d\nu}{\mathrm d\mu},\qquad
+\frac{\mathrm d\mu}{\mathrm d\nu}=\left(\frac{\mathrm d\nu}{\mathrm d\mu}\right)^{-1}
+\]
+后式要求 $\mu\sim\nu$，即互相绝对连续；等式按相应测度 a.e. 成立。若 $\nu=h\mu$，则 $\nu\sim\mu$ 当且仅当 $h>0$ $\mu$-a.e.；仅有 $h\ge0$ 不够。
+\subsection{条件期望作为密度与投影}\index{条件期望作为密度与投影|hyperpage}
+概率空间上 $f\in L^1$、$\mathcal G\subset\mathcal A$，条件期望由
+\[
+\int_G E[f\mid\mathcal G]\,\mathrm dP=\int_Gf\,\mathrm dP\quad(G\in\mathcal G)
+\]
+及 $\mathcal G$ 可测性确定。塔式法则、收缩性及条件 Jensen 为
+\[
+E[E[f\mid\mathcal H]\mid\mathcal G]=E[f\mid\mathcal G]\ (\mathcal G\subset\mathcal H),\quad
+\|E[f\mid\mathcal G]\|_p\le\|f\|_p,
+\]
+\[
+\Phi(E[f\mid\mathcal G])\le E[\Phi(f)\mid\mathcal G].
+\]
+最后一式要求凸 $\Phi$ 及相关可积性；在 $L^2$ 中条件期望是到 $L^2(\mathcal G)$ 的正交投影。
+\section{函数列与测度列的收敛}
+\subsection{依测度收敛与子列原则}\index{依测度收敛与子列原则|hyperpage}
+\[
+f_n\to f\text{ 依测度}\iff\mu(|f_n-f|>\varepsilon)\to0\quad(\forall\varepsilon>0).
+\]
+依测度收敛可选取 a.e. 收敛子列；有限测度时 a.e. 收敛蕴含依测度收敛。有限测度空间上可用度量 $d(f,g)=\int\min(1,|f-g|)\,\mathrm d\mu$ 刻画依测度收敛。无限测度时须区分全局依测度与局部依测度。
+\subsection{Egorov、Lusin与Vitali判别}\index{Egorov、Lusin与Vitali判别|hyperpage}
+有限测度时，若有限值函数列 a.e. 收敛到有限值函数，则去掉任意小测度集合后变为一致收敛（Egorov）。有限 Radon 测度下，可测有限值函数可在质量任意接近全体的紧集上连续（Lusin）。有限测度空间上定义
+\[
+\mathcal F\text{ 一致可积}\iff
+\lim_{K\to\infty}\sup_{f\in\mathcal F}\int_{|f|>K}|f|\,\mathrm d\mu=0.
+\]
+若 $f_n\to f$ 依测度，则 $f_n\to f$ 于 $L^1$ 当且仅当 $\{f_n\}$ 一致可积。无限测度空间通常还需防止质量逃向无穷远的条件。
+\subsection{窄收敛与Portmanteau定理}\index{窄收敛与Portmanteau定理|hyperpage}
+度量空间上概率测度的窄收敛定义为 $\mu_n\Rightarrow\mu$，即 $\int f\,\mathrm d\mu_n\to\int f\,\mathrm d\mu$ 对每个 $f\in C_b$ 成立。等价条件包括
+\begin{gather*}
+\limsup_n\mu_n(F)\le\mu(F)\quad(F\text{ 闭}),\qquad
+\liminf_n\mu_n(G)\ge\mu(G)\quad(G\text{ 开}),\\
+\mu_n(A)\to\mu(A)\quad\text{若 }\mu(\partial A)=0.
+\end{gather*}
+相应下半连续有下界函数满足 $\int f\,\mathrm d\mu\le\liminf_n\int f\,\mathrm d\mu_n$。非紧空间上只以 $C_c$ 测试的模糊收敛较弱，可能丢失总质量。
+\subsection{紧性、Prokhorov与连续映射}\index{紧性、Prokhorov与连续映射|hyperpage}
+Polish 空间上，概率测度族紧（tight）指任意 $\varepsilon>0$ 有紧集 $K$ 使 $\sup_\nu\nu(X\setminus K)<\varepsilon$。Prokhorov 定理为
+\[
+\text{紧性}\iff\text{在窄拓扑下相对紧}.
+\]
+连续 $T$ 保持窄收敛：$\mu_n\Rightarrow\mu\Rightarrow T_\#\mu_n\Rightarrow T_\#\mu$；若 $T$ 可测且不连续点集为 $\mu$-零测，也有连续映射定理的相应版本。
+\section{Radon测度与距离}
+\subsection{正则性与Riesz--Markov表示}\index{正则性与Riesz-Markov表示|hyperpage}
+局部紧 Hausdorff 空间上的 Radon 测度局部有限、在 Borel 集上内正则并具有相应外正则性。对有限 Radon 测度，
+\[
+\mu(A)=\sup_{K\subset A,\ K\text{ 紧}}\mu(K)
+=\inf_{U\supset A,\ U\text{ 开}}\mu(U).
+\]
+$C_0(X)$ 的有界线性泛函唯一表示为有限正则符号或复测度的积分，且 $\|\varphi_\nu\|=|\nu|(X)$；正泛函对应正测度。
+\subsection{全变差距离与密度公式}\index{全变差距离与密度公式|hyperpage}
+概率测度的全变差距离约定为
+\[
+d_{\rm TV}(\mu,\nu)=\sup_A|\mu(A)-\nu(A)|
+=\tfrac12|\mu-\nu|(X)=\tfrac12\int|f-g|\,\mathrm d\lambda
+\]
+（$\mu=f\lambda,\nu=g\lambda$）。另有 $\sup_{\|h\|_\infty\le1}|\int h\,\mathrm d(\mu-\nu)|=2d_{\rm TV}$；因子二依约定而变。任意概率核满足 $d_{\rm TV}(\mu K,\nu K)\le d_{\rm TV}(\mu,\nu)$。
+\subsection{相对熵与Pinsker不等式}\index{相对熵与Pinsker不等式|hyperpage}
+\[
+D(\mu\Vert\nu)=\begin{cases}\displaystyle\int\log\frac{\mathrm d\mu}{\mathrm d\nu}\,\mathrm d\mu,&\mu\ll\nu,\\+\infty,&\text{否则},\end{cases}
+\qquad d_{\rm TV}(\mu,\nu)\le\sqrt{D(\mu\Vert\nu)/2}.
+\]
+使用自然对数，$D\ge0$，等号当且仅当两概率测度相等。可测推前或概率核满足数据处理不等式 $D(\mu K\Vert\nu K)\le D(\mu\Vert\nu)$。相对熵一般不对称，也不满足距离三角不等式。
+\subsection{Wasserstein距离与一维分位数}\index{Wasserstein距离与一维分位数|hyperpage}
+Polish 度量空间上的有限 $p$ 阶矩概率测度，$p\ge1$，定义
+\[
+W_p(\mu,\nu)^p=\inf_{\pi\in\Pi(\mu,\nu)}\int d(x,y)^p\,\mathrm d\pi(x,y).
+\]
+$\Pi$ 为具有给定边际的耦合集。一维上有
+\[
+W_p^p=\int_0^1|F_\mu^{-1}(t)-F_\nu^{-1}(t)|^p\,\mathrm dt,\qquad
+W_1=\sup_{\operatorname{Lip}(f)\le1}\left|\int f\,\mathrm d(\mu-\nu)\right|.
+\]
+$W_p$ 收敛等价于窄收敛加关于固定基点的 $p$ 阶矩收敛；仅窄收敛不足以控制高阶矩。
+\section{几何微分与不变测度}
+\subsection{Lebesgue--Stieltjes测度与分布函数}\index{Lebesgue-Stieltjes测度与分布函数|hyperpage}
+右连续递增函数 $F$ 定义 $\mu_F((a,b])=F(b)-F(a)$；局部有界保证局部有限。原子及分解为
+\[
+\mu_F(\{x\})=F(x)-F(x-),\qquad
+\mathrm dF=F'(x)\,\mathrm dx+\mu_{\rm sc}+\sum_x(F(x)-F(x-))\delta_x.
+\]
+后式对局部有限测度按局部分解解释，$\mu_{\rm sc}$ 奇异且无原子。单调函数 a.e. 可导，但导数积分可能漏掉奇异连续部分和跳跃部分。
+\subsection{测度微分与Lebesgue分解的点态恢复}\index{测度微分与Lebesgue分解的点态恢复|hyperpage}
+若 $\nu=f\,m+\nu_s$ 为 $\mathbb R^d$ 上局部有限正 Radon 测度的 Lebesgue 分解，则
+\[
+\lim_{r\downarrow0}\frac{\nu(B(x,r))}{m(B(x,r))}=f(x)\quad m\text{-a.e.}
+\]
+对 $f\in L^1_{\rm loc}$，几乎每点满足
+\[
+\lim_{r\downarrow0}\frac1{|B(x,r)|}\int_{B(x,r)}|f(y)-f(x)|\,\mathrm dy=0.
+\]
+该结论依赖欧氏球的覆盖性质；在任意度量空间上需额外假设。
+\subsection{面积与余面积公式}\index{面积与余面积公式|hyperpage}
+本小节 $\mathcal H^j_{\rm norm}$ 采用在 $j$ 维平面上等于 Lebesgue 测度的归一化。Lipschitz 映射 $F:\mathbb R^m\to\mathbb R^n$、$m\le n$ 满足面积公式
+\[
+\int_Ag(x)J_mF(x)\,\mathrm dx
+=\int_{\mathbb R^n}\sum_{x\in A\cap F^{-1}(y)}g(x)\,\mathrm d\mathcal H^m_{\rm norm}(y),
+\quad J_mF=\sqrt{\det(DF^{\mathsf T}DF)}.
+\]
+对 Lipschitz $F:\mathbb R^n\to\mathbb R^m$、$n\ge m$，余面积公式为
+\[
+\int_AgJ_mF\,\mathrm dx
+=\int_{\mathbb R^m}\int_{A\cap F^{-1}(y)}g\,\mathrm d\mathcal H^{n-m}_{\rm norm}\,\mathrm dy,
+\quad J_mF=\sqrt{\det(DFDF^{\mathsf T})}.
+\]
+取非负 Borel $g$、Borel $A$；导数按 a.e. 可微性解释。不同 Hausdorff 归一化会改变常数。
+\subsection{Haar测度与群上的积分}\index{Haar测度与群上的积分|hyperpage}
+局部紧 Hausdorff 群 $G$ 存在非零左不变 Radon 测度，且在正数倍意义下唯一：$\mu(gA)=\mu(A)$。紧群可归一化为 $\mu(G)=1$，此时也是右不变。对紧群，
+\[
+\int f(gx)\,\mathrm d\mu(x)=\int f(xg)\,\mathrm d\mu(x)=\int f(x)\,\mathrm d\mu(x),\qquad
+\int f(x^{-1})\,\mathrm d\mu(x)=\int f(x)\,\mathrm d\mu(x).
+\]
+一般非紧群不必左右不变；需使用模函数记录右平移下的缩放。群上的 Fourier 公式见\hyperref[chap:harmonic-analysis]{调和分析}。
+% References: https://matheron.perso.math.cnrs.fr/recherche_fichiers/PetitMachin.pdf
+% https://sites.math.washington.edu/~rtr/papers/rtr073-IntegralFnlsNormalIntegrands.pdf
+% https://www-dimat.unipv.it/~rigo/skorsankhya.pdf
+\section{无限乘积与测度的等价性}
+\subsection{Kolmogorov一致性与柱集}\index{Kolmogorov一致性与柱集|hyperpage}
+对标准 Borel 空间 $E_t$，若有限指标集上的概率 $\mu_F$ 满足投影一致性 $({\rm pr}_F)_\#\mu_G=\mu_F$（$F\subset G$），则存在唯一乘积 $\sigma$-代数上的概率 $\mu$，使
+\[
+\mu\bigl(\{x:(x_t)_{t\in F}\in A\}\bigr)=\mu_F(A).
+\]
+这构造随机过程的有限维分布；连续轨道等路径性质还需额外正则性，不能由一致性单独推出。不可数乘积的柱集 $\sigma$-代数也不应无条件认作任意乘积拓扑的 Borel 集。
+\subsection{Ionescu--Tulcea逐步核构造}\index{Ionescu-Tulcea逐步核构造|hyperpage}
+给定初始概率 $\mu_0$ 及从历史 $(x_0,\ldots,x_{n-1})$ 到下一坐标的概率核 $K_n$，有唯一可数乘积概率满足
+\[
+\mu(\mathrm dx_0\cdots\mathrm dx_n)
+=\mu_0(\mathrm dx_0)\prod_{j=1}^nK_j(x_0,\ldots,x_{j-1};\mathrm dx_j).
+\]
+右端表示逐次核积分，不是普通密度乘法。该构造允许依赖全部历史；只有核仅依赖最后一坐标时才是相应 Markov 结构。
+\subsection{Hellinger亲和与Kakutani二分}\index{Hellinger亲和与Kakutani二分|hyperpage}
+若每个 $\mu_n\sim\nu_n$ 为概率，取共同支配测度 $\lambda_n$，令
+\[
+a_n=\int\sqrt{\frac{\mathrm d\mu_n}{\mathrm d\lambda_n}
+\frac{\mathrm d\nu_n}{\mathrm d\lambda_n}}\,\mathrm d\lambda_n.
+\]
+则 $\bigotimes_n\mu_n\sim\bigotimes_n\nu_n$ 当且仅当 $\prod_na_n>0$，否则两乘积测度互相奇异。等价条件是 $\sum_n-\log a_n<\infty$。有限维每一对测度均等价，不保证无限乘积仍等价。
+\subsection{高斯乘积的平移准不变性}\index{高斯乘积的平移准不变性|hyperpage}
+设 $\gamma=\bigotimes_nN(0,\sigma_n^2)$、$\sigma_n>0$，$\gamma_h$ 为坐标平移 $x\mapsto x+h$ 的推前。则
+\[
+\gamma_h\sim\gamma\iff\sum_n\frac{h_n^2}{\sigma_n^2}<\infty,
+\qquad
+\frac{\mathrm d\gamma_h}{\mathrm d\gamma}(x)
+=\exp\left(\sum_n\frac{h_nx_n}{\sigma_n^2}-\frac12\sum_n\frac{h_n^2}{\sigma_n^2}\right).
+\]
+在有限和条件下，随机级数按 $L^2(\gamma)$ 及 a.s. 收敛解释；指数密度由有限维密度的 $L^1$ 极限得到。不满足条件时两测度奇异。
+\section{无原子结构与可测选择}
+\subsection{无原子测度的可分割性}\index{无原子测度的可分割性|hyperpage}
+有限正测度无原子时，任意可测 $A$ 及 $0\le t\le\mu(A)$，存在 $B\subset A$ 可测且
+\[
+\mu(B)=t.
+\]
+原子是正测度、其任意可测子集质量只能为零或全质量的集合。有限可测分割可按指定非负质量构造；若存在原子，任意分割质量的结论可能失效。
+\subsection{测度代数与集合收敛}\index{测度代数与集合收敛|hyperpage}
+有限测度空间中将相差零测集的可测集视为同一元素，得到完备度量
+\[
+d_\mu([A],[B])=\mu(A\triangle B)
+=\|\bm1_A-\bm1_B\|_{L^1(\mu)}.
+\]
+由集合的 Cauchy 列可选取子列满足 $\sum_j\mu(A_{n_{j+1}}\triangle A_{n_j})<\infty$，从而示性函数 a.e. 稳定。一般度量收敛只保证可选 a.e. 收敛子列，不保证整个序列逐点稳定。
+\subsection{Lyapunov向量测度凸性}\index{Lyapunov向量测度凸性|hyperpage}
+令 $m(A)=(\int_Af_1\,\mathrm d\mu,\ldots,\int_Af_k\,\mathrm d\mu)$，其中 $f_i\in L^1$、$\mu$ 有限无原子。则
+\[
+\{m(A):A\in\mathcal A\}
+=\left\{\int h(f_1,\ldots,f_k)\,\mathrm d\mu:0\le h\le1\right\}
+\]
+为紧凸集。这把有限个积分约束下的分数选择替换为集合选择；有限维性与无原子性重要，一般无限维向量测度不自动具有相同的凸值域结论。
+\subsection{闭值映射的可测选择}\index{闭值映射的可测选择|hyperpage}
+设 $Y$ 为 Polish 空间，$F(x)\subset Y$ 非空闭，且对任意开集 $U$，$\{x:F(x)\cap U\ne\varnothing\}$ 可测。则存在可测 $f(x)\in F(x)$，并可选取可数个可测选择使
+\[
+F(x)=\overline{\{f_1(x),f_2(x),\ldots\}}.
+\]
+前者是 Kuratowski--Ryll-Nardzewski 定理，后者为 Castaing 表示。只给每个点的非空值而不检查可测性，不能保证选择函数可测。
+\section{Banach值可测性与积分}\label{sec:measure-vector}
+\subsection{Pettis可测性判别}\index{Pettis可测性判别|hyperpage}
+对完备测度空间及 Banach 空间 $B$，$f:X\to B$ 强可测指它为简单 $B$ 值函数的 a.e. 范数极限。Pettis 判别为
+\[
+f\text{ 强可测}\iff f\text{ 弱可测且本质可分值}.
+\]
+弱可测要求每个 $b^*\in B^*$ 的 $b^*\circ f$ 可测；本质可分值要求去掉零测集后像包含于可分子空间。一般不可分空间中，弱可测本身不够。
+\subsection{Bochner积分与支配收敛}\index{Bochner积分与支配收敛|hyperpage}
+强可测 $f$ Bochner 可积当且仅当 $\int\|f\|_B<\infty$，并有
+\[
+\left\|\int f\,\mathrm d\mu\right\|_B\le\int\|f\|_B\,\mathrm d\mu,\qquad
+T\int f\,\mathrm d\mu=\int Tf\,\mathrm d\mu
+\]
+对有界线性 $T$ 成立。若 $f_n\to f$ a.e. 于范数且 $\|f_n\|\le g\in L^1$，则 $\int\|f_n-f\|\to0$。这为抽象演化方程中的时间积分提供范数意义。
+\subsection{Pettis积分与标量测试}\index{Pettis积分与标量测试|hyperpage}
+弱可测 $f$ Pettis 可积，要求每个标量函数 $b^*f$ 可积，且对每个可测 $A$ 存在 $I_A\in B$ 满足
+\[
+b^*(I_A)=\int_Ab^*(f)\,\mathrm d\mu\quad(\forall b^*\in B^*).
+\]
+Bochner 可积蕴含 Pettis 可积；逆命题一般不成立。仅得到 $B^{**}$ 中的积分表示还不够，Pettis 定义要求代表向量属于 $B$ 本身。
+\subsection{向量Radon--Nikodym性质}\index{向量Radon-Nikodym性质|hyperpage}
+有限变差、可数可加的 $B$ 值向量测度 $m\ll\mu$，若 $B$ 具有 Radon--Nikodym 性质，则存在 Bochner 可积 $g$ 使
+\[
+m(A)=\int_Ag\,\mathrm d\mu,\qquad |m|(A)=\int_A\|g\|_B\,\mathrm d\mu.
+\]
+这里 $\mu$ 为有限正测度，$|m|$ 由可测分割的范数和定义。自反 Banach 空间具有该性质；不能把标量密度定理无条件移植到任意 Banach 空间。
+\section{概率测度的度量、表示与弱紧性}
+\subsection{有界Lipschitz与Prokhorov距离}\index{有界Lipschitz与Prokhorov距离|hyperpage}
+Polish 空间上的概率可用
+\[
+d_{\rm BL}(\mu,\nu)=\sup_{\|f\|_\infty+\operatorname{Lip}(f)\le1}
+\left|\int f\,\mathrm d(\mu-\nu)\right|
+\]
+度量窄收敛。Prokhorov 距离是使 $\mu(A)\le\nu(A^\varepsilon)+\varepsilon$ 及交换后的不等式对所有 Borel 集成立的 $\varepsilon>0$ 的下确界；$A^\varepsilon=\{x:d(x,A)<\varepsilon\}$。两者均刻画窄拓扑，但不等于全变差距离。
+\subsection{Skorokhod共同空间表示}\index{Skorokhod共同空间表示|hyperpage}
+若 Polish 空间上 $\mu_n\Rightarrow\mu$，可在某个共同概率空间构造随机元 $X_n,X$，使
+\[
+\mathcal L(X_n)=\mu_n,\qquad\mathcal L(X)=\mu,\qquad X_n\to X\quad\text{a.s.}
+\]
+这是重新耦合后的表示，不意味着原有概率空间上的随机元自动 a.s. 收敛，也不保持任意预先指定的联合依赖关系。
+\subsection{最大耦合与全变差}\index{最大耦合与全变差|hyperpage}
+标准 Borel 空间上两个概率满足
+\[
+d_{\rm TV}(\mu,\nu)=\min_{\pi\in\Pi(\mu,\nu)}\pi\{(x,y):x\ne y\}.
+\]
+若 $\mu=f\lambda,\nu=g\lambda$，共同部分质量为 $\int\min(f,g)\,\mathrm d\lambda=1-d_{\rm TV}(\mu,\nu)$。此质量放在对角线上可构造最大耦合；一般给定耦合仅给上界 $d_{\rm TV}\le P(X\ne Y)$。
+\subsection{Dunford--Pettis弱紧性判据}\index{Dunford-Pettis弱紧性判据|hyperpage}
+有限测度空间中，$\mathcal F\subset L^1$ 相对弱紧，当且仅当它一致可积，即
+\[
+\lim_{K\to\infty}\sup_{f\in\mathcal F}\int_{|f|>K}|f|\,\mathrm d\mu=0.
+\]
+有限测度使该条件同时给出 $L^1$ 有界性。它是弱紧性判据，不能代替\hyperref[sec:ra-compactness]{实分析}中控制平移振荡的强紧性判据；无限测度版本需额外空间尾部控制。
+
+\section{一致可积性、熵与传输对偶补充}
+概率测度与条件积分参见\cite{durrett}，传输与熵的变分形式参见\cite{villani}。
+\subsection{de la Vallée Poussin一致可积性判据}\index{de la Vallée Poussin一致可积性判据|hyperpage}
+概率空间上函数族 $\mathcal F\subset L^1$ 一致可积，当且仅当存在递增凸函数 $\Phi:[0,\infty)\to[0,\infty)$，满足
+\[
+\frac{\Phi(t)}t\longrightarrow\infty,\qquad
+\sup_{f\in\mathcal F}\int\Phi(|f|)\,\mathrm d\mu<\infty.
+\]
+例如统一 $L^{1+\delta}$ 界足够，而仅统一 $L^1$ 界不够。空间测度有限是该表述的重要背景；无限测度时还要检查质量逃向无穷远。
+\subsection{相对熵的Gibbs变分公式}\index{相对熵的Gibbs变分公式|hyperpage}
+概率测度 $\nu,\mu$ 的相对熵满足
+\[
+D(\nu\Vert\mu)=\sup_{f\text{ 有界可测}}
+\left\{\int f\,\mathrm d\nu-\log\int e^f\,\mathrm d\mu\right\}.
+\]
+若 $\nu\not\ll\mu$，两边取 $+\infty$。对有界可测 $g$，还可写
+\[
+\log\int e^g\,\mathrm d\mu
+=\sup_\nu\left\{\int g\,\mathrm d\nu-D(\nu\Vert\mu)\right\}.
+\]
+极值概率为 $\mathrm d\nu=e^g\mathrm d\mu/\int e^g\mathrm d\mu$；无界函数须另外检查指数可积性。
+\subsection{熵的边缘与条件链式法则}\index{熵的边缘与条件链式法则|hyperpage}
+标准 Borel 乘积空间上，设概率 $P\ll Q$，其分解为 $P_XP(\mathrm dy\mid x)$ 与 $Q_XQ(\mathrm dy\mid x)$。则
+\[
+D(P\Vert Q)=D(P_X\Vert Q_X)
++\int D\bigl(P(\cdot\mid x)\Vert Q(\cdot\mid x)\bigr)\,P_X(\mathrm dx).
+\]
+按扩展非负实数理解，可由密度的乘法分解和积分得到；特别地，取边缘不会增加相对熵。条件核只要求在相应几乎处处意义下定义。
+\subsection{Kantorovich--Rubinstein一阶传输对偶}\index{Kantorovich-Rubinstein一阶传输对偶|hyperpage}
+Polish 度量空间 $(X,d)$ 上的概率 $\mu,\nu$ 均有有限一阶矩时，
+\[
+W_1(\mu,\nu)=\sup_{\operatorname{Lip}(f)\le1}
+\left|\int f\,\mathrm d\mu-\int f\,\mathrm d\nu\right|.
+\]
+可固定一点 $x_0$ 并要求 $f(x_0)=0$；一阶矩保证积分有限。这里不额外限制 $\|f\|_\infty\le1$，故它与有界 Lipschitz 距离不同。
+\clearpage
+\end{document}

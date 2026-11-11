@@ -1,0 +1,293 @@
+\documentclass[../main.tex]{subfiles}
+\begin{document}
+本章主要参考\cite{milneCA,stacks}。
+
+% Reference: https://www.jmilne.org/math/xnotes/CA.pdf
+\section{模、子模与同态}
+\subsection{模与生成集}\index{模与生成集|hyperpage}
+本章 $R$ 为含单位交换环，$R$-模 $M$ 是带有数乘的 Abel 群，满足分配律、$(rs)m=r(sm)$ 及 $1m=m$。域上的模即向量空间，$\mathbb Z$-模即 Abel 群。
+\[
+\langle m_1,\ldots,m_r\rangle_R=\left\{\sum_{i=1}^ra_im_i:a_i\in R\right\},\qquad
+\operatorname{Ann}_R(M)=\{r:rM=0\}.
+\]
+若有限多个元素生成 $M$，称有限生成。子模对加法与数乘封闭；有限生成模的子模在一般环上不一定有限生成。
+\subsection{商模与同构定理}\index{商模与同构定理|hyperpage}
+$R$-线性映射 $f:M\to N$ 满足 $f(am+bn)=af(m)+bf(n)$，其核、像均为子模，并有
+\[
+M/\ker f\cong\operatorname{im}f,\qquad
+(A+B)/B\cong A/(A\cap B),\qquad
+(M/A)/(B/A)\cong M/B\quad(A\subseteq B\subseteq M).
+\]
+这些是模范畴中的同构，包含向量空间及 Abel 群的相应公式。
+\subsection{直和、直积与正合列}\index{直和、直积与正合列|hyperpage}
+\[
+\bigoplus_{i\in I}M_i=\{(m_i)\in\prod_iM_i:\text{仅有限个 }m_i\ne0\}.
+\]
+有限指标集时直和等于直积，无限指标集时通常不同。短正合列
+\[
+0\to A\xrightarrow{i}B\xrightarrow{p}C\to0
+\]
+表示 $i$ 单射、$p$ 满射且 $\operatorname{im}i=\ker p$。它分裂当且仅当存在 $s:C\to B$ 使 $ps=\operatorname{id}_C$，此时 $B\cong A\oplus C$；一般短正合列不一定分裂。
+\section{自由模与PID上的结构}
+\subsection{自由模、关系与秩}\index{自由模、关系与秩|hyperpage}
+有一组基、使每个元素可唯一表示为基向量的有限线性组合时称自由模。当生成元与关系均有限时，有有限表示
+\[
+R^s\xrightarrow{A}R^r\to M\to0
+\]
+其中 $r,s$ 均有限；一般有限生成模只保证存在 $R^r\twoheadrightarrow M$，其核未必有限生成。
+若 $R$ 为整环、分式域为 $K$，定义 $\operatorname{rank}_R M=\dim_K(K\otimes_RM)$，挠子模为
+\[
+M_{\mathrm{tor}}=\{m:\exists\,0\ne r\in R,\ rm=0\}.
+\]
+无挠不等于自由，除非具有适当的环与有限性条件。
+\subsection{PID上有限生成模结构定理}\index{PID上有限生成模结构定理|hyperpage}
+若 $R$ 为主理想整环，有限生成模唯一分解为
+\[
+M\cong R^r\oplus R/(d_1)\oplus\cdots\oplus R/(d_t),
+\qquad 0\ne d_i\notin R^\times,\quad d_1\mid\cdots\mid d_t,
+\]
+不变因子在相伴意义下唯一。也可分解为素元幂的循环模直和。PID 上自由模的子模仍自由，有限生成无挠模必为自由模。
+取 $R=\mathbb Z$ 得有限生成 Abel 群结构；取 $R=F[x]$、用 $x\cdot v=T(v)$，得到线性算子的有理标准形，分裂时进一步得到 Jordan 结构。
+\section{Hom、张量积与正合性}
+\subsection{Hom函子与张量积}\index{Hom函子与张量积|hyperpage}
+$\operatorname{Hom}_R(M,N)$ 为所有 $R$-线性映射组成的模。张量积 $M\otimes_RN$ 由符号 $m\otimes n$ 生成并施加双线性关系，满足
+\[
+(rm)\otimes n=m\otimes(rn)=r(m\otimes n),\qquad
+\operatorname{Hom}_R(M\otimes_RN,P)\cong\operatorname{Hom}_R(M,\operatorname{Hom}_R(N,P)).
+\]
+\[
+(R/I)\otimes_RM\cong M/IM,\qquad
+S^{-1}R\otimes_RM\cong S^{-1}M,\qquad
+\mathbb Z/m\mathbb Z\otimes_{\mathbb Z}\mathbb Z/n\mathbb Z\cong\mathbb Z/\gcd(m,n)\mathbb Z.
+\]
+张量积不要求张量总能写成单个 $m\otimes n$；一般是这类元素的有限和。
+\subsection{投射、内射、平坦与Tor、Ext}\index{投射、内射、平坦与Tor、Ext|hyperpage}
+给定短正合列 $0\to A\to B\to C\to0$，$\operatorname{Hom}_R(P,-)$ 总左正合，张量函子 $-\otimes_RM$ 总右正合：
+\begin{gather*}
+0\to\operatorname{Hom}_R(P,A)\to\operatorname{Hom}_R(P,B)\to\operatorname{Hom}_R(P,C),\\
+A\otimes_RM\to B\otimes_RM\to C\otimes_RM\to0.
+\end{gather*}
+$P$ 投射指前者还在右端满射；等价于 $P$ 是某自由模的直和因子。$I$ 内射指 $\operatorname{Hom}_R(-,I)$ 将短正合列变为短正合列；$M$ 平坦指张量函子也保持左端单射。
+自由模必投射，投射模必平坦；反向一般不成立。Tor 与 Ext 分别衡量张量与 Hom 的正合性缺失，常用例子（$m,n\ge1$）为
+\[
+\operatorname{Tor}^{\mathbb Z}_1(\mathbb Z/m,\mathbb Z/n)\cong\mathbb Z/\gcd(m,n),\qquad
+\operatorname{Ext}_{\mathbb Z}^1(\mathbb Z/m,\mathbb Z/n)\cong\mathbb Z/\gcd(m,n).
+\]
+\section{有限性与局部方法}
+\subsection{Noether模与Nakayama引理}\index{Noether模与Nakayama引理|hyperpage}
+模为 Noether 当且仅当子模升链稳定，也等价于每个子模有限生成。若 $R$ Noether 且 $M$ 有限生成，则 $M$ Noether。
+在局部环 $(R,\mathfrak m)$ 上，有限生成模满足
+\[
+M=\mathfrak mM\Longrightarrow M=0.
+\]
+这是 Nakayama 引理；等价地，若若干元素的像生成 $M/\mathfrak mM$，则原元素生成 $M$。最小生成元个数为 $\dim_{R/\mathfrak m}(M/\mathfrak mM)$，有限生成假设不可省略。
+\section{生成关系、对偶与结构计算补充}
+\subsection{Hom与直和、商模的基本计算}\index{Hom与直和、商模的基本计算|hyperpage}
+对交换环 $R$，有自然同构
+\begin{gather*}
+\operatorname{Hom}_R(R,M)\cong M,\qquad
+\operatorname{Hom}_R(R/I,M)\cong\{m\in M:Im=0\},\\
+\operatorname{Hom}_R\!\left(\bigoplus_iM_i,N\right)\cong\prod_i\operatorname{Hom}_R(M_i,N),\\
+\operatorname{Hom}_R\!\left(M,\prod_iN_i\right)\cong\prod_i\operatorname{Hom}_R(M,N_i).
+\end{gather*}
+若 $M$ 有限生成，还可将第二变量的直积改成直和；一般无限生成模不能这样交换直和与 Hom。
+
+对正整数 $m,n$，$\operatorname{Hom}_{\mathbb Z}(\mathbb Z/m,\mathbb Z/n)\cong\mathbb Z/\gcd(m,n)$。模同态由生成元的像决定，但这些像须满足全部关系。
+
+\subsection{对偶模、双对偶与有限投射模}\index{对偶模、双对偶与有限投射模|hyperpage}
+定义 $M^*=\operatorname{Hom}_R(M,R)$，自然映射 $M\to M^{**}$ 为 $m\mapsto(\lambda\mapsto\lambda(m))$。它对一般模未必单射或满射；例如 $\operatorname{Hom}_{\mathbb Z}(\mathbb Z/n,\mathbb Z)=0$（$n\ge2$）。
+
+有限生成投射模 $P$ 存在有限对偶基 $p_i\in P$、$\lambda_i\in P^*$，使
+\[
+p=\sum_i\lambda_i(p)p_i\qquad(\forall p\in P).
+\]
+反之存在这样的对偶基则 $P$ 有限生成投射。此时
+\[
+P\cong P^{**},\qquad P^*\otimes_RN\cong\operatorname{Hom}_R(P,N),\quad
+\lambda\otimes n\longmapsto[p\mapsto\lambda(p)n].
+\]
+这些公式不能不加有限投射条件地推广到任意模。
+
+\subsection{Smith标准形与不变因子的计算}\index{Smith标准形与不变因子的计算|hyperpage}
+对 PID 上的 $m\times n$ 矩阵 $A$，存在可逆矩阵 $U,V$ 使
+\[
+UAV=\operatorname{diag}(d_1,\ldots,d_r,0),\qquad
+d_1\mid d_2\mid\cdots\mid d_r,\quad d_i\ne0.
+\]
+相应地，作为 $R^n\to R^m$ 的映射，
+\[
+\operatorname{coker}A\cong R^{m-r}\oplus\bigoplus_{i=1}^rR/(d_i).
+\]
+单位 $d_i$ 给出零直和项。令 $\Delta_j$ 为所有 $j$ 阶子式的最大公因子，$\Delta_0=1$，则
+\[
+\Delta_j\sim d_1\cdots d_j,\qquad d_j\sim\Delta_j/\Delta_{j-1}\quad(1\le j\le r).
+\]
+这同时给出有限生成 Abel 群及 $F[x]$-模的结构算法。只有在 PID 条件下，才可普遍使用这种对角不变因子形式。
+
+\section{张量运算、局部化与有限性补充}
+\subsection{张量积的分配、商与基变换}\index{张量积的分配、商与基变换|hyperpage}
+张量积具有自然的结合、交换与分配同构：
+\begin{gather*}
+(M\otimes_RN)\otimes_RP\cong M\otimes_R(N\otimes_RP),\qquad
+M\otimes_RN\cong N\otimes_RM,\\
+\left(\bigoplus_iM_i\right)\otimes_RN\cong\bigoplus_i(M_i\otimes_RN),\\
+(R/I)\otimes_R(R/J)\cong R/(I+J),\qquad
+(M/A)\otimes_RN\cong(M\otimes_RN)/\operatorname{im}(A\otimes_RN).
+\end{gather*}
+最后式必须取像，因为 $A\otimes_RN\to M\otimes_RN$ 可能不单射。对 $R$-代数 $S$，标量扩张满足
+\[
+(S\otimes_RM)\otimes_S(S\otimes_RN)\cong S\otimes_R(M\otimes_RN).
+\]
+一般张量积不交换无限直积；无限直和与直积的区别在此同样重要。
+
+\subsection{局部化、支集与关联素理想}\index{局部化、支集与关联素理想|hyperpage}
+对素理想 $\mathfrak p$，记 $M_{\mathfrak p}=(R\setminus\mathfrak p)^{-1}M$。局部化保持正合列，且
+\[
+(M\otimes_RN)_{\mathfrak p}\cong M_{\mathfrak p}\otimes_{R_{\mathfrak p}}N_{\mathfrak p}.
+\]
+若 $M$ 有限表示，则还有
+\[
+\operatorname{Hom}_R(M,N)_{\mathfrak p}
+\cong\operatorname{Hom}_{R_{\mathfrak p}}(M_{\mathfrak p},N_{\mathfrak p}).
+\]
+定义 $\operatorname{Supp}M=\{\mathfrak p:M_{\mathfrak p}\ne0\}$；若 $M$ 有限生成，则
+\[
+\operatorname{Supp}M=V(\operatorname{Ann}M)
+=\{\mathfrak p:\operatorname{Ann}M\subseteq\mathfrak p\}.
+\]
+Noether 环上有限生成非零模的关联素理想为 $\operatorname{Ass}M=\{\operatorname{Ann}(m):m\ne0,\operatorname{Ann}(m)\text{ 素}\}$，这是有限非空集合，且属于支集；等价地，$\mathfrak p\in\operatorname{Ass}M$ 当且仅当 $R/\mathfrak p$ 可嵌入 $M$。
+
+\subsection{模长、秩与正合列}\index{模长、秩与正合列|hyperpage}
+有限长度模的长度 $\ell_R(M)$ 为任一合成列的简单因子数。若 $0\to A\to B\to C\to0$ 正合，且长度有限，则
+\[
+\ell_R(B)=\ell_R(A)+\ell_R(C).
+\]
+模有限长度当且仅当同时 Noether 且 Artin。对 PID 的素元 $p$，$\ell_R(R/(p^e))=e$；特别地 $\ell_{\mathbb Z}(\mathbb Z/n)=\sum_pv_p(n)$（$n\ge1$）。域上长度就是向量空间维数。
+
+整环上的有限秩模在正合列中有
+\[
+\operatorname{rank}B=\operatorname{rank}A+\operatorname{rank}C.
+\]
+这是因为张量到分式域保持正合；一般交换环上未经定义不能直接使用单个整数秩。
+
+\subsection{投射、平坦与内射的判别}\index{投射、平坦与内射的判别|hyperpage}
+有限表示模投射当且仅当它在每个极大理想处局部化后为自由模；也等价于有限表示且平坦。有限生成投射模在局部环上自由，其局部秩为局部常值函数，环的谱连通时秩恒定。
+
+Baer 判别准则：$E$ 内射当且仅当每个理想 $I\subseteq R$ 上的线性映射 $I\to E$ 都可延拓到 $R\to E$。在 PID 上，
+\[
+E\text{ 内射}\iff E\text{ 可除},\qquad
+M\text{ 平坦}\iff M\text{ 无挠}.
+\]
+可除指每个非零 $r$ 都有 $rE=E$。例如 $\mathbb Q$、$\mathbb Q/\mathbb Z$ 为内射 $\mathbb Z$-模；$\mathbb Q$ 平坦但不投射。这些等价关系依赖 PID 条件。
+
+\section{导出函子与同调代数补充}
+\subsection{投射分解、Tor与Ext的定义}\index{投射分解、Tor与Ext的定义|hyperpage}
+取投射分解 $\cdots\to P_1\to P_0\to M\to0$，则
+\[
+\operatorname{Tor}_i^R(M,N)=H_i(P_\bullet\otimes_RN),\qquad
+\operatorname{Ext}_R^i(M,N)=H^i(\operatorname{Hom}_R(P_\bullet,N)).
+\]
+这些模与分解选择无关，$\operatorname{Tor}_0=M\otimes_RN$、$\operatorname{Ext}^0=\operatorname{Hom}_R(M,N)$。投射模或内射模满足
+\[
+\operatorname{Ext}_R^{i}(P,N)=0,\quad
+\operatorname{Ext}_R^{i}(M,E)=0,\quad
+\operatorname{Tor}_i^R(F,N)=0\qquad(i>0),
+\]
+其中 $P$ 投射、$E$ 内射、$F$ 平坦。在交换环上 Tor 的两个变量可交换，但 Ext 一般不能交换两个变量。
+
+\subsection{长正合列与扩张的分类}\index{长正合列与扩张的分类|hyperpage}
+对短正合列 $0\to A\to B\to C\to0$，张量及 Hom 的长正合列包含
+\begin{gather*}
+\cdots\to\operatorname{Tor}_1(B,N)\to\operatorname{Tor}_1(C,N)
+\to A\otimes_RN\to B\otimes_RN\to C\otimes_RN\to0,\\
+0\to\operatorname{Hom}(M,A)\to\operatorname{Hom}(M,B)\to\operatorname{Hom}(M,C)\\
+\to\operatorname{Ext}^1(M,A)\to\operatorname{Ext}^1(M,B)\to\operatorname{Ext}^1(M,C)\to\operatorname{Ext}^2(M,A)\to\cdots.
+\end{gather*}
+全部 Hom、Tor、Ext 均在 $R$ 上计算。$\operatorname{Ext}_R^1(M,N)$ 分类 $0\to N\to E\to M\to0$ 的等价扩张，零类对应分裂扩张。
+
+\subsection{循环模的Tor、Ext与投射维数}\index{循环模的Tor、Ext与投射维数|hyperpage}
+若 $a\in R$ 为非零因子，则 $0\to R\xrightarrow{a}R\to R/(a)\to0$ 为自由分解，因此
+\[
+\operatorname{Tor}_1^R(R/(a),M)\cong\{m:am=0\},\qquad
+\operatorname{Ext}_R^1(R/(a),M)\cong M/aM.
+\]
+两者在次数 $i\ge2$ 时均为零。非域 PID 的全局维数为 $1$，故其上任意模的二阶以上 Tor、Ext 为零。非零因子条件不能在上述二项分解中省略。
+
+若 $0\to K\to P\to M\to0$ 且 $P$ 投射，则对 $i\ge1$ 有维数移动
+\[
+\operatorname{Ext}_R^{i+1}(M,N)\cong\operatorname{Ext}_R^i(K,N),\qquad
+\operatorname{Tor}_{i+1}^R(M,N)\cong\operatorname{Tor}_i^R(K,N).
+\]
+
+\section{张量代数、分次模与等价补充}
+\subsection{对称幂、外幂与行列式线}\index{对称幂、外幂与行列式线|hyperpage}
+张量代数为 $T(M)=\bigoplus_{n\ge0}M^{\otimes n}$。对称代数由关系 $m\otimes n-n\otimes m$ 取商，外代数由全部 $m\otimes m$ 取商；特征 $2$ 时只写反交换关系不足以定义外代数。
+
+若 $M=R^r$，则
+\[
+\operatorname{rank}\Lambda^kM=\binom rk,\qquad
+\operatorname{rank}\operatorname{Sym}^kM=\binom{r+k-1}k\quad(r\ge1),
+\]
+且 $\Lambda^kM=0$（$k>r$）。直和满足
+\[
+\Lambda^k(M\oplus N)\cong\bigoplus_{i+j=k}\Lambda^iM\otimes_R\Lambda^jN.
+\]
+秩为 $r$ 的有限投射模的行列式线为 $\det M=\Lambda^rM$；自由模自同态在最高外幂上的作用为乘以通常的行列式。
+
+\subsection{分次模、Hilbert级数与自由分解}\index{分次模、Hilbert级数与自由分解|hyperpage}
+设 $S=k[x_1,\ldots,x_n]$，各变量次数为 $1$，$M$ 为有限生成分次模，每个齐次分量有限维且次数下有界。Hilbert 级数为
+\[
+H_M(t)=\sum_j\dim_k(M_j)t^j=\frac{Q(t)}{(1-t)^n},\qquad
+H_{S(-a)}(t)=\frac{t^a}{(1-t)^n},
+\]
+其中 $Q$ 为 Laurent 多项式，移位约定 $S(-a)_j=S_{j-a}$。若有分次自由分解 $F_i=\bigoplus_jS(-j)^{\beta_{ij}}$，则
+\[
+H_M(t)=\frac{\sum_{i,j}(-1)^i\beta_{ij}t^j}{(1-t)^n}.
+\]
+Hilbert 协同定理保证可取长度不超过 $n$ 的有限自由分解。若 $\dim M=d\ge1$，Hilbert 函数在充分大次数等于次数为 $d-1$ 的多项式；有限长度模的齐次分量最终为零。
+
+\subsection{矩阵环的模与Morita等价}\index{矩阵环的模与Morita等价|hyperpage}
+令 $A=M_n(R)$、$e=E_{11}$，则 $eAe\cong R$，两个函子
+\[
+A\text{-Mod}\longrightarrow R\text{-Mod},\ M\longmapsto eM,
+\qquad N\longmapsto Ae\otimes_RN
+\]
+给出模范畴等价。这说明矩阵环与底环可能不同构，但具有等价的模理论。有限群表示等价于群代数上的模；复群代数的半单分解与特征标公式见第\ref{chap:group-theory}章。
+\section{正合图、局部化与同调维数补充}
+本节采用交换环上的模与通常同调次数，参见\cite{stacks,milneCA}。
+\subsection{蛇引理的核与余核正合列}\index{蛇引理的核与余核正合列|hyperpage}
+交换图两行短正合，垂直映射依次为 $f_A,f_B,f_C$。则有自然正合列
+\begin{gather*}
+0\longrightarrow\ker f_A\longrightarrow\ker f_B\longrightarrow\ker f_C
+\mathop{\longrightarrow}^{\delta}\operatorname{coker}f_A\\
+\longrightarrow\operatorname{coker}f_B\longrightarrow\operatorname{coker}f_C\longrightarrow0.
+\end{gather*}
+连接映射 $\delta$ 由提升到中间模、再取前一模中的代表构造。正合要求图交换；只知道两行正合不能凭空拼接核与余核。
+\subsection{Tor与Ext的局部化}\index{Tor与Ext的局部化|hyperpage}
+对乘法集 $S$、任意模 $M,N$，有
+\[
+S^{-1}\operatorname{Tor}_i^R(M,N)
+\cong\operatorname{Tor}_i^{S^{-1}R}(S^{-1}M,S^{-1}N).
+\]
+若 $R$ Noether 且 $M$ 有限生成，则还对所有 $i\ge0$ 有
+\[
+S^{-1}\operatorname{Ext}_R^i(M,N)
+\cong\operatorname{Ext}_{S^{-1}R}^i(S^{-1}M,S^{-1}N).
+\]
+后一条件保证可用逐阶有限生成自由分解，不能把任意第一变量的 Ext 与局部化无条件交换。
+\subsection{Auslander--Buchsbaum深度公式}\index{Auslander-Buchsbaum深度公式|hyperpage}
+若 $(R,\mathfrak m)$ 为 Noether 局部环，$M\ne0$ 为有限生成模且投射维数有限，则
+\[
+\operatorname{pd}_RM+\operatorname{depth}_RM=\operatorname{depth}R.
+\]
+深度可由极大理想中的 $M$-正则列长度定义。正则局部环有有限整体维数 $\dim R$；对无限投射维数的模，不能将上式当作有限数等式使用。
+\subsection{Koszul复形与正则序列}\index{Koszul复形与正则序列|hyperpage}
+对 $x_1,\ldots,x_r\in R$，Koszul 复形第 $i$ 项为 $\bigwedge^iR^r$，微分为
+\[
+d(e_{j_1}\wedge\cdots\wedge e_{j_i})=
+\sum_{a=1}^i(-1)^{a-1}x_{j_a}
+e_{j_1}\wedge\cdots\widehat e_{j_a}\cdots\wedge e_{j_i}.
+\]
+有 $d^2=0$。若该序列为正则序列，则 $K_\bullet$ 是 $R/(x_1,\ldots,x_r)$ 的自由分解；仅有生成同一理想的任意序列未必在正次数正合。
+\clearpage
+\end{document}

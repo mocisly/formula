@@ -1,0 +1,216 @@
+\documentclass[../main.tex]{subfiles}
+\begin{document}
+本章主要参考\cite{teschl}。
+
+% Reference: https://ocw.mit.edu/courses/12-006j-nonlinear-dynamics-chaos-fall-2022/pages/lecture-notes/
+\section{流、迭代与稳定性}
+\subsection{连续流与离散迭代}\index{连续流与离散迭代|hyperpage}
+自治微分方程 $\dot x=f(x)$ 在唯一解存在时生成局部流 $\Phi^t$，在两边有定义的时间范围内满足
+\[
+\Phi^0=\operatorname{id},\qquad\Phi^{t+s}=\Phi^t\circ\Phi^s.
+\]
+离散系统为 $x_{n+1}=F(x_n)$，$F^n$ 表示复合迭代，不是函数值的 $n$ 次幂。平衡点满足 $f(x_*)=0$，离散不动点满足 $F(x_*)=x_*$。
+\subsection{线性化与周期点乘子}\index{线性化与周期点乘子|hyperpage}
+对 $C^1$ 连续系统，$A=Df(x_*)$ 的特征值实部均负时平衡点局部渐近稳定；存在实部为正的特征值时不稳定。
+对离散系统，若 $DF(x_*)$ 的所有特征值模均小于 $1$，则局部渐近稳定；存在模大于 $1$ 的特征值时不稳定。边界情形需另行分析。
+一维 $p$ 周期轨道 $x_0,\ldots,x_{p-1}$ 的乘子为
+\[
+(F^p)'(x_0)=\prod_{j=0}^{p-1}F'(x_j).
+\]
+其模小于 $1$ 时吸引，大于 $1$ 时排斥。
+\subsection{Lyapunov直接法}\index{Lyapunov直接法|hyperpage}
+在平衡点 $x_*=0$ 附近，若 $V\in C^1$、$V(0)=0$、$V(x)>0$（$x\ne0$），且
+\[
+\dot V(x)=\nabla V(x)\cdot f(x)\le0,
+\]
+则原点稳定；若在非零点严格小于零，则局部渐近稳定。若 $V$ 在整个 $\mathbb R^n$ 正定、$\dot V(x)<0$ 对所有 $x\ne0$ 成立，且 $V(x)\to\infty$ 当 $\|x\|\to\infty$，在局部 Lipschitz 向量场下可得全局渐近稳定。
+对 $\dot x=Ax$，若 $A$ 的谱均在左半平面，对任意对称正定 $Q$，Lyapunov 方程
+\[
+A^{\mathsf T}P+PA=-Q
+\]
+存在唯一对称正定解 $P$，$V=x^{\mathsf T}Px$ 满足 $\dot V=-x^{\mathsf T}Qx$。
+\subsection{LaSalle不变性原理}\index{LaSalle不变性原理|hyperpage}
+设 $\Omega$ 紧致且正向不变，$V\in C^1$ 并在 $\Omega$ 上满足 $\dot V\le0$。令 $M$ 为集合 $\{x\in\Omega:\dot V(x)=0\}$ 中最大的不变集，则
+\[
+\operatorname{dist}(\Phi^t(x_0),M)\to0\quad(t\to\infty,\ x_0\in\Omega).
+\]
+若 $M$ 仅含一个平衡点，则轨道收敛到该点；仅有 $\dot V\le0$ 不足以直接断言渐近稳定。
+\section{周期轨道与分岔}
+\subsection{Poincaré映射与Floquet乘子}\index{Poincaré映射与Floquet乘子|hyperpage}
+对非平凡 $T$ 周期轨道 $x_*(t)$，选取横截面得到局部返回映射 $P$。周期轨道的横向稳定性由 $DP$ 的特征值决定；其模均小于 $1$ 时轨道局部渐近轨道稳定。
+变分方程和单周期矩阵为
+\[
+\dot\Psi(t)=Df(x_*(t))\Psi(t),\quad\Psi(0)=I,\qquad M=\Psi(T).
+\]
+$M$ 的特征值为 Floquet 乘子；自治系统的流向产生一个乘子 $1$，不能据此把周期轨道判为不稳定。
+\[
+\det M=\exp\!\left(\int_0^T\operatorname{div}f(x_*(t))\,\mathrm dt\right).
+\]
+\subsection{平面系统与周期轨道判别}\index{平面系统与周期轨道判别|hyperpage}
+对平面 $C^1$ 向量场，若一条正向轨道留在定义域内的某紧集，其 $\omega$-极限集不含平衡点，则该极限集为周期轨道（Poincaré--Bendixson 定理）。此结论不能直接推广到三维。
+若单连通开区域 $D$ 上存在 $C^1$ 函数 $B$，使
+\[
+\operatorname{div}(Bf)=\partial_x(Bf_1)+\partial_y(Bf_2)
+\]
+在 $D$ 上处处严格为正或处处严格为负，则 $D$ 内无周期轨道。这是 Bendixson--Dulac 判别的一个充分形式。
+\subsection{常见局部分岔的标准形}\index{常见局部分岔的标准形|hyperpage}
+以下为典型一参数标准形，实际系统化归时需验证相应非退化与横截条件：
+\begin{align*}
+\dot x&=\mu-x^2 &&\text{（鞍结）},\\
+\dot x&=\mu x-x^2 &&\text{（跨临界）},\\
+\dot x&=\mu x-x^3 &&\text{（超临界叉形）},\\
+\dot r&=\mu r-r^3,\quad\dot\theta=\omega\ne0 &&\text{（超临界Hopf）}.
+\end{align*}
+最后一式在 $\mu>0$ 时产生稳定周期轨道 $r=\sqrt\mu$；稳定性由径向导数 $\mu-3r^2=-2\mu$ 给出。
+\section{复杂轨道与不变测度}
+\subsection{Lyapunov指数与Logistic映射}\index{Lyapunov指数与Logistic映射|hyperpage}
+一维轨道的 Lyapunov 指数在极限存在时为
+\[
+\lambda(x_0)=\lim_{N\to\infty}\frac1N\log|(F^N)'(x_0)|
+=\lim_{N\to\infty}\frac1N\sum_{k=0}^{N-1}\log|F'(x_k)|.
+\]
+正指数描述沿该轨道的无穷小扰动指数增长，单凭它不能替代所有意义下的混沌定义。
+Logistic 映射 $F_r(x)=rx(1-x)$ 在 $0\le r\le4$ 时保持区间 $[0,1]$。不动点 $0$ 在 $0<r<1$ 吸引；$x_*=1-1/r$ 在 $1<r<3$ 吸引，因其乘子为 $2-r$。
+\subsection{不变测度、复返与遍历平均}\index{不变测度、复返与遍历平均|hyperpage}
+概率测度 $\mu$ 对 $T$ 不变指 $\mu(T^{-1}A)=\mu(A)$。Poincaré 复返定理：对可测 $A$，几乎每个 $x\in A$ 都会无穷多次返回 $A$。
+若系统还遍历，即任意模零不变集的测度均为 $0$ 或 $1$，则对 $g\in L^1(\mu)$，Birkhoff 定理给出
+\[
+\frac1N\sum_{k=0}^{N-1}g(T^kx)\to\int g\,\mathrm d\mu\quad\text{a.e.}
+\]
+非遍历时极限一般是对不变 $\sigma$-代数的条件期望，不一定等于全空间平均。
+\section{Hamilton系统}
+\subsection{正则方程与体积守恒}\index{正则方程与体积守恒|hyperpage}
+对自治光滑 Hamilton 函数 $H(q,p)$，正则方程为
+\[
+\dot q_i=\frac{\partial H}{\partial p_i},\qquad
+\dot p_i=-\frac{\partial H}{\partial q_i},\qquad\frac{\mathrm dH}{\mathrm dt}=0.
+\]
+相空间向量场散度为零，因此流在存在时间内保持标准相体积（Liouville 定理）。Poisson 括号取
+\[
+\{F,G\}=\sum_i(F_{q_i}G_{p_i}-F_{p_i}G_{q_i}),\qquad
+\frac{\mathrm dF}{\mathrm dt}=\{F,H\}+\partial_tF.
+\]
+守恒量、Hamilton 函数与物理能量的对应须随具体模型确定。
+\section{局部结构与稳定性计算补充}
+\subsection{变分、体积与离散Lyapunov方程}\index{变分、体积与离散Lyapunov方程|hyperpage}
+对流 $\Phi^t$，其导数满足 $\dot Y=Df(\Phi^tx)Y$、$Y(0)=I$，并有
+\[
+\det D\Phi^t(x)=\exp\left(\int_0^t\operatorname{div}f(\Phi^sx)\,\mathrm ds\right).
+\]
+若连续系统矩阵 $A$ 为 Hurwitz，则 $P=\int_0^\infty e^{A^{\mathsf T}t}Qe^{At}\,\mathrm dt$ 解前述 Lyapunov 方程。离散情形若 $\rho(A)<1$、$Q\succ0$，则
+\[
+A^{\mathsf T}PA-P=-Q,\qquad P=\sum_{k=0}^\infty(A^{\mathsf T})^kQA^k\succ0.
+\]
+这分别给出连续时间的衰减率与离散时间的单步能量下降。
+\subsection{双曲性、稳定流形与共轭}\index{双曲性、稳定流形与共轭|hyperpage}
+双曲平衡点的线性化无实部为零的特征值，切空间分为 $E^s\oplus E^u$。局部稳定流形满足
+\[
+T_{x_*}W^s_{\rm loc}=E^s,\qquad
+\|\Phi^t(x)-x_*\|\le C_xe^{-\alpha t}\quad(t\ge0)
+\]
+（在适当局部范围及 $\alpha>0$ 下）；不稳定流形对应反向时间。Hartman--Grobman 定理给出双曲点附近与线性系统的局部拓扑共轭，通常不保证共轭可微。离散微分同胚的双曲性改成无单位圆特征值。
+\subsection{中心流形的图方程}\index{中心流形的图方程|hyperpage}
+设 $\dot x=Ax+f(x,y)$、$\dot y=By+g(x,y)$，$A$ 的谱在虚轴，$B$ 无虚轴谱，非线性项在原点至少二阶。中心流形 $y=h(x)$ 满足
+\[
+Dh(x)[Ax+f(x,h(x))]=Bh(x)+g(x,h(x)),\quad h(0)=0,\ Dh(0)=0.
+\]
+将 $h$ 展成幂级数并逐阶配系数，可得约化系统 $\dot x=Ax+f(x,h(x))$。中心流形一般不唯一，但有限阶展开可用于局部分岔；若其余谱严格在左半平面，约化系统的渐近稳定性可传递到原系统。
+\subsection{Hopf与倍周期的非退化形式}\index{Hopf与倍周期的非退化形式|hyperpage}
+复坐标下 Hopf 标准形可写为
+\[
+\dot z=(\alpha(\mu)+i\omega(\mu))z+c z|z|^2+\cdots,\qquad
+\dot r=\alpha(\mu)r+\operatorname{Re}c\,r^3+\cdots.
+\]
+需 $\omega(0)\ne0$、$\alpha(0)=0$、$\alpha'(0)\ne0$、$\operatorname{Re}c\ne0$；小周期轨道满足 $r^2\approx-\alpha(\mu)/\operatorname{Re}c$。离散一维典型倍周期标准形 $x_{n+1}=-(1+\mu)x_n+ax_n^3+\cdots$ 在 $a>0,\mu>0$ 小时产生 $x\approx\pm\sqrt{\mu/a}$ 的吸引二周期轨道。
+\section{全局几何与可积结构补充}
+\subsection{梯度系统与平面极限环}\index{梯度系统与平面极限环|hyperpage}
+梯度系统 $\dot x=-\nabla V(x)$ 满足
+\[
+\frac{\mathrm d}{\mathrm dt}V(x(t))=-\|\nabla V(x(t))\|^2.
+\]
+因此没有非平凡周期轨道；紧轨道的极限集位于临界点集，但若不增加条件，不应断言必收敛到单个临界点。平面周期轨道的非平凡乘子为
+\[
+\rho=\exp\int_0^T\operatorname{div}f(x_*(t))\,\mathrm dt.
+\]
+故积分负时横向吸引、正时排斥。对环形正向不变区域，若无平衡点，可结合 Poincaré--Bendixson 得到周期轨道。
+\subsection{圆周旋转数与刚性旋转}\index{圆周旋转数与刚性旋转|hyperpage}
+保向圆周同胚的提升 $F:\mathbb R\to\mathbb R$ 满足 $F(x+1)=F(x)+1$，旋转数为
+\[
+\rho(F)=\lim_{n\to\infty}\frac{F^n(x)-x}{n}\pmod1,
+\]
+与 $x$ 无关；旋转数有理当且仅当存在周期点。无理旋转 $x\mapsto x+\alpha\pmod1$ 对 Lebesgue 测度遍历，Fourier 特征值为 $e^{2\pi ik\alpha}$。不能在一般正则性下直接把任意无理旋转数的同胚当作刚性旋转。
+\subsection{作用角变量与KAM适用条件}\index{作用角变量与KAM适用条件|hyperpage}
+对 $n$ 自由度完全可积 Hamilton 系统，若有 $n$ 个独立且两两 Poisson 对易的积分，紧连通正则共同能级局部为环面，作用角变量满足
+\[
+H=H(I),\qquad\dot I=0,\quad\dot\theta=\omega(I)=\nabla_IH(I).
+\]
+KAM 中典型非共振条件为 $|k\cdot\omega|\ge\gamma|k|^{-\tau}$（$k\in\mathbb Z^n\setminus\{0\}$、$\tau>n-1$），并要求足够光滑的小扰动及非退化条件如 $\det D_I^2H\ne0$。结论是许多这样的环面延续存在，不是所有轨道都保持可积。
+\subsection{同宿扰动的Melnikov函数}\index{同宿扰动的Melnikov函数|hyperpage}
+平面 Hamilton 系统 $\dot z=J\nabla H(z)+\varepsilon g(z,t)$，其中 $J=\left(\begin{smallmatrix}0&1\\-1&0\end{smallmatrix}\right)$，设未扰动同宿轨道 $z_h(t)$ 趋向双曲鞍点，$g$ 为时间周期扰动。能量分离的一阶量为
+\[
+M(t_0)=\int_{-\infty}^{\infty}\nabla H(z_h(t))\cdot g(z_h(t),t+t_0)\,\mathrm dt.
+\]
+在积分收敛及通常非退化假设下，$M(t_0)=0$、$M'(t_0)\ne0$ 表示小扰动后稳定与不稳定流形横截相交，可产生马蹄型动力学。重零点需要高阶分析。
+\section{遍历、混沌与统计结构补充}
+\subsection{转移算子与不变密度}\index{转移算子与不变密度|hyperpage}
+对分段 $C^1$、各分支可逆且导数非零的一维映射，Perron--Frobenius 算子为
+\[
+(\mathcal Lh)(y)=\sum_{x:T(x)=y}\frac{h(x)}{|T'(x)|}.
+\]
+不变密度满足 $\mathcal Lh=h$、$h\ge0$、$\int h=1$。Koopman 算子 $Ug=g\circ T$ 与其满足 $\int(\mathcal Lh)g=\int h(g\circ T)$。对 $T(x)=4x(1-x)$，
+\[
+h(x)=\frac1{\pi\sqrt{x(1-x)}}\quad(0<x<1),\qquad
+T^n(\sin^2\pi\theta)=\sin^2(2^n\pi\theta),\quad\lambda=\log2\ \text{a.e.}
+\]
+\subsection{相关、混合与平均遍历}\index{相关、混合与平均遍历|hyperpage}
+保概率变换的相关为 $C_n(f,g)=\int f(g\circ T^n)\,\mathrm d\mu-\int f\,\mathrm d\mu\int g\,\mathrm d\mu$。混合要求 $\mu(A\cap T^{-n}B)\to\mu(A)\mu(B)$，等价于相应 $L^2$ 测试的相关趋零；混合蕴含遍历，逆命题不成立。von Neumann 平均遍历定理给出
+\[
+\frac1N\sum_{n=0}^{N-1}U^nf\to P_{\ker(I-U)}f\quad\text{于 }L^2.
+\]
+连续时间对应 $T^{-1}\int_0^Tf\circ\Phi^t\,\mathrm dt$；遍历时投影为常数 $\int f\,\mathrm d\mu$。
+\subsection{度量熵、拓扑熵与指数}\index{度量熵、拓扑熵与指数|hyperpage}
+有限可测分割 $\mathcal P$ 的 Shannon 熵及熵率为
+\[
+H_\mu(\mathcal P)=-\sum_{A\in\mathcal P}\mu(A)\log\mu(A),\qquad
+h_\mu(T,\mathcal P)=\lim_{n\to\infty}\frac1nH_\mu\!\left(\bigvee_{j=0}^{n-1}T^{-j}\mathcal P\right).
+\]
+$h_\mu(T)=\sup_\mathcal P h_\mu(T,\mathcal P)$。紧度量空间上连续映射以 $d_n(x,y)=\max_{0\le j<n}d(T^jx,T^jy)$ 定义最大 $\varepsilon$-分离集大小 $s_n(\varepsilon)$，则
+\[
+h_{\rm top}(T)=\lim_{\varepsilon\downarrow0}\limsup_n\frac1n\log s_n(\varepsilon)
+=\sup_{\mu\text{ 不变概率}}h_\mu(T).
+\]
+若 $T$ 是紧流形上的 $C^1$ 微分同胚，Ruelle 不等式给出 $h_\mu(T)\le\int\sum_{\lambda_i(x)>0}\lambda_i(x)\,\mathrm d\mu$，指数按重数计。光滑性更强且不变测度对体积绝对连续等条件下可得 Pesin 等式；一般不能把该不等式直接改为等号。
+
+\section{符号编码、回返与双曲跟踪补充}
+光滑动力学参见\cite{teschl}，保测回返和遍历结构参见\cite{durrett}。
+\subsection{有限型移位的谱半径熵}\index{有限型移位的谱半径熵|hyperpage}
+非零不可约零一矩阵 $A$ 定义允许相邻符号 $A_{x_nx_{n+1}}=1$ 的双边移位空间。长度 $n$ 的允许词数为 $\bm1^{\mathsf T}A^{n-1}\bm1$，且
+\[
+h_{\rm top}(\sigma_A)=\log\rho(A),\qquad
+\#\operatorname{Fix}(\sigma_A^n)=\operatorname{tr}(A^n).
+\]
+满 $k$ 符号移位取全一矩阵，熵为 $\log k$。周期点计数按带起点的周期序列计算，不能直接当作不同周期轨道条数。
+\subsection{Kac回返时间公式}\index{Kac回返时间公式|hyperpage}
+可逆、遍历、保概率变换 $T$，对 $\mu(A)>0$，令 $\tau_A(x)=\inf\{n\ge1:T^nx\in A\}$。则
+\[
+\int_A\tau_A\,\mathrm d\mu=1,\qquad
+\mathbb E_{\mu(\cdot\mid A)}\tau_A=\frac1{\mu(A)}.
+\]
+非遍历时第一式右侧改为 $A$ 的双向不变饱和集的测度。几乎必然回返与平均回返时间是两个不同层次的结论。
+\subsection{Oseledets指数与Jacobian平均}\index{Oseledets指数与Jacobian平均|hyperpage}
+紧流形上的 $C^1$ 微分同胚保持概率 $\mu$。乘法遍历定理给几乎处处的 Lyapunov 指数，按维数重数计有
+\[
+\sum_{i=1}^d\lambda_i(x)=
+\lim_{n\to\infty}\frac1n\log|\det DT^n(x)|.
+\]
+若 $\mu$ 遍历，指数几乎处处常数，和等于 $\int\log|\det DT|\,\mathrm d\mu$。保持 Riemannian 体积时该和为零；这不要求每个指数单独为零。
+\subsection{局部极大双曲集的阴影引理}\index{局部极大双曲集的阴影引理|hyperpage}
+令 $\Lambda$ 为 $C^1$ 微分同胚的局部极大紧双曲集。对任意充分小 $\varepsilon>0$，存在 $\delta>0$，使每条双边伪轨道 $(x_n)\subset\Lambda$ 满足
+\[
+d(Tx_n,x_{n+1})<\delta
+\quad\Longrightarrow\quad
+\exists y\in\Lambda:\ \sup_{n\in\mathbb Z}d(T^ny,x_n)<\varepsilon.
+\]
+足够小的跟踪尺度还给唯一性。双曲性与局部极大性保证跟踪点留在指定集合；一般数值伪轨道未必在非双曲区域得到此保证。
+\clearpage
+\end{document}

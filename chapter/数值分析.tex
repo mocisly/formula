@@ -1,0 +1,349 @@
+\documentclass[../main.tex]{subfiles}
+\begin{document}
+本章主要参考\cite{fnc}。
+
+% Reference: https://ocw.mit.edu/courses/18-330-introduction-to-numerical-analysis-spring-2012/pages/lecture-notes/
+\section{误差与非线性方程}
+\subsection{误差、浮点模型与条件数}\index{误差、浮点模型与条件数|hyperpage}
+近似值 $\widehat x$ 的绝对误差为 $|\widehat x-x|$，$x\ne0$ 时相对误差为 $|\widehat x-x|/|x|$。常用舍入模型为
+\[
+\operatorname{fl}(a\circ b)=(a\circ b)(1+\delta),\qquad |\delta|\le u,
+\]
+其中 $\circ\in\{+,-,\times,/\}$，$u$ 为单位舍入误差，结果须处于正常浮点范围且除数非零。
+标量函数在 $x\ne0,f(x)\ne0$ 处的相对条件数为 $\kappa_f(x)=|xf'(x)/f(x)|$。矩阵条件数为 $\kappa(A)=\|A\|\|A^{-1}\|$；只扰动非零右端 $b$ 时，
+\[
+A(x+\delta x)=b+\delta b\Longrightarrow
+\frac{\|\delta x\|}{\|x\|}\le\kappa(A)\frac{\|\delta b\|}{\|b\|}.
+\]
+条件数描述问题对数据的敏感性；算法的稳定性还需单独分析。
+\subsection{二分法、Newton法与割线法}\index{二分法、Newton法与割线法|hyperpage}
+若连续 $f$ 在 $[a_0,b_0]$ 两端异号，二分 $k$ 次后的区间长度为 $(b_0-a_0)/2^k$，区间中点到所夹根的距离不超过 $(b_0-a_0)/2^{k+1}$。
+\[
+x_{k+1}=x_k-\frac{f(x_k)}{f'(x_k)}\quad\text{（Newton法）},
+\qquad x_{k+1}=x_k-f(x_k)\frac{x_k-x_{k-1}}{f(x_k)-f(x_{k-1})}\quad\text{（割线法）}.
+\]
+Newton 法在 $f\in C^2$、单根 $\alpha$ 附近且初值充分接近时二阶收敛，并有
+\[
+e_{k+1}=\frac{f''(\alpha)}{2f'(\alpha)}e_k^2+o(e_k^2),\qquad e_k=x_k-\alpha.
+\]
+割线法在单根附近的通常非退化条件下收敛阶为 $(1+\sqrt5)/2$。分母为零或初值远离根时不能保证收敛。
+\subsection{不动点迭代与误差估计}\index{不动点迭代与误差估计|hyperpage}
+若 $g:[a,b]\to[a,b]$ 为压缩映射，$|g(x)-g(y)|\le q|x-y|$、$0<q<1$，则唯一不动点 $\alpha$ 满足
+\[
+x_{k+1}=g(x_k),\quad
+|x_k-\alpha|\le\frac{q^k}{1-q}|x_1-x_0|,\qquad
+|x_k-\alpha|\le\frac q{1-q}|x_k-x_{k-1}|\quad(k\ge1).
+\]
+后一个是可由相邻迭代值计算的后验界。
+\section{插值、微分与积分}
+\subsection{Lagrange与Newton插值}\index{Lagrange与Newton插值|hyperpage}
+对互异节点 $x_0,\ldots,x_n$，唯一的次数不超过 $n$ 的插值多项式为
+\[
+p_n(x)=\sum_{i=0}^nf(x_i)\ell_i(x),\qquad
+\ell_i(x)=\prod_{j\ne i}\frac{x-x_j}{x_i-x_j}.
+\]
+Newton 形式为 $p_n(x)=\sum_{k=0}^nf[x_0,\ldots,x_k]\prod_{j=0}^{k-1}(x-x_j)$，差商递推为
+\[
+f[x_i,\ldots,x_{i+k}]=\frac{f[x_{i+1},\ldots,x_{i+k}]-f[x_i,\ldots,x_{i+k-1}]}{x_{i+k}-x_i}.
+\]
+若 $f\in C^{n+1}$，在节点与 $x$ 的包络区间内存在 $\xi$，使
+\[
+f(x)-p_n(x)=\frac{f^{(n+1)}(\xi)}{(n+1)!}\prod_{j=0}^n(x-x_j).
+\]
+增加等距节点的次数并不总能改善一致误差；常用 Chebyshev 节点 $x_j=\cos((2j+1)\pi/(2n+2))$（在 $[-1,1]$ 上）。
+\subsection{有限差分与截断误差}\index{有限差分与截断误差|hyperpage}
+在 $x$ 附近足够光滑时，
+\begin{align*}
+f'(x)&=\frac{f(x+h)-f(x)}h+O(h),\\
+f'(x)&=\frac{f(x+h)-f(x-h)}{2h}+O(h^2),\\
+f''(x)&=\frac{f(x+h)-2f(x)+f(x-h)}{h^2}+O(h^2).
+\end{align*}
+相减会放大舍入误差。若函数求值绝对误差量级为 $\varepsilon$，中心一阶差分总误差模型为 $C_1h^2+C_2\varepsilon/h$，平衡步长量级为 $\varepsilon^{1/3}$，并非 $h$ 越小越好。
+\subsection{复合求积与Gaussian求积}\index{复合求积与Gaussian求积|hyperpage}
+令 $x_i=a+ih$、$h=(b-a)/N$，$f_i=f(x_i)$。复合梯形与 Simpson 公式为
+\begin{gather*}
+T_N=h\left[\frac{f_0+f_N}2+\sum_{i=1}^{N-1}f_i\right],\\
+S_N=\frac h3\left[f_0+f_N+4\sum_{\substack{1\le i<N\\i\text{ 为奇数}}}f_i
++2\sum_{\substack{2\le i<N\\i\text{ 为偶数}}}f_i\right]\quad(N\text{ 为偶数}).
+\end{gather*}
+对相应连续高阶导数，存在 $\xi,\eta\in(a,b)$ 使
+\[
+\int_a^bf-T_N=-\frac{b-a}{12}h^2f''(\xi),\qquad
+\int_a^bf-S_N=-\frac{b-a}{180}h^4f^{(4)}(\eta).
+\]
+$n$ 点 Gauss--Legendre 求积在 $[-1,1]$ 上取 $P_n$ 的零点为节点，权重为
+\[
+w_i=\frac2{(1-x_i^2)[P_n'(x_i)]^2},\qquad
+\int_{-1}^1p(x)\,\mathrm dx=\sum_{i=1}^nw_ip(x_i)\quad(\deg p\le2n-1),
+\]
+其中 $P_n(1)=1$。一般区间需作仿射换元并乘以区间长度的一半。
+\section{线性系统与微分方程的数值解}
+\subsection{Jacobi与Gauss--Seidel迭代}\index{Jacobi与Gauss-Seidel迭代|hyperpage}
+写 $A=D+L+U$，$D$ 为非零对角矩阵，$L,U$ 分别为严格下、上三角部分，则
+\[
+x^{(k+1)}=D^{-1}(b-(L+U)x^{(k)})\quad\text{（Jacobi）},
+\]
+\[
+x^{(k+1)}=(D+L)^{-1}(b-Ux^{(k)})\quad\text{（Gauss--Seidel）}.
+\]
+一般定常迭代 $x^{(k+1)}=Bx^{(k)}+c$ 对任意初值收敛当且仅当 $\rho(B)<1$。严格行对角占优是上述两种方法收敛的充分条件；实对称正定矩阵保证 Gauss--Seidel 收敛。
+\subsection{共轭梯度法}\index{共轭梯度法|hyperpage}
+对实对称正定 $A$，取 $r_0=b-Ax_0,p_0=r_0$，在残差非零时迭代
+\begin{gather*}
+\alpha_k=\frac{r_k^{\mathsf T}r_k}{p_k^{\mathsf T}Ap_k},\quad
+x_{k+1}=x_k+\alpha_kp_k,\quad r_{k+1}=r_k-\alpha_kAp_k,\\
+\beta_k=\frac{r_{k+1}^{\mathsf T}r_{k+1}}{r_k^{\mathsf T}r_k},\qquad
+p_{k+1}=r_{k+1}+\beta_kp_k.
+\end{gather*}
+在精确算术中至多 $n$ 步得到解；浮点算术中正交性会逐渐损失。令 $\|e\|_A=\sqrt{e^{\mathsf T}Ae}$、$\kappa_2=\lambda_{\max}/\lambda_{\min}$，则
+\[
+\|x_k-x_*\|_A\le2\left(\frac{\sqrt{\kappa_2}-1}{\sqrt{\kappa_2}+1}\right)^k\|x_0-x_*\|_A\quad(k\ge1).
+\]
+\subsection{Euler方法与经典四阶Runge--Kutta法}\index{Euler方法与经典四阶Runge-Kutta法|hyperpage}
+对 $y'=f(t,y)$，步长 $h>0$，显式 Euler 与隐式 Euler 为
+\[
+y_{n+1}=y_n+hf(t_n,y_n),\qquad
+y_{n+1}=y_n+hf(t_{n+1},y_{n+1}).
+\]
+经典四阶 Runge--Kutta 法为
+\begin{gather*}
+k_1=f(t_n,y_n),\quad k_2=f(t_n+h/2,y_n+hk_1/2),\\
+k_3=f(t_n+h/2,y_n+hk_2/2),\quad k_4=f(t_n+h,y_n+hk_3),\\
+y_{n+1}=y_n+\frac h6(k_1+2k_2+2k_3+k_4).
+\end{gather*}
+在固定有限时间区间、适当光滑与 Lipschitz 条件下，Euler 方法全局误差为 $O(h)$，RK4 为 $O(h^4)$。
+\subsection{绝对稳定性与刚性}\index{绝对稳定性与刚性|hyperpage}
+对测试方程 $y'=\lambda y$，若算法满足 $y_{n+1}=R(z)y_n$、$z=h\lambda$，绝对稳定区域由 $|R(z)|\le1$ 描述。
+\[
+R_{\mathrm{Euler}}(z)=1+z,\quad
+R_{\mathrm{BE}}(z)=\frac1{1-z},\quad
+R_{\mathrm{RK4}}(z)=1+z+\frac{z^2}2+\frac{z^3}6+\frac{z^4}{24}.
+\]
+隐式 Euler 的稳定区域包含整个左半平面，称为 A-稳定；显式 Euler 对负实 $\lambda$ 要求 $h|\lambda|\le2$。稳定性限制与精度要求须同时检查。
+\section{舍入误差、非线性迭代与外推}
+% References: https://dlmf.nist.gov/3.3
+% https://people.csail.mit.edu/jsolomon/share/book/numerical_book.pdf
+\subsection{累积舍入、残差与后向误差}\index{累积舍入、残差与后向误差|hyperpage}
+若每次相对舍入不超过 $u$，且 $nu<1$，记 $\gamma_n=nu/(1-nu)$，则
+\[
+\prod_{i=1}^n(1+\delta_i)=1+\theta_n,\quad |\theta_n|\le\gamma_n,
+\qquad|\delta_i|\le u.
+\]
+通常顺序点积的绝对误差可界为 $\gamma_n\sum_i|x_iy_i|$，须无上溢、下溢。对非奇异 $A$、近似解 $\widehat x$，残差 $r=b-A\widehat x$ 满足
+\[
+x-\widehat x=A^{-1}r,\qquad
+\frac{\|x-\widehat x\|}{\|x\|}\le\kappa(A)\frac{\|r\|}{\|b\|}\quad(b\ne0).
+\]
+允许同时扰动 $A,b$ 时，相容诱导范数下的范数型相对后向误差为
+\[
+\eta(\widehat x)=\frac{\|b-A\widehat x\|}{\|A\|\|\widehat x\|+\|b\|}.
+\]
+若 $\kappa(A)\|\Delta A\|/\|A\|<1$，则同时扰动的前向误差界为
+\[
+\frac{\|\Delta x\|}{\|x\|}\le
+\frac{\kappa(A)}{1-\kappa(A)\|\Delta A\|/\|A\|}
+\left(\frac{\|\Delta A\|}{\|A\|}+\frac{\|\Delta b\|}{\|b\|}\right).
+\]
+小残差不保证小前向误差；病态矩阵会放大后向误差。
+
+\subsection{重根Newton、多元Newton与迭代加速}\index{重根Newton、多元Newton与迭代加速|hyperpage}
+若根 $\alpha$ 的重数为 $m$，普通 Newton 法一般仅线性收敛，渐近误差比为 $(m-1)/m$。已知重数时改用
+\[
+x_{k+1}=x_k-m\frac{f(x_k)}{f'(x_k)}.
+\]
+在足够光滑且初值接近的条件下恢复二阶收敛。多元方程 $F(x)=0$ 的 Newton 步解线性系统
+\[
+DF(x_k)s_k=-F(x_k),\qquad x_{k+1}=x_k+s_k.
+\]
+应求解线性方程而非显式求逆；局部二阶收敛要求解处 Jacobian 非奇异且导数局部 Lipschitz。
+
+对近似线性收敛序列，Aitken $\Delta^2$ 加速与 Steffensen 不动点迭代为
+\begin{gather*}
+\widehat x_k=x_k-\frac{(x_{k+1}-x_k)^2}{x_{k+2}-2x_{k+1}+x_k},\\
+x_{k+1}=x_k-\frac{(g(x_k)-x_k)^2}{g(g(x_k))-2g(x_k)+x_k}.
+\end{gather*}
+分母非零时才使用；过小分母会放大舍入误差。Steffensen 的局部二阶结论还需 $g$ 足够光滑且 $g'(\alpha)\ne1$。
+
+\subsection{Richardson外推与Romberg积分}\index{Richardson外推与Romberg积分|hyperpage}
+若 $A(h)=A+ch^p+O(h^{p+q})$，$p,q>0$，则
+\[
+A_{\rm ext}(h)=\frac{2^pA(h/2)-A(h)}{2^p-1}=A+O(h^{p+q}).
+\]
+对光滑函数的复合梯形法，误差具有偶次幂展开。取 $R_{k,0}=T_{2^k}$，Romberg 表为
+\[
+R_{k,j}=R_{k,j-1}+\frac{R_{k,j-1}-R_{k-1,j-1}}{4^j-1},\qquad 1\le j\le k.
+\]
+固定列 $j$ 的阶为 $2j+2$，要求足够高阶导数存在；端点奇异、非光滑函数或舍入主导时不能直接预期该阶。
+
+\section{插值与近似补充}
+\subsection{重心插值、Lebesgue常数与Hermite插值}\index{重心插值、Lebesgue常数与Hermite插值|hyperpage}
+对互异节点，定义 $w_j=\prod_{k\ne j}(x_j-x_k)^{-1}$。第二重心形式为
+\[
+p_n(x)=\frac{\sum_{j=0}^n w_jf(x_j)/(x-x_j)}{\sum_{j=0}^n w_j/(x-x_j)}.
+\]
+在节点处直接取 $p_n(x_j)=f(x_j)$；权重共同乘以任意非零常数不改变结果。Lebesgue 常数与最佳一致近似误差给出
+\[
+\Lambda_n=\max_{x\in[a,b]}\sum_j|\ell_j(x)|,\qquad
+\|f-p_n\|_\infty\le(1+\Lambda_n)\inf_{q\in\mathcal P_n}\|f-q\|_\infty.
+\]
+同时插值函数值与一阶导数的 Hermite 多项式为
+\begin{gather*}
+H(x)=\sum_{j=0}^n\left[f(x_j)(1-2\ell_j'(x_j)(x-x_j))\ell_j(x)^2
++f'(x_j)(x-x_j)\ell_j(x)^2\right],\\
+f(x)-H(x)=\frac{f^{(2n+2)}(\xi)}{(2n+2)!}\prod_{j=0}^n(x-x_j)^2.
+\end{gather*}
+余项要求包络区间上 $f\in C^{2n+2}$。
+
+\subsection{三次样条与Chebyshev展开}\index{三次样条与Chebyshev展开|hyperpage}
+设 $h_i=x_{i+1}-x_i>0$、$M_i=S''(x_i)$，三次样条在 $[x_i,x_{i+1}]$ 上为
+\begin{align*}
+S(x)={}&\frac{M_i(x_{i+1}-x)^3+M_{i+1}(x-x_i)^3}{6h_i}\\
+&+\left(f_i-\frac{M_ih_i^2}{6}\right)\frac{x_{i+1}-x}{h_i}
++\left(f_{i+1}-\frac{M_{i+1}h_i^2}{6}\right)\frac{x-x_i}{h_i}.
+\end{align*}
+内部二阶导数解三对角系统
+\[
+h_{i-1}M_{i-1}+2(h_{i-1}+h_i)M_i+h_iM_{i+1}
+=6\left(\frac{f_{i+1}-f_i}{h_i}-\frac{f_i-f_{i-1}}{h_{i-1}}\right).
+\]
+自然边界取 $M_0=M_n=0$；夹持边界指定两端一阶导数，端点方程随之改变。
+
+Chebyshev 多项式满足 $T_j(\cos\theta)=\cos(j\theta)$、$T_{j+1}=2xT_j-T_{j-1}$。对展开 $f(x)\sim a_0/2+\sum_{j\ge1}a_jT_j(x)$，
+\[
+a_j=\frac2\pi\int_0^\pi f(\cos\theta)\cos(j\theta)\,\mathrm d\theta.
+\]
+若 $f$ 在参数 $\rho>1$ 的 Bernstein 椭圆及其内部解析且 $|f|\le M$，则 $|a_j|\le2M\rho^{-j}$，$n$ 次截断误差不超过 $2M\rho^{-n}/(\rho-1)$。
+
+\subsection{高阶差分与自适应求积}\index{高阶差分与自适应求积|hyperpage}
+在足够光滑的条件下，五点中心差分为
+\begin{gather*}
+f'(x)=\frac{f(x-2h)-8f(x-h)+8f(x+h)-f(x+2h)}{12h}+O(h^4),\\
+f''(x)=\frac{-f(x+2h)+16f(x+h)-30f(x)+16f(x-h)-f(x-2h)}{12h^2}+O(h^4).
+\end{gather*}
+复步长微分对在实轴附近解析且能以复数方式求值的实值函数给出 $f'(x)=\operatorname{Im}f(x+ih)/h+O(h^2)$；不能直接用于含绝对值等非解析运算的程序。
+
+设 $S$ 为区间上的 Simpson 近似，$S_2$ 为将区间二分后的两段近似之和。在四阶主误差模型适用时，
+\[
+I\approx S_2+\frac{S_2-S}{15},\qquad
+|I-S_2|\approx\frac{|S_2-S|}{15}.
+\]
+这是局部误差估计，非光滑或强振荡时不能无条件当作严格误差界。
+
+\section{矩阵分解、特征值与Krylov方法}
+\subsection{带选主元LU、Cholesky与QR最小二乘}\index{带选主元LU、Cholesky与QR最小二乘|hyperpage}
+部分选主元消去给出 $PA=LU$，其中 $P$ 为置换矩阵，$L$ 单位下三角，$U$ 上三角；解 $Ly=Pb$、$Ux=y$。对实对称正定矩阵，Cholesky 分解 $A=LL^{\mathsf T}$ 可按
+\[
+l_{jj}=\sqrt{a_{jj}-\sum_{k<j}l_{jk}^2},\qquad
+l_{ij}=\frac{a_{ij}-\sum_{k<j}l_{ik}l_{jk}}{l_{jj}}\quad(i>j)
+\]
+计算。对满列秩 $m\times n$ 矩阵 $A=QR$（经济型，$Q^{\mathsf T}Q=I$），最小二乘解满足
+\[
+R\widehat x=Q^{\mathsf T}b,\qquad
+\|A^{\mathsf T}A\|_2\|(A^{\mathsf T}A)^{-1}\|_2=\kappa_2(A)^2.
+\]
+正规方程会平方条件数，QR 通常更适合病态最小二乘。Householder 反射为 $H=I-2vv^{\mathsf T}/(v^{\mathsf T}v)$（$v\ne0$），满足 $H^{\mathsf T}H=I$。
+
+\subsection{SVD、截断与特征值迭代}\index{SVD、截断与特征值迭代|hyperpage}
+设 $A=U\Sigma V^*$，非零奇异值为 $\sigma_1\ge\cdots\ge\sigma_r>0$，则
+\[
+A^+=V\Sigma^+U^*,\qquad
+\kappa_2(A)=\sigma_1/\sigma_n\quad(A\text{ 满列秩}),\qquad
+\min_{\operatorname{rank}B\le k}\|A-B\|_2=\sigma_{k+1}.
+\]
+其中 $A^+$ 为伪逆；最小范数最小二乘解为 $A^+b$。截断 SVD 将较小奇异值舍去，以正则化代替不稳定的倒数。
+
+幂迭代 $v_{k+1}=Av_k/\|Av_k\|$ 在唯一模最大简单特征值、适当谱分解与初向量投影非零时收敛到主特征向量方向。移位逆迭代解
+\[
+(A-\mu I)w_{k+1}=v_k,\qquad v_{k+1}=w_{k+1}/\|w_{k+1}\|.
+\]
+Rayleigh 商为 $\rho(v)=v^*Av/(v^*v)$。对 Hermitian 矩阵，使用 $\mu_k=\rho(v_k)$ 的逆迭代在简单特征向量附近通常三阶收敛，移位矩阵奇异时需判断是否已收敛。QR 迭代为 $A_k-\mu_kI=Q_kR_k$、$A_{k+1}=R_kQ_k+\mu_kI$，各步保持相似性。
+
+\subsection{SOR、预条件与GMRES}\index{SOR、预条件与GMRES|hyperpage}
+沿用 $A=D+L+U$，SOR 迭代为
+\[
+(D+\omega L)x^{(k+1)}=\omega b+[(1-\omega)D-\omega U]x^{(k)}.
+\]
+对实对称正定 $A$，$0<\omega<2$ 保证收敛；$\omega=1$ 退化为 Gauss--Seidel。预条件 $M^{-1}Ax=M^{-1}b$ 的目标是改善谱或条件性质，而不是显式形成逆矩阵。
+
+Krylov 子空间 $\mathcal K_k(A,r_0)=\operatorname{span}\{r_0,Ar_0,\ldots,A^{k-1}r_0\}$。GMRES 取
+\[
+x_k\in x_0+\mathcal K_k(A,r_0),\qquad
+\|b-Ax_k\|_2=\min_{x\in x_0+\mathcal K_k}\|b-Ax\|_2.
+\]
+Arnoldi 关系 $AV_k=V_{k+1}\overline H_k$ 将其化为小规模最小二乘 $\min_y\|\beta e_1-\overline H_ky\|_2$，$\beta=\|r_0\|_2$。重启可节省存储，但可能降低收敛速度；对非正规矩阵，特征值聚集本身不保证快速收敛。
+
+\subsection{离散Fourier变换与FFT卷积}\index{离散Fourier变换与FFT卷积|hyperpage}
+对 $j,k=0,\ldots,N-1$，采用
+\[
+\widehat x_k=\sum_{j=0}^{N-1}x_je^{-2\pi ijk/N},\qquad
+x_j=\frac1N\sum_{k=0}^{N-1}\widehat x_ke^{2\pi ijk/N}.
+\]
+离散 Parseval 公式为 $\sum_j|x_j|^2=N^{-1}\sum_k|\widehat x_k|^2$。循环卷积 $c_j=\sum_{\ell=0}^{N-1}x_\ell y_{(j-\ell)\bmod N}$ 满足 $\widehat c_k=\widehat x_k\widehat y_k$。线性卷积须先补零至长度至少为两序列长度之和减一，避免循环混叠；FFT 对合适分解长度将计算量降至 $O(N\log N)$。连续变换约定见第\ref{chap:harmonic-analysis}章。
+
+\section{时间积分与边值离散补充}
+\subsection{Runge--Kutta一般形式与阶条件}\index{Runge-Kutta一般形式与阶条件|hyperpage}
+一个 $s$ 级 Runge--Kutta 方法写为
+\[
+k_i=f\!\left(t_n+c_ih,y_n+h\sum_{j=1}^sa_{ij}k_j\right),\qquad
+y_{n+1}=y_n+h\sum_{i=1}^sb_ik_i.
+\]
+通常取 $c_i=\sum_j a_{ij}$。一阶条件为 $\sum_i b_i=1$，二阶再要求 $\sum_i b_ic_i=1/2$，三阶再要求
+\[
+\sum_i b_ic_i^2=\frac13,\qquad\sum_{i,j}b_ia_{ij}c_j=\frac16.
+\]
+在测试方程上稳定函数为 $R(z)=1+z b^{\mathsf T}(I-zA)^{-1}\bm1$。只有全部相应阶条件成立才能断言该阶，单个测试方程上的展开不足以验证非线性方程的完整阶数。
+
+\subsection{多步法、零稳定性与刚性方法}\index{多步法、零稳定性与刚性方法|hyperpage}
+令 $f_n=f(t_n,y_n)$，二阶 Adams--Bashforth、梯形和 BDF2 分别为
+\begin{gather*}
+y_{n+1}=y_n+\tfrac h2(3f_n-f_{n-1}),\\
+y_{n+1}=y_n+\tfrac h2(f_n+f_{n+1}),\\
+3y_{n+1}-4y_n+y_{n-1}=2h f_{n+1}.
+\end{gather*}
+多步法需要足够准确的起始值。一般线性多步法 $\sum_{j=0}^k\alpha_j y_{n+j}=h\sum_{j=0}^k\beta_jf_{n+j}$ 定义
+\[
+\rho(\zeta)=\sum_j\alpha_j\zeta^j,\quad\sigma(\zeta)=\sum_j\beta_j\zeta^j,
+\qquad \rho(1)=0,\quad\rho'(1)=\sigma(1).
+\]
+最后两式为一致性条件。零稳定性要求 $\rho$ 的根均在闭单位圆内，且单位圆上的根简单；一致性加零稳定性等价于通常条件下的收敛性。梯形法与 BDF2 都 A-稳定；梯形法 $R(z)=(1+z/2)/(1-z/2)$ 在 $z\to-\infty$ 时趋于 $-1$，不具 L-稳定性，而隐式 Euler 具有 L-稳定性。
+
+\subsection{二阶边值问题的差分离散}\index{二阶边值问题的差分离散|hyperpage}
+对 $-y''+q(x)y=f(x)$、$y(a)=\alpha$、$y(b)=\beta$，取等距网格 $x_i=a+ih$，内部节点满足
+\[
+-y_{i-1}+(2+h^2q_i)y_i-y_{i+1}=h^2f_i.
+\]
+端点值移入右端，得到三对角系统。若 $q\ge0$，离散矩阵正定；在解足够光滑和离散稳定条件下，网格最大范数误差为 $O(h^2)$。差分截断阶与整体收敛阶应通过稳定性联系，不能仅由局部 Taylor 展开推断所有边值问题的整体误差。
+\section{正则化、谱微分与结构保持补充}
+基础数值方法参见\cite{fnc}，谱方法和几何积分分别参见\cite{spectral,geometric}，有限元残差参见\cite{fem}。
+\subsection{Tikhonov正则化与奇异值滤波}\index{Tikhonov正则化与奇异值滤波|hyperpage}
+对矩阵 $A$ 与数据 $b$，$\alpha>0$ 时最小化 $\|Ax-b\|_2^2+\alpha\|x\|_2^2$，唯一解为
+\[
+x_\alpha=(A^*A+\alpha I)^{-1}A^*b
+=\sum_{\sigma_j>0}\frac{\sigma_j}{\sigma_j^2+\alpha}
+\langle b,u_j\rangle v_j.
+\]
+小奇异值的倒数被有界滤波因子替代。参数过小放大噪声，过大带来偏差；$\alpha\to0$ 且数据固定时趋于最小范数最小二乘解。
+\subsection{Chebyshev配点微分矩阵}\index{Chebyshev配点微分矩阵|hyperpage}
+取 $N\ge1$、$x_j=\cos(j\pi/N)$，$c_0=c_N=2$、其余 $c_j=1$。插值多项式导数在节点上的矩阵为
+\[
+D_{ij}=\frac{c_i}{c_j}\frac{(-1)^{i+j}}{x_i-x_j}\ (i\ne j),\qquad
+D_{ii}=-\sum_{j\ne i}D_{ij}.
+\]
+内部对角元为 $-x_i/[2(1-x_i^2)]$，端点为 $D_{00}=(2N^2+1)/6$、$D_{NN}=-D_{00}$。边界条件需另行替换相应方程；节点顺序反转会改变矩阵表示。
+\subsection{Störmer--Verlet辛积分}\index{Störmer-Verlet辛积分|hyperpage}
+对 $H(q,p)=\tfrac12p^{\mathsf T}M^{-1}p+V(q)$、$M\succ0$，速度型 Verlet 为
+\begin{align*}
+p_{n+1/2}&=p_n-\tfrac h2\nabla V(q_n),\\
+q_{n+1}&=q_n+hM^{-1}p_{n+1/2},\\
+p_{n+1}&=p_{n+1/2}-\tfrac h2\nabla V(q_{n+1}).
+\end{align*}
+它二阶、对称且辛。在线性振子上要求 $h\omega<2$ 才位于非退化稳定范围；辛性不等于逐步精确守恒原 Hamilton 量。
+\subsection{Poisson有限元的残差后验界}\index{Poisson有限元的残差后验界|hyperpage}
+齐次 Dirichlet Poisson 问题在形状正则单纯形网格上采用协调分片线性解 $u_h$，定义
+\[
+\eta^2=\sum_Kh_K^2\|f+\Delta u_h\|_{L^2(K)}^2
++\sum_{E\text{ 内部}}h_E\|[\nabla u_h\cdot n_E]\|_{L^2(E)}^2.
+\]
+则 $\|\nabla(u-u_h)\|_2\le C\eta$，并有 $\eta\le C(\|\nabla(u-u_h)\|_2+\operatorname{osc}f)$。数据振荡可取 $\operatorname{osc}f=(\sum_Kh_K^2\|f-\bar f_K\|_2^2)^{1/2}$；常数依赖域与网格形状正则性。
+\clearpage
+\end{document}

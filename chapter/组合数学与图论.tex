@@ -1,0 +1,301 @@
+\documentclass[../main.tex]{subfiles}
+\begin{document}
+本章主要参考\cite{cameron,mcs}。
+
+% References:
+% https://math.mit.edu/~rstan/algcomb/algcomb.pdf
+% https://theory.stanford.edu/~blynn/polya/polya.html
+% https://www.cs.columbia.edu/~cs4203/files/GT-Lec4.pdf
+\section{计数与递推}
+\subsection{基本计数、容斥与多重组合}\index{基本计数、容斥与多重组合|hyperpage}
+互斥分类用加法，分步独立选择用乘法。有限集合的容斥公式为
+\[
+\left|\bigcup_{i=1}^nA_i\right|=\sum_{\varnothing\ne S\subseteq\{1,\ldots,n\}}
+(-1)^{|S|+1}\left|\bigcap_{i\in S}A_i\right|.
+\]
+将 $n$ 个可区分对象分成大小为 $n_1,\ldots,n_r$ 的有标号组，有 $n!/(n_1!\cdots n_r!)$ 种。非负整数方程 $x_1+\cdots+x_r=n$ 的解数为 $\binom{n+r-1}{r-1}$；若要求各项正，解数为 $\binom{n-1}{r-1}$（$n\ge r\ge1$）。
+\subsection{二项式恒等式与反演}\index{二项式恒等式与反演|hyperpage}
+对非负整数 $n$，约定 $\binom nk=0$（$k<0$ 或 $k>n$）。二项式定理与常用恒等式为
+\begin{gather*}
+(x+y)^n=\sum_{k=0}^n\binom nk x^ky^{n-k},\qquad
+\binom nk=\binom{n-1}k+\binom{n-1}{k-1}\quad(n\ge1),\\
+\sum_{k=0}^n\binom nk=2^n,\qquad
+\sum_{k=0}^n(-1)^k\binom nk=0\quad(n\ge1),\\
+\sum_{k=0}^n k\binom nk=n2^{n-1}\quad(n\ge1),\\
+\sum_{k=0}^n k(k-1)\binom nk=n(n-1)2^{n-2}\quad(n\ge2),\\
+\sum_k\binom rk\binom s{n-k}=\binom{r+s}n\quad(r,s,n\ge0),\qquad
+\sum_{k=0}^n\binom nk^2=\binom{2n}n,\\
+\sum_{j=r}^n\binom jr=\binom{n+1}{r+1}\quad(0\le r\le n).
+\end{gather*}
+Vandermonde 求和中的 $k$ 可遍历所有整数，非零项只有有限个。二项式反演为
+\[
+b_n=\sum_{k=0}^n\binom nk a_k
+\iff a_n=\sum_{k=0}^n(-1)^{n-k}\binom nk b_k.
+\]
+若将 $N$ 个对象放入 $r\ge1$ 个盒子，至少有一个盒子含不少于 $\lceil N/r\rceil$ 个对象；特别地，$N>r(t-1)$ 时至少有一盒含 $t$ 个对象（抽屉原理）。
+
+\subsection{映射、排列与有界分配计数}\index{映射、排列与有界分配计数|hyperpage}
+对 $n,k\ge0$，从 $n$ 元集到 $k$ 元集的映射数为 $k^n$；单射数为 $k!/(k-n)!$（$n\le k$），$n>k$ 时为零。组合计数中约定 $0^0=1$。对 $n,k\ge1$，满射数为
+\[
+k!S(n,k)=\sum_{j=0}^k(-1)^j\binom kj(k-j)^n.
+\]
+将 $n$ 个可区分对象分入 $k$ 个有标号非空盒子，与满射计数相同；若盒子无标号，则为 $S(n,k)$。
+
+对整数 $n\ge0$、$r\ge1$、$u_i\ge0$，记 $[r]=\{1,\ldots,r\}$，则 $x_1+\cdots+x_r=n$、$0\le x_i\le u_i$ 的整数解数为
+\[
+\sum_{S\subseteq[r]}(-1)^{|S|}
+\binom{n-\sum_{i\in S}(u_i+1)+r-1}{r-1}.
+\]
+此处特约定上标小于 $r-1$ 的二项式系数为零，包括负上标情形。若每个 $u_i=u$，可合并为
+\[
+\sum_{j=0}^r(-1)^j\binom rj\binom{n-j(u+1)+r-1}{r-1}.
+\]
+\subsection{Stirling数、Bell数与Catalan数}\index{Stirling数、Bell数与Catalan数|hyperpage}
+第二类 Stirling 数 $S(n,k)$ 计数将 $n$ 元集合划分为 $k$ 个非空无标号块的方法：
+\[
+S(n,k)=kS(n-1,k)+S(n-1,k-1),\quad
+S(0,0)=1,\quad S(n,0)=0\ (n>0).
+\]
+Bell 数 $B_n=\sum_{k=0}^nS(n,k)$。Catalan 数及其递推为
+\[
+C_n=\frac1{n+1}\binom{2n}{n},\qquad
+C_0=1,\quad C_{n+1}=\sum_{k=0}^nC_kC_{n-k}.
+\]
+它计数 $n$ 对合法括号串、$n+1$ 个叶子的满有序二叉树等对象。错排数为 $D_n=n!\sum_{k=0}^n(-1)^k/k!$。
+另有 $D_0=1$、$D_1=0$，且
+\[
+D_n=(n-1)(D_{n-1}+D_{n-2})\quad(n\ge2),\qquad
+D_n=nD_{n-1}+(-1)^n\quad(n\ge1).
+\]
+\subsection{第一类Stirling数与基变换}\index{第一类Stirling数与基变换|hyperpage}
+无符号第一类 Stirling 数 $c(n,k)$ 计数 $n$ 元排列中恰有 $k$ 个不交循环的排列，满足
+\[
+c(n,k)=c(n-1,k-1)+(n-1)c(n-1,k),\qquad c(0,0)=1.
+\]
+约定 $c(n,k)=S(n,k)=0$（$k<0$ 或 $k>n$），且 $c(n,0)=S(n,0)=0$（$n>0$）。令 $s(n,k)=(-1)^{n-k}c(n,k)$ 为有符号第一类 Stirling 数，则
+\begin{gather*}
+x^{\underline n}:=x(x-1)\cdots(x-n+1)=\sum_{k=0}^n s(n,k)x^k,\\
+x^n=\sum_{k=0}^nS(n,k)x^{\underline k},\qquad
+x(x+1)\cdots(x+n-1)=\sum_{k=0}^n c(n,k)x^k,\\
+\sum_{k=j}^n s(n,k)S(k,j)=\sum_{k=j}^n S(n,k)s(k,j)=\delta_{nj}.
+\end{gather*}
+其中 $x^{\underline0}=1$。因此两种 Stirling 数给出幂基与下降阶乘基之间互逆的变换。
+\subsection{普通生成函数与指数生成函数}\index{普通生成函数与指数生成函数|hyperpage}
+普通生成函数 $A(z)=\sum_{n\ge0}a_nz^n$ 的乘法对应卷积：
+\[
+[z^n](A(z)B(z))=\sum_{k=0}^na_kb_{n-k},\qquad
+\sum_{n\ge0}C_nz^n=\frac{1-\sqrt{1-4z}}{2z}.
+\]
+指数生成函数为 $\widehat A(z)=\sum_{n\ge0}a_nz^n/n!$，其乘法系数为 $\sum_k\binom nka_kb_{n-k}$。常用形式为
+\[
+\sum_{n\ge0}B_n\frac{z^n}{n!}=\exp(e^z-1),\qquad
+\sum_{n\ge k}S(n,k)\frac{z^n}{n!}=\frac{(e^z-1)^k}{k!}.
+\]
+这些等式可先按形式幂级数理解；作解析运算时需检查收敛性。
+\subsection{生成函数的运算规则}\index{生成函数的运算规则|hyperpage}
+设普通生成函数 $A(z)=\sum_{n\ge0}a_nz^n$，下列公式按形式幂级数成立：
+\begin{gather*}
+\sum_{n\ge0}a_{n+1}z^n=\frac{A(z)-a_0}{z},\qquad
+\sum_{n\ge0}na_nz^n=zA'(z),\\
+\sum_{n\ge0}\left(\sum_{k=0}^na_k\right)z^n=\frac{A(z)}{1-z},\qquad
+\sum_{n\ge0}\left(\sum_{k=0}^n\binom nk a_k\right)z^n
+=\frac1{1-z}A\!\left(\frac z{1-z}\right).
+\end{gather*}
+若 $\widehat A(z)=\sum_{n\ge0}a_nz^n/n!$ 是指数生成函数，则
+\[
+\widehat A'(z)=\sum_{n\ge0}a_{n+1}\frac{z^n}{n!},\qquad
+e^z\widehat A(z)=\sum_{n\ge0}\left(\sum_{k=0}^n\binom nk a_k\right)\frac{z^n}{n!}.
+\]
+有限移位公式中的除以 $z$ 是去掉零常数项后再降幂，不是引入负幂。
+
+\subsection{Fibonacci数与二阶递推}\index{Fibonacci数与二阶递推|hyperpage}
+定义 $F_0=0$、$F_1=1$、$F_{n+2}=F_{n+1}+F_n$，则
+\begin{gather*}
+\sum_{n\ge0}F_nz^n=\frac z{1-z-z^2},\qquad
+F_n=\frac{\alpha^n-\beta^n}{\sqrt5},\quad
+\alpha=\frac{1+\sqrt5}{2},\quad\beta=\frac{1-\sqrt5}{2},\\
+\sum_{k=0}^nF_k=F_{n+2}-1,\qquad
+F_{n-1}F_{n+1}-F_n^2=(-1)^n\quad(n\ge1),\\
+F_{m+n}=F_{m-1}F_n+F_mF_{n+1}\quad(m\ge1,\ n\ge0).
+\end{gather*}
+更一般地，若 $a_{n+2}=u a_{n+1}+v a_n$（$n\ge0$），则
+\[
+A(z)=\frac{a_0+(a_1-u a_0)z}{1-uz-vz^2}.
+\]
+特征根与重根情形的通解见第\ref{chap:ordinary-differential-equations}章中的线性递推部分；一阶递推见第\ref{chap:elementary-mathematics}章。
+
+\section{图、树与平面图}
+\subsection{度数、路径与Euler回路}\index{度数、路径与Euler回路|hyperpage}
+默认 $G=(V,E)$ 为有限无向简单图，$n=|V|,m=|E|$，握手定理为
+\[
+\sum_{v\in V}\deg v=2m.
+\]
+因此奇度顶点数为偶数。若所有非孤立顶点属于同一连通分支，则存在 Euler 回路当且仅当所有顶点度数为偶数；存在以不同顶点为端点的 Euler 通路当且仅当恰有两个奇度顶点。
+Euler 通路每条边恰用一次；Hamilton 回路要求每个顶点恰经过一次，二者判别条件不同。
+\subsection{Hamilton回路的充分条件}\index{Hamilton回路的充分条件|hyperpage}
+对 $n\ge3$ 的有限无向简单图，设最小度为 $\delta(G)$。Dirac 定理与 Ore 定理给出
+\begin{gather*}
+\delta(G)\ge n/2\ \Longrightarrow\ G\text{ 有Hamilton回路},\\
+\deg u+\deg v\ge n\quad(\forall\text{ 不相邻的 }u\ne v)
+\ \Longrightarrow\ G\text{ 有Hamilton回路}.
+\end{gather*}
+两者均为充分条件，不是必要条件；一般不存在仅由奇偶度数给出的 Hamilton 回路判别。
+\subsection{树、生成树与矩阵树定理}\index{树、生成树与矩阵树定理|hyperpage}
+$n$ 个顶点的无向图为树，当且仅当连通且有 $n-1$ 条边，也等价于任意两点之间恰有一条简单路径。$n\ge2$ 时，有标号树数为
+\[
+\tau(K_n)=n^{n-2}\qquad\text{（Cayley公式）}.
+\]
+令邻接矩阵为 $A$、度矩阵为 $D$、图 Laplace 矩阵为 $L=D-A$，则
+\[
+\tau(G)=\det L^{(i)},
+\]
+其中 $L^{(i)}$ 删去同一顶点对应的行与列；对连通图其值与顶点选择无关，不连通时为零。
+\subsection{Prüfer编码与树计数}\index{Prüfer编码与树计数|hyperpage}
+标号集为 $\{1,\ldots,n\}$（$n\ge2$）的树，与长度 $n-2$ 的 Prüfer 序列一一对应；编码时反复删去最小标号叶子并记录其邻点。标号 $i$ 在序列中出现 $d_i-1$ 次，其中 $d_i$ 为其度数。因此
+\[
+\#\{T:\deg_T(i)=d_i\ (1\le i\le n)\}
+=\frac{(n-2)!}{\prod_{i=1}^n(d_i-1)!},
+\qquad d_i\ge1,\quad\sum_i d_i=2n-2.
+\]
+有 $k$ 个连通分支的森林满足 $m=n-k$；树有 $n-1$ 条边且在 $n\ge2$ 时至少有两个叶子。若树中 $n_j$ 表示度为 $j$ 的顶点数，则
+\[
+n_1=2+\sum_{j\ge3}(j-2)n_j\quad(n\ge2).
+\]
+完全二分图 $K_{r,s}$（$r,s\ge1$）的生成树数为
+\[
+\tau(K_{r,s})=r^{s-1}s^{r-1}.
+\]
+在前述约定下 $\tau(K_n)=n^{n-2}$；单顶点图的生成树数另约定为 $1$。
+\subsection{平面图与着色多项式}\index{平面图与着色多项式|hyperpage}
+连通平面图的顶点、边、面数（包括无界面）满足
+\[
+n-m+f=2.
+\]
+对 $n\ge3$ 的简单平面图，$m\le3n-6$；若还是二分图，则 $m\le2n-4$。这些必要条件不足以保证平面性。
+着色多项式 $P_G(q)$ 计数使用 $q$ 种有标号颜色的正常顶点着色。对非自环边 $e$，
+\[
+P_G(q)=P_{G-e}(q)-P_{G/e}(q),\qquad
+P_{T_n}(q)=q(q-1)^{n-1},
+\]
+\[
+P_{C_n}(q)=(q-1)^n+(-1)^n(q-1)\quad(n\ge3).
+\]
+色数满足 $\omega(G)\le\chi(G)\le\Delta(G)+1$，其中 $\omega$ 为最大团大小，$\Delta$ 为最大度。
+\subsection{独立集、连通度与极值界}\index{独立集、连通度与极值界|hyperpage}
+设 $\alpha(G)$ 为最大独立集大小、$\tau_v(G)$ 为最小顶点覆盖大小，则
+\[
+\alpha(G)+\tau_v(G)=n,\qquad
+\alpha(G)\ge\frac n{\Delta(G)+1},\qquad
+\chi(G)\ge\frac n{\alpha(G)}\quad(n\ge1).
+\]
+第一式来自独立集与顶点覆盖的补集对应。对至少两个顶点的连通简单图，点连通度 $\kappa$、边连通度 $\lambda$ 满足
+\[
+\kappa(G)\le\lambda(G)\le\delta(G).
+\]
+其中点连通度按删点后不连通或仅剩一个顶点所需的最少删点数定义，从而 $\kappa(K_n)=n-1$。若图含环，则围长 $g$ 为最短环长；对 $g\ge3$ 的简单平面图，
+\[
+m\le\frac g{g-2}(n-2).
+\]
+Mantel 定理说明无三角形的简单图满足 $m\le\lfloor n^2/4\rfloor$；平衡完全二分图达到此界。此结论不要求图为平面图。
+\section{匹配、网络与谱}
+\subsection{Hall定理与Kőnig定理}\index{Hall定理与Kőnig定理|hyperpage}
+二分图 $G=(X\sqcup Y,E)$ 存在覆盖所有 $X$ 顶点的匹配，当且仅当
+\[
+|N(S)|\ge|S|\quad(\forall S\subseteq X).
+\]
+有限二分图中，最大匹配边数等于最小顶点覆盖数：$\nu(G)=\tau_v(G)$。这里顶点覆盖要求每条边至少有一个端点被选中，并非选择边来覆盖顶点。
+对任意无孤立顶点的有限简单图，若 $\rho(G)$ 为覆盖全部顶点所需的最少边数，则 Gallai 恒等式为
+\[
+\nu(G)+\rho(G)=n.
+\]
+边覆盖选择边以覆盖顶点，顶点覆盖选择顶点以覆盖边；符号 $\rho$ 与 $\tau_v$ 表示不同问题。结合 Kőnig 定理，二分图还满足 $\alpha(G)=n-\nu(G)$。
+\subsection{最大流最小割}\index{最大流最小割|hyperpage}
+对有向网络，容量 $c_e\ge0$，流满足 $0\le f_e\le c_e$ 及中间顶点的流量守恒。源 $s$、汇 $t$ 不同，则
+\[
+\max_f|f|=\min_{s\in S,\ t\notin S}\sum_{e\in\delta^+(S)}c_e.
+\]
+$\delta^+(S)$ 为从 $S$ 指向补集的边。容量为整数时存在整数最大流，但不表示所有最大流都必须为整数。
+\subsection{邻接矩阵与图谱}\index{邻接矩阵与图谱|hyperpage}
+$A^k$ 的 $(i,j)$ 元等于从 $i$ 到 $j$ 长度为 $k$ 的游走数；游走允许重复顶点和边。无向图的 $A,L$ 为实对称矩阵，且
+\[
+x^{\mathsf T}Lx=\sum_{\{i,j\}\in E}(x_i-x_j)^2\ge0,
+\qquad\dim\ker L=\text{连通分支数}.
+\]
+对 $n\ge2$ 的连通图，若 $0=\lambda_1<\lambda_2\le\cdots\le\lambda_n$ 为 $L$ 的特征值，则
+\[
+\tau(G)=\frac1n\prod_{i=2}^n\lambda_i.
+\]
+\section{群作用与对称计数}
+\subsection{循环指标与Pólya计数}\index{循环指标与Pólya计数|hyperpage}
+设有限置换群 $G$ 作用在 $n$ 个位置上，$c_i(g)$ 为置换 $g$ 的长度为 $i$ 的循环数，满足 $\sum_i i c_i(g)=n$。循环指标多项式为
+\[
+Z_G(t_1,\ldots,t_n)=\frac1{|G|}\sum_{g\in G}\prod_{i=1}^n t_i^{c_i(g)}.
+\]
+使用 $q\ge1$ 种有标号颜色，各位置任意着色，将群作用相互变换的着色视为相同，则不同着色数为
+\[
+N_G(q)=Z_G(q,\ldots,q)=\frac1{|G|}\sum_{g\in G}q^{\sum_i c_i(g)}.
+\]
+每个置换循环必须同色，故固定着色数为 $q^{\sum_i c_i(g)}$。该式应用了第\ref{chap:group-theory}章的 Burnside 引理。
+
+若用 $x_j$ 记录第 $j$ 种颜色使用次数，Pólya 库存多项式为
+\[
+Z_G\!\left(\sum_{j=1}^q x_j,\ \sum_{j=1}^q x_j^2,\ \ldots,\ \sum_{j=1}^q x_j^n\right).
+\]
+其中 $x_1^{a_1}\cdots x_q^{a_q}$ 的系数给出各色恰出现 $a_1,\ldots,a_q$ 次的不同着色数。若颜色本身也允许互换，需要另行指定群作用。
+
+\subsection{项链、手镯与非周期项链}\index{项链、手镯与非周期项链|hyperpage}
+对 $n\ge1$、$q\ge1$，用 $q$ 种有标号颜色给 $n$ 个圆周位置着色，允许颜色重复。只将旋转视为相同的项链数为
+\[
+N_n(q)=\frac1n\sum_{k=0}^{n-1}q^{\gcd(n,k)}
+=\frac1n\sum_{d\mid n}\varphi(d)q^{n/d},\qquad\gcd(n,0)=n.
+\]
+这里 $\varphi$ 是 Euler 函数，见第\ref{chap:elementary-number-theory}章。对 $n\ge3$，再将镜面翻转视为相同，得到手镯数
+\[
+B_n(q)=\begin{cases}
+\dfrac12N_n(q)+\dfrac12q^{(n+1)/2},&n\text{ 为奇数},\\[4pt]
+\dfrac12N_n(q)+\dfrac14\bigl(q^{n/2+1}+q^{n/2}\bigr),&n\text{ 为偶数}.
+\end{cases}
+\]
+这些公式不要求每一种颜色都使用。例如 $N_4(3)=24$，而 $B_4(3)=21$。
+
+最小旋转周期恰为 $n$ 的非周期项链数为
+\[
+L_n(q)=\frac1n\sum_{d\mid n}\mu(d)q^{n/d},
+\]
+其中 $\mu$ 为 Möbius 函数。非周期项链的每个旋转轨道含恰好 $n$ 个有起点的字符串；普通项链可能具有非平凡旋转对称，不能直接用 $q^n/n$ 计数。
+\section{反链、分拆与图多项式补充}
+组合方法参见\cite{cameron,mcs}，整数分拆公式参见\cite{dlmf}。
+\subsection{Sperner与LYM反链界}\index{Sperner与LYM反链界|hyperpage}
+若 $\mathcal A\subseteq2^{[n]}$ 为反链，则
+\[
+\sum_{A\in\mathcal A}\binom n{|A|}^{-1}\le1,
+\qquad |\mathcal A|\le\binom n{\lfloor n/2\rfloor}.
+\]
+第一式通过对全排列诱导的极大链双重计数得到。固定中间层的全部子集达到第二式；反链只排除严格包含，不要求集合互不相交。
+\subsection{整数分拆与五边形递推}\index{整数分拆与五边形递推|hyperpage}
+记 $p(n)$ 为 $n$ 的无序正整数分拆数，$p(0)=1$，负指标取零，则
+\[
+\sum_{n\ge0}p(n)z^n=\prod_{m\ge1}(1-z^m)^{-1},\qquad |z|<1,
+\]
+\[
+p(n)=\sum_{k\ge1}(-1)^{k-1}
+\left[p\!\left(n-\frac{k(3k-1)}2\right)
++p\!\left(n-\frac{k(3k+1)}2\right)\right],\quad n\ge1.
+\]
+每个固定 $n$ 只有有限个非零项。无序分拆不同于有序合成，不能把其生成函数换成几何级数计数。
+\subsection{Tutte多项式与删缩递推}\index{Tutte多项式与删缩递推|hyperpage}
+有限图允许重边和环。令 $r(A)=|V|-c(V,A)$，定义
+\[
+T_G(x,y)=\sum_{A\subseteq E}(x-1)^{r(E)-r(A)}(y-1)^{|A|-r(A)}.
+\]
+普通边 $e$ 有 $T_G=T_{G\setminus e}+T_{G/e}$；桥给因子 $x$，环给因子 $y$。连通图的生成树数为 $T_G(1,1)$，无边图取 $T=1$；图不连通时该值计生成森林。
+\subsection{图的归一化Laplacian与Cheeger界}\index{图的归一化Laplacian与Cheeger界|hyperpage}
+无孤立点的连通无向图中，令 $\mathcal L=I-D^{-1/2}AD^{-1/2}$，特征值 $0=\lambda_1<\lambda_2\le\cdots\le2$。定义
+\[
+h=\min_{0<\operatorname{vol}(S)\le\operatorname{vol}(V)/2}
+\frac{|E(S,S^c)|}{\operatorname{vol}(S)},\qquad
+\frac{\lambda_2}{2}\le h\le\sqrt{2\lambda_2}.
+\]
+体积为顶点度数和。组合 Laplacian $D-A$ 的特征值采用不同归一化，不能直接代入同一常数界。
+\clearpage
+\end{document}

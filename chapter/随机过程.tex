@@ -1,0 +1,274 @@
+\documentclass[../main.tex]{subfiles}
+\begin{document}
+本章主要参考\cite{durrett,legall}。
+
+% Reference: https://www.columbia.edu/~ks20/stochastic-I/stochastic-I.html
+\section{过程与Markov链}
+\subsection{随机过程、滤过与条件期望}\index{随机过程、滤过与条件期望|hyperpage}
+随机过程为共同概率空间上的随机变量族 $\{X_t:t\in T\}$。滤过 $\mathcal F_s\subseteq\mathcal F_t$（$s\le t$）表示信息随时间增长；$X_t$ 对 $\mathcal F_t$ 可测时称过程适应。
+\[
+E[E[X\mid\mathcal F_t]\mid\mathcal F_s]=E[X\mid\mathcal F_s]\quad(s\le t),
+\]
+要求 $X$ 可积。条件期望按几乎处处相等确定；它是随机变量，而非一般的常数。
+\subsection{离散时间转移与平稳分布}\index{离散时间转移与平稳分布|hyperpage}
+对时齐 Markov 链，$p_{ij}=P(X_{n+1}=j\mid X_n=i)$，$P=(p_{ij})$ 为行随机矩阵，$\mu_n$ 为行分布向量，则
+\[
+P^{(m+n)}=P^{(m)}P^{(n)},\quad P^{(n)}=P^n,\qquad
+\mu_n=\mu_0P^n,\qquad\pi P=\pi,\quad\sum_i\pi_i=1.
+\]
+有限不可约链有唯一平稳分布；若还非周期，则 $P^n_{ij}\to\pi_j$。详细平衡条件 $\pi_ip_{ij}=\pi_jp_{ji}$ 足以保证平稳性，并称链对 $\pi$ 可逆。
+\subsection{到达时间与吸收链}\index{到达时间与吸收链|hyperpage}
+令 $T_A=\inf\{n\ge0:X_n\in A\}$，平均到达时间在有限时满足
+\[
+h_i=E_iT_A=0\ (i\in A),\qquad h_i=1+\sum_{j\notin A}p_{ij}h_j\ (i\notin A).
+\]
+一般可取该方程组的最小非负扩展实值解，不能预先假定期望有限。
+有限吸收链按瞬态、吸收态排序为 $P=\begin{pmatrix}Q&R\\0&I\end{pmatrix}$，若 $\rho(Q)<1$，则
+\[
+N=(I-Q)^{-1}=\sum_{n\ge0}Q^n,\qquad t=N\bm1,\qquad B=NR.
+\]
+$N_{ij}$ 为从瞬态 $i$ 出发吸收前访问瞬态 $j$ 的期望次数，$t$ 为期望吸收时间，$B$ 为各吸收态的最终吸收概率。
+\subsection{连续时间Markov链与生成矩阵}\index{连续时间Markov链与生成矩阵|hyperpage}
+对有限状态时齐链，生成矩阵满足 $q_{ij}\ge0$（$i\ne j$）、$q_{ii}=-\sum_{j\ne i}q_{ij}$。转移半群与平稳方程为
+\[
+P(t)=e^{tQ},\quad P'(t)=QP(t)=P(t)Q,\quad
+\mu(t)=\mu(0)e^{tQ},\quad\pi Q=0.
+\]
+在状态 $i$ 的停留时间为率 $-q_{ii}$ 的指数变量（该率正时），跳到 $j$ 的条件概率为 $q_{ij}/(-q_{ii})$。无限状态情形需另查非爆炸性等条件。
+\section{计数与更新过程}
+\subsection{Poisson过程}\index{Poisson过程|hyperpage}
+率 $\lambda>0$ 的 Poisson 过程满足 $N(0)=0$、独立平稳增量，且
+\[
+N(t)-N(s)\sim\operatorname{Poisson}(\lambda(t-s)),\quad0\le s<t,
+\qquad E[N(t)]=\operatorname{Var}(N(t))=\lambda t.
+\]
+相邻到达间隔独立同分布为 $\operatorname{Exp}(\lambda)$，第 $n$ 次到达时刻 $S_n\sim\operatorname{Gamma}(n,\lambda)$，使用率参数。
+给定 $N(t)=n$，到达时刻的联合密度在 $0<s_1<\cdots<s_n<t$ 上为 $n!/t^n$，即 $n$ 个独立 $U(0,t)$ 样本的次序统计量。
+\subsection{更新定理与更新报酬}\index{更新定理与更新报酬|hyperpage}
+设 $X_i>0$ 独立同分布、$0<\mu=E[X_i]<\infty$，$S_n=\sum_{i=1}^nX_i$，$S_0=0$，$N(t)=\max\{n:S_n\le t\}$。则
+\[
+\frac{N(t)}t\to\frac1\mu\quad\text{a.s.},\qquad
+\frac{E[N(t)]}t\to\frac1\mu.
+\]
+若 $(X_i,R_i)$ 为独立同分布的周期长度与报酬对，$E|R_i|<\infty$，则已完成周期的总报酬满足
+\[
+\frac1t\sum_{i=1}^{N(t)}R_i\to\frac{E[R_1]}{E[X_1]}\quad\text{a.s.}
+\]
+同一周期内长度与报酬允许相关；不同周期对之间须独立同分布。
+\section{鞅、Brown运动与随机积分}
+\subsection{鞅、停时与Doob不等式}\index{鞅、停时与Doob不等式|hyperpage}
+适应可积过程 $M_n$ 为鞅指 $E[M_{n+1}\mid\mathcal F_n]=M_n$。停时 $\tau$ 满足 $\{\tau\le n\}\in\mathcal F_n$。
+对有界离散停时，$E[M_\tau]=E[M_0]$；对任意无界停时不能直接沿用，需一致可积性等附加条件。
+若 $p>1$ 且 $M_n\in L^p$，Doob 极大不等式为
+\[
+\left\|\max_{0\le k\le n}|M_k|\right\|_p\le\frac p{p-1}\|M_n\|_p.
+\]
+\subsection{标准Brown运动}\index{标准Brown运动|hyperpage}
+实标准 Brown 运动 $W_t$ 从零开始，路径连续，具有独立增量，且
+\[
+W_t-W_s\sim N(0,t-s),\quad E[W_t]=0,\quad E[W_sW_t]=\min(s,t).
+\]
+随机积分部分使用使 $W$ 适应、且 $W_t-W_s$ 独立于 $\mathcal F_s$（$s<t$）的滤过，不能提前包含未来增量的信息。
+对固定 $t$，沿确定性分割、网格趋零时，二次变差满足
+\[
+[W]_t=\underset{|\Pi|\to0}{\operatorname{p-lim}}\sum_i(W_{t_{i+1}}-W_{t_i})^2=t.
+\]
+Brown 运动几乎必然具有处处不可导的样本路径；不能将其导数当作普通函数运算。
+\subsection{Itô积分与Itô公式}\index{Itô积分与Itô公式|hyperpage}
+若 $H$ 可预测且 $E\int_0^TH_t^2\,\mathrm dt<\infty$，则
+\[
+E\!\left[\int_0^TH_t\,\mathrm dW_t\right]=0,\qquad
+E\!\left[\left(\int_0^TH_t\,\mathrm dW_t\right)^2\right]
+=E\int_0^TH_t^2\,\mathrm dt.
+\]
+若 $\mathrm dX_t=b_t\,\mathrm dt+\sigma_t\,\mathrm dW_t$ 为适当可积的 Itô 过程、$f\in C^{1,2}$，则
+\[
+\mathrm df(t,X_t)=\left(f_t+b_tf_x+\tfrac12\sigma_t^2f_{xx}\right)\mathrm dt
++\sigma_tf_x\,\mathrm dW_t.
+\]
+偏导在 $(t,X_t)$ 取值。形式记号 $(\mathrm dW_t)^2=\mathrm dt$ 表示二次变差规则，不是普通微分乘法。
+\section{扩散与平稳过程}
+\subsection{常见随机微分方程}\index{常见随机微分方程|hyperpage}
+给定 $\mathcal F_0$-可测且平方可积的初值，系数对空间变量全局 Lipschitz 并满足适当线性增长、时间正则条件时，随机微分方程有唯一强解。几何 Brown 运动为
+\[
+\mathrm dX_t=\mu X_t\,\mathrm dt+\sigma X_t\,\mathrm dW_t,
+\qquad X_t=X_0\exp((\mu-\sigma^2/2)t+\sigma W_t).
+\]
+Ornstein--Uhlenbeck 过程 $\mathrm dX_t=\kappa(\theta-X_t)\,\mathrm dt+\sigma\,\mathrm dW_t$（$\kappa>0$）满足
+\[
+X_t=\theta+(X_0-\theta)e^{-\kappa t}
++\sigma\int_0^te^{-\kappa(t-s)}\,\mathrm dW_s.
+\]
+确定初值时，$E[X_t]=\theta+(X_0-\theta)e^{-\kappa t}$，$\operatorname{Var}(X_t)=\sigma^2(1-e^{-2\kappa t})/(2\kappa)$。
+\subsection{扩散生成元与Kolmogorov方程}\index{扩散生成元与Kolmogorov方程|hyperpage}
+对时齐扩散 $\mathrm dX_t=b(X_t)\,\mathrm dt+\sigma(X_t)\,\mathrm dW_t$，生成元为
+\[
+\mathcal L\phi=b\phi'+\tfrac12\sigma^2\phi''.
+\]
+若 $u(t,x)=E_x[g(X_t)]$ 足够光滑且满足所需可积条件，则 $u_t=\mathcal Lu$、$u(0,x)=g(x)$。若密度 $\rho$ 存在并足够光滑，前向方程为
+\[
+\partial_t\rho=-\partial_x(b\rho)+\tfrac12\partial_x^2(\sigma^2\rho).
+\]
+边界上的吸收、反射或通量条件需随具体状态空间指定。
+\subsection{宽平稳过程与功率谱}\index{宽平稳过程与功率谱|hyperpage}
+宽平稳过程均值为常数 $m$，协方差只依赖时间差：$R(\tau)=E[(X_{t+\tau}-m)\overline{(X_t-m)}]$。在适当连续性与可积条件下，Wiener--Khinchin 关系为
+\[
+S(\omega)=\int_{\mathbb R}R(\tau)e^{-i\omega\tau}\,\mathrm d\tau\ge0,
+\qquad R(\tau)=\frac1{2\pi}\int_{\mathbb R}S(\omega)e^{i\omega\tau}\,\mathrm d\omega.
+\]
+一般情形应使用谱测度，未必存在谱密度 $S$；宽平稳也不等于各阶联合分布均平移不变的严格平稳。
+\section{Markov链与计数过程补充}
+\subsection{返归、平稳回返与赌徒破产}\index{返归、平稳回返与赌徒破产|hyperpage}
+对不可约可数状态链，状态 $i$ 返归当且仅当 $\sum_{n\ge0}p_{ii}^{(n)}=\infty$；正返归时 $\pi_i=1/E_iT_i^+$，其中 $T_i^+=\inf\{n\ge1:X_n=i\}$。对 $0,\ldots,N$ 上向右概率 $p$、向左 $q=1-p$ 的随机游走，
+\[
+P_i(T_N<T_0)=\begin{cases}\dfrac{1-(q/p)^i}{1-(q/p)^N},&p\ne q,\\ i/N,&p=q=1/2,\end{cases}
+\]
+其中 $0<p<1$。公平情形 $E_i(T_0\wedge T_N)=i(N-i)$；有限区间的结论不能直接套用于无上界的随机游走停时。
+\subsection{分支过程的生成函数与灭绝}\index{分支过程的生成函数与灭绝|hyperpage}
+Galton--Watson 过程每个个体的后代数生成函数为 $f(s)=E[s^\xi]$，均值 $m=f'(1)$。从一个个体出发，
+\[
+E[s^{Z_n}]=f^{\circ n}(s),\qquad E[Z_n]=m^n,\qquad
+P(\text{最终灭绝})=\min\{s\in[0,1]:f(s)=s\}.
+\]
+若非退化且 $m\le1$，灭绝概率为 $1$；$m>1$ 时小于 $1$。若 $\operatorname{Var}\xi=\sigma^2<\infty$，
+\[
+\operatorname{Var}Z_n=\begin{cases}\sigma^2m^{n-1}(m^n-1)/(m-1),&m\ne1,\\n\sigma^2,&m=1.\end{cases}
+\]
+$Z_n/m^n$ 在 $m>0$ 时为非负鞅，但其极限的期望未必等于初值期望。
+\subsection{生灭链、排队与详细平衡}\index{生灭链、排队与详细平衡|hyperpage}
+连续时间生灭链上跳率 $\lambda_n$、下跳率 $\mu_n$（$\mu_0=0$）满足
+\[
+\pi_n=\pi_0\prod_{k=0}^{n-1}\frac{\lambda_k}{\mu_{k+1}},\qquad
+\pi_0=\left(1+\sum_{n\ge1}\prod_{k=0}^{n-1}\frac{\lambda_k}{\mu_{k+1}}\right)^{-1},
+\]
+需归一化级数有限及相应非爆炸条件。$M/M/1$ 队列取 $\rho=\lambda/\mu<1$，有
+\[
+\pi_n=(1-\rho)\rho^n,\quad L=\frac\rho{1-\rho},\quad
+W=\frac1{\mu-\lambda},\quad L_q=\frac{\rho^2}{1-\rho}.
+\]
+稳态下 Little 公式 $L=\lambda_{\rm eff}W$ 适用于更一般稳定队列；此处 $W$ 包含服务时间。
+\subsection{更新方程、剩余寿命与检查悖论}\index{更新方程、剩余寿命与检查悖论|hyperpage}
+设间隔分布 $F$、均值 $\mu>0$，更新函数 $m(t)=EN(t)$ 满足
+\[
+m(t)=F(t)+\int_0^tm(t-s)\,\mathrm dF(s).
+\]
+在非格点、有限均值的标准更新条件下，剩余寿命 $R(t)=S_{N(t)+1}-t$ 有极限尾分布
+\[
+P(R_\infty>x)=\frac1\mu\int_x^\infty[1-F(s)]\,\mathrm ds.
+\]
+若二阶矩有限，则 $ER_\infty=EX^2/(2EX)$；平衡更新过程的年龄有相同边际分布，而观察时刻所在间隔长度的均值为 $EX^2/EX$。这体现长间隔被抽中的概率更大。
+\subsection{补偿Poisson、复合Poisson与Lévy指数}\index{补偿Poisson、复合Poisson与Lévy指数|hyperpage}
+$N_t-\lambda t$ 为鞅。若 $Y_i$ 独立同分布并独立于 $N$，$S_t=\sum_{i=1}^{N_t}Y_i$，则
+\[
+E[e^{iuS_t}]=\exp\{\lambda t(Ee^{iuY}-1)\},\quad
+ES_t=\lambda tEY,\quad\operatorname{Var}S_t=\lambda tEY^2.
+\]
+一般实 Lévy 过程的特征函数为 $Ee^{iuX_t}=e^{t\psi(u)}$，其中
+\[
+\psi(u)=ibu-\tfrac12a u^2+
+\int_{\mathbb R\setminus\{0\}}(e^{iux}-1-iux\bm1_{|x|<1})\,\nu(\mathrm dx),
+\]
+$a\ge0$，$\int(1\wedge x^2)\nu(\mathrm dx)<\infty$。漂移 $b$ 随截断约定改变；这里 $X_0=0$。
+\section{鞅与Brown路径补充}
+\subsection{Doob分解、收敛与二次变差}\index{Doob分解、收敛与二次变差|hyperpage}
+离散次鞅 $X_n$ 有分解 $X_n=M_n+A_n$，其中 $A_0=0$，
+\[
+A_n=\sum_{k=1}^nE[X_k-X_{k-1}\mid\mathcal F_{k-1}],\qquad M_n=X_n-A_n.
+\]
+$A$ 可预测递增。非负超鞅 a.s. 收敛；一致可积鞅还在 $L^1$ 收敛，且 $M_n=E[M_\infty\mid\mathcal F_n]$。对连续局部鞅 $M$、$M_0=0$，二次变差满足 $M^2-[M]$ 为局部鞅；BDG 不等式给出
+\[
+c_pE[M]_T^{p/2}\le E\sup_{t\le T}|M_t|^p\le C_pE[M]_T^{p/2}\quad(p>0)
+\]
+（按扩展期望并通过停时局部化解释）。
+\subsection{反射原理、首次到达与Brown桥}\index{反射原理、首次到达与Brown桥|hyperpage}
+对 $a>0$、$\tau_a=\inf\{t:W_t=a\}$，
+\[
+P(\tau_a\le t)=2[1-\Phi(a/\sqrt t)],\qquad
+f_{\tau_a}(t)=\frac a{\sqrt{2\pi t^3}}e^{-a^2/(2t)}.
+\]
+$\tau_a<\infty$ a.s.，但 $E\tau_a=\infty$；其 Laplace 变换为 $Ee^{-s\tau_a}=e^{-a\sqrt{2s}}$。区间 $[0,T]$ 的标准 Brown 桥可构造为 $B_t=W_t-(t/T)W_T$，且
+\[
+EB_t=0,\qquad\operatorname{Cov}(B_s,B_t)=\min(s,t)-st/T.
+\]
+Brown 缩放为 $\{c^{-1/2}W_{ct}\}_{t\ge0}\overset d=\{W_t\}_{t\ge0}$（$c>0$）。
+\subsection{多维Itô、乘积与Stratonovich转换}\index{多维Itô、乘积与Stratonovich转换|hyperpage}
+若 $\mathrm dX=b\,\mathrm dt+\sigma\,\mathrm dW$，$a=\sigma\sigma^{\mathsf T}$，则
+\[
+\mathrm df(t,X_t)=\left(f_t+b\cdot\nabla f+\tfrac12\operatorname{tr}(aD^2f)\right)\mathrm dt
++\nabla f^{\mathsf T}\sigma\,\mathrm dW.
+\]
+连续半鞅满足 $\mathrm d(XY)=X\,\mathrm dY+Y\,\mathrm dX+\mathrm d[X,Y]$。若 $\sigma$ 光滑，则 Stratonovich 方程 $\mathrm dX_i=b_i\,\mathrm dt+\sum_k\sigma_{ik}\circ\mathrm dW_k$ 对应 Itô 漂移
+\[
+\widetilde b_i=b_i+\tfrac12\sum_{j,k}\sigma_{jk}\partial_j\sigma_{ik}.
+\]
+Stratonovich 积分使用通常链式法则，而 Itô 积分必须保留二阶项。
+\subsection{随机指数与Girsanov变换}\index{随机指数与Girsanov变换|hyperpage}
+可预测 $\theta$ 在有限时段满足 Novikov 条件 $E\exp(\tfrac12\int_0^T|\theta_s|^2\,\mathrm ds)<\infty$ 时，
+\[
+Z_t=\exp\left(-\int_0^t\theta_s\cdot\mathrm dW_s-\tfrac12\int_0^t|\theta_s|^2\,\mathrm ds\right)
+\]
+是真鞅。定义 $\mathrm dQ/\mathrm dP|_{\mathcal F_T}=Z_T$，则 $W_t^Q=W_t+\int_0^t\theta_s\,\mathrm ds$ 在 $Q$ 下为 Brown 运动。于是原 Itô 方程的漂移变为 $b-\sigma\theta$；符号随随机指数约定联动，不能单独改变。
+\section{扩散、停时与谱补充}
+\subsection{Dynkin公式与Feynman--Kac}\index{Dynkin公式与Feynman-Kac|hyperpage}
+在停止和可积条件保证鞅项期望为零时，
+\[
+E_xf(X_\tau)=f(x)+E_x\int_0^\tau\mathcal Lf(X_s)\,\mathrm ds.
+\]
+若 $u_t+\mathcal Lu-cu+f=0$、$u(T,x)=g(x)$，相应光滑可积解表示为
+\begin{align*}
+u(t,x)=E_{t,x}\bigg[&e^{-\int_t^Tc(X_r)\,\mathrm dr}g(X_T)\\
+&+\int_t^Te^{-\int_t^sc(X_r)\,\mathrm dr}f(s,X_s)\,\mathrm ds\bigg].
+\end{align*}
+时间相关系数作相应替换；退出域时应在退出停时截断并加入边界数据。
+\subsection{一维尺度函数、平稳密度与退出}\index{一维尺度函数、平稳密度与退出|hyperpage}
+对区间内 $\sigma^2(x)>0$ 的正则一维扩散，尺度密度与速度密度可取
+\[
+s'(x)=\exp\left(-\int^x\frac{2b(y)}{\sigma^2(y)}\,\mathrm dy\right),\qquad
+m(x)=\frac2{\sigma^2(x)s'(x)}.
+\]
+当边界 $a<b$ 为可达且适当停止时，$P_x(\tau_b<\tau_a)=[s(x)-s(a)]/[s(b)-s(a)]$。零通量平稳密度若可归一化，则
+\[
+\pi(x)=\frac C{\sigma^2(x)}\exp\left(\int^x\frac{2b(y)}{\sigma^2(y)}\,\mathrm dy\right).
+\]
+期望退出时间满足 $\mathcal Lv=-1$、$v(a)=v(b)=0$，取适当非负解；边界分类和非爆炸条件仍需检查。
+\subsection{Gaussian过程与平稳OU谱}\index{Gaussian过程与平稳OU谱|hyperpage}
+Gaussian 过程由均值函数和协方差核唯一确定其有限维分布；对任意有限点集，核矩阵须半正定。条件分布由分块 Gaussian 公式计算。平稳 OU 过程满足
+\[
+R(\tau)=\frac{\sigma^2}{2\kappa}e^{-\kappa|\tau|},\qquad
+S(\omega)=\frac{\sigma^2}{\kappa^2+\omega^2}.
+\]
+对宽平稳输入经过线性时不变滤波 $Y=h*X$，在相应二阶可积条件下，$S_Y(\omega)=|\widehat h(\omega)|^2S_X(\omega)$。白噪声为广义过程，形式协方差为 $\delta(t-s)$，不能视为逐点有限方差的普通连续时间过程。
+
+\section{连续鞅的表示、时变换与局部时补充}
+本节采用满足通常条件的滤过，随机积分与连续鞅理论参见\cite{legall}。
+\subsection{Burkholder--Davis--Gundy不等式}\index{Burkholder-Davis-Gundy不等式|hyperpage}
+连续局部鞅 $M_0=0$，任意 $p>0$ 及停时 $T$，有常数 $0<c_p\le C_p<\infty$ 使
+\[
+c_p\mathbb E\langle M\rangle_T^{p/2}
+\le\mathbb E\sup_{t\le T}|M_t|^p
+\le C_p\mathbb E\langle M\rangle_T^{p/2}.
+\]
+先对有界停止过程使用，再以局部化解释可能的无穷值。它把路径上确界与二次变差比较，并不要求 $M$ 为 Gaussian 过程。
+\subsection{Brown滤过的鞅表示}\index{Brown滤过的鞅表示|hyperpage}
+在 $d$ 维 Brown 运动生成并作通常增广的自然滤过中，有限区间 $[0,T]$ 上任意平方可积鞅有唯一表示
+\[
+M_t=M_0+\int_0^tH_s\cdot\mathrm dB_s,\qquad
+\mathbb E\int_0^T|H_s|^2\,\mathrm ds<\infty.
+\]
+$H$ 取可预测过程，唯一性按 $\mathrm dt\otimes\mathbb P$ 几乎处处理解。任意扩大滤过后可能出现与 Brown 积分正交的新鞅，不能继续无条件保证表示。
+\subsection{Dambis--Dubins--Schwarz时变换}\index{Dambis-Dubins-Schwarz时变换|hyperpage}
+若连续局部鞅 $M_0=0$ 且 $\langle M\rangle_t\to\infty$ a.s.，定义 $\tau_s=\inf\{t:\langle M\rangle_t>s\}$。则在时间变换滤过中 $B_s=M_{\tau_s}$ 为 Brown 运动，且
+\[
+M_t=B_{\langle M\rangle_t}.
+\]
+因此连续局部鞅可看作以自身二次变差计时的 Brown 运动。二次变差总量有限时，需要在终止时刻后补充 Brown 运动，可能须扩大概率空间。
+\subsection{Itô--Tanaka与占据密度}\index{Itô-Tanaka与占据密度|hyperpage}
+连续半鞅 $X=M+A$ 的右局部时 $L_t^a$ 可取归一化使
+\begin{gather*}
+(X_t-a)^+=(X_0-a)^++\int_0^t\mathbf1_{\{X_s>a\}}\,\mathrm dX_s+\tfrac12L_t^a,\\
+\int_0^tg(X_s)\,\mathrm d\langle M\rangle_s
+=\int_{\mathbb R}g(a)L_t^a\,\mathrm da.
+\end{gather*}
+第二式适用于非负可测 $g$，或相应绝对可积情形。第一式扩展到非光滑凸函数；右局部时、对称局部时及阈值处导数的约定需配套使用。
+\clearpage
+\end{document}

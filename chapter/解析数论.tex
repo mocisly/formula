@@ -1,0 +1,260 @@
+\documentclass[../main.tex]{subfiles}
+\begin{document}
+本章主要参考\cite{davenport,dlmf}。
+
+% Reference: https://ocw.mit.edu/courses/18-785-number-theory-i-fall-2021/mit18_785f21_full_lec.pdf
+\section{求和方法与平均阶}
+\subsection{渐近记号与分部求和}\index{渐近记号与分部求和|hyperpage}
+$x\to\infty$ 时，$f=O(g)$ 表示 $|f|\le C|g|$ 最终成立，$f=o(g)$ 表示 $f/g\to0$，$f\sim g$ 表示 $f/g\to1$，后两式要求分母最终非零。
+设 $A(x)=\sum_{n\le x}a_n$，$F\in C^1[1,x]$，则 Abel 分部求和公式为
+\[
+\sum_{n\le x}a_nF(n)=A(x)F(x)-\int_1^xA(t)F'(t)\,\mathrm dt.
+\]
+除特别说明，整数求和从 $n=1$ 开始，素数乘积遍历正素数。
+\subsection{调和和与约数函数平均阶}\index{调和和与约数函数平均阶|hyperpage}
+Euler 常数 $\gamma=\lim_{N\to\infty}(\sum_{n=1}^N1/n-\ln N)$，且
+\[
+\sum_{n\le x}\frac1n=\ln x+\gamma+O(x^{-1}).
+\]
+令 $m=\lfloor\sqrt x\rfloor$，Dirichlet 双曲线法给出
+\[
+\sum_{n\le x}\tau(n)=2\sum_{n=1}^m\left\lfloor\frac xn\right\rfloor-m^2
+=x\ln x+(2\gamma-1)x+O(\sqrt x).
+\]
+渐近公式描述总和或平均阶，不意味着单个 $\tau(n)$ 近似于 $\ln n$。
+\section{Dirichlet级数与zeta函数}
+\subsection{Dirichlet级数与Euler乘积}\index{Dirichlet级数与Euler乘积|hyperpage}
+\[
+D_f(s)=\sum_{n=1}^\infty\frac{f(n)}{n^s},\qquad n^{-s}=e^{-s\ln n}.
+\]
+在绝对收敛半平面可逐项相乘，$D_fD_g=D_{f*g}$。若 $f$ 积性，绝对收敛时
+\[
+D_f(s)=\prod_p\left(\sum_{k=0}^\infty\frac{f(p^k)}{p^{ks}}\right).
+\]
+若 $f$ 完全积性，每个局部因子化为 $(1-f(p)p^{-s})^{-1}$。在条件收敛区域不能直接使用这些重排公式。
+\subsection{Riemann zeta函数与算术函数生成式}\index{Riemann zeta函数与算术函数生成式|hyperpage}
+对 $\operatorname{Re}s>1$，
+\begin{gather*}
+\zeta(s)=\sum_{n=1}^\infty n^{-s}=\prod_p(1-p^{-s})^{-1},\\
+\sum_{n=1}^\infty\frac{\mu(n)}{n^s}=\frac1{\zeta(s)},\qquad
+\sum_{n=1}^\infty\frac{\tau(n)}{n^s}=\zeta(s)^2.
+\end{gather*}
+定义 von Mangoldt 函数 $\Lambda(n)=\ln p$（$n=p^k,k\ge1$），其他情形为零，则
+\[
+-\frac{\zeta'(s)}{\zeta(s)}=\sum_{n=1}^\infty\frac{\Lambda(n)}{n^s}
+\quad(\operatorname{Re}s>1),\qquad \sum_{d\mid n}\Lambda(d)=\ln n.
+\]
+另有 $\sum_{n\ge1}\varphi(n)n^{-s}=\zeta(s-1)/\zeta(s)$，其绝对收敛范围为 $\operatorname{Re}s>2$。
+\subsection{解析延拓与函数方程}\index{解析延拓与函数方程|hyperpage}
+$\zeta$ 可亚纯延拓至复平面，唯一极点为 $s=1$ 的一阶极点，留数为 $1$。完成函数
+\[
+\xi(s)=\tfrac12s(s-1)\pi^{-s/2}\Gamma(s/2)\zeta(s)
+\]
+延拓为整函数并满足 $\xi(s)=\xi(1-s)$。等价的亚纯函数方程为
+\[
+\zeta(s)=2^s\pi^{s-1}\sin(\pi s/2)\Gamma(1-s)\zeta(1-s).
+\]
+奇异点处须用解析延拓解释乘积，不能直接代入各个发散因子。常用值为
+\[
+\zeta(2)=\pi^2/6,\quad\zeta(4)=\pi^4/90,\quad\zeta(0)=-1/2,\quad
+\zeta(-2m)=0\quad(m\ge1).
+\]
+\section{素数分布与算术级数}
+\subsection{素数定理与Chebyshev函数}\index{素数定理与Chebyshev函数|hyperpage}
+\[
+\pi(x)=\#\{p\le x:p\text{ 为素数}\},\quad
+\vartheta(x)=\sum_{p\le x}\ln p,\quad\psi(x)=\sum_{n\le x}\Lambda(n).
+\]
+素数定理及其等价形式为
+\[
+\pi(x)\sim\operatorname{Li}(x)\sim\frac x{\ln x},\qquad
+\vartheta(x)\sim x,\qquad\psi(x)\sim x,
+\quad \operatorname{Li}(x)=\int_2^x\frac{\mathrm dt}{\ln t}\ (x>2).
+\]
+第 $n$ 个素数满足 $p_n\sim n\ln n$。这些是极限结论，不能当作有限 $x$ 时的等式。
+\subsection{Dirichlet特征与正交关系}\index{Dirichlet特征与正交关系|hyperpage}
+模 $q\ge2$ 的 Dirichlet 特征是 $(\mathbb Z/q\mathbb Z)^\times$ 到复单位圆的群同态，在非互素整数处延拓为零，并按模 $q$ 周期延拓。
+对 $\gcd(a,q)=1$，所有模 $q$ 特征满足
+\[
+\bm1_{\{n\equiv a\bmod q\}}=
+\frac1{\varphi(q)}\sum_{\chi\bmod q}\overline{\chi(a)}\chi(n).
+\]
+对特征 $\chi,\chi'$，$\sum_{a\bmod q}\chi(a)\overline{\chi'(a)}$ 在二者相同时为 $\varphi(q)$，否则为零。
+\par\begin{samepage}
+\subsection{L函数与算术级数中的素数}\index{L函数与算术级数中的素数|hyperpage}
+在 $\operatorname{Re}s>1$，
+\[
+L(s,\chi)=\sum_{n=1}^\infty\frac{\chi(n)}{n^s}
+=\prod_p(1-\chi(p)p^{-s})^{-1}.
+\]
+非主特征的 $L$ 函数在 $s=1$ 处非零；非主特征的级数在 $\operatorname{Re}s>0$ 收敛并定义全纯函数，但绝对收敛仍需 $\operatorname{Re}s>1$。
+对固定 $q$、$\gcd(a,q)=1$，Dirichlet 定理保证该剩余类中素数无穷多；更强的算术级数素数定理为
+\[
+\pi(x;q,a):=\#\{p\le x:p\equiv a\pmod q\}
+\sim\frac{\operatorname{Li}(x)}{\varphi(q)}.
+\]
+这里 $q$ 固定，不能直接将该渐近关系解释为模数随 $x$ 增长时的一致估计。
+\par\end{samepage}
+\section{算术函数与渐近求和补充}
+\subsection{Dirichlet卷积与反演公式表}\index{Dirichlet卷积与反演公式表|hyperpage}
+定义 $(f*g)(n)=\sum_{d\mid n}f(d)g(n/d)$，单位元为 $\varepsilon(1)=1$、$\varepsilon(n)=0$（$n>1$）。令 $\mathbf1(n)=1$、$\operatorname{id}(n)=n$，则
+\[
+\mu*\mathbf1=\varepsilon,\quad\varphi*\mathbf1=\operatorname{id},\quad
+\tau=\mathbf1*\mathbf1,\quad\sigma_k=\operatorname{id}^k*\mathbf1,\quad
+\Lambda*\mathbf1=\log.
+\]
+Möbius 反演为 $F(n)=\sum_{d\mid n}f(d)\iff f(n)=\sum_{d\mid n}\mu(d)F(n/d)$。常用级数为
+\[
+\sum_n\frac{\sigma_k(n)}{n^s}=\zeta(s)\zeta(s-k),\quad
+\sum_n\frac{\mu(n)^2}{n^s}=\frac{\zeta(s)}{\zeta(2s)},\quad
+\sum_n\frac{\Lambda(n)}{n^s}=-\frac{\zeta'}\zeta(s).
+\]
+第一式对 $\operatorname{Re}s>\max(1,k+1)$，后两式对 $\operatorname{Re}s>1$ 绝对收敛；$k$ 为固定实数。
+\subsection{平均阶、平方自由数与双曲线分解}\index{平均阶、平方自由数与双曲线分解|hyperpage}
+\[
+\sum_{n\le x}\varphi(n)=\frac3{\pi^2}x^2+O(x\log x),\qquad
+\sum_{n\le x}\mu(n)^2=\frac6{\pi^2}x+O(\sqrt x).
+\]
+若 $F(x)=\sum_{n\le x}f(n)$、$G(x)=\sum_{n\le x}g(n)$，取 $uv=x$（$u,v>0$），则
+\[
+\sum_{n\le x}(f*g)(n)=\sum_{a\le u}f(a)G(x/a)+\sum_{b\le v}g(b)F(x/b)-F(u)G(v).
+\]
+这是一般双曲线分解；分别估计短边总和常比逐项估计卷积更有效。
+\subsection{Euler--Maclaurin与Bernoulli值}\index{Euler-Maclaurin与Bernoulli值|hyperpage}
+取整数 $a<b$、$f\in C^{2m}[a,b]$，则
+\begin{align*}
+\sum_{n=a}^bf(n)={}&\int_a^bf(t)\,\mathrm dt+\tfrac12(f(a)+f(b))\\
+&+\sum_{r=1}^m\frac{B_{2r}}{(2r)!}[f^{(2r-1)}(b)-f^{(2r-1)}(a)]+R_m,\\
+R_m={}&-\frac1{(2m)!}\int_a^b B_{2m}(\{t\})f^{(2m)}(t)\,\mathrm dt.
+\end{align*}
+Bernoulli 数由 $t/(e^t-1)=\sum B_nt^n/n!$ 定义。于是
+\[
+\zeta(2m)=(-1)^{m+1}\frac{B_{2m}(2\pi)^{2m}}{2(2m)!}\quad(m\ge1),\qquad
+\zeta(1-m)=-B_m/m\quad(m\ge2).
+\]
+\section{复积分、零点与素数估计补充}
+\subsection{Mellin变换与Perron公式}\index{Mellin变换与Perron公式|hyperpage}
+\[
+\mathcal Mf(s)=\int_0^\infty f(x)x^{s-1}\,\mathrm dx,\qquad
+f(x)=\frac1{2\pi i}\int_{c-i\infty}^{c+i\infty}\mathcal Mf(s)x^{-s}\,\mathrm ds
+\]
+在适当光滑和可积条件下成立，$c$ 位于收敛带内。若 $D(s)=\sum a_nn^{-s}$ 在 $\operatorname{Re}s>\sigma_a$ 绝对收敛，取 $c>\max(0,\sigma_a)$，则对非整数 $x>0$，经典 Perron 反演为
+\[
+\sum_{n<x}a_n=\lim_{T\to\infty}\frac1{2\pi i}\int_{c-iT}^{c+iT}D(s)\frac{x^s}s\,\mathrm ds.
+\]
+整数点使用半权版本；截断积分在估计中必须附加余项，不能直接省去有限高度误差。
+\subsection{零点计数、显式公式与RH条件估计}\index{零点计数、显式公式与RH条件估计|hyperpage}
+非平凡零点记 $\rho=\beta+i\gamma$。计正虚部零点并含重数，
+\[
+N(T)=\frac T{2\pi}\log\frac T{2\pi}-\frac T{2\pi}+O(\log T).
+\]
+令 $\psi_0(x)=\tfrac12[\psi(x-)+\psi(x+)]$，则 $x>1$ 时
+\[
+\psi_0(x)=x-\sum_\rho\frac{x^\rho}\rho-\log(2\pi)-\tfrac12\log(1-x^{-2}),
+\]
+零点和按 $|\operatorname{Im}\rho|\le T$ 对称截断取极限，不能任意重排。Riemann 假设要求所有非平凡零点 $\beta=1/2$；在此假设下，
+\[
+\psi(x)=x+O(\sqrt x\log^2x),\qquad
+\pi(x)=\operatorname{Li}(x)+O(\sqrt x\log x).
+\]
+上述两式在本节明确为条件结论。
+\subsection{无零区域、Mertens公式与素数级数}\index{无零区域、Mertens公式与素数级数|hyperpage}
+存在绝对常数 $c>0$，使 $\zeta(s)$ 在 $\operatorname{Re}s\ge1-c/\log(|\operatorname{Im}s|+3)$ 无零点。经典素数定理误差可写为
+\[
+\psi(x)=x+O(xe^{-c_1\sqrt{\log x}}),\qquad c_1>0.
+\]
+Mertens 公式为
+\[
+\sum_{p\le x}\frac1p=\log\log x+B_1+o(1),\qquad
+\prod_{p\le x}(1-1/p)^{-1}\sim e^\gamma\log x.
+\]
+故素数倒数和发散；$B_1$ 为素数 Mertens 常数，与 Euler 常数 $\gamma$ 不同。
+\subsection{Gauss和与本原L函数方程}\index{Gauss和与本原L函数方程|hyperpage}
+本原特征 $\chi\bmod q$ 的 Gauss 和为 $\tau(\chi)=\sum_{a\bmod q}\chi(a)e^{2\pi ia/q}$，满足 $|\tau(\chi)|=\sqrt q$。若 $\chi(-1)=(-1)^a$、$a\in\{0,1\}$，则
+\[
+\Lambda(s,\chi)=(q/\pi)^{(s+a)/2}\Gamma((s+a)/2)L(s,\chi),\qquad
+\Lambda(s,\chi)=\frac{\tau(\chi)}{i^a\sqrt q}\Lambda(1-s,\overline\chi).
+\]
+非主本原特征的完成函数整；主特征满足 $L(s,\chi_0)=\zeta(s)\prod_{p\mid q}(1-p^{-s})$，不能套用同一导子完成方式而忽略缺失 Euler 因子。
+\section{指数和、筛法与加性问题补充}
+\subsection{正交展开、Weyl判别与几何级数}\index{正交展开、Weyl判别与几何级数|hyperpage}
+记 $e(t)=e^{2\pi it}$，则
+\[
+\frac1q\sum_{r=0}^{q-1}e(r(n-a)/q)=\bm1_{n\equiv a\bmod q},\qquad
+\int_0^1e(k\alpha)\,\mathrm d\alpha=\bm1_{k=0}.
+\]
+序列 $x_n$ 模一均匀分布当且仅当对每个整数 $h\ne0$，$N^{-1}\sum_{n\le N}e(hx_n)\to0$。线性相位满足
+\[
+\left|\sum_{n=1}^Ne(n\alpha)\right|\le\min\left(N,\frac1{2\|\alpha\|_{\mathbb R/\mathbb Z}}\right)
+\]
+（整数 $\alpha$ 时仅用 $N$ 界）。无理斜率的 $n\alpha$ 因此等分布。
+\subsection{大筛不等式与平均素数分布}\index{大筛不等式与平均素数分布|hyperpage}
+若 $\alpha_r$ 模一两两距离至少 $\delta>0$，则
+\[
+\sum_r\left|\sum_{n=M+1}^{M+N}a_ne(n\alpha_r)\right|^2
+\le(N-1+\delta^{-1})\sum_{n=M+1}^{M+N}|a_n|^2.
+\]
+Bombieri--Vinogradov 定理的一种形式：任意 $A>0$，存在 $B>0$，对 $Q\le x^{1/2}/(\log x)^B$，
+\[
+\sum_{q\le Q}\max_{(a,q)=1}\left|\psi(x;q,a)-\frac x{\varphi(q)}\right|
+\ll_A\frac x{(\log x)^A},\quad
+\psi(x;q,a)=\sum_{\substack{n\le x\\n\equiv a\ (q)}}\Lambda(n).
+\]
+这是对模数平均的估计，不能改成每个模数均取得同样平方根级误差。
+\subsection{筛法的包含排除与上界}\index{筛法的包含排除与上界|hyperpage}
+令 $P(z)=\prod_{p<z}p$，对有限整数集 $\mathcal A$ 有精确公式
+\[
+S(\mathcal A,z)=\#\{a\in\mathcal A:(a,P(z))=1\}
+=\sum_{d\mid P(z)}\mu(d)\#\{a\in\mathcal A:d\mid a\}.
+\]
+若 $\lambda_1=1$，则常用平方权上界为
+\[
+S(\mathcal A,z)\le\sum_{a\in\mathcal A}\left(\sum_{d\mid(a,P(z))}\lambda_d\right)^2.
+\]
+取有限支撑筛权后展开为可优化的二次型。筛法得到的孪生素数倒数和收敛（Brun 定理）不等于已证明孪生素数有限或无穷。
+\subsection{圆法恒等式与整数分拆渐近}\index{圆法恒等式与整数分拆渐近|hyperpage}
+有限集合 $\mathcal A$ 的 $k$ 元有序表示数满足
+\[
+r_k(N)=\int_0^1\left(\sum_{a\in\mathcal A}e(\alpha a)\right)^ke(-N\alpha)\,\mathrm d\alpha.
+\]
+该式是精确 Fourier 正交关系；主弧与次弧分析决定能否推出渐近式。整数分拆数由
+\[
+\sum_{n\ge0}p(n)q^n=\prod_{m\ge1}(1-q^m)^{-1}\quad(|q|<1),\qquad
+p(n)\sim\frac{e^{\pi\sqrt{2n/3}}}{4n\sqrt3}
+\]
+给出生成函数与 Hardy--Ramanujan 渐近，约定 $p(0)=1$。
+
+\section{指数和、分解恒等式与矩估计补充}
+乘法数论参见\cite{davenport}，广义约数均值参见\cite{tenenbaum}，zeta 矩参见\cite{titchmarsh}。
+\subsection{Ramanujan和的约数表达}\index{Ramanujan和的约数表达|hyperpage}
+记 $e(x)=e^{2\pi ix}$，$c_q(n)=\sum_{1\le a\le q,\,(a,q)=1}e(an/q)$。则
+\[
+c_q(n)=\sum_{d\mid(q,n)}d\,\mu(q/d)
+=\mu\left(\frac q{(q,n)}\right)
+\frac{\varphi(q)}{\varphi(q/(q,n))}.
+\]
+对固定 $n$，它关于 $q$ 乘法；$c_q(0)=\varphi(q)$、$c_q(1)=\mu(q)$。与加性特征全和不同，这里只对既约剩余类求和。
+\subsection{Vaughan卷积分解}\index{Vaughan卷积分解|hyperpage}
+写 $f_{\le U}(n)=f(n)\mathbf1_{n\le U}$、$f_{>U}=f-f_{\le U}$，$\mathbf1(n)=1$。由 $\log=\Lambda*\mathbf1$ 和 $\mu*\mathbf1=\delta$，对 $U,V\ge1$ 有精确恒等式
+\[
+\Lambda=\mu_{\le U}*\log+\Lambda_{\le V}
+-\mu_{\le U}*\mathbf1*\Lambda_{\le V}
++\mu_{>U}*\mathbf1*\Lambda_{>V}.
+\]
+将它代入带权素数和，可分离短变量项与双线性项。恒等式本身无渐近误差；后续估计才依赖参数选择与相位性质。
+\subsection{广义约数函数的Selberg--Delange主项}\index{广义约数函数的Selberg-Delange主项|hyperpage}
+固定实数 $z>0$，定义 $d_z$ 为乘法函数，$d_z(p^a)=\Gamma(z+a)/(\Gamma(z)a!)$，从而 $\sum_nd_z(n)n^{-s}=\zeta(s)^z$ 于 $\operatorname{Re}s>1$。当 $x\to\infty$，
+\[
+\sum_{n\le x}d_z(n)=\frac{x(\log x)^{z-1}}{\Gamma(z)}
+\left(1+O_z\!\left(\frac1{\log x}\right)\right).
+\]
+对正整数 $z=k$，$d_k$ 计有序 $k$ 元因数分解。非正整数或随 $x$ 变化的参数需要另行处理，不在此固定正参数公式内。
+\subsection{临界线zeta函数的二次均值}\index{临界线zeta函数的二次均值|hyperpage}
+当 $T\to\infty$，有
+\[
+\int_0^T\left|\zeta\!\left(\tfrac12+it\right)\right|^2\,\mathrm dt
+\sim T\log T.
+\]
+因此均方尺度为 $\log T$。该平均值不表示每一点都满足 $|\zeta(1/2+it)|\asymp\sqrt{\log t}$，也不单独证明 Riemann 假设。
+\clearpage
+\end{document}

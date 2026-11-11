@@ -1,0 +1,223 @@
+\documentclass[../main.tex]{subfiles}
+\begin{document}
+本章主要参考\cite{hatcher}。
+
+开集、连续性、紧致性及商空间的基础见\hyperref[chap:general-topology]{一般拓扑}；本章侧重同伦与代数不变量。
+% Reference: https://pi.math.cornell.edu/~hatcher/AT/ATpage.html
+\section{同伦与基本群}
+\subsection{拓扑空间、同伦与同伦等价}\index{拓扑空间、同伦与同伦等价|hyperpage}
+拓扑 $\mathcal T\subseteq\mathcal P(X)$ 包含 $\varnothing,X$，对任意并及有限交封闭；连续映射要求开集的原像仍开。
+映射 $f,g:X\to Y$ 同伦指存在连续 $H:X\times[0,1]\to Y$，使 $H(x,0)=f(x)$、$H(x,1)=g(x)$，记 $f\simeq g$。
+若存在 $g:Y\to X$ 使 $gf\simeq\operatorname{id}_X$、$fg\simeq\operatorname{id}_Y$，则 $X,Y$ 同伦等价。可缩空间与一点同伦等价；同伦等价不一定是同胚。
+\subsection{基本群、高阶同伦群与van Kampen定理}\index{基本群、高阶同伦群与van Kampen定理|hyperpage}
+$\pi_1(X,x_0)$ 是以 $x_0$ 为端点的闭路按保持端点同伦形成的群，运算为路径拼接。$\pi_n(X,x_0)$ 由保基点映射 $S^n\to X$ 的同伦类构成，$n\ge2$ 时为 Abel 群。
+\[
+\pi_1(S^1)\cong\mathbb Z,\quad\pi_1(S^n)=0\ (n\ge2),\quad
+\pi_1((S^1)^n)\cong\mathbb Z^n.
+\]
+若 $X=U\cup V$，$U,V,U\cap V$ 均道路连通且 $U,V$ 开，基点取于交集，则
+\[
+\pi_1(X)\cong\pi_1(U)*_{\pi_1(U\cap V)}\pi_1(V).
+\]
+右端为由包含映射确定的群推出（合并自由积），不能一般替换为直积。
+\subsection{覆盖空间与子群对应}\index{覆盖空间与子群对应|hyperpage}
+设 $X$ 道路连通、局部道路连通且半局部单连通。连通覆盖 $p:E\to X$ 的同构类与 $\pi_1(X)$ 的子群共轭类对应；选定基点后对应子群本身。
+\[
+p_*:\pi_1(E,e_0)\hookrightarrow\pi_1(X,x_0),\qquad
+|p^{-1}(x_0)|=[\pi_1(X,x_0):p_*\pi_1(E,e_0)].
+\]
+覆盖正规当且仅当对应子群 $H$ 正规，此时覆盖变换群为 $\pi_1(X)/H$。一般连通覆盖的变换群为 $N_{\pi_1(X)}(H)/H$，其中 $N$ 为正规化子。
+\section{同调与正合列}
+\subsection{奇异链复形与同调群}\index{奇异链复形与同调群|hyperpage}
+除特别说明，系数取 $\mathbb Z$。$C_n(X)$ 为奇异单形 $\sigma:\Delta^n\to X$ 生成的自由 Abel 群，边界算子为
+\[
+\partial_n\sigma=\sum_{i=0}^n(-1)^i\sigma\circ\delta_i,
+\qquad\partial_{n-1}\partial_n=0,\qquad
+H_n(X)=\frac{\ker\partial_n}{\operatorname{im}\partial_{n+1}}.
+\]
+边界公式用于 $n\ge1$，取 $\partial_0=0$；$\delta_i$ 为第 $i$ 个面嵌入。连续映射诱导同调同态，同伦映射诱导相同同态；$H_0(X)$ 是道路连通分支上生成的自由 Abel 群。
+\subsection{相对同调与长正合列}\index{相对同调与长正合列|hyperpage}
+对 $A\subseteq X$，$C_n(X,A)=C_n(X)/C_n(A)$。短正合链复形导出长正合列
+\[
+\cdots\to H_n(A)\to H_n(X)\to H_n(X,A)
+\xrightarrow{\partial}H_{n-1}(A)\to H_{n-1}(X)\to\cdots.
+\]
+正合指每一项的前一个映射之像等于后一个映射之核。切除定理：若 $\overline Z\subseteq\operatorname{int}_X A$，则包含映射诱导 $H_n(X\setminus Z,A\setminus Z)\cong H_n(X,A)$。
+\subsection{胞腔同调与Mayer--Vietoris列}\index{胞腔同调与Mayer-Vietoris列|hyperpage}
+对 CW 复形，胞腔链群 $C_n^{\mathrm{cell}}(X)\cong\bigoplus_{n\text{ 维胞腔}}\mathbb Z$，其同调等于奇异同调；边界系数由附着映射的度数确定。
+若 $X=U\cup V$ 为开覆盖，则有 Mayer--Vietoris 长正合列
+\[
+\cdots\to H_n(U\cap V)\xrightarrow{(i_*,-j_*)}H_n(U)\oplus H_n(V)
+\to H_n(X)\to H_{n-1}(U\cap V)\to\cdots.
+\]
+例如 $n\ge1$ 时，
+\[
+H_k(S^n)=\begin{cases}\mathbb Z,&k=0,n,\\0,&\text{其他},\end{cases}
+\qquad H_k((S^1)^n)\cong\mathbb Z^{\binom nk}\quad(0\le k\le n).
+\]
+\section{上同调与整体不变量}
+\subsection{上同调、杯积与通用系数公式}\index{上同调、杯积与通用系数公式|hyperpage}
+取交换系数环 $R$，上链群 $C^n(X;R)=\operatorname{Hom}(C_n(X),R)$，上边界由 $\delta\phi=\phi\circ\partial$ 定义，$H^n=\ker\delta/\operatorname{im}\delta$。
+杯积赋予 $H^*(X;R)$ 分次环结构：
+\[
+\alpha\smile\beta=(-1)^{pq}\beta\smile\alpha,
+\quad\alpha\in H^p(X;R),\ \beta\in H^q(X;R).
+\]
+对 Abel 系数群 $A$，上同调通用系数短正合列为
+\[
+0\to\operatorname{Ext}_{\mathbb Z}^1(H_{n-1}(X;\mathbb Z),A)
+\to H^n(X;A)\to\operatorname{Hom}_{\mathbb Z}(H_n(X;\mathbb Z),A)\to0.
+\]
+该列可分裂，但一般无自然的分裂选择；存在挠元时不能只保留右侧 $\operatorname{Hom}$ 项。
+\subsection{Euler示性数与典型上同调环}\index{Euler示性数与典型上同调环|hyperpage}
+对有限 CW 复形，令 $c_k$ 为 $k$ 维胞腔数，$b_k=\dim_{\mathbb Q}H_k(X;\mathbb Q)$，则
+\[
+\chi(X)=\sum_k(-1)^kc_k=\sum_k(-1)^kb_k,\qquad
+\chi(X\times Y)=\chi(X)\chi(Y).
+\]
+若 $X=A\cup B$ 为有限子复形之并，则 $\chi(X)=\chi(A)+\chi(B)-\chi(A\cap B)$。
+\[
+H^*(\mathbb{CP}^{m};\mathbb Z)\cong\mathbb Z[u]/(u^{m+1}),\quad\deg u=2,
+\qquad H^*((S^1)^n;\mathbb Z)\cong\bigwedge_{\mathbb Z}(x_1,\ldots,x_n),\quad\deg x_i=1.
+\]
+环结构比仅列出各阶同调群包含更多信息。
+\subsection{Poincaré对偶与Hurewicz定理}\index{Poincaré对偶与Hurewicz定理|hyperpage}
+若 $M$ 是连通、闭、可定向的 $n$ 维流形，$[M]\in H_n(M;\mathbb Z)$ 为基本类，则帽积给出
+\[
+H^k(M;\mathbb Z)\xrightarrow{\ \frown[M]\ }H_{n-k}(M;\mathbb Z)
+\quad\text{为同构}.
+\]
+不可定向时可使用 $\mathbb Z/2\mathbb Z$ 系数；有边界时需相对同调形式，不能直接套用闭流形公式。
+若道路连通 CW 复形 $X$ 为 $(n-1)$-连通且 $n\ge2$，则 Hurewicz 映射 $\pi_n(X)\to H_n(X;\mathbb Z)$ 为同构；在一阶有 $H_1(X;\mathbb Z)\cong\pi_1(X)_{\mathrm{ab}}$。
+\section{基本群与胞腔计算补充}
+\subsection{图、闭曲面与射影空间}\index{图、闭曲面与射影空间|hyperpage}
+连通有限图有 $\pi_1\cong F_{E-V+1}$，$H_1\cong\mathbb Z^{E-V+1}$。亏格 $g$ 的定向闭曲面满足
+\[
+\pi_1(\Sigma_g)=\langle a_1,b_1,\ldots,a_g,b_g\mid\prod_{i=1}^g[a_i,b_i]=1\rangle,
+\quad H_1(\Sigma_g)=\mathbb Z^{2g},\quad\chi=2-2g.
+\]
+非定向 $k$ 重射影平面连通和的群为 $\langle a_1,\ldots,a_k\mid a_1^2\cdots a_k^2=1\rangle$，$H_1\cong\mathbb Z^{k-1}\oplus\mathbb Z/2$，$\chi=2-k$。$n\ge2$ 时 $\pi_1(\mathbb{RP}^n)=\mathbb Z/2$，且
+\[
+H^*(\mathbb{RP}^n;\mathbb F_2)=\mathbb F_2[a]/(a^{n+1}),\qquad |a|=1.
+\]
+\subsection{附着映射、Moore空间与透镜空间}\index{附着映射、Moore空间与透镜空间|hyperpage}
+在 $S^n$ 上用度 $m\ne0$ 映射附着一个 $(n+1)$ 胞腔，约化胞腔复形仅有 $\mathbb Z\xrightarrow{m}\mathbb Z$，因而 $\widetilde H_n=\mathbb Z/|m|$，其余约化同调为零（$n\ge1$）。$\mathbb{RP}^n$ 每维一个胞腔，正次数（$k\ge1$）的整数胞腔边界为
+\[
+d_k=1+(-1)^k=\begin{cases}2,&k\text{ 偶},\\0,&k\text{ 奇}.\end{cases}
+\]
+三维透镜空间 $L(p,q)$（$p\ge2,\gcd(p,q)=1$）有 $H_0=H_3=\mathbb Z$、$H_1=\mathbb Z/p$、$H_2=0$；同调群相同不保证空间同胚或同伦等价。
+\subsection{胞腔逼近、Whitehead与楔和}\index{胞腔逼近、Whitehead与楔和|hyperpage}
+CW 复形之间的映射可同伦为胞腔映射。诱导全部同伦群同构的 CW 映射是同伦等价（Whitehead）。对有良好基点的空间，
+\[
+\widetilde H_k(X\vee Y)\cong\widetilde H_k(X)\oplus\widetilde H_k(Y),\quad
+\widetilde H_{k+1}(\Sigma X)\cong\widetilde H_k(X).
+\]
+悬挂使约化同调次数加一；同伦群一般没有同样简单的普遍分解。
+\section{系数、乘积与对偶计算补充}
+\subsection{同调通用系数与Künneth公式}\index{同调通用系数与Künneth公式|hyperpage}
+对 Abel 群 $A$，
+\[
+0\to H_n(X;\mathbb Z)\otimes A\to H_n(X;A)
+\to\operatorname{Tor}_1^{\mathbb Z}(H_{n-1}(X;\mathbb Z),A)\to0.
+\]
+对 CW 复形，整数 Künneth 短正合列为
+\begin{gather*}
+0\longrightarrow\bigoplus_{p+q=n}H_p(X)\otimes H_q(Y)
+\longrightarrow H_n(X\times Y)\\
+\longrightarrow\bigoplus_{p+q=n-1}\operatorname{Tor}_1^{\mathbb Z}(H_p(X),H_q(Y))
+\longrightarrow0.
+\end{gather*}
+两列均可非自然分裂；域系数下 Tor 项消失。计算时使用 $\mathbb Z/m\otimes\mathbb Z/n\cong\operatorname{Tor}_1(\mathbb Z/m,\mathbb Z/n)\cong\mathbb Z/\gcd(m,n)$。
+\subsection{映射度、Lefschetz数与固定点}\index{映射度、Lefschetz数与固定点|hyperpage}
+连通定向闭 $n$ 维流形间映射的度由 $f_*[M]=\deg(f)[N]$ 定义；有 $\deg(gf)=\deg(g)\deg(f)$。球面反足映射的度为 $(-1)^{n+1}$。有限 CW 复形自映射的 Lefschetz 数为
+\[
+L(f)=\sum_k(-1)^k\operatorname{tr}(f_*:H_k(X;\mathbb Q)\to H_k(X;\mathbb Q)).
+\]
+$L(f)\ne0$ 蕴含固定点存在，但 $L(f)=0$ 不排除固定点。环面上整数矩阵 $A$ 诱导的映射满足 $L(f_A)=\det(I-A)$，度为 $\det A$。
+\subsection{交叉形式、带边界对偶与Alexander对偶}\index{交叉形式、带边界对偶与Alexander对偶|hyperpage}
+定向闭 $2m$ 维流形的中维交叉配对可写为
+\[
+Q(\alpha,\beta)=\langle\alpha\smile\beta,[M]\rangle,\qquad
+Q(\beta,\alpha)=(-1)^mQ(\alpha,\beta).
+\]
+在整数无挠部分为幺模配对。紧定向有边界流形满足 $H^k(M)\cong H_{n-k}(M,\partial M)$、$H^k(M,\partial M)\cong H_{n-k}(M)$。若非空紧局部可缩集 $A\subset S^n$，则
+\[
+\widetilde H_i(S^n\setminus A;\mathbb Z)\cong\widetilde H^{n-i-1}(A;\mathbb Z).
+\]
+更一般紧集需要 Čech 上同调，不能随意以奇异上同调替代。
+\section{纤维化与特征类补充}
+\subsection{纤维化的同伦长正合列}\index{纤维化的同伦长正合列|hyperpage}
+对带基点 Serre 纤维化 $F\to E\to B$，有
+\[
+\cdots\to\pi_n(F)\to\pi_n(E)\to\pi_n(B)\to\pi_{n-1}(F)\to\cdots.
+\]
+高阶为群正合列，低阶涉及带基点集合。Hopf 纤维化 $S^1\to S^3\to S^2$ 给出 $\pi_n(S^3)\cong\pi_n(S^2)$（$n\ge3$），特别地 $\pi_3(S^2)=\mathbb Z$。覆盖映射在 $n\ge2$ 诱导同伦群同构。
+\subsection{Serre谱序列与分次信息}\index{Serre谱序列与分次信息|hyperpage}
+当 $B$ 单连通、$F\to E\to B$ 为适当 CW 型纤维化时，上同调 Serre 谱序列为
+\[
+E_2^{p,q}=H^p(B;H^q(F;R))\Longrightarrow H^{p+q}(E;R),\qquad
+d_r:E_r^{p,q}\to E_r^{p+r,q-r+1}.
+\]
+$E_{r+1}=\ker d_r/\operatorname{im}d_r$，$E_\infty$ 给出总空间上同调某滤过的关联分次；恢复群或环时仍可能有扩张问题。非单连通底空间一般需局部系数系统，不能只写常系数张量积。
+\subsection{向量丛的Euler、Stiefel--Whitney与Chern类}\index{向量丛的Euler、Stiefel-Whitney与Chern类|hyperpage}
+实秩 $r$ 向量丛有 $w_i(E)\in H^i(X;\mathbb F_2)$、$w_0=1$；复秩 $r$ 丛有 $c_i(E)\in H^{2i}(X;\mathbb Z)$、$c_0=1$，并满足
+\[
+w(E\oplus F)=w(E)\smile w(F),\quad c(E\oplus F)=c(E)\smile c(F),\quad
+c_1(L\otimes L')=c_1(L)+c_1(L').
+\]
+定向实秩 $r$ 丛有 Euler 类 $e(E)\in H^r(X;\mathbb Z)$，非零处处截面使 $e(E)=0$。复秩 $r$ 丛底层定向实丛满足 $e(E_\mathbb R)=c_r(E)$、$w_{2i}(E_\mathbb R)=c_i(E)\bmod2$、$w_{2i+1}=0$。
+\subsection{Thom同构与球丛Gysin列}\index{Thom同构与球丛Gysin列|hyperpage}
+定向实秩 $r$ 丛的盘丛、球丛为 $D(E),S(E)$，Thom 类 $u\in H^r(D(E),S(E);\mathbb Z)$ 给出
+\[
+H^k(X;\mathbb Z)\xrightarrow{\ \pi^*(\cdot)\smile u\ }H^{k+r}(D(E),S(E);\mathbb Z).
+\]
+零截面拉回 $u$ 为 Euler 类。球丛的 Gysin 长正合列包含
+\[
+\cdots\to H^{k-r}(X)\xrightarrow{\smile e}H^k(X)
+\xrightarrow{\pi^*}H^k(S(E))\xrightarrow{\pi_!}H^{k-r+1}(X)\to\cdots.
+\]
+对定向圆丛 $r=2$，Euler 类（亦即相关复线丛的 $c_1$）控制这一序列中的连接映射。
+\subsection{Bockstein与Steenrod平方}\index{Bockstein与Steenrod平方|hyperpage}
+系数短正合列 $0\to\mathbb Z\xrightarrow{2}\mathbb Z\to\mathbb F_2\to0$ 导出 $\beta:H^k(X;\mathbb F_2)\to H^{k+1}(X;\mathbb Z)$。Steenrod 平方为
+\[
+\operatorname{Sq}^i:H^n(X;\mathbb F_2)\to H^{n+i}(X;\mathbb F_2),\quad
+\operatorname{Sq}^0=I,\quad\operatorname{Sq}^n\alpha=\alpha^2,\quad\operatorname{Sq}^i\alpha=0\ (i>n).
+\]
+Cartan 公式为 $\operatorname{Sq}^k(\alpha\smile\beta)=\sum_{i+j=k}\operatorname{Sq}^i\alpha\smile\operatorname{Sq}^j\beta$。对 $H^*(\mathbb{RP}^\infty;\mathbb F_2)=\mathbb F_2[a]$，$\operatorname{Sq}^i(a^j)=\binom ji a^{j+i}$，二项式系数按模二计算。
+
+\section{分类空间、K理论与映射环面补充}
+同伦与上同调参见\cite{hatcher}，周期性参见\cite{hatcherK}。
+\subsection{Eilenberg--MacLane空间表示上同调}\index{Eilenberg-MacLane空间表示上同调|hyperpage}
+对 Abel 群 $A$、$n\ge1$，空间 $K(A,n)$ 只有第 $n$ 个同伦群为 $A$。对带基点连通 CW 复形 $X$，有自然对应
+\[
+\widetilde H^n(X;A)\cong[X,K(A,n)]_*.
+\]
+例如 $K(\mathbb Z,1)=S^1$、$K(\mathbb Z,2)=\mathbb{CP}^\infty$。这将上同调类转为映射的同伦类；$n=0$ 要单独处理连通分支。
+\subsection{复K理论的Bott周期性}\index{复K理论的Bott周期性|hyperpage}
+对带基点有限 CW 复形，约化复 K 理论满足
+\[
+\widetilde K^0(\Sigma^2X)\cong\widetilde K^0(X),\qquad
+\widetilde K^0(S^{2m})\cong\mathbb Z\ (m\ge1),\qquad
+\widetilde K^0(S^{2m+1})=0\ (m\ge0).
+\]
+$K^0$ 由复向量丛直和的 Grothendieck 群构造，约化群去掉秩分量。实 K 理论有八周期，而非同样的二周期。
+\subsection{循环群分类空间的上同调环}\index{循环群分类空间的上同调环|hyperpage}
+对 $m\ge2$，$BC_m=K(\mathbb Z/m,1)$ 的整系数上同调为
+\[
+H^*(BC_m;\mathbb Z)\cong\mathbb Z[u]/(mu),\qquad |u|=2.
+\]
+故正偶次为 $\mathbb Z/m$、奇次为零，零次为 $\mathbb Z$。若 $p$ 为奇素数，则
+\[
+H^*(BC_p;\mathbb F_p)\cong\Lambda(a)\otimes\mathbb F_p[b],\quad |a|=1,\ |b|=2;
+\]
+$p=2$ 时为 $\mathbb F_2[a]$、$|a|=1$。系数改变后不能把整系数环简单逐项张量，而忽略通用系数中的 Tor 项。
+\newpage
+\subsection{映射环面的Wang正合列}\index{映射环面的Wang正合列|hyperpage}
+同伦等价 $f:X\to X$ 的映射环面为 $T_f=X\times[0,1]/((x,1)\sim(f(x),0))$。其同调满足
+\[
+\cdots\to H_q(X)\mathop{\longrightarrow}^{1-f_*}H_q(X)
+\to H_q(T_f)\to H_{q-1}(X)\mathop{\longrightarrow}^{1-f_*}H_{q-1}(X)\to\cdots.
+\]
+有限 CW 复形及域系数下，$b_q(T_f)=\dim\ker(1-f_{*,q})+\dim\ker(1-f_{*,q-1})$，从而 $\chi(T_f)=0$。该序列来自到圆周的同伦纤维化。
+\clearpage
+\end{document}

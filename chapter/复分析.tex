@@ -1,0 +1,274 @@
+\documentclass[../main.tex]{subfiles}
+\begin{document}
+本章主要参考\cite{complex,dlmf}。
+
+% Reference: https://ocw.mit.edu/courses/18-04-complex-variables-with-applications-spring-2018/resources/lecture-notes/
+\section{全纯函数与初等函数}
+\subsection{复导数与Cauchy--Riemann方程}\index{复导数与Cauchy-Riemann方程|hyperpage}
+设 $z=x+iy$，$f(z)=u(x,y)+iv(x,y)$，复导数定义为
+\[
+f'(z_0)=\lim_{z\to z_0}\frac{f(z)-f(z_0)}{z-z_0}.
+\]
+若 $u,v$ 在邻域内为 $C^1$，则 $f$ 在该邻域全纯当且仅当
+\[
+u_x=v_y,\qquad u_y=-v_x;\qquad f'=u_x+iv_x=u_x-iu_y.
+\]
+复导数要求沿所有方向得到同一极限，不能只检查实轴方向。
+\subsection{指数、对数与幂的分支}\index{指数、对数与幂的分支|hyperpage}
+\[
+e^z=e^x(\cos y+i\sin y),\quad
+\sin z=\frac{e^{iz}-e^{-iz}}{2i},\quad\cos z=\frac{e^{iz}+e^{-iz}}2.
+\]
+对 $z\ne0$，多值对数为 $\log z=\ln|z|+i(\arg z+2k\pi)$，$k\in\mathbb Z$。
+在割平面 $\mathbb C\setminus(-\infty,0]$ 上取 $\operatorname{Arg}z\in(-\pi,\pi)$，定义
+\[
+\operatorname{Log}z=\ln|z|+i\operatorname{Arg}z,\qquad
+z^\alpha=\exp(\alpha\operatorname{Log}z),\qquad (\operatorname{Log}z)'=1/z.
+\]
+对数加法及幂运算必须检查分支，主值下不宜直接使用实数中的全部运算规则。
+\section{复积分与解析展开}
+\subsection{曲线积分与Cauchy积分定理}\index{曲线积分与Cauchy积分定理|hyperpage}
+对分段 $C^1$ 路径 $z=z(t)$，$a\le t\le b$，
+\[
+\int_\gamma f(z)\,\mathrm dz=\int_a^bf(z(t))z'(t)\,\mathrm dt,\qquad
+\left|\int_\gamma f\,\mathrm dz\right|\le\ell(\gamma)\sup_\gamma|f|.
+\]
+若 $f$ 在单连通区域 $D$ 全纯，则对 $D$ 内闭路径 $\gamma$，$\oint_\gamma f\,\mathrm dz=0$，且 $f$ 在 $D$ 有原函数。
+\subsection{Cauchy积分公式与估计}\index{Cauchy积分公式与估计|hyperpage}
+若 $f$ 在正向简单闭曲线 $\gamma$ 及其内部的一个邻域全纯，$z$ 在曲线内部，则
+\[
+f^{(n)}(z)=\frac{n!}{2\pi i}\oint_\gamma\frac{f(\zeta)}{(\zeta-z)^{n+1}}\,\mathrm d\zeta
+\quad(n=0,1,\ldots).
+\]
+若闭圆盘 $|z-a|\le R$ 位于全纯区域内，$M_R=\max_{|z-a|=R}|f(z)|$，则
+\[
+|f^{(n)}(a)|\le\frac{n!M_R}{R^n}.
+\]
+有界整函数必为常数（Liouville 定理）；非恒定全纯函数的模不能在区域内部取得局部最大值。
+\subsection{Taylor与Laurent展开}\index{Taylor与Laurent展开|hyperpage}
+在以 $a$ 为中心的全纯圆盘内，$f(z)=\sum_{n=0}^\infty f^{(n)}(a)(z-a)^n/n!$。
+在全纯圆环 $r<|z-a|<R$ 内，
+\[
+f(z)=\sum_{n=-\infty}^{\infty}c_n(z-a)^n,\qquad
+c_n=\frac1{2\pi i}\oint_{|\zeta-a|=\rho}\frac{f(\zeta)}{(\zeta-a)^{n+1}}\,\mathrm d\zeta,
+\quad r<\rho<R.
+\]
+圆周取正向。孤立奇点处，负幂项全无为可去奇点；有限个非零负幂项为极点；无穷多个为本性奇点。
+\section{留数与零点}
+\subsection{留数计算与留数定理}\index{留数计算与留数定理|hyperpage}
+留数为 Laurent 展开中的 $c_{-1}$，记 $\operatorname{Res}(f,a)$。若 $a$ 为 $m$ 阶极点，则
+\[
+\operatorname{Res}(f,a)=\frac1{(m-1)!}\lim_{z\to a}
+\frac{\mathrm d^{m-1}}{\mathrm dz^{m-1}}[(z-a)^mf(z)].
+\]
+若 $f=g/h$、$g,h$ 在 $a$ 附近全纯，$h(a)=0,h'(a)\ne0$，则 $\operatorname{Res}(f,a)=g(a)/h'(a)$。
+若 $f$ 在正向简单闭曲线及其内部除有限个孤立奇点 $a_k$ 外全纯，且曲线上无奇点，则
+\[
+\oint_\gamma f(z)\,\mathrm dz=2\pi i\sum_{a_k\text{ 在内部}}\operatorname{Res}(f,a_k).
+\]
+\subsection{辐角原理与Rouché定理}\index{辐角原理与Rouché定理|hyperpage}
+若 $f$ 在正向简单闭曲线及其内部邻域亚纯，边界无零点或极点，则
+\[
+\frac1{2\pi i}\oint_\gamma\frac{f'(z)}{f(z)}\,\mathrm dz=N-P,
+\]
+其中 $N,P$ 为内部零点、极点的个数，按重数计。若 $f,g$ 在曲线及内部邻域全纯，且边界满足 $|g|<|f|$，则 $f$ 与 $f+g$ 在内部的零点数相同。
+\section{调和函数与保角映射}
+\subsection{调和共轭与Möbius变换}\index{调和共轭与Möbius变换|hyperpage}
+全纯函数 $u+iv$ 的实部和虚部均满足 $\Delta u=\Delta v=0$。在单连通平面区域，$C^2$ 调和函数 $u$ 存在调和共轭 $v$，由
+\[
+\mathrm dv=-u_y\,\mathrm dx+u_x\,\mathrm dy
+\]
+确定至相差常数。全纯函数在 $f'(z_0)\ne0$ 处局部保角。
+\[
+w=\frac{az+b}{cz+d},\quad ad-bc\ne0,\qquad
+w'=\frac{ad-bc}{(cz+d)^2}.
+\]
+Möbius 变换在扩充复平面将广义圆（圆或直线）映为广义圆；分母为零处按无穷远点解释。
+\section{解析性、零点与延拓补充}
+% References: https://dlmf.nist.gov/4.22
+% https://abel.math.harvard.edu/~ctm/home/text/class/harvard/213a/06/html/home/course/course.pdf
+\subsection{Wirtinger导数、原函数与Morera定理}\index{Wirtinger导数、原函数与Morera定理|hyperpage}
+对 $C^1$ 函数，定义
+\[
+\partial_z=\tfrac12(\partial_x-i\partial_y),\qquad
+\partial_{\bar z}=\tfrac12(\partial_x+i\partial_y),\qquad
+\Delta=4\partial_z\partial_{\bar z}.
+\]
+全纯性等价于 $\partial_{\bar z}f=0$。连续函数若沿区域内每个三角形边界的积分均为零，则全纯（Morera 定理）。全纯函数有全局原函数当且仅当所有闭路径积分为零。
+
+对处处非零的全纯函数 $f$，存在全局全纯对数的充要条件为
+\[
+\oint_\gamma\frac{f'(z)}{f(z)}\,\mathrm dz=0
+\quad\text{对区域内所有闭路径 }\gamma.
+\]
+在单连通区域上，无零点全纯函数必可取全纯对数，并由 $f^{1/n}=e^{(\log f)/n}$ 选取根函数。不同对数分支相差 $2\pi i k$（连通区域上 $k$ 为固定整数）。
+
+\subsection{幂级数半径、恒等定理与逆函数}\index{幂级数半径、恒等定理与逆函数|hyperpage}
+幂级数 $\sum a_n(z-z_0)^n$ 的收敛半径满足
+\[
+R^{-1}=\limsup_{n\to\infty}|a_n|^{1/n};\qquad
+R=\lim_{n\to\infty}\left|\frac{a_n}{a_{n+1}}\right|
+\quad\text{（若右侧极限存在）}.
+\]
+按扩充实数约定 $1/0=\infty$、$1/\infty=0$；比值公式要求相关系数最终非零。全纯函数在圆盘内可逐项求导、积分，导数级数收敛半径相同。
+
+非恒零全纯函数的零点孤立，$m$ 阶零点可写为 $f(z)=(z-a)^mg(z)$、$g(a)\ne0$。若两个全纯函数的相等点在连通区域内部有聚点，则在整个区域相等。若 $f'(a)\ne0$，局部逆函数 $g=f^{-1}$ 满足
+\[
+g'(f(a))=\frac1{f'(a)},\qquad
+g''(f(a))=-\frac{f''(a)}{f'(a)^3}.
+\]
+全纯函数局部一致极限仍全纯，且各阶导数局部一致收敛。若无零点全纯函数列局部一致趋于 $f$，则 $f$ 无零点或恒零（Hurwitz 定理）；局部一致有界的全纯函数族在紧集上一致收敛的意义下为正规族（Montel 定理）。
+
+\subsection{可去奇点、无穷远点与有理函数}\index{可去奇点、无穷远点与有理函数|hyperpage}
+若 $f$ 在穿孔邻域全纯，则局部有界当且仅当奇点可去，也等价于 $\lim_{z\to a}(z-a)f(z)=0$。在无穷远点的函数性质用 $g(w)=f(1/w)$ 在 $w=0$ 的性质定义，但留数须使用微分形式的变换：
+\[
+\operatorname{Res}(f,\infty)=-\operatorname{Res}_{w=0}\frac{f(1/w)}{w^2}.
+\]
+若 $f$ 在足够大的外圆环展开为 $\sum_{n\in\mathbb Z}c_nz^n$，则 $\operatorname{Res}(f,\infty)=-c_{-1}$。对扩充复平面上的亚纯函数，
+\[
+\sum_{a\in\mathbb C}\operatorname{Res}(f,a)+\operatorname{Res}(f,\infty)=0.
+\]
+球面上的亚纯函数恰为有理函数；对整函数，若 $|f(z)|\le C(1+|z|)^m$，则为次数不超过 $\lfloor m\rfloor$ 的多项式（$m\ge0$）。
+
+\section{留数法的积分应用}
+\subsection{有理积分、Fourier型积分与圆周代换}\index{有理积分、Fourier型积分与圆周代换|hyperpage}
+若有理函数 $R=P/Q$ 无实极点且 $\deg Q\ge\deg P+2$，则
+\[
+\int_{-\infty}^{\infty}R(x)\,\mathrm dx
+=2\pi i\sum_{\operatorname{Im}a>0}\operatorname{Res}(R,a).
+\]
+对 $t>0$，若 $R$ 无实极点且在无穷远为 $O(1/z)$，Jordan 引理支持上半平面闭合，从而
+\[
+\int_{-\infty}^{\infty}e^{itx}R(x)\,\mathrm dx
+=2\pi i\sum_{\operatorname{Im}a>0}\operatorname{Res}(e^{itz}R(z),a).
+\]
+此时积分可按两侧广义积分解释；$t<0$ 应在下半平面顺时针闭合，符号相反。$t=0$ 不能直接套用 Jordan 衰减。
+
+对三角有理式，若单位圆上无极点，令 $z=e^{i\theta}$，则
+\[
+\int_0^{2\pi}F(\cos\theta,\sin\theta)\,\mathrm d\theta
+=\oint_{|z|=1}F\!\left(\frac{z+z^{-1}}2,\frac{z-z^{-1}}{2i}\right)\frac{\mathrm dz}{iz}.
+\]
+
+\subsection{实轴简单极点的主值与支割积分}\index{实轴简单极点的主值与支割积分|hyperpage}
+设有理函数 $R$ 在无穷远为 $O(z^{-2})$，实轴极点均简单。沿上半平面闭合并从上方小半圆避开实极点，得到
+\[
+\operatorname{PV}\int_{\mathbb R}R(x)\,\mathrm dx
+=2\pi i\sum_{\operatorname{Im}a>0}\operatorname{Res}(R,a)
++i\pi\sum_{a\in\mathbb R}\operatorname{Res}(R,a).
+\]
+各实极点处以对称方式取主值。高阶实极点通常需要有限部分等其他正则化，不能照搬本式。
+
+钥匙孔围道中，支割两侧的幂函数相差相位因子。典型结果为
+\[
+\int_0^\infty\frac{x^{\alpha-1}}{1+x}\,\mathrm dx
+=\frac\pi{\sin\pi\alpha}\qquad(0<\alpha<1).
+\]
+计算前须固定 $z^{\alpha-1}$ 的辐角范围，分别估计大小圆弧；改变支割不能不加说明地复用同一相位因子。
+
+\section{调和函数与单位圆盘几何}
+\subsection{平均值、Poisson核与Dirichlet问题}\index{平均值、Poisson核与Dirichlet问题|hyperpage}
+若 $u$ 在闭圆盘的邻域调和，则
+\begin{gather*}
+u(a)=\frac1{2\pi}\int_0^{2\pi}u(a+Re^{it})\,\mathrm dt
+=\frac1{\pi R^2}\iint_{|z-a|<R}u(z)\,\mathrm dA,\\
+u(re^{i\theta})=\frac1{2\pi}\int_0^{2\pi}
+\frac{1-r^2}{1-2r\cos(\theta-t)+r^2}\,u(e^{it})\,\mathrm dt\quad(0\le r<1).
+\end{gather*}
+第二式针对单位圆盘，连续边界数据经 Poisson 积分给出连续至边界的唯一调和延拓。核非负且积分为 $2\pi$，所以调和函数最大最小值由边界控制。
+
+若 $f\in C^1(\overline D)$，$D$ 为有分段光滑边界的有界区域，边界正向，则 Cauchy--Pompeiu 公式为
+\[
+f(z)=\frac1{2\pi i}\int_{\partial D}\frac{f(\zeta)}{\zeta-z}\,\mathrm d\zeta
+-\frac1\pi\iint_D\frac{\partial_{\bar\zeta}f(\zeta)}{\zeta-z}\,\mathrm dA(\zeta)\quad(z\in D).
+\]
+全纯时面积项消失，恢复 Cauchy 积分公式。
+
+\subsection{Schwarz引理、Schwarz--Pick与Harnack不等式}\index{Schwarz引理、Schwarz-Pick与Harnack不等式|hyperpage}
+若 $f:\mathbb D\to\mathbb D$ 全纯且 $f(0)=0$，则 $|f(z)|\le|z|$、$|f'(0)|\le1$；非零点处等号或导数模为 $1$ 时，$f(z)=e^{i\theta}z$。
+一般圆盘自映射满足 Schwarz--Pick 不等式
+\begin{gather*}
+\left|\frac{f(z)-f(w)}{1-\overline{f(w)}f(z)}\right|
+\le\left|\frac{z-w}{1-\bar wz}\right|,\\
+\frac{|f'(z)|}{1-|f(z)|^2}\le\frac1{1-|z|^2}.
+\end{gather*}
+若 $u>0$ 在 $\mathbb D$ 调和，则 Harnack 不等式为
+\[
+\frac{1-|z|}{1+|z|}u(0)\le u(z)\le\frac{1+|z|}{1-|z|}u(0).
+\]
+上述界不适用于任意变号调和函数。
+
+\subsection{圆盘自同构、交比与典型映射}\index{圆盘自同构、交比与典型映射|hyperpage}
+单位圆盘全部全纯自同构为
+\[
+\phi(z)=e^{i\theta}\frac{z-a}{1-\bar az},\qquad |a|<1,\quad\theta\in\mathbb R.
+\]
+上半平面到单位圆盘的 Cayley 变换为 $w=(z-i)/(z+i)$，逆变换为 $z=i(1+w)/(1-w)$。定义交比
+\[
+[z_1,z_2;z_3,z_4]=\frac{(z_1-z_3)(z_2-z_4)}{(z_1-z_4)(z_2-z_3)},
+\]
+它在 Möbius 变换下不变；四个互异点共广义圆当且仅当交比为实数，无穷远点按极限解释。
+
+Joukowski 映射 $w=(z+z^{-1})/2$ 将 $|z|>1$ 一一映到 $\mathbb C\setminus[-1,1]$，其逆为 $z=w+\sqrt{w^2-1}$，平方根取无穷远处渐近于 $w$ 的分支。非整个复平面的单连通区域 $D$ 均与圆盘双全纯等价；选定 $a\in D$ 并要求 $f(a)=0$、$f'(a)>0$ 后，映射 $f:D\to\mathbb D$ 唯一（Riemann 映射定理的规范化形式）。
+
+\section{零点分布、乘积与部分分式}
+\subsection{Jensen公式与零点计数界}\index{Jensen公式与零点计数界|hyperpage}
+若 $f$ 在 $|z|\le R$ 的邻域全纯，$f(0)\ne0$，圆周上无零点，内部零点 $a_j$ 按重数列出，则
+\[
+\log|f(0)|+\sum_{|a_j|<R}\log\frac R{|a_j|}
+=\frac1{2\pi}\int_0^{2\pi}\log|f(Re^{it})|\,\mathrm dt.
+\]
+令 $M_R=\max_{|z|=R}|f(z)|$，$n(r)$ 为 $|z|\le r<R$ 内按重数计的零点数，则
+\[
+n(r)\log(R/r)\le\log M_R-\log|f(0)|.
+\]
+若原点为零点，先除去相应的 $z^m$ 因子，再应用公式。
+
+\subsection{Weierstrass乘积与Mittag--Leffler展开}\index{Weierstrass乘积与Mittag-Leffler展开|hyperpage}
+给定无有限聚点的非零零点列 $a_n$，可选整数 $p_n\ge0$ 使典型因子乘积局部一致收敛，其中
+\[
+E_p(w)=(1-w)\exp\!\left(w+\frac{w^2}2+\cdots+\frac{w^p}p\right),\qquad E_0(w)=1-w.
+\]
+具有该零点列（含重数）和原点 $m$ 重零点的整函数可写为
+\[
+f(z)=z^me^{g(z)}\prod_nE_{p_n}(z/a_n),
+\]
+其中 $g$ 整；必须选取保证收敛的典型因子，不能无条件使用 $\prod_n(1-z/a_n)$。
+
+Mittag--Leffler 定理允许给定离散极点集上的有限主部，并构造具有这些主部的亚纯函数；满足相同主部的两个函数相差整函数。常见显式公式为
+\begin{gather*}
+\sin\pi z=\pi z\prod_{n=1}^\infty\left(1-\frac{z^2}{n^2}\right),\\
+\pi\cot\pi z=\frac1z+\sum_{n=1}^\infty\frac{2z}{z^2-n^2},\qquad
+\pi^2\csc^2\pi z=\sum_{n\in\mathbb Z}\frac1{(z-n)^2}.
+\end{gather*}
+乘积在紧集上一致收敛；后两式在避开整数的紧集上局部一致收敛。余切项按所示的正负整数配对，不能未经说明地将不绝对收敛的 $\sum_n1/(z-n)$ 任意重排。
+\section{正规族、逼近与共形微分补充}
+解析函数理论参见\cite{complex,dlmf}。
+\subsection{Montel正规族与Hurwitz零点定理}\index{Montel正规族与Hurwitz零点定理|hyperpage}
+域 $\Omega$ 上局部一致有界的全纯函数族，任意序列均有局部一致收敛子列，极限全纯。若无零点的全纯 $f_n$ 局部一致趋于 $f$，则
+\[
+f\equiv0\quad\text{或}\quad f(z)\ne0\ (z\in\Omega).
+\]
+后者为 Hurwitz 推论。局部一致收敛不能换成任意逐点收敛；正常族结论也不声称原序列全部收敛。
+\subsection{Runge有理逼近与多项式情形}\index{Runge有理逼近与多项式情形|hyperpage}
+设 $K\subset\mathbb C$ 紧，$f$ 在 $K$ 的邻域全纯。从 $\widehat{\mathbb C}\setminus K$ 的每个连通分支选择一个允许极点（可含无穷远），则存在仅在这些点有极点的有理函数 $r_n$，使
+\[
+\sup_{z\in K}|f(z)-r_n(z)|\longrightarrow0.
+\]
+若 $\mathbb C\setminus K$ 连通，可取多项式。孔洞影响允许极点的位置；不能把一般紧集上的邻域解析函数都无条件用多项式逼近。
+\subsection{Hadamard三圆定理}\index{Hadamard三圆定理|hyperpage}
+若 $f$ 在包含闭环域 $r_1\le|z|\le r_3$ 的邻域全纯，记 $M(r)=\max_{|z|=r}|f(z)|$。对 $r_1<r_2<r_3$，
+\[
+M(r_2)\le M(r_1)^\theta M(r_3)^{1-\theta},\qquad
+\theta=\frac{\log(r_3/r_2)}{\log(r_3/r_1)}.
+\]
+即 $\log M(r)$ 对 $\log r$ 凸。$f\equiv0$ 时直接理解；其余情形 $M(r)>0$，可取对数。
+\subsection{Schwarzian导数与链式法则}\index{Schwarzian导数与链式法则|hyperpage}
+局部单叶全纯函数 $f$ 的 Schwarzian 导数为
+\[
+Sf=\frac{f'''}{f'}-\frac32\left(\frac{f''}{f'}\right)^2,\qquad
+S(f\circ g)=(Sf\circ g)(g')^2+Sg.
+\]
+Möbius 变换的 Schwarzian 为零；反之，在连通域上满足 $Sf=0$ 的局部单叶亚纯函数是某 Möbius 变换的限制。定义要求在所用局部坐标中 $f'\ne0$。
+\clearpage
+\end{document}

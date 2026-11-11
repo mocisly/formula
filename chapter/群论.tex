@@ -1,0 +1,270 @@
+\documentclass[../main.tex]{subfiles}
+\begin{document}
+本章主要参考\cite{milneGT}。
+
+% Reference: https://www.jmilne.org/math/CourseNotes/gt.html
+\section{群、子群与循环群}
+\subsection{群公理与子群判别}\index{群公理与子群判别|hyperpage}
+群 $(G,\cdot)$ 的运算满足结合律，存在单位元 $e$，每个元素有逆元。若运算可交换，则称 Abel 群。
+\[
+(ab)^{-1}=b^{-1}a^{-1},\qquad
+H\le G\iff H\ne\varnothing\text{ 且 }ab^{-1}\in H\quad(\forall a,b\in H).
+\]
+元素 $g$ 的阶为使 $g^n=e$ 的最小正整数 $n$；若不存在则阶为无穷。
+\subsection{陪集、Lagrange定理与循环群}\index{陪集、Lagrange定理与循环群|hyperpage}
+左陪集为 $gH=\{gh:h\in H\}$；各陪集等势并划分 $G$。有限群满足
+\[
+|G|=[G:H]|H|,\qquad \operatorname{ord}(g)\mid |G|,\qquad g^{|G|}=e.
+\]
+若 $G=\langle g\rangle$ 为 $n$ 阶循环群，则
+\[
+\operatorname{ord}(g^k)=\frac n{\gcd(n,k)},\qquad
+\langle g^k\rangle=G\iff\gcd(n,k)=1.
+\]
+对每个 $d\mid n$，恰有一个 $d$ 阶子群 $\langle g^{n/d}\rangle$；$n$ 阶循环群有 $\varphi(n)$ 个生成元。子群阶整除群阶，但任意因子未必都是某个子群的阶。
+\section{正规子群与同态}
+\subsection{商群与核}\index{商群与核|hyperpage}
+\[
+N\trianglelefteq G\iff gNg^{-1}=N\quad(\forall g\in G),\qquad
+(gN)(hN)=ghN.
+\]
+只有正规子群才能使上述陪集乘法良定义。群同态 $\phi:G\to H$ 满足 $\phi(ab)=\phi(a)\phi(b)$，其核与像为
+\[
+\ker\phi=\{g:\phi(g)=e_H\}\trianglelefteq G,\qquad
+\operatorname{im}\phi\le H,\qquad \phi\text{ 单射}\iff\ker\phi=\{e\}.
+\]
+\subsection{同构定理}\index{同构定理|hyperpage}
+对群同态 $\phi$，第一同构定理为 $G/\ker\phi\cong\operatorname{im}\phi$。
+若 $H\le G,N\trianglelefteq G$，则 $HN\le G$，且
+\[
+H/(H\cap N)\cong HN/N.
+\]
+若 $N\trianglelefteq G$、$K\trianglelefteq G$ 且 $N\subseteq K$，则 $(G/N)/(K/N)\cong G/K$。
+$G/N$ 的子群与包含 $N$ 的 $G$ 的子群一一对应，正规性也在此对应下保持。
+\section{群作用与有限群}
+\subsection{轨道、稳定子与计数公式}\index{轨道、稳定子与计数公式|hyperpage}
+群作用满足 $e\cdot x=x$、$(gh)\cdot x=g\cdot(h\cdot x)$。定义
+\[
+Gx=\{g\cdot x:g\in G\},\qquad G_x=\{g:g\cdot x=x\}.
+\]
+有限群的轨道--稳定子公式与有限集上的 Burnside 引理为
+\[
+|Gx|=[G:G_x],\qquad
+|X/G|=\frac1{|G|}\sum_{g\in G}|\operatorname{Fix}(g)|.
+\]
+\subsection{共轭、类方程与Sylow定理}\index{共轭、类方程与Sylow定理|hyperpage}
+中心 $Z(G)=\{z:zg=gz,\ \forall g\}$，中心化子 $C_G(x)=\{g:gx=xg\}$。有限群的类方程为
+\[
+|G|=|Z(G)|+\sum_i[G:C_G(x_i)],
+\]
+求和遍历非中心共轭类代表。非平凡有限 $p$-群的中心非平凡。
+若 $|G|=p^am$、$p\nmid m$，Sylow $p$-子群的阶为 $p^a$，且
+\[
+n_p\equiv1\pmod p,\qquad n_p\mid m.
+\]
+Sylow $p$-子群存在、彼此共轭，每个 $p$-子群均包含于某个 Sylow $p$-子群；$n_p=1$ 当且仅当该 Sylow 子群正规。Cauchy 定理：素数 $p\mid|G|$ 时存在阶为 $p$ 的元素。
+\section{典型群与结构}
+\subsection{置换群、二面体群与直积}\index{置换群、二面体群与直积|hyperpage}
+$S_n$ 的阶为 $n!$；不交轮换的乘积表示中，置换阶为各轮换长度的最小公倍数。
+\[
+\operatorname{sgn}(\sigma)=(-1)^{\text{逆序数}},\qquad
+A_n=\ker(\operatorname{sgn}),\quad |A_n|=n!/2\quad(n\ge2).
+\]
+采用 $D_n$ 表示正 $n$ 边形的对称群（$n\ge3$）：
+\[
+D_n=\langle r,s:r^n=s^2=e,\ srs^{-1}=r^{-1}\rangle,\qquad |D_n|=2n.
+\]
+注意有些教材将它记为 $D_{2n}$。直积逐坐标运算；若 $\alpha:H\to\operatorname{Aut}(N)$ 为同态，半直积的乘法为
+\[
+(n,h)(n',h')=(n\alpha(h)(n'),hh').
+\]
+\par\begin{samepage}
+\subsection{有限Abel群与交换子}\index{有限Abel群与交换子|hyperpage}
+每个有限 Abel 群可唯一写成（除同构外）
+\[
+G\cong\mathbb Z/d_1\mathbb Z\times\cdots\times\mathbb Z/d_r\mathbb Z,
+\qquad 1<d_1\mid d_2\mid\cdots\mid d_r,
+\]
+也可分解为素数幂阶循环群的直积。两个有限循环群的直积为循环群当且仅当它们的阶互素。
+交换子取 $[g,h]=ghg^{-1}h^{-1}$，交换子群 $[G,G]$ 是使商群 Abel 化的最小正规子群，$G_{\mathrm{ab}}=G/[G,G]$。
+\par\end{samepage}
+\section{元素、陪集与群作用的计数补充}
+% Reference: https://www.jmilne.org/math/CourseNotes/GT.pdf
+\subsection{循环群中的方程、同态与自同构}\index{循环群中的方程、同态与自同构|hyperpage}
+记 $C_n=\mathbb Z/n\mathbb Z$。对正整数 $m,n,k$，有
+\begin{gather*}
+\#\{x\in C_n:x^k=e\}=\gcd(n,k),\qquad
+\#\{x\in C_n:\operatorname{ord}(x)=d\}=\varphi(d)\quad(d\mid n),\\
+\operatorname{Hom}(C_m,C_n)\cong C_{\gcd(m,n)},\qquad
+\operatorname{Aut}(C_n)\cong(\mathbb Z/n\mathbb Z)^\times.
+\end{gather*}
+第一式使用乘法记号；加法群中写作 $kx=0$。同态由一个生成元的像决定，像的阶须整除 $m$。若有限阶元素 $a,b$ 可交换，则
+\[
+\operatorname{ord}(ab)\mid\operatorname{lcm}(\operatorname{ord}(a),\operatorname{ord}(b)).
+\]
+两阶互素时等号成立且阶为两阶之积；不互素时未必取等号。不交换时不能直接使用这个整除关系。
+
+\subsection{子群乘积、双陪集与正规化子}\index{子群乘积、双陪集与正规化子|hyperpage}
+对有限子群 $H,K\le G$，
+\[
+|HK|=\frac{|H||K|}{|H\cap K|},\qquad
+|HgK|=\frac{|H||K|}{|H\cap gKg^{-1}|}.
+\]
+$HK$ 为子群当且仅当 $HK=KH$，集合大小公式本身不保证乘积集合为子群。对有限指数子群 $K\le H\le G$，$[G:K]=[G:H][H:K]$。
+
+正规化子 $N_G(H)=\{g:gHg^{-1}=H\}$ 满足 $H\trianglelefteq N_G(H)$，且
+\[
+\#\{gHg^{-1}:g\in G\}=[G:N_G(H)],\qquad
+|\operatorname{Cl}_G(x)|=[G:C_G(x)].
+\]
+特别地，Sylow $p$ 子群 $P$ 的共轭个数为 $n_p=[G:N_G(P)]$。群作用对应同态 $G\to S_X$；作用忠实当且仅当其核为平凡群。Cayley 定理由左乘作用给出 $G\hookrightarrow S_G$。
+
+\subsection{置换的循环型与共轭类大小}\index{置换的循环型与共轭类大小|hyperpage}
+若 $\sigma\in S_n$ 有 $m_i$ 个长度为 $i$ 的不交轮换，$\sum_i i m_i=n$，则
+\[
+\operatorname{sgn}(\sigma)=(-1)^{n-\sum_i m_i},\qquad
+|C_{S_n}(\sigma)|=\prod_i i^{m_i}m_i!,\qquad
+|\operatorname{Cl}_{S_n}(\sigma)|=\frac{n!}{\prod_i i^{m_i}m_i!}.
+\]
+$S_n$ 中两个置换共轭当且仅当循环型相同，共轭类个数等于整数 $n$ 的分拆数。对 $n\ge5$，$A_n$ 为非 Abel 单群；$A_4$ 的情形例外。对称计数的循环指标及项链公式见第\ref{chap:combinatorics-and-graph-theory}章。
+
+\section{直积、扩张与正规列补充}
+\subsection{内部直积、半直积与分裂扩张}\index{内部直积、半直积与分裂扩张|hyperpage}
+若 $N,H\le G$，$N\trianglelefteq G$、$N\cap H=\{e\}$、$NH=G$，则
+\[
+G\cong N\rtimes_\alpha H,\qquad \alpha(h)(n)=hnh^{-1}.
+\]
+若 $H$ 也正规，则两子群逐元素交换，$G\cong N\times H$。外部半直积中
+\[
+(n,h)^{-1}=(\alpha(h^{-1})(n^{-1}),h^{-1}).
+\]
+短正合列 $1\to N\to G\xrightarrow{\pi}H\to1$ 若存在群同态截面 $s:H\to G$、$\pi\circ s=\operatorname{id}_H$，则称分裂，并给出半直积。集合意义的截面不足以保证群扩张分裂。
+
+\subsection{有限Abel群的素数分解与小阶群}\index{有限Abel群的素数分解与小阶群|hyperpage}
+有限 Abel 群的 $p$ 主部分为 $G_p=\{g:\operatorname{ord}(g)\text{ 为 }p\text{ 的幂}\}$，并有
+\[
+G\cong\prod_{p\mid|G|}G_p,\qquad
+\exp(G)=\operatorname{lcm}\{\operatorname{ord}(g):g\in G\}.
+\]
+若不变因子为 $d_1\mid\cdots\mid d_r$，则 $\exp(G)=d_r$。$p^a$ 阶 Abel 群的同构类型个数等于 $a$ 的分拆数；一般 $|G|=\prod_p p^{a_p}$ 时，Abel 群类型数为 $\prod_p p(a_p)$，这里 $p(a)$ 为分拆数而非素数。
+
+素数阶群均循环；$p^2$ 阶群为 $C_{p^2}$ 或 $C_p\times C_p$。对素数 $p<q$，若 $p\nmid q-1$，则 $pq$ 阶群循环；若 $p\mid q-1$，除循环群外恰有一种非 Abel 半直积 $C_q\rtimes C_p$。
+
+二面体群满足 $[D_n,D_n]=\langle r^2\rangle$，中心为
+\[
+Z(D_n)=\begin{cases}\{e\},&n\text{ 奇},\\\{e,r^{n/2}\},&n\text{ 偶}.\end{cases}
+\]
+四元数群 $Q_8=\{\pm1,\pm i,\pm j,\pm k\}$ 满足 $i^2=j^2=k^2=ijk=-1$，每个子群均正规，但群本身不交换。
+
+\subsection{特征子群、可解群与幂零群}\index{特征子群、可解群与幂零群|hyperpage}
+特征子群在所有自同构下不变，记 $H\operatorname{char}G$；特征子群必正规，且 $K\operatorname{char}H\operatorname{char}G$ 蕴含 $K\operatorname{char}G$。正规性本身一般不具有传递性。
+
+定义导出列与下中心列
+\[
+G^{(0)}=G,\quad G^{(n+1)}=[G^{(n)},G^{(n)}],\qquad
+\gamma_1(G)=G,\quad\gamma_{n+1}(G)=[\gamma_n(G),G].
+\]
+某个 $G^{(n)}=1$ 称可解，某个 $\gamma_{c+1}(G)=1$ 称幂零。有限 $p$ 群幂零；有限群幂零当且仅当所有 Sylow 子群正规，也等价于所有 Sylow 子群的直积。幂零蕴含可解，反向一般不成立。
+
+若 $N\trianglelefteq G$，则 $G$ 可解当且仅当 $N$ 与 $G/N$ 均可解。有限群的合成列中各因子为单群，Jordan--Hölder 定理保证合成因子的同构类型及重数与合成列选择无关。
+
+\subsection{自由群、生成关系与Abel化}\index{自由群、生成关系与Abel化|hyperpage}
+由集合 $S$ 生成的自由群 $F(S)$ 满足泛性质：任意映射 $S\to G$ 唯一延拓为群同态 $F(S)\to G$。由生成元与关系表示的群为
+\[
+\langle S\mid R\rangle=F(S)/\langle\!\langle R\rangle\!\rangle,
+\]
+其中双括号表示关系集的正规闭包。有限生成自由群 $F_r$ 的 Abel 化为 $\mathbb Z^r$。若 $H\le F_r$ 指数为有限的 $d$，则 Nielsen--Schreier 公式为
+\[
+\operatorname{rank}(H)=1+d(r-1).
+\]
+子群本身仍自由；生成元数的公式要求有限指数。
+
+\section{有限群的复表示与特征标}
+\subsection{表示、平均投影、Maschke与Schur引理}\index{表示、平均投影、Maschke与Schur引理|hyperpage}
+本节 $G$ 为有限群，表示均为有限维复表示 $\rho:G\to\operatorname{GL}(V)$。平均任意 Hermitian 内积可得 $G$ 不变内积，因此表示可取为酉表示。固定子空间的投影为
+\[
+P_G=\frac1{|G|}\sum_{g\in G}\rho(g),\qquad
+P_G^2=P_G,\quad\operatorname{im}P_G=V^G.
+\]
+Maschke 定理说明表示分解为不可约表示的直和。对域 $k$，该完全可约结论要求 $\operatorname{char}k\nmid|G|$，不能直接推广到模表示。
+
+Schur 引理：不可约表示之间的非零等变映射必为同构；复数域上不可约表示的等变自同态为标量。取互不同构的不可约表示代表 $V_i$，则
+\[
+\dim_{\mathbb C}\operatorname{Hom}_G(V_i,V_j)=\delta_{ij}.
+\]
+
+\subsection{特征标内积、分解与维数平方和}\index{特征标内积、分解与维数平方和|hyperpage}
+特征标 $\chi_V(g)=\operatorname{tr}\rho(g)$ 在共轭类上恒定，$\chi_V(e)=\dim V$，$\chi_V(g^{-1})=\overline{\chi_V(g)}$。定义
+\[
+\langle\chi,\psi\rangle_G=\frac1{|G|}\sum_{g\in G}\chi(g)\overline{\psi(g)}.
+\]
+不可约特征标满足 $\langle\chi_i,\chi_j\rangle=\delta_{ij}$；任意表示的分解重数为
+\[
+V\cong\bigoplus_i m_iV_i,\qquad
+m_i=\langle\chi_V,\chi_i\rangle\in\mathbb Z_{\ge0},\qquad
+\langle\chi_V,\chi_V\rangle=\sum_i m_i^2.
+\]
+故非零表示不可约当且仅当其特征标内积平方范数为 $1$。正则表示给出
+\[
+\mathbb C[G]\cong\bigoplus_i(\dim V_i)V_i,\qquad
+|G|=\sum_i(\dim V_i)^2.
+\]
+不可约表示个数等于共轭类个数；有限 Abel 群的不可约复表示全部一维。
+
+\subsection{列正交、张量积与诱导表示}\index{列正交、张量积与诱导表示|hyperpage}
+对不可约特征标全体，列正交关系为
+\[
+\sum_i\chi_i(g)\overline{\chi_i(h)}=
+\begin{cases}|C_G(g)|,&g,h\text{ 共轭},\\0,&g,h\text{ 不共轭}.\end{cases}
+\]
+直和、张量积和对偶的特征标满足
+\[
+\chi_{V\oplus W}=\chi_V+\chi_W,\qquad
+\chi_{V\otimes W}=\chi_V\chi_W,\qquad
+\chi_{V^*}=\overline{\chi_V}.
+\]
+对 $H\le G$ 的表示 $W$，诱导表示维数为 $[G:H]\dim W$，其特征标为
+\[
+\chi_{\operatorname{Ind}_H^G W}(g)=\frac1{|H|}
+\sum_{\substack{x\in G\\x^{-1}gx\in H}}\chi_W(x^{-1}gx).
+\]
+Frobenius 互反律为 $\langle\operatorname{Ind}_H^G\chi,\psi\rangle_G=\langle\chi,\operatorname{Res}_H^G\psi\rangle_H$。群代数的模论解释见第\ref{chap:module-theory}章。
+\section{有限线性群、交换概率与群代数补充}
+群结构与表示的基本约定参见\cite{milneGT}，有限域运算参见\cite{shoup}。
+\subsection{有限一般线性群与子空间计数}\index{有限一般线性群与子空间计数|hyperpage}
+在 $\mathbb F_q^n$ 中依次选择线性无关的列，得到
+\[
+|\operatorname{GL}_n(\mathbb F_q)|=\prod_{j=0}^{n-1}(q^n-q^j),\qquad
+|\operatorname{SL}_n(\mathbb F_q)|=\frac{|\operatorname{GL}_n(\mathbb F_q)|}{q-1}.
+\]
+$k$ 维子空间数为 Gaussian 二项式
+\[
+{n\brack k}_q=\prod_{j=0}^{k-1}\frac{q^{n-j}-1}{q^{k-j}-1},\qquad0\le k\le n.
+\]
+除掉有序基的数量才能得到子空间数；基的数目不能直接当作子空间数。
+\subsection{可交换概率与共轭类数}\index{可交换概率与共轭类数|hyperpage}
+有限群 $G$ 中独立均匀选取 $x,y$，可交换概率为
+\[
+\operatorname{cp}(G)=\frac{\#\{(x,y):xy=yx\}}{|G|^2}
+=\frac1{|G|^2}\sum_x|C_G(x)|=\frac{k(G)}{|G|},
+\]
+其中 $k(G)$ 为共轭类数。概率为一当且仅当群交换；该恒等式是按共轭类对中心化子求和的结果。
+\subsection{射影线性群与中心商}\index{射影线性群与中心商|hyperpage}
+有限域上 $n\ge2$ 时，一般线性群的中心为非零标量矩阵。因此
+\[
+|\operatorname{PGL}_n(\mathbb F_q)|=\frac{|\operatorname{GL}_n(\mathbb F_q)|}{q-1},\qquad
+|\operatorname{PSL}_n(\mathbb F_q)|=\frac{|\operatorname{SL}_n(\mathbb F_q)|}{\gcd(n,q-1)}.
+\]
+$\operatorname{PGL}_2(\mathbb F_q)$ 作用于 $q+1$ 个射影点，其阶为 $q(q^2-1)$。$\operatorname{PSL}$ 的分母来自行列式为一的标量中心，不能统一替换为 $q-1$。
+\subsection{复群代数的中心本原幂等元}\index{复群代数的中心本原幂等元|hyperpage}
+有限群 $G$ 的不可约复特征标为 $\chi$，次数为 $d_\chi=\chi(1)$。在 $\mathbb C[G]$ 中令
+\[
+e_\chi=\frac{d_\chi}{|G|}\sum_{g\in G}\chi(g^{-1})g.
+\]
+则 $e_\chi e_\psi=\delta_{\chi\psi}e_\chi$、$\sum_\chi e_\chi=1$，并给出
+\[
+\mathbb C[G]\cong\bigoplus_{\chi\in\widehat G}M_{d_\chi}(\mathbb C).
+\]
+这些幂等元投影到等型分量；在模特征整除群阶时，平均分母与半单分解均不能照搬。
+\clearpage
+\end{document}

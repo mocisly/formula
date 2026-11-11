@@ -1,0 +1,304 @@
+\documentclass[../main.tex]{subfiles}
+\begin{document}
+本章主要参考\cite{shoup,dlmf,lte}。
+
+% References for added material:
+% https://math.hmc.edu/funfacts/lucas-theorem/
+% https://kconrad.math.uconn.edu/blurbs/gradnumthy/hensel.pdf
+% https://www.maths.dur.ac.uk/users/jack.g.shotton/Teaching/number-theory/notes.html
+% https://www2.math.uu.se/~lakelind/kompendier/Talteori.pdf
+% https://www3.nd.edu/~ajorza/courses/2022f-m40520/lectures.pdf
+% https://isa-afp.org/entries/Sum_Of_Squares_Count.html
+% https://ximera.osu.edu/elementarynt/MATH4573Online/ElementaryNumberTheory/MATH4573Online/April10/April10
+\section{整除与算术函数}
+\subsection{最大公因数、Euclid算法与Bézout等式}\index{最大公因数、Euclid算法与Bézout等式|hyperpage}
+对不全为零的整数 $a,b$，$\gcd(a,b)>0$，且
+\[
+\gcd(a,b)=\gcd(b,a-qb),\qquad
+\gcd(a,b)=ax+by\quad(\text{某些 }x,y\in\mathbb Z).
+\]
+若 $a,b\ne0$，则 $\gcd(a,b)\operatorname{lcm}(a,b)=|ab|$。丢番图方程 $ax+by=c$ 有整数解当且仅当 $d=\gcd(a,b)\mid c$；若 $(x_0,y_0)$ 为一解，全部解为
+\[
+x=x_0+\frac bd t,\qquad y=y_0-\frac ad t,\qquad t\in\mathbb Z.
+\]
+\subsection{素因数分解与常用算术函数}\index{素因数分解与常用算术函数|hyperpage}
+对正整数 $n=\prod_{p\mid n}p^{a_p}$，定义约数个数 $\tau(n)$、约数和 $\sigma_k(n)$、Euler 函数 $\varphi(n)$：
+\begin{align*}
+\tau(n)&=\prod_{p\mid n}(a_p+1),\\
+\sigma_k(n)=\sum_{d\mid n}d^k&=\prod_{p\mid n}\frac{p^{k(a_p+1)}-1}{p^k-1}\quad(k\in\mathbb N^*),\\
+\varphi(n)&=n\prod_{p\mid n}(1-1/p).
+\end{align*}
+空乘积取 $1$。Möbius 函数定为 $\mu(1)=1$；若 $n$ 含平方素因子则 $\mu(n)=0$，否则 $\mu(n)=(-1)^r$，其中 $r$ 是不同素因子的个数。
+\subsection{素因子指数与阶乘公式}\index{素因子指数与阶乘公式|hyperpage}
+对素数 $p$ 与非零整数 $n$，记 $v_p(n)=\max\{e\ge0:p^e\mid n\}$，并约定 $v_p(0)=+\infty$。对非零整数 $a,b$，
+\begin{gather*}
+v_p(ab)=v_p(a)+v_p(b),\qquad
+v_p(\gcd(a,b))=\min\{v_p(a),v_p(b)\},\\
+v_p(\operatorname{lcm}(a,b))=\max\{v_p(a),v_p(b)\},\qquad
+v_p(a+b)\ge\min\{v_p(a),v_p(b)\}.
+\end{gather*}
+最后一式在 $v_p(a)\ne v_p(b)$ 时取等号。若 $n\ge0$，其 $p$ 进制数字之和为 $s_p(n)$，则 Legendre 公式为
+\[
+v_p(n!)=\sum_{j\ge1}\left\lfloor\frac{n}{p^j}\right\rfloor
+=\frac{n-s_p(n)}{p-1}.
+\]
+求和仅有有限个非零项。对 $0\le k\le n$，
+\[
+v_p\binom nk=\sum_{j\ge1}\left(
+\left\lfloor\frac n{p^j}\right\rfloor-
+\left\lfloor\frac k{p^j}\right\rfloor-
+\left\lfloor\frac{n-k}{p^j}\right\rfloor\right).
+\]
+整数 $N\ne0$ 在十进制下的末尾零数为 $\min\{v_2(N),v_5(N)\}$。特别地，$n!$ 的末尾零数为
+\[
+\sum_{j\ge1}\left\lfloor\frac n{5^j}\right\rfloor.
+\]
+
+\subsection{Lucas同余与Kummer进位定理}\index{Lucas同余与Kummer进位定理|hyperpage}
+设 $p$ 为素数，非负整数 $n,k$ 的 $p$ 进制展开为 $n=\sum_i n_ip^i$、$k=\sum_i k_ip^i$，其中 $0\le n_i,k_i<p$，不足位补零。Lucas 定理为
+\[
+\binom nk\equiv\prod_i\binom{n_i}{k_i}\pmod p,
+\qquad\binom uv=0\quad(v>u\ge0).
+\]
+若 $0\le k\le n$，Kummer 定理说明 $v_p\binom nk$ 等于将 $k$ 与 $n-k$ 按 $p$ 进制相加时的进位次数，亦即
+\[
+v_p\binom nk=\frac{s_p(k)+s_p(n-k)-s_p(n)}{p-1}.
+\]
+因此 $p\nmid\binom nk$ 当且仅当逐位满足 $k_i\le n_i$。第 $n$ 行二项式系数中不被 $p$ 整除的项数为 $\prod_i(n_i+1)$；当 $p=2$ 时，奇数项数为 $2^{s_2(n)}$。
+\subsection{Dirichlet卷积与Möbius反演}\index{Dirichlet卷积与Möbius反演|hyperpage}
+\[
+(f*g)(n)=\sum_{d\mid n}f(d)g(n/d),\qquad
+\sum_{d\mid n}\mu(d)=\begin{cases}1,&n=1,\\0,&n>1.\end{cases}
+\]
+若 $F(n)=\sum_{d\mid n}f(d)$，则 $f(n)=\sum_{d\mid n}\mu(d)F(n/d)$。另有
+\[
+\sum_{d\mid n}\varphi(d)=n,\qquad
+\varphi(n)=\sum_{d\mid n}\mu(d)\frac nd.
+\]
+积性函数满足 $f(1)=1$ 及互素时 $f(mn)=f(m)f(n)$；完全积性则不要求互素。两积性函数的 Dirichlet 卷积仍积性。
+\subsection{约数恒等式与有限求和}\index{约数恒等式与有限求和|hyperpage}
+以下 $m,n,N$ 为正整数，$\sigma(n)=\sigma_1(n)$。配对约数及按最大公因数分类可得
+\begin{gather*}
+\prod_{d\mid n}d=n^{\tau(n)/2},\qquad
+\tau(n)\text{ 为奇数}\iff n\text{ 为完全平方数},\\
+\sum_{k=1}^n\gcd(k,n)=\sum_{d\mid n}d\,\varphi(n/d),\\
+\gcd(m,n)=\sum_{d\mid\gcd(m,n)}\varphi(d),\qquad
+\sum_{d\mid n}\frac{\mu(d)}d=\frac{\varphi(n)}n.
+\end{gather*}
+交换有限求和顺序，有
+\begin{gather*}
+\sum_{k=1}^N\tau(k)=\sum_{d=1}^N\left\lfloor\frac Nd\right\rfloor,\qquad
+\sum_{k=1}^N\sigma(k)=\sum_{d=1}^N d\left\lfloor\frac Nd\right\rfloor,\\
+\sum_{d=1}^N\mu(d)\left\lfloor\frac Nd\right\rfloor=1,\\
+\#\{(a,b):1\le a,b\le N,\ \gcd(a,b)=1\}
+=\sum_{d=1}^N\mu(d)\left\lfloor\frac Nd\right\rfloor^2
+=2\sum_{k=1}^N\varphi(k)-1.
+\end{gather*}
+这里有序对按顺序区分；约数函数总和的渐近估计见第\ref{chap:analytic-number-theory}章。
+
+\section{同余与剩余类}
+\subsection{线性同余与中国剩余定理}\index{线性同余与中国剩余定理|hyperpage}
+$a\equiv b\pmod m$ 指 $m\mid a-b$，取 $m\ge2$。$ax\equiv b\pmod m$ 可解当且仅当 $d=\gcd(a,m)\mid b$，可解时模 $m$ 恰有 $d$ 个解类。
+若 $m_1,\ldots,m_r$ 两两互素，令 $M=\prod_im_i$、$M_i=M/m_i$，取 $M_it_i\equiv1\pmod{m_i}$，则
+\[
+x\equiv\sum_{i=1}^ra_iM_it_i\pmod M
+\]
+为 $x\equiv a_i\pmod{m_i}$ 的唯一解类。一般模数情形可解当且仅当 $a_i\equiv a_j\pmod{\gcd(m_i,m_j)}$，解模 $\operatorname{lcm}(m_1,\ldots,m_r)$ 唯一。
+\subsection{消去律、模逆与解类参数化}\index{消去律、模逆与解类参数化|hyperpage}
+对 $m\ge2$，令 $d=\gcd(a,m)$，则
+\[
+ax\equiv ay\pmod m\iff x\equiv y\pmod{m/d}.
+\]
+只有 $d=1$ 时才能保持原模数消去 $a$。模逆 $a^{-1}\pmod m$ 存在当且仅当 $\gcd(a,m)=1$；由 $au+mv=1$ 可取 $a^{-1}\equiv u\pmod m$，也可用
+\[
+a^{-1}\equiv a^{\varphi(m)-1}\pmod m.
+\]
+当 $d\mid b$ 且 $d<m$，令 $a'=a/d$、$b'=b/d$、$m'=m/d$，取 $a'u\equiv1\pmod{m'}$，则 $ax\equiv b\pmod m$ 的全部解类为
+\[
+x\equiv ub'+tm'\pmod m,\qquad t=0,1,\ldots,d-1.
+\]
+若 $d=m$，则 $a\equiv0\pmod m$；此时 $m\mid b$ 则所有剩余类均为解，否则无解。
+\subsection{Fermat、Euler与Wilson定理}\index{Fermat、Euler与Wilson定理|hyperpage}
+\[
+\gcd(a,m)=1\Longrightarrow a^{\varphi(m)}\equiv1\pmod m,
+\qquad p\text{ 为素数}\Longrightarrow a^p\equiv a\pmod p.
+\]
+对整数 $n>1$，Wilson 判别为 $n$ 是素数当且仅当 $(n-1)!\equiv-1\pmod n$。
+模素数 $p$ 的单位群为循环群，故存在阶为 $p-1$ 的原根。
+\subsection{乘法阶、原根与幂同余}\index{乘法阶、原根与幂同余|hyperpage}
+设 $\gcd(a,m)=1$，$r=\operatorname{ord}_m(a)$，则对正整数 $t$，
+\[
+a^t\equiv1\pmod m\iff r\mid t,\qquad
+\operatorname{ord}_m(a^t)=\frac r{\gcd(r,t)}.
+\]
+对 $m\ge2$，模 $m$ 存在原根当且仅当
+\[
+m=2,\ 4,\ p^e,\ 2p^e\qquad(p\text{ 为奇素数},\ e\ge1).
+\]
+存在原根时，原根个数为 $\varphi(\varphi(m))$。若 $g$ 为原根，$r=\varphi(m)$，则 $g^j$ 是原根当且仅当 $\gcd(j,r)=1$；阶恰为 $d$ 的单位有 $\varphi(d)$ 个（$d\mid r$）。
+
+设 $\gcd(a,m)=1$、$k\ge1$ 且模 $m$ 有原根，令 $h=\gcd(k,r)$，则
+\[
+x^k\equiv a\pmod m\text{ 可解}\iff a^{r/h}\equiv1\pmod m.
+\]
+可解时恰有 $h$ 个解类。该判别依赖单位群为循环群，不能直接用于任意合数模数。
+
+\subsection{Carmichael函数与统一指数}\index{Carmichael函数与统一指数|hyperpage}
+对 $m\ge2$，$\lambda(m)$ 是使所有与 $m$ 互素的 $a$ 满足 $a^{\lambda(m)}\equiv1\pmod m$ 的最小正整数。若 $m=\prod_i p_i^{e_i}$，则
+\begin{gather*}
+\lambda(m)=\operatorname{lcm}_i\lambda(p_i^{e_i}),\qquad
+\lambda(p^e)=p^{e-1}(p-1)\quad(p\text{ 为奇素数}),\\
+\lambda(2^e)=\begin{cases}
+1,&e=1,\\2,&e=2,\\2^{e-2},&e\ge3,
+\end{cases}\qquad
+\operatorname{ord}_m(a)\mid\lambda(m)\mid\varphi(m).
+\end{gather*}
+最后一个整除链要求 $\gcd(a,m)=1$。例如 $\lambda(8)=2<\varphi(8)=4$；缩减幂指数前仍须确认底数与模数互素。
+
+\subsection{多项式根数与Hensel提升}\index{多项式根数与Hensel提升|hyperpage}
+模素数 $p$ 的非零 $d$ 次多项式至多有 $d$ 个不同根；合数模数下这一结论一般不成立，例如 $x^2\equiv1\pmod8$ 有四个解。
+
+设 $f\in\mathbb Z[x]$，$p$ 为素数，$f(a_1)\equiv0\pmod p$ 且 $f'(a_1)\not\equiv0\pmod p$。则对每个 $j\ge1$，存在唯一模 $p^j$ 的根类 $a_j$ 满足 $a_j\equiv a_1\pmod p$，且可递推为
+\[
+a_{j+1}=a_j+t_jp^j,\qquad
+t_j\equiv-\frac{f(a_j)}{p^j}\,(f'(a_j))^{-1}\pmod p.
+\]
+可取 $0\le t_j<p$；分式 $f(a_j)/p^j$ 是整数，逆元在模 $p$ 下计算。导数为零的重根不能直接使用这个唯一提升公式。
+
+\section{二次剩余}
+\subsection{Legendre符号与二次互反律}\index{Legendre符号与二次互反律|hyperpage}
+对奇素数 $p$，定义 $\left(\frac ap\right)$：$p\mid a$ 时为 $0$，非零平方剩余为 $1$，否则为 $-1$。Euler 判别为
+\[
+a^{(p-1)/2}\equiv\left(\frac ap\right)\pmod p\quad(p\nmid a),\qquad
+\left(\frac{ab}p\right)=\left(\frac ap\right)\left(\frac bp\right).
+\]
+对不同奇素数 $p,q$，
+\[
+\left(\frac pq\right)\left(\frac qp\right)=(-1)^{(p-1)(q-1)/4},\qquad
+\left(\frac{-1}p\right)=(-1)^{(p-1)/2},\quad
+\left(\frac2p\right)=(-1)^{(p^2-1)/8}.
+\]
+对奇合数可用素因数分解定义 Jacobi 符号，但 Jacobi 符号等于 $1$ 不保证是平方剩余。
+\subsection{Gauss引理、Jacobi符号与平方根数}\index{Gauss引理、Jacobi符号与平方根数|hyperpage}
+对奇素数 $p\nmid a$，令 $\nu$ 为 $a,2a,\ldots,\frac{p-1}{2}a$ 的最小正剩余中大于 $p/2$ 的个数，则 Gauss 引理为
+\[
+\left(\frac ap\right)=(-1)^\nu.
+\]
+对正奇数 $n=\prod_i p_i^{e_i}$，Jacobi 符号定义为 $\left(\frac an\right)=\prod_i\left(\frac a{p_i}\right)^{e_i}$，并约定 $\left(\frac a1\right)=1$。对互素正奇数 $m,n$，
+\begin{gather*}
+\left(\frac mn\right)\left(\frac nm\right)=(-1)^{(m-1)(n-1)/4},\\
+\left(\frac{-1}n\right)=(-1)^{(n-1)/2},\qquad
+\left(\frac2n\right)=(-1)^{(n^2-1)/8}.
+\end{gather*}
+例如 $\left(\frac2{15}\right)=1$，但 $2$ 模 $15$ 不是平方剩余。
+
+若 $p$ 为奇素数且 $p\nmid a$，$x^2\equiv a\pmod{p^e}$ 可解当且仅当 $\left(\frac ap\right)=1$，可解时恰有两个解类。对奇数 $a$，
+\[
+x^2\equiv a\pmod{2^e}\text{ 可解}\iff
+\begin{cases}
+a\equiv1\pmod2,&e=1,\\
+a\equiv1\pmod4,&e=2,\\
+a\equiv1\pmod8,&e\ge3.
+\end{cases}
+\]
+可解时解类数分别为 $1,2,4$。对一般模数 $m$ 且 $\gcd(a,m)=1$，先在各素数幂模数下求根，再由中国剩余定理组合；总根数为各局部根数的乘积。
+\section{连分数与不定方程}
+\subsection{简单连分数与逼近分数}\index{简单连分数与逼近分数|hyperpage}
+简单连分数 $[a_0;a_1,a_2,\ldots]$ 中 $a_0\in\mathbb Z$，$a_k\in\mathbb N^*$（$k\ge1$）。第 $k$ 个渐近分数 $p_k/q_k$ 满足
+\begin{gather*}
+p_k=a_kp_{k-1}+p_{k-2},\qquad q_k=a_kq_{k-1}+q_{k-2},\\
+p_{-2}=0,\ p_{-1}=1,\qquad q_{-2}=1,\ q_{-1}=0,\\
+p_kq_{k-1}-p_{k-1}q_k=(-1)^{k-1}.
+\end{gather*}
+对无理数 $\alpha$ 的无限简单连分数，$|\alpha-p_k/q_k|<1/(q_kq_{k+1})\le1/q_k^2$。实无理数的简单连分数最终周期当且仅当它是二次无理数。
+\subsection{连分数误差与渐近分数判别}\index{连分数误差与渐近分数判别|hyperpage}
+设 $\alpha=[a_0;a_1,\ldots]$ 无理，完全商为 $\alpha_{k+1}=[a_{k+1};a_{k+2},\ldots]$，则
+\begin{gather*}
+\alpha=\frac{p_k\alpha_{k+1}+p_{k-1}}{q_k\alpha_{k+1}+q_{k-1}},\\
+\alpha-\frac{p_k}{q_k}
+=\frac{(-1)^k}{q_k(q_k\alpha_{k+1}+q_{k-1})},\\
+\frac1{q_k(q_{k+1}+q_k)}
+<\left|\alpha-\frac{p_k}{q_k}\right|
+<\frac1{q_kq_{k+1}}.
+\end{gather*}
+若既约分数 $u/v$ 满足 $v>0$ 且 $|\alpha-u/v|<1/(2v^2)$，则 $u/v$ 必为 $\alpha$ 的某个渐近分数（Legendre 逼近判别）。这是充分条件，并非每个渐近分数都满足该更强误差界。
+\par\begin{samepage}
+\subsection{Pell方程与勾股数组}\index{Pell方程与勾股数组|hyperpage}
+对非平方正整数 $D$，Pell 方程 $x^2-Dy^2=1$ 有非平凡正整数解。若 $(x_1,y_1)$ 是使 $x_1+y_1\sqrt D>1$ 最小的正解，则所有正解由
+\[
+x_n+y_n\sqrt D=(x_1+y_1\sqrt D)^n,\qquad n=1,2,\ldots
+\]
+给出。原始勾股数组（可交换两直角边）为
+\[
+a=m^2-n^2,\quad b=2mn,\quad c=m^2+n^2,
+\quad m>n\ge1,\quad\gcd(m,n)=1,\quad m-n\text{ 为奇数}.
+\]
+一般正整数勾股数组可再乘一个正整数公因子。
+\par\end{samepage}
+\subsection{Pell方程的周期判别与递推}\index{Pell方程的周期判别与递推|hyperpage}
+设 $\sqrt D=[a_0;\overline{a_1,\ldots,a_\ell}]$，$\ell$ 为最小周期长度，$D$ 为非平方正整数。正 Pell 方程的基本正解为
+\[
+(x_1,y_1)=\begin{cases}
+(p_{\ell-1},q_{\ell-1}),&\ell\text{ 为偶数},\\
+(p_{2\ell-1},q_{2\ell-1}),&\ell\text{ 为奇数}.
+\end{cases}
+\]
+负 Pell 方程 $x^2-Dy^2=-1$ 有整数解当且仅当 $\ell$ 为奇数；此时最小正解为 $(p_{\ell-1},q_{\ell-1})$。正 Pell 方程的解亦可由 $(x_0,y_0)=(1,0)$ 递推：
+\[
+x_{n+1}=x_1x_n+Dy_1y_n,\qquad
+y_{n+1}=y_1x_n+x_1y_n.
+\]
+
+\subsection{两平方和、三平方和与四平方和}\index{两平方和、三平方和与四平方和|hyperpage}
+对正整数 $n$，允许平方项为零，则
+\begin{gather*}
+n=x^2+y^2\ (x,y\in\mathbb Z)
+\iff v_p(n)\text{ 对每个 }p\equiv3\pmod4\text{ 的素数均为偶数},\\
+n=x^2+y^2+z^2\ (x,y,z\in\mathbb Z)
+\iff n\ne4^a(8b+7)\quad(\forall a,b\in\mathbb Z_{\ge0}),\\
+\forall n\ge1,\quad n=x_1^2+x_2^2+x_3^2+x_4^2
+\quad(\text{某些 }x_i\in\mathbb Z).
+\end{gather*}
+后两式分别为 Legendre 三平方和定理与 Lagrange 四平方和定理。两平方和的乘法恒等式为
+\[
+(a^2+b^2)(c^2+d^2)=(ac-bd)^2+(ad+bc)^2.
+\]
+定义 $r_2(n)=\#\{(x,y)\in\mathbb Z^2:x^2+y^2=n\}$，计入顺序与符号；令 $d_j(n)=\#\{d\mid n:d\equiv j\pmod4\}$，则
+\[
+r_2(n)=4\bigl(d_1(n)-d_3(n)\bigr).
+\]
+例如 $r_2(5)=8$；此计数不同于仅计无序非负整数表示的计数。
+\section{赋值提升、剩余类计数与有理逼近补充}
+同余运算与算术函数参见\cite{shoup,dlmf}，赋值提升参见\cite{lte}。
+\subsection{LTE赋值提升公式}\index{LTE赋值提升公式|hyperpage}
+奇素数 $p$ 满足 $p\mid a-b$、$p\nmid ab$，且 $n\ge1$ 时，
+\[
+v_p(a^n-b^n)=v_p(a-b)+v_p(n).
+\]
+若 $a,b$ 均奇且 $n$ 为正偶数，则
+\[
+v_2(a^n-b^n)=v_2(a-b)+v_2(a+b)+v_2(n)-1.
+\]
+对奇数 $n$，二进赋值为 $v_2(a-b)$。默认 $a^n\ne b^n$；$a,b$ 可取非零整数，但不能去掉互素于 $p$ 的条件。
+\subsection{平方根一的模数计数}\index{平方根一的模数计数|hyperpage}
+设 $m=2^\alpha\prod_{i=1}^kp_i^{e_i}$，其中 $p_i$ 为互异奇素数、$e_i\ge1$，则
+\[
+\#\{x\bmod m:x^2\equiv1\pmod m\}=2^k c_\alpha,\qquad
+c_\alpha=\begin{cases}1,&\alpha=0,1,\\2,&\alpha=2,\\4,&\alpha\ge3.\end{cases}
+\]
+奇素数幂上只有 $\pm1$；$2^\alpha$、$\alpha\ge3$ 时为 $\pm1$ 与 $\pm1+2^{\alpha-1}$。合成模数的解由中国剩余定理组合。
+\subsection{四平方表示数的Jacobi公式}\index{四平方表示数的Jacobi公式|hyperpage}
+令 $r_4(n)$ 计入四元整数表示的顺序、符号与零项，$n\ge1$ 时
+\[
+r_4(n)=8\sum_{\substack{d\mid n\\4\nmid d}}d.
+\]
+例如 $r_4(1)=8$。这比四平方存在定理给出更细的计数；若只计算无序非负解，不能简单除以固定常数，因为零项和重复项的稳定子不同。
+\subsection{Farey相邻分数与分母约束}\index{Farey相邻分数与分母约束|hyperpage}
+在 $[0,1]$ 中分母不超过 $N$ 的既约分数按大小排列。相邻项 $a/b<c/d$ 满足
+\[
+bc-ad=1,\qquad b+d>N,\qquad
+\frac cd-\frac ab=\frac1{bd}.
+\]
+反之，两个位于该序列的分数满足前两式便相邻。任何严格位于它们之间的既约分数，其分母至少为 $b+d$；中介分数 $(a+c)/(b+d)$ 达到此下界。
+\clearpage
+\end{document}

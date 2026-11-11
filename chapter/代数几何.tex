@@ -1,0 +1,300 @@
+\documentclass[../main.tex]{subfiles}
+\begin{document}
+本章主要参考\cite{milneAG,stacks}。
+
+环、模与域的基础分别见\hyperref[chap:ring-theory]{环论}、\hyperref[chap:module-theory]{模论}和\hyperref[chap:field-theory]{域论}；本章保留几何公式所需的简要约定。
+% Reference: https://www.jmilne.org/math/CourseNotes/AG.pdf
+\section{交换代数准备}
+\subsection{环、理想与根理想}\index{环、理想与根理想|hyperpage}
+本章交换环均含单位。除概形一节外，默认基域 $k$ 代数闭。理想 $I\subseteq R$ 对加法封闭并满足 $RI\subseteq I$，根理想为
+\[
+\sqrt I=\{f\in R:f^m\in I\text{ 对某个整数 }m\ge1\}.
+\]
+真理想 $\mathfrak p$ 为素理想当且仅当 $R/\mathfrak p$ 为整环；$\mathfrak m$ 为极大理想当且仅当 $R/\mathfrak m$ 为域。
+Noether 环的每个理想有限生成；Hilbert 基定理保证 $R$ 为 Noether 环时 $R[x]$ 也为 Noether 环，因此 $k[x_1,\ldots,x_n]$ 的理想均有限生成。
+\subsection{局部化与局部环}\index{局部化与局部环|hyperpage}
+若 $S\subseteq R$ 乘法封闭、含 $1$ 不含 $0$，局部化 $S^{-1}R$ 的元素写为 $a/s$，等价关系为
+\[
+\frac as=\frac bt\iff\exists u\in S:\ u(at-bs)=0.
+\]
+记 $R_f=R[1/f]$，并允许 $f$ 幂零时得到零环。对素理想 $\mathfrak p$，$R_{\mathfrak p}=(R\setminus\mathfrak p)^{-1}R$ 是唯一极大理想为 $\mathfrak pR_{\mathfrak p}$ 的局部环。剩余域为
+\[
+\kappa(\mathfrak p)=R_{\mathfrak p}/\mathfrak pR_{\mathfrak p}
+\cong\operatorname{Frac}(R/\mathfrak p).
+\]
+局部化是在选定元素可逆的环境中研究几何，不等同于直接取商环。
+\section{仿射代数几何}
+\subsection{代数集、Zariski拓扑与坐标环}\index{代数集、Zariski拓扑与坐标环|hyperpage}
+对 $I\subseteq k[x_1,\ldots,x_n]$，定义
+\[
+V(I)=\{a\in k^n:f(a)=0,\ \forall f\in I\},\qquad
+I(X)=\{f:f|_X=0\},\quad k[X]=k[x_1,\ldots,x_n]/I(X).
+\]
+Zariski 闭集即这些代数集，满足
+\[
+V(I+J)=V(I)\cap V(J),\qquad V(IJ)=V(I)\cup V(J).
+\]
+$X$ 不可约指它不能写为两个真闭子集之并；非空仿射代数集不可约当且仅当 $I(X)$ 为素理想，也等价于 $k[X]$ 为整环。
+\subsection{Hilbert零点定理与代数几何对应}\index{Hilbert零点定理与代数几何对应|hyperpage}
+在代数闭域 $k$ 上，$k[x_1,\ldots,x_n]$ 的每个极大理想均为 $(x_1-a_1,\ldots,x_n-a_n)$，$a\in k^n$；强零点定理为
+\[
+I(V(I))=\sqrt I.
+\]
+故根理想与仿射代数集反向一一对应，素理想与非空不可约仿射代数集对应。基域不代数闭时，不能直接使用此点集形式，例如 $x^2+1$ 在 $\mathbb R$ 上无零点但并非单位多项式。
+\subsection{正则映射与维数}\index{正则映射与维数|hyperpage}
+仿射代数集间的正则映射 $F:X\to Y$ 由坐标函数的多项式限制给出，诱导反向 $k$-代数同态
+\[
+F^*:k[Y]\to k[X],\quad g\mapsto g\circ F,
+\qquad (G\circ F)^*=F^*\circ G^*.
+\]
+对不可约仿射代数簇，函数域 $k(X)=\operatorname{Frac}(k[X])$，且
+\[
+\dim X=\dim k[X]=\operatorname{trdeg}_k k(X),\qquad\dim\mathbb A_k^n=n.
+\]
+环的 Krull 维数为素理想严格包含链的长度之上确界。非零非常数多项式 $f$ 在 $\mathbb A_k^n$ 定义的超曲面维数为 $n-1$。
+\subsection{Zariski切空间与Jacobian判别}\index{Zariski切空间与Jacobian判别|hyperpage}
+若 $I(X)=(f_1,\ldots,f_r)$，$p\in X$，则
+\[
+T_pX=\left\{v\in k^n:\sum_{j=1}^n\frac{\partial f_i}{\partial x_j}(p)v_j=0,
+\ i=1,\ldots,r\right\},\qquad
+\dim T_pX=n-\operatorname{rank}J(p).
+\]
+内在形式为 $T_pX\cong(\mathfrak m_p/\mathfrak m_p^2)^*$，其中 $\mathfrak m_p$ 是 $k[X]$ 中点 $p$ 的极大理想。
+若 $X$ 不可约、维数为 $d$，则 $p$ 非奇异当且仅当 $\dim T_pX=d$，即 $\operatorname{rank}J(p)=n-d$。必须使用生成根理想 $I(X)$ 的方程；把同一零点方程任意取幂会改变 Jacobian，却不改变点集。
+\section{射影几何与代数曲线}
+\subsection{射影空间、齐次方程与仿射图}\index{射影空间、齐次方程与仿射图|hyperpage}
+\[
+\mathbb P_k^n=(k^{n+1}\setminus\{0\})/k^\times,
+\qquad [x_0:\cdots:x_n]=[\lambda x_0:\cdots:\lambda x_n]\quad(\lambda\ne0).
+\]
+射影代数集由齐次多项式定义。在标准开集 $U_i=\{x_i\ne0\}$ 上，以比值 $x_j/x_i$（$j\ne i$）为坐标，有 $U_i\cong\mathbb A_k^n$。
+次数为 $d$ 的仿射多项式 $f$ 的齐次化为
+\[
+F(x_0,\ldots,x_n)=x_0^d f(x_1/x_0,\ldots,x_n/x_0).
+\]
+射影闭包补入无穷远处的点；一般代数集应齐次化整个理想，不能只随意齐次化一组方程而忽略可能的额外分支。
+\subsection{Bézout定理与光滑平面曲线亏格}\index{Bézout定理与光滑平面曲线亏格|hyperpage}
+若射影平面曲线 $C,D\subseteq\mathbb P_k^2$ 的次数分别为 $m,n$，且没有公共不可约分支，则
+\[
+\sum_{p\in C\cap D}I_p(C,D)=mn,
+\]
+其中 $I_p$ 是局部交点重数。等式同时计入重数与无穷远交点；仅数不同的仿射交点通常得不到 $mn$。
+次数为 $d$ 的光滑不可约射影平面曲线满足
+\[
+g=\frac{(d-1)(d-2)}2.
+\]
+奇异平面曲线的光滑模型亏格可能更低，不能直接套用此光滑公式。
+\subsection{除子、线性系统与Riemann--Roch公式}\index{除子、线性系统与Riemann-Roch公式|hyperpage}
+设 $C$ 为光滑连通射影曲线。除子为有限形式和 $D=\sum_pn_pp$，$n_p\in\mathbb Z$，其次数为 $\deg D=\sum_pn_p$。非零有理函数给出主除子
+\[
+\operatorname{div}(f)=\sum_p\operatorname{ord}_p(f)p,\qquad
+\deg\operatorname{div}(f)=0.
+\]
+令 $L(D)=\{f\in k(C)^\times:\operatorname{div}(f)+D\ge0\}\cup\{0\}$，$\ell(D)=\dim_kL(D)$。若 $K_C$ 为典范除子，则
+\[
+\ell(D)-\ell(K_C-D)=\deg D+1-g,\qquad\deg K_C=2g-2.
+\]
+特别地，$\deg D>2g-2$ 时 $\ell(D)=\deg D+1-g$。在 $k=\mathbb C$ 时，这与紧 Riemann 曲面的经典理论对应。
+\section{概形入门}
+\subsection{素谱、结构层与仿射概形}\index{素谱、结构层与仿射概形|hyperpage}
+对任意含单位交换环 $R$，其素谱为
+\[
+\operatorname{Spec}R=\{\mathfrak p\subset R:\mathfrak p\text{ 为素理想}\},\qquad
+V(I)=\{\mathfrak p:I\subseteq\mathfrak p\}.
+\]
+基本开集 $D(f)=\{\mathfrak p:f\notin\mathfrak p\}$ 满足 $D(fg)=D(f)\cap D(g)$。结构层把开集上的局部正则函数及其粘合记录下来，满足
+\[
+\mathcal O_{\operatorname{Spec}R}(D(f))\cong R_f,\qquad
+\mathcal O_{\operatorname{Spec}R,\mathfrak p}\cong R_{\mathfrak p}.
+\]
+仿射概形是此带结构层的空间；概形是局部同构于仿射概形的局部赋环空间。环同态 $\phi:R\to S$ 诱导反向映射 $\operatorname{Spec}S\to\operatorname{Spec}R$，$\mathfrak q\mapsto\phi^{-1}(\mathfrak q)$。
+结构层不可省略：$\operatorname{Spec}k$ 与 $\operatorname{Spec}(k[\varepsilon]/(\varepsilon^2))$ 的底空间都只有一点，但后者含非零幂零元，二者并非同一概形。
+% Further references: https://stacks.math.columbia.edu/tag/01XS ; https://www.jmilne.org/math/CourseNotes/AG.pdf
+\section{维数、消元与概形运算补充}
+\subsection{Noether正规化与纤维维数}\index{Noether正规化与纤维维数|hyperpage}
+有限生成整 $k$-代数 $A$ 存在代数独立元 $t_1,\ldots,t_d$，使 $A$ 为 $k[t_1,\ldots,t_d]$ 上有限模，且
+\[
+d=\dim A=\operatorname{trdeg}_k\operatorname{Frac}A.
+\]
+对不可约簇的支配态射 $f:X\to Y$，一般纤维维数为 $\dim X-\dim Y$，每个非空纤维的维数至少为此值。真闭不可约子簇的维数严格小于原簇；闭点局部维数与切空间维数的差可检测奇异性。
+\subsection{Gröbner基、标准单项式与消元}\index{Gröbner基、标准单项式与消元|hyperpage}
+固定单项式序，$G=\{g_i\}$ 为理想 $I$ 的 Gröbner 基当且仅当 $\operatorname{in}(I)=(\operatorname{LT}(g_i))$。Buchberger 判别要求全部 $S$ 多项式的除法余式为零，其中
+\[
+S(f,g)=\frac{\operatorname{lcm}(\operatorname{LM}f,\operatorname{LM}g)}{\operatorname{LT}f}f
+-\frac{\operatorname{lcm}(\operatorname{LM}f,\operatorname{LM}g)}{\operatorname{LT}g}g.
+\]
+不被初始理想整除的标准单项式给出 $k[x]/I$ 的 $k$-基；零维时其个数等于商环维数（包括重数）。字典序下 $G\cap k[x_{r+1},\ldots,x_n]$ 是消元理想 $I\cap k[x_{r+1},\ldots,x_n]$ 的 Gröbner 基。
+\subsection{纤维积、基变换与Proj}\index{纤维积、基变换与Proj|hyperpage}
+仿射概形的纤维积由张量积计算：
+\[
+\operatorname{Spec}B\times_{\operatorname{Spec}A}\operatorname{Spec}C
+\cong\operatorname{Spec}(B\otimes_AC),\qquad
+X_y=X\times_Y\operatorname{Spec}\kappa(y).
+\]
+对非负分次环 $S$，$\operatorname{Proj}S$ 由不包含 $S_+$ 的齐次素理想构成，标准开集为
+\[
+D_+(f)\cong\operatorname{Spec}(S_f)_0,\qquad
+\mathbb P_A^n=\operatorname{Proj}A[x_0,\ldots,x_n].
+\]
+张量积可能出现幂零元或额外分支，所以概形纤维积应保留结构层和环结构。
+\subsection{准凝聚层、正合性与仿射消失}\index{准凝聚层、正合性与仿射消失|hyperpage}
+在 $X=\operatorname{Spec}A$ 上，$A$-模 $M$ 对应准凝聚层 $\widetilde M$，满足
+\[
+\Gamma(X,\widetilde M)=M,\quad\widetilde M(D(f))=M_f,\quad
+H^i(X,\widetilde M)=0\quad(i>0).
+\]
+Noether 情形有限生成模对应凝聚层。短正合层列导出上同调长正合列：
+\[
+0\to H^0(\mathcal F')\to H^0(\mathcal F)\to H^0(\mathcal F'')
+\to H^1(\mathcal F')\to\cdots.
+\]
+因此全局截面函子一般仅左正合；仿射消失结论要求准凝聚性。
+\section{微分、线丛与层上同调补充}
+\subsection{Kähler微分与余法正合列}\index{Kähler微分与余法正合列|hyperpage}
+$\Omega_{B/A}$ 由符号 $\mathrm db$ 按加法、Leibniz 及 $\mathrm da=0$（$a\in A$）关系生成。若 $B=A[x_1,\ldots,x_n]/I$，则
+\[
+I/I^2\longrightarrow\bigoplus_{j=1}^nB\,\mathrm dx_j\longrightarrow\Omega_{B/A}\longrightarrow0,
+\quad f\longmapsto\sum_j\partial_jf\,\mathrm dx_j.
+\]
+对闭浸入 $X\subset Y$，余法列为 $I/I^2\to\Omega_Y|_X\to\Omega_X\to0$。光滑维数 $d$ 的簇满足 $\Omega_X$ 局部自由秩 $d$、$T_X=\Omega_X^\vee$；有限表示态射平坦且 $\Omega_{X/Y}=0$ 时为 étale。仅有微分模秩信息通常不足以推出光滑性。
+\subsection{Cartier除子、Picard群与线性系统}\index{Cartier除子、Picard群与线性系统|hyperpage}
+Cartier 除子局部由非零因子有理函数 $f_i$ 给出，交叠处 $f_i/f_j$ 为单位。光滑整簇上 Cartier 除子与 Weil 除子相同，并有
+\[
+\operatorname{Pic}(X)\cong\operatorname{Div}(X)/\operatorname{Prin}(X),\qquad
+\mathcal O(D+E)\cong\mathcal O(D)\otimes\mathcal O(E).
+\]
+对一般正规整簇，Weil 类群 $\operatorname{Cl}(X)$ 可能大于 $\operatorname{Pic}(X)$。有效除子满足
+\[
+0\to\mathcal O_X(-D)\to\mathcal O_X\to\mathcal O_D\to0.
+\]
+基点自由线性系统的截面 $s_0,\ldots,s_r$ 定义 $x\mapsto[s_0(x):\cdots:s_r(x)]$，并拉回 $\mathcal O_{\mathbb P^r}(1)$ 为原线丛。
+\subsection{射影空间线丛上同调}\index{射影空间线丛上同调|hyperpage}
+对 $n\ge1$、$d\in\mathbb Z$，$\operatorname{Pic}(\mathbb P^n)=\mathbb Z[\mathcal O(1)]$，且
+\begin{align*}
+h^0(\mathbb P^n,\mathcal O(d))&=\binom{n+d}n\quad(d\ge0),\\
+h^n(\mathbb P^n,\mathcal O(d))&=\binom{-d-1}n\quad(d\le-n-1),\\
+H^i(\mathbb P^n,\mathcal O(d))&=0\quad(0<i<n).
+\end{align*}
+上述第一、二行域外分别为零；$\chi(\mathcal O(d))=\binom{d+n}n$ 以多项式意义对所有整数 $d$ 成立。Euler 正合列为
+\[
+0\to\Omega_{\mathbb P^n}^1\to\mathcal O(-1)^{\oplus(n+1)}\to\mathcal O\to0,
+\qquad\omega_{\mathbb P^n}=\mathcal O(-n-1).
+\]
+\subsection{Serre消失、对偶与Hilbert多项式}\index{Serre消失、对偶与Hilbert多项式|hyperpage}
+射影概形上的凝聚层 $\mathcal F$ 及丰沛线丛 $L$ 满足 $H^i(X,\mathcal F\otimes L^m)=0$（$i>0,m\gg0$），且充分高次扭转由全局截面生成。光滑射影 $n$ 维簇上，向量丛 $E$ 满足 Serre 对偶
+\[
+H^i(X,E)^*\cong H^{n-i}(X,E^\vee\otimes\omega_X).
+\]
+若 $L=\mathcal O_X(1)$，$\chi(X,L^m)$ 为 Hilbert 多项式，$d$ 维射影簇的首项为 $\deg(X)m^d/d!$。常数项与低次项包含算术亏格等信息，不能只保留维数。
+\section{曲线、曲面与交理论补充}
+\subsection{Riemann--Hurwitz与曲线向量丛Riemann--Roch}\index{Riemann-Hurwitz与曲线向量丛Riemann-Roch|hyperpage}
+对光滑射影曲线的有限可分态射 $f:C\to D$、次数 $d$，
+\[
+K_C\sim f^*K_D+R,\qquad 2g_C-2=d(2g_D-2)+\deg R.
+\]
+特征零或温和分歧时 $R=\sum_p(e_p-1)p$；野分歧时应以不同指数代替 $e_p-1$。曲线上秩 $r$ 向量丛 $E$ 满足
+\[
+\chi(E)=\deg E+r(1-g),\quad\deg E=\deg\det E,\qquad
+h^1(E)=h^0(E^\vee\otimes\omega_C).
+\]
+线丛次数至少 $2g$ 时全局生成，至少 $2g+1$ 时非常丰沛；次数为负的线丛无非零全局截面。
+\subsection{交环、完全交与伴随公式}\index{交环、完全交与伴随公式|hyperpage}
+射影空间的 Chow 环为 $A^*(\mathbb P^n)=\mathbb Z[H]/(H^{n+1})$，$\int_{\mathbb P^n}H^n=1$。多重次数 $(d_1,\ldots,d_r)$ 的光滑完全交 $X\subset\mathbb P^n$ 满足
+\[
+\deg X=\prod_i d_i,\qquad
+\omega_X\cong\mathcal O_X\left(\sum_i d_i-n-1\right).
+\]
+光滑曲面上光滑曲线 $C$ 有 $\omega_C\cong(\omega_X\otimes\mathcal O_X(C))|_C$，故
+\[
+2g(C)-2=C\cdot(C+K_X).
+\]
+交数必须按适当相交或交理论的重数定义，不能以不同交点的个数代替。
+\subsection{曲面Riemann--Roch与吹起}\index{曲面Riemann-Roch与吹起|hyperpage}
+光滑射影曲面及除子 $D$ 满足
+\[
+\chi(\mathcal O_X(D))=\chi(\mathcal O_X)+\tfrac12D\cdot(D-K_X),\qquad
+\chi(\mathcal O_X)=\frac{K_X^2+c_2(X)}{12}.
+\]
+在光滑点吹起 $\pi:\widetilde X\to X$，例外曲线 $E\cong\mathbb P^1$，则
+\[
+E^2=-1,\quad\pi^*D\cdot E=0,\quad
+K_{\widetilde X}=\pi^*K_X+E,\quad K_{\widetilde X}^2=K_X^2-1.
+\]
+沿光滑余维 $r$ 中心吹起的典范除子为 $K_{\widetilde X}=\pi^*K_X+(r-1)E$。吹起可由 Rees 代数 $\operatorname{Proj}\bigoplus_{m\ge0}I^m$ 构造。
+\subsection{椭圆曲线的群律与不变量}\index{椭圆曲线的群律与不变量|hyperpage}
+特征不为 $2,3$ 时，光滑短 Weierstrass 模型为 $y^2=x^3+Ax+B$，要求
+\[
+\Delta=-16(4A^3+27B^2)\ne0,\qquad
+j=1728\frac{4A^3}{4A^3+27B^2}.
+\]
+以无穷远点 $O$ 为零元，若 $P\ne\pm Q$，令 $m=(y_Q-y_P)/(x_Q-x_P)$；倍点时 $m=(3x_P^2+A)/(2y_P)$，则
+\[
+x_{P+Q}=m^2-x_P-x_Q,\qquad y_{P+Q}=m(x_P-x_{P+Q})-y_P.
+\]
+垂直线给 $P+(-P)=O$，$y_P=0$ 时 $2P=O$。曲线同构、同源及双有理坐标变换各有不同含义，需明确所用模型。
+\section{高维与算术几何公式补充}
+\subsection{Chern特征、Todd类与Hirzebruch--Riemann--Roch}\index{Chern特征、Todd类与Hirzebruch-Riemann-Roch|hyperpage}
+以形式 Chern 根 $x_i$ 表示向量丛，定义
+\begin{align*}
+\operatorname{ch}(E)&=\sum_i e^{x_i}=r+c_1+\tfrac12(c_1^2-2c_2)+\cdots,\\
+\operatorname{td}(E)&=\prod_i\frac{x_i}{1-e^{-x_i}}
+=1+\tfrac12c_1+\tfrac1{12}(c_1^2+c_2)+\cdots.
+\end{align*}
+光滑射影簇上（有理 Chow 环中）
+\[
+\chi(X,E)=\int_X\operatorname{ch}(E)\operatorname{td}(T_X).
+\]
+积分表示取最高余维分量的次数。该式统一曲线、曲面和射影空间的 Euler 特征公式；低维截断只在相应维数计算中足够。
+\subsection{有限域点数、曲线zeta与Hasse--Weil界}\index{有限域点数、曲线zeta与Hasse-Weil界|hyperpage}
+本小节改取有限基域 $\mathbb F_q$。令 $N_r=\#X(\mathbb F_{q^r})$，局部 zeta 函数为 $Z(X,t)=\exp(\sum_{r\ge1}N_rt^r/r)$。对光滑射影几何连通亏格 $g$ 曲线，
+\[
+Z(C,t)=\frac{P(t)}{(1-t)(1-qt)},\quad
+P(t)=\prod_{i=1}^{2g}(1-\alpha_it),\quad|\alpha_i|=\sqrt q,
+\]
+并有 $N_r=q^r+1-\sum_i\alpha_i^r$、$|N_1-(q+1)|\le2g\sqrt q$。椭圆曲线时 $P(t)=1-at+qt^2$，$a=q+1-\#E(\mathbb F_q)$，$|a|\le2\sqrt q$。这些是已证的有限域结论，与数域上尚需另外研究的全局 $L$ 函数区分使用。
+\subsection{数域椭圆曲线与典范高度}\index{数域椭圆曲线与典范高度|hyperpage}
+本小节基域改为数域 $K$。Mordell--Weil 定理给出
+\[
+E(K)\cong E(K)_{\rm tors}\oplus\mathbb Z^r.
+\]
+以 $h_x$ 为 $x$ 坐标的绝对对数高度（$O$ 取零），典范高度可归一化为
+\[
+\widehat h(P)=\tfrac12\lim_{n\to\infty}4^{-n}h_x([2^n]P),\quad
+\widehat h([m]P)=m^2\widehat h(P),\quad
+\widehat h(P)=0\iff P\text{ 为挠点}.
+\]
+双线性配对 $\langle P,Q\rangle=\tfrac12[\widehat h(P+Q)-\widehat h(P)-\widehat h(Q)]$ 在除去挠点后的自由部分正定。此处只列定理性结构与高度公式，不预设秩可由未经证明的特殊值公式求出。
+
+\section{射影丛、Grassmann簇与推前公式补充}
+代数簇参见\cite{milneAG}，交理论参见\cite{stacks}，多面体计数参见\cite{toric}。
+\subsection{射影丛的Chow环公式}\index{射影丛的Chow环公式|hyperpage}
+光滑簇 $X$ 上秩 $r$ 向量丛 $E$，取 $\mathbb P(E)$ 表示一维商、$\xi=c_1(\mathcal O_{\mathbb P(E)}(1))$，则
+\[
+A^*(\mathbb P(E))\cong
+A^*(X)[\xi]/\left(\xi^r-c_1(E)\xi^{r-1}+\cdots+(-1)^rc_r(E)\right).
+\]
+系数由 $\pi^*$ 拉回，且 $\pi_*(\xi^{r-1})=1$。若改用一维子空间的射影丛约定，必须同时检查对偶丛及超平面类的符号。
+\subsection{Grothendieck--Riemann--Roch推前}\index{Grothendieck-Riemann-Roch推前|hyperpage}
+特征零域上，光滑射影簇间的态射 $f:X\to Y$ 及向量丛 $E$ 满足，在有理 Chow 环中
+\[
+\operatorname{ch}(f_!E)\operatorname{td}(T_Y)
+=f_*\bigl(\operatorname{ch}(E)\operatorname{td}(T_X)\bigr),\qquad
+f_!E=\sum_i(-1)^i[R^if_*E].
+\]
+右侧的推前按交理论次数理解，左侧的高阶直像先视为 K 群类。$Y$ 为一点时恢复 Hirzebruch--Riemann--Roch；不能把 $f_!$ 简化为只有零阶直像。
+\subsection{Grassmann簇与Plücker二次关系}\index{Grassmann簇与Plücker二次关系|hyperpage}
+$\operatorname{Gr}(2,n)$ 参数化 $k^n$ 中二维子空间，维数为 $2(n-2)$。对其有序基组成的二行矩阵，取二阶子式 $p_{ij}$，得到
+\[
+\operatorname{Gr}(2,n)\hookrightarrow\mathbb P^{\binom n2-1},\qquad
+p_{ij}p_{kl}-p_{ik}p_{jl}+p_{il}p_{jk}=0\quad(i<j<k<l).
+\]
+更换基同时乘全部坐标以同一非零行列式，故射影点良定义；这些二次关系刻画可分解二向量。
+\subsection{Bernstein多面体根数公式}\index{Bernstein多面体根数公式|hyperpage}
+复系数 Laurent 多项式 $f_1,\ldots,f_d$ 的 Newton 多面体为 $P_1,\ldots,P_d$。当系数一般且混合体积为正，代数环面 $(\mathbb C^*)^d$ 中的解计重数为
+\[
+N=d!\operatorname{MV}(P_1,\ldots,P_d),\qquad
+\operatorname{MV}(P,\ldots,P)=\operatorname{Vol}(P).
+\]
+多面体取指数支集的凸包，体积按标准整数格归一到基本平行多面体体积一。特殊退化系数或环面外的零点不在此一般位置计数的直接结论中。
+\clearpage
+\end{document}

@@ -1,0 +1,8 @@
+icu_locale "zh"
+headings_flag 0
+preamble "\\begin{theindex}\n\\small\\raggedright\\sloppy\n\\noindent 本索引按公式、定理和主题标题编排。拉丁词条按字母排序，中文词条按拼音排序；页码可点击。同名词条合并列出所在页。\\par\\bigskip\n"
+postamble "\n\\end{theindex}\n"
+delim_0 ", "
+delim_1 ", "
+delim_2 ", "
+line_max 100

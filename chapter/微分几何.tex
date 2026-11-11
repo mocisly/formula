@@ -1,0 +1,264 @@
+\documentclass[../main.tex]{subfiles}
+\begin{document}
+本章主要参考\cite{riemann}。
+
+% Reference: https://www.math.ucla.edu/~sucharit/120A-notes.html
+\section{空间曲线}
+\subsection{弧长、曲率与挠率}\index{弧长、曲率与挠率|hyperpage}
+设 $\bm r(t)$ 为 $C^3$ 正则曲线，$\bm r'\ne0$，弧长与单位切向量为
+\[
+s(t)=\int_{t_0}^t\|\bm r'(\tau)\|\,\mathrm d\tau,\qquad
+T=\frac{\mathrm d\bm r}{\mathrm ds}=\frac{\bm r'}{\|\bm r'\|}.
+\]
+曲率 $\kappa=\|\mathrm dT/\mathrm ds\|$。在 $\bm r'\times\bm r''\ne0$ 处，
+\[
+\kappa=\frac{\|\bm r'\times\bm r''\|}{\|\bm r'\|^3},\qquad
+\tau=\frac{\det(\bm r',\bm r'',\bm r''')}{\|\bm r'\times\bm r''\|^2}.
+\]
+平面曲线 $\bm r=(x,y)$ 的曲率为 $|x'y''-y'x''|/(x'^2+y'^2)^{3/2}$。
+\subsection{Frenet--Serret公式}\index{Frenet-Serret公式|hyperpage}
+在 $\kappa>0$ 处，令 $N=T'/\kappa$、$B=T\times N$，这里撇号表示对弧长求导，则
+\[
+T'=\kappa N,\qquad N'=-\kappa T+\tau B,\qquad B'=-\tau N.
+\]
+切线、主法线和副法线分别沿 $T,N,B$；密切平面法向量为 $B$。曲率为零时，Frenet 标架可能失去定义。
+\section{曲面的基本形式}
+\subsection{第一基本形式与面积元}\index{第一基本形式与面积元|hyperpage}
+正则参数曲面 $\bm r(u,v)$ 满足 $\bm r_u\times\bm r_v\ne0$，选取单位法向量
+\[
+n=\frac{\bm r_u\times\bm r_v}{\|\bm r_u\times\bm r_v\|}.
+\]
+定义 $E=\langle\bm r_u,\bm r_u\rangle$、$F=\langle\bm r_u,\bm r_v\rangle$、$G=\langle\bm r_v,\bm r_v\rangle$，则
+\[
+\mathrm I=\mathrm ds^2=E\,\mathrm du^2+2F\,\mathrm du\,\mathrm dv+G\,\mathrm dv^2,
+\qquad\mathrm dA=\sqrt{EG-F^2}\,\mathrm du\,\mathrm dv.
+\]
+切向量 $a,b$ 的夹角由 $\cos\theta=\mathrm I(a,b)/\sqrt{\mathrm I(a,a)\mathrm I(b,b)}$ 确定。
+\subsection{第二基本形式与形算子}\index{第二基本形式与形算子|hyperpage}
+采用形算子 $S=-\mathrm dn$ 的符号约定，令
+\[
+e=\langle\bm r_{uu},n\rangle,\quad f=\langle\bm r_{uv},n\rangle,\quad
+ g=\langle\bm r_{vv},n\rangle,\qquad
+\mathrm{II}=e\,\mathrm du^2+2f\,\mathrm du\,\mathrm dv+g\,\mathrm dv^2.
+\]
+在参数切基下，
+\[
+[S]=\begin{pmatrix}E&F\\F&G\end{pmatrix}^{-1}
+\begin{pmatrix}e&f\\f&g\end{pmatrix},\qquad
+\mathrm{II}(a,b)=\mathrm I(Sa,b).
+\]
+将 $n$ 反向会使 $\mathrm{II}$ 和主曲率变号，但不改变第一基本形式。
+\section{曲率与曲面上的曲线}
+\subsection{主曲率、Gauss曲率与平均曲率}\index{主曲率、Gauss曲率与平均曲率|hyperpage}
+主曲率 $k_1,k_2$ 为 $S$ 的特征值，且
+\[
+K=k_1k_2=\frac{eg-f^2}{EG-F^2},\qquad
+H=\frac{k_1+k_2}2=\frac{eG-2fF+gE}{2(EG-F^2)}.
+\]
+若单位切向量与第一主方向夹角为 $\theta$，Euler 公式为
+\[
+k_n=\frac{\mathrm{II}(a,a)}{\mathrm I(a,a)}
+=k_1\cos^2\theta+k_2\sin^2\theta.
+\]
+半径 $R$ 的球面取外法向时，按本章约定 $k_1=k_2=-1/R$、$H=-1/R$、$K=1/R^2$；平均曲率的符号须连同法向约定使用。
+\subsection{图形曲面的曲率}\index{图形曲面的曲率|hyperpage}
+对 $z=h(x,y)$ 取向上法向，令 $W=\sqrt{1+h_x^2+h_y^2}$，则
+\[
+E=1+h_x^2,\quad F=h_xh_y,\quad G=1+h_y^2,\qquad
+(e,f,g)=\frac1W(h_{xx},h_{xy},h_{yy}).
+\]
+\[
+K=\frac{h_{xx}h_{yy}-h_{xy}^2}{(1+h_x^2+h_y^2)^2},\qquad
+H=\frac{(1+h_y^2)h_{xx}-2h_xh_yh_{xy}+(1+h_x^2)h_{yy}}{2(1+h_x^2+h_y^2)^{3/2}}.
+\]
+极小曲面满足 $H=0$；图形形式等价于 $\operatorname{div}(\nabla h/\sqrt{1+|\nabla h|^2})=0$。
+\subsection{测地曲率与测地线}\index{测地曲率与测地线|hyperpage}
+对曲面上的单位速曲线 $\gamma(s)$，$T=\gamma'$，定义
+\[
+\gamma''=k_g(n\times T)+k_nn,\quad
+k_g=\langle\gamma'',n\times T\rangle,\quad k_n=\langle\gamma'',n\rangle,
+\quad\kappa^2=k_g^2+k_n^2.
+\]
+单位速曲线为测地线当且仅当 $k_g=0$，即其加速度只有曲面法向分量。
+\section{Riemann度量与联络}
+\subsection{度量、Christoffel符号与测地线方程}\index{度量、Christoffel符号与测地线方程|hyperpage}
+在局部坐标 $x^1,\ldots,x^n$ 中，度量为 $\mathrm ds^2=\sum_{i,j}g_{ij}\,\mathrm dx^i\mathrm dx^j$，$g=(g_{ij})$ 对称正定，逆矩阵记 $(g^{ij})$。Levi--Civita 联络系数为
+\[
+\Gamma^k_{ij}=\frac12\sum_\ell g^{k\ell}
+(\partial_i g_{j\ell}+\partial_j g_{i\ell}-\partial_\ell g_{ij}).
+\]
+对向量场 $V=\sum_kV^k\partial_k$，
+\[
+(\nabla_iV)^k=\partial_iV^k+\sum_j\Gamma^k_{ij}V^j,\qquad
+\ddot x^k+\sum_{i,j}\Gamma^k_{ij}\dot x^i\dot x^j=0.
+\]
+后一式要求使用仿射参数（如常速弧长参数）。沿曲线平行移动满足 $\mathrm dV^k/\mathrm dt+\sum_{i,j}\Gamma^k_{ij}\dot x^iV^j=0$。
+\subsection{体积元、Laplace--Beltrami算子与曲率张量}\index{体积元、Laplace-Beltrami算子与曲率张量|hyperpage}
+\[
+\mathrm dV_g=\sqrt{\det g}\,\mathrm dx^1\cdots\mathrm dx^n,\qquad
+\Delta_g f=\frac1{\sqrt{\det g}}\sum_{i,j}\partial_i
+\left(\sqrt{\det g}\,g^{ij}\partial_j f\right).
+\]
+采用 $R(X,Y)Z=\nabla_X\nabla_YZ-\nabla_Y\nabla_XZ-\nabla_{[X,Y]}Z$ 的约定，其中 $[X,Y]$ 为 Lie 括号，则独立切向量张成平面的截面曲率为
+\[
+\sec(X,Y)=\frac{\langle R(X,Y)Y,X\rangle}{\|X\|^2\|Y\|^2-\langle X,Y\rangle^2}.
+\]
+二维曲面的截面曲率即 Gauss 曲率，因而 $K$ 可仅由第一基本形式决定。
+\section{整体曲率}
+\subsection{Gauss--Bonnet公式}\index{Gauss-Bonnet公式|hyperpage}
+对紧致、可定向、无边界的光滑曲面 $M$，
+\[
+\int_MK\,\mathrm dA=2\pi\chi(M)=4\pi(1-g),
+\]
+其中 $\chi$ 为 Euler 示性数，$g$ 为连通闭曲面的亏格（最后一等式要求连通）。
+对紧致可定向曲面上的分段光滑区域 $D$，取正向边界及外转角 $\theta_j$，则
+\[
+\int_DK\,\mathrm dA+\int_{\partial D}k_g\,\mathrm ds+\sum_j\theta_j=2\pi\chi(D).
+\]
+边界正向约定为行进时区域位于左侧，并与所选法向一致；角项对光滑边界为零。
+\section{曲面计算与结构方程补充}
+\subsection{旋转曲面、等温坐标与共形曲率}\index{旋转曲面、等温坐标与共形曲率|hyperpage}
+旋转曲面 $r(u,v)=(a(u)\cos v,a(u)\sin v,b(u))$、$a>0$，若母线按弧长参数化，即 $a'^2+b'^2=1$，则
+\[
+\mathrm ds^2=\mathrm du^2+a(u)^2\mathrm dv^2,\quad
+\mathrm dA=a(u)\,\mathrm du\,\mathrm dv,\quad K=-a''(u)/a(u).
+\]
+二维等温坐标 $g=e^{2\lambda}(\mathrm du^2+\mathrm dv^2)$ 中，$K=-e^{-2\lambda}(\lambda_{uu}+\lambda_{vv})$。更一般地，共形改变 $\widetilde g=e^{2v}g$ 满足
+\[
+\widetilde K=e^{-2v}(K-\Delta_gv).
+\]
+公式中的 Laplace 算子采用本章 $\Delta=\operatorname{div}\nabla$ 的符号。
+\subsection{Gauss公式、Codazzi与法向变分}\index{Gauss公式、Codazzi与法向变分|hyperpage}
+欧氏超曲面上，$D$ 为环境平直联络，形算子仍取 $S=-\mathrm dn$，则
+\[
+D_XY=\nabla_XY+\mathrm{II}(X,Y)n,\qquad D_Xn=-SX.
+\]
+Gauss 与 Codazzi 方程分别为
+\begin{gather*}
+\langle R(X,Y)Z,W\rangle=\mathrm{II}(X,W)\mathrm{II}(Y,Z)-\mathrm{II}(X,Z)\mathrm{II}(Y,W),\\
+(\nabla_XS)Y=(\nabla_YS)X.
+\end{gather*}
+对 $m$ 维超曲面定义 $H=\operatorname{tr}S/m$，沿紧支撑法向变分 $V=fn$ 有
+\[
+\delta\operatorname{Area}=-m\int fH\,\mathrm dA,\qquad\Delta_g r=mHn.
+\]
+所以极小浸入的各坐标函数均调和；有边界且变分不固定边界时需加入边界项。
+\subsection{Koszul公式与张量协变微分}\index{Koszul公式与张量协变微分|hyperpage}
+Levi--Civita 联络由无挠性及度量相容性唯一确定，其 Koszul 公式为
+\begin{align*}
+2\langle\nabla_XY,Z\rangle={}&X\langle Y,Z\rangle+Y\langle Z,X\rangle-Z\langle X,Y\rangle\\
+&-\langle X,[Y,Z]\rangle+\langle Y,[Z,X]\rangle+\langle Z,[X,Y]\rangle.
+\end{align*}
+对一形式 $\alpha$，$(\nabla_i\alpha)_j=\partial_i\alpha_j-\Gamma^k_{ij}\alpha_k$；一般张量每个上指标加一个 $\Gamma$ 项，每个下指标减一个 $\Gamma$ 项，重复指标求和。特别地
+\[
+\nabla g=0,\qquad(\operatorname{Hess}f)_{ij}=\partial_i\partial_jf-\Gamma^k_{ij}\partial_kf,
+\quad\Delta_gf=g^{ij}(\operatorname{Hess}f)_{ij}.
+\]
+\subsection{正交标架与Cartan结构方程}\index{正交标架与Cartan结构方程|hyperpage}
+取局部正交标架 $e_i$ 及对偶标架 $\theta^i$，令 $\nabla e_j=\omega^i{}_je_i$，则 $\omega^i{}_j=-\omega^j{}_i$，
+\[
+\mathrm d\theta^i+\omega^i{}_j\wedge\theta^j=0,\qquad
+\Omega^i{}_j=\mathrm d\omega^i{}_j+\omega^i{}_k\wedge\omega^k{}_j,
+\]
+其中 $\Omega^i{}_j(X,Y)=\langle R(X,Y)e_j,e_i\rangle$。第二 Bianchi 恒等式为 $\mathrm d\Omega+\omega\wedge\Omega-\Omega\wedge\omega=0$。
+\section{Riemann曲率与测地变分补充}
+\subsection{曲率分量、Ricci与Einstein张量}\index{曲率分量、Ricci与Einstein张量|hyperpage}
+沿用本章 $R$ 的约定，写 $R(\partial_i,\partial_j)\partial_k=R^\ell{}_{kij}\partial_\ell$，则
+\[
+R^\ell{}_{kij}=\partial_i\Gamma^\ell_{jk}-\partial_j\Gamma^\ell_{ik}
++\Gamma^\ell_{im}\Gamma^m_{jk}-\Gamma^\ell_{jm}\Gamma^m_{ik}.
+\]
+\[
+\operatorname{Ric}(X,Y)=\sum_a\langle R(e_a,X)Y,e_a\rangle,\quad
+\operatorname{Scal}=\sum_a\operatorname{Ric}(e_a,e_a),\quad
+G=\operatorname{Ric}-\tfrac12\operatorname{Scal}\,g.
+\]
+缩约 Bianchi 恒等式给出 $\operatorname{div}G=0$。常截面曲率 $K$ 的空间满足
+\[
+R(X,Y)Z=K(\langle Y,Z\rangle X-\langle X,Z\rangle Y),\quad
+\operatorname{Ric}=(n-1)Kg,\quad\operatorname{Scal}=n(n-1)K.
+\]
+\subsection{指数映射、法坐标与完备性}\index{指数映射、法坐标与完备性|hyperpage}
+$\exp_p(v)=\gamma_v(1)$，其中 $\gamma_v(0)=p,\dot\gamma_v(0)=v$。法坐标原点满足 $g_{ij}(p)=\delta_{ij}$、$\Gamma^k_{ij}(p)=0$，体积密度有展开
+\[
+\sqrt{\det g(x)}=1-\tfrac16\operatorname{Ric}_{ij}(p)x^ix^j+O(|x|^3).
+\]
+径向距离在割迹外满足 $|\nabla r|=1$；指数映射全局可能不单射。连通 Riemann 流形上 Hopf--Rinow 定理给出：度量完备等价于测地完备，且任意两点可由极小测地线连接，闭有界集紧。
+\subsection{第一变分、Jacobi场与指标型}\index{第一变分、Jacobi场与指标型|hyperpage}
+对曲线能量 $E(\gamma)=\tfrac12\int_a^b|\dot\gamma|^2\,\mathrm dt$，变分场 $V$ 给出
+\[
+\delta E=\langle V,\dot\gamma\rangle\big|_a^b-\int_a^b\langle V,\nabla_t\dot\gamma\rangle\,\mathrm dt.
+\]
+测地线变分的 Jacobi 场满足 $\nabla_t^2J+R(J,\dot\gamma)\dot\gamma=0$。固定端点的测地线二阶变分为
+\[
+I(V,V)=\int_a^b\bigl(|\nabla_tV|^2-\langle R(V,\dot\gamma)\dot\gamma,V\rangle\bigr)\,\mathrm dt.
+\]
+存在非零 Jacobi 场在两端为零时称共轭点；过首个共轭点后测地线失去局部极小性。常正曲率空间中垂直 Jacobi 分量满足 $J''+KJ=0$。
+\subsection{比较定理与Bochner恒等式}\index{比较定理与Bochner恒等式|hyperpage}
+若完备 $n$ 维流形（$n\ge2$）满足 $\operatorname{Ric}\ge(n-1)kg$、$k>0$，则 Myers 定理给出 $\operatorname{diam}M\le\pi/\sqrt k$，且基本群有限。若截面曲率非正且流形完备、单连通，则 $\exp_p:T_pM\to M$ 为全局微分同胚（Cartan--Hadamard）。
+\[
+\tfrac12\Delta_g|\nabla f|^2=|\operatorname{Hess}f|^2+
+\langle\nabla f,\nabla\Delta_gf\rangle+\operatorname{Ric}(\nabla f,\nabla f).
+\]
+对闭流形积分时 $\int\Delta_g\phi=0$；若 $\operatorname{Ric}\ge0$，可用该恒等式限制调和函数与调和一形式。
+\section{微分形式与几何算子补充}
+\subsection{外微分、拉回与Lie导数}\index{外微分、拉回与Lie导数|hyperpage}
+在光滑流形上 $\mathrm d^2=0$，$\mathrm d(\alpha\wedge\beta)=\mathrm d\alpha\wedge\beta+(-1)^k\alpha\wedge\mathrm d\beta$（$\alpha$ 为 $k$ 形式），且 $F^*\mathrm d=\mathrm dF^*$。Cartan 公式为
+\[
+\mathcal L_X\alpha=\mathrm d(\iota_X\alpha)+\iota_X\mathrm d\alpha,\qquad
+\mathcal L_Xg(Y,Z)=\langle\nabla_YX,Z\rangle+\langle Y,\nabla_ZX\rangle.
+\]
+$X$ 为 Killing 场当且仅当 $\mathcal L_Xg=0$；沿测地线 $\langle X,\dot\gamma\rangle$ 守恒。
+\subsection{Hodge星、余微分与Hodge分解}\index{Hodge星、余微分与Hodge分解|hyperpage}
+定向 Riemann $n$ 维流形上，$\alpha\wedge*\beta=\langle\alpha,\beta\rangle\mathrm dV_g$，对 $k$ 形式有
+\[
+*^2=(-1)^{k(n-k)},\quad\delta=(-1)^{n(k+1)+1}*\mathrm d*,\quad
+\Delta_H=\mathrm d\delta+\delta\mathrm d.
+\]
+$\Delta_H$ 非负；在函数上等于 $-\Delta_g$。闭流形的光滑形式有正交分解
+\[
+\Omega^k(M)=\mathcal H^k\oplus\mathrm d\Omega^{k-1}(M)\oplus\delta\Omega^{k+1}(M),\qquad
+\dim\mathcal H^k=b_k.
+\]
+这里 $\mathcal H^k=\ker\Delta_H$，每个 de Rham 上同调类有唯一调和代表；有边界时须指定绝对或相对边界条件。
+\subsection{极小超曲面的二阶稳定性}\index{极小超曲面的二阶稳定性|hyperpage}
+对定向极小超曲面及紧支撑法向变分 $fn$，环境为 Riemann 流形时
+\[
+\delta^2\operatorname{Area}(f)=\int_M\left(|\nabla f|^2-(|S|^2+\operatorname{Ric}_{\rm amb}(n,n))f^2\right)\,\mathrm dA.
+\]
+若对全部此类 $f$ 非负，称稳定；相应 Jacobi 算子为 $J=\Delta_M+|S|^2+\operatorname{Ric}_{\rm amb}(n,n)$，二阶变分为 $-\int fJf$。边界变分改变时应保留相应边界项。
+
+\section{共形曲率、几何流与热谱补充}
+度量与曲率约定参见\cite{riemann}，Ricci 流参见\cite{topping}，热核系数参见\cite{heatkernels}。本节 $\Delta=\operatorname{div}\nabla$。
+\subsection{共形Laplacian与Yamabe变换}\index{共形Laplacian与Yamabe变换|hyperpage}
+在 $d\ge3$ 维，令 $\widetilde g=u^{4/(d-2)}g$、$u>0$ 光滑。标量曲率和体积元满足
+\[
+R_{\widetilde g}=u^{-(d+2)/(d-2)}
+\left(-\frac{4(d-1)}{d-2}\Delta_gu+R_gu\right),\qquad
+\mathrm dV_{\widetilde g}=u^{2d/(d-2)}\mathrm dV_g.
+\]
+括号中的算子称共形 Laplacian。将 $R_{\widetilde g}$ 设为常数得到 Yamabe 方程；二维需采用指数共形因子，不能直接令 $d=2$。
+\subsection{Ricci流的体积与标量曲率演化}\index{Ricci流的体积与标量曲率演化|hyperpage}
+对 $\partial_tg=-2\operatorname{Ric}(g)$，有
+\[
+\partial_t\mathrm dV_g=-R_g\,\mathrm dV_g,\qquad
+\partial_tR=\Delta R+2|\operatorname{Ric}|^2.
+\]
+闭流形上 $\frac{\mathrm d}{\mathrm dt}\operatorname{Vol}(M,g(t))=-\int R\,\mathrm dV$。这是未归一化 Ricci 流；若添加保持体积的归一化项，相应演化公式也须改变。
+\subsection{梯度Ricci孤立子恒等式}\index{梯度Ricci孤立子恒等式|hyperpage}
+连通 Riemann 流形上，梯度孤立子满足 $\operatorname{Ric}+\nabla^2f=\lambda g$，其中 $\lambda$ 为常数。取迹并利用缩并 Bianchi 恒等式可得
+\[
+R+\Delta f=d\lambda,\qquad
+R+|\nabla f|^2-2\lambda f=C.
+\]
+$\lambda>0,=0,<0$ 分别对应收缩、稳态和扩张约定。对 $f$ 添加常数会改变 $C$，不会改变孤立子方程。
+\subsection{闭流形热迹的前两项}\index{闭流形热迹的前两项|hyperpage}
+光滑闭 $d$ 维流形的标量 Laplace 算子满足，$t\downarrow0$ 时
+\[
+\operatorname{Tr}(e^{t\Delta})
+=(4\pi t)^{-d/2}
+\left(\operatorname{Vol}(M)+\frac t6\int_MR\,\mathrm dV+O(t^2)\right).
+\]
+体积与总标量曲率因此可由谱恢复。有边界时会出现半整数次项及边界条件贡献；不能把闭流形展开原样用于 Dirichlet 或 Neumann 边值谱。
+\clearpage
+\end{document}

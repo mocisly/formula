@@ -1,0 +1,393 @@
+\documentclass[../main.tex]{subfiles}
+\begin{document}
+本章主要参考\cite{falconer}。
+
+本章兼顾分形几何、测度维数与分形上的微分和谱分析。默认集合位于欧氏空间，$\log$ 为自然对数；测度基础见\hyperref[chap:measure-theory]{测度论}，能量和弱解见\hyperref[chap:calculus-of-variations]{变分法}。
+% References: https://rutar.org/teaching/fractal-geometry-and-dynamics/fgd-notes.pdf
+% https://personal.maths.manchester.ac.uk/jm/wiki/uploads/LMS/Fraser-notes.pdf
+% https://pi.math.cornell.edu/~ektuley/mono2c.html
+\section{覆盖、测度与维数}
+\subsection{Hausdorff测度与临界维数}\index{Hausdorff测度与临界维数|hyperpage}
+沿用实分析章的未归一化约定，对 $s>0$，
+\[
+\mathcal H_\delta^s(E)=\inf_{\substack{E\subset\bigcup_iU_i\\\operatorname{diam}U_i\le\delta}}\sum_i(\operatorname{diam}U_i)^s,
+\qquad\mathcal H^s(E)=\lim_{\delta\downarrow0}\mathcal H_\delta^s(E).
+\]
+取 $\mathcal H^0$ 为计数测度。Hausdorff 维数满足
+\[
+\dim_HE=\inf\{s\ge0:\mathcal H^s(E)=0\},\qquad
+s<\dim_HE\Rightarrow\mathcal H^s(E)=\infty.
+\]
+临界维数上的测度可能为零、有限正数或无穷；空集的维数另依约定取值，本章维数公式用于非空集。
+\subsection{盒维数、覆盖数与Minkowski邻域}\index{盒维数、覆盖数与Minkowski邻域|hyperpage}
+有界集 $E$ 以半径 $r$ 球的最小覆盖数记 $N_r(E)$，则
+\[
+\underline{\dim}_BE=\liminf_{r\downarrow0}\frac{\log N_r(E)}{-\log r},\qquad
+\overline{\dim}_BE=\limsup_{r\downarrow0}\frac{\log N_r(E)}{-\log r}.
+\]
+若两者相等称盒维数。对 $E_r=\{x:\operatorname{dist}(x,E)<r\}$，其邻域体积的相应上、下极限给
+\[
+\underline{\dim}_BE=d-\limsup_{r\downarrow0}\frac{\log|E_r|}{\log r},\quad
+\overline{\dim}_BE=d-\liminf_{r\downarrow0}\frac{\log|E_r|}{\log r}.
+\]
+若 $|E_r|/r^{d-s}\to M\in(0,\infty)$，称存在这一约定下的 $s$ 维 Minkowski 内容，且盒维数为 $s$。
+\subsection{Packing维数与可数稳定性}\index{Packing维数与可数稳定性|hyperpage}
+Packing 维数可由可数覆盖的修正上盒维数刻画：
+\[
+\dim_PE=\inf_{E\subset\bigcup_iE_i}\sup_i\overline{\dim}_BE_i,
+\qquad\dim_HE\le\dim_PE\le\overline{\dim}_BE.
+\]
+覆盖中的 $E_i$ 可取有界集。Hausdorff 与 Packing 维数对可数并满足 $\dim(\bigcup_iE_i)=\sup_i\dim E_i$；盒维数一般不具备这一性质，例如 $\mathbb Q\cap[0,1]$ 的 Hausdorff 维数为零、盒维数为一。
+\subsection{Assouad维数与映射的维数界}\index{Assouad维数与映射的维数界|hyperpage}
+\[
+\dim_AE=\inf\left\{s:\exists C>0,\ N_r(E\cap B(x,R))\le C(R/r)^s,
+\ \forall x\in E,\ 0<r<R\le\operatorname{diam}E\right\}.
+\]
+对非平凡有界集，$\overline{\dim}_BE\le\dim_AE\le d$。若 $T$ 为 $\alpha$-Hölder，$0<\alpha\le1$，则 $\dim_HT(E)\le\dim_HE/\alpha$；双 Lipschitz 映射保持 Hausdorff、盒、Packing 和 Assouad 维数。
+\section{测度维数、能量与Fourier方法}
+\subsection{质量分布原理与Frostman引理}\index{质量分布原理与Frostman引理|hyperpage}
+若非零有限 Borel 测度 $\mu$ 支撑于 $E$，且 $\mu(B(x,r))\le Cr^s$，则 $\dim_HE\ge s$。对非空紧集，
+\[
+\dim_HE=\sup\{s\ge0:\exists\mu\in\mathcal P(E),\ C>0,\ \mu(B(x,r))\le Cr^s\}.
+\]
+这是 Frostman 刻画；在临界指数 $s=\dim_HE$ 上，不保证存在相应测度。上界通常用显式覆盖，下界通常用质量分布或能量估计。
+\subsection{局部维数与精确维测度}\index{局部维数与精确维测度|hyperpage}
+\[
+\underline d_\mu(x)=\liminf_{r\downarrow0}\frac{\log\mu(B(x,r))}{\log r},\qquad
+\overline d_\mu(x)=\limsup_{r\downarrow0}\frac{\log\mu(B(x,r))}{\log r}.
+\]
+两者相等时记 $d_\mu(x)$。若 $d_\mu(x)=s$ 对 $\mu$-a.e. 点成立，称精确维；其满测度集合的 Hausdorff 维数下确界为 $s$。局部维数是关于所选测度的量，不必等于整个支撑的维数。
+\subsection{Riesz能量与容量下界}\index{Riesz能量与容量下界|hyperpage}
+对 $0<s<d$，
+\[
+I_s(\mu)=\iint|x-y|^{-s}\,\mathrm d\mu(x)\mathrm d\mu(y),\qquad
+\operatorname{Cap}_s(E)=\left(\inf_{\mu\in\mathcal P(E)}I_s(\mu)\right)^{-1}.
+\]
+$I_s(\mu)<\infty$ 蕴含 $\dim_H\operatorname{supp}\mu\ge s$；对紧集，$\dim_HE=\sup\{s:\operatorname{Cap}_s(E)>0\}$，在 $0<s<d$ 范围内取上确界并处理零维端点。容量随核的归一化改变常数。
+\subsection{Fourier能量与Fourier维数}\index{Fourier能量与Fourier维数|hyperpage}
+取角频率 $\widehat\mu(\xi)=\int e^{-ix\cdot\xi}\,\mathrm d\mu(x)$，则 $0<s<d$ 时
+\[
+I_s(\mu)=C_{d,s}\int_{\mathbb R^d}|\widehat\mu(\xi)|^2|\xi|^{s-d}\,\mathrm d\xi,
+\quad C_{d,s}=\frac{2^{d-s}\pi^{d/2}\Gamma((d-s)/2)}{(2\pi)^d\Gamma(s/2)}.
+\]
+按扩展非负积分解释。Fourier 维数为满足 $|\widehat\mu(\xi)|\le C(1+|\xi|)^{-s/2}$ 的概率测度所允许的 $s\in[0,d]$ 的上确界，且 $\dim_FE\le\dim_HE$。两维相等的集合称 Salem 集；不是所有自相似集合都具有正 Fourier 维数。
+\section{自相似构造与显式维数}
+\subsection{Hausdorff距离与迭代函数系统}\index{Hausdorff距离与迭代函数系统|hyperpage}
+非空紧集的 Hausdorff 距离为
+\[
+d_H(A,B)=\max\{\sup_{a\in A}\operatorname{dist}(a,B),\sup_{b\in B}\operatorname{dist}(b,A)\}.
+\]
+有限压缩族 $S_i$ 的 Hutchinson 算子 $\mathcal S(A)=\bigcup_iS_i(A)$ 满足 $d_H(\mathcal S(A),\mathcal S(B))\le r_{\max}d_H(A,B)$。因此在完备底空间的紧集空间上有唯一紧吸引子 $K=\bigcup_iS_i(K)$，迭代以几何速度收敛。
+\subsection{相似维数、开集条件与Moran公式}\index{相似维数、开集条件与Moran公式|hyperpage}
+有限相似映射的比率为 $0<r_i<1$，相似维数 $s$ 解 $\sum_ir_i^s=1$。若存在非空有界开集 $O$，使 $S_i(O)\subset O$ 且两两不交，则
+\[
+\dim_HK=\dim_BK=s,\qquad0<\mathcal H^s(K)<\infty.
+\]
+这称开集条件。更强的强分离条件要求 $S_i(K)$ 两两不交。没有分离条件时仍有 $\dim_HK\le\min(d,s)$，等式可能因重叠失效。
+\subsection{Cantor、Koch、垫片与地毯}\index{Cantor、Koch、垫片与地毯|hyperpage}
+\begin{gather*}
+\dim_HC=\frac{\log2}{\log3},\quad
+\dim_H(\text{Koch曲线})=\frac{\log4}{\log3},\\
+\dim_H(\text{Sierpi\'nski垫片})=\frac{\log3}{\log2},\quad
+\dim_H(\text{标准八块地毯})=\frac{\log8}{\log3}.
+\end{gather*}
+这些例子也具有相同盒维数。一般 $N$ 个等比率 $r$ 的分离相似构造给 $s=\log N/\log(1/r)$；Koch 雪花边界的长度无限，而围成的面积有限，边界维数不能当作区域维数。
+\subsection{自相似测度与Ahlfors正则性}\index{自相似测度与Ahlfors正则性|hyperpage}
+给定 $p_i>0,\sum_ip_i=1$，自相似测度由 $\mu=\sum_ip_i(S_i)_\#\mu$ 唯一确定。在强分离条件下它精确维，且
+\[
+\dim_H\mu=\frac{-\sum_ip_i\log p_i}{-\sum_ip_i\log r_i}.
+\]
+若 $p_i=r_i^s$ 并满足开集条件，则自然测度满足 $c r^s\le\mu(B(x,r))\le C r^s$（$x\in K,0<r\le\operatorname{diam}K$），称 $s$-Ahlfors 正则；从而各常用集合维数等于 $s$。
+\section{多重分形与热力学刻画}
+\subsection{配分和、Rényi维数与信息维数}\index{配分和、Rényi维数与信息维数|hyperpage}
+用尺度 $r$ 的网格取质量 $\mu_i(r)>0$，定义 $Z(q,r)=\sum_i\mu_i(r)^q$，在极限存在时
+\[
+\tau(q)=\lim_{r\downarrow0}\frac{\log Z(q,r)}{\log r},\qquad
+D_q=\frac{\tau(q)}{q-1}\quad(q\ne1),\qquad
+D_1=\lim_{r\downarrow0}\frac{-\sum_i\mu_i(r)\log\mu_i(r)}{-\log r}.
+\]
+负 $q$ 时仅对正质量网格求和且对小质量格敏感。$q=0$ 关联支撑的盒计数维数，$q=2$ 为相关维数；一般需检查极限存在性。
+\subsection{自相似谱与Legendre变换}\index{自相似谱与Legendre变换|hyperpage}
+强分离自相似测度的 $\tau(q)$ 由
+\[
+\sum_ip_i^qr_i^{-\tau(q)}=1
+\]
+确定。令 $w_i(q)=p_i^qr_i^{-\tau(q)}$，则
+\[
+\alpha(q)=\tau'(q)=\frac{\sum_iw_i(q)\log p_i}{\sum_iw_i(q)\log r_i},\qquad
+f(\alpha(q))=q\alpha(q)-\tau(q).
+\]
+$f(\alpha)=\dim_H\{x:d_\mu(x)=\alpha\}$。在这一分离模型及相应指数范围内，$f(\alpha)=\inf_q(q\alpha-\tau(q))$；一般测度的多重分形形式可能失效。
+\subsection{二项Cantor测度的显式谱}\index{二项Cantor测度的显式谱|hyperpage}
+三分 Cantor 构造赋概率 $p,1-p$，取 $0<p<1,p\ne1/2$。左分支频率为 $t$ 的点满足
+\[
+\alpha(t)=-\frac{t\log p+(1-t)\log(1-p)}{\log3},\qquad
+f(\alpha(t))=\frac{-t\log t-(1-t)\log(1-t)}{\log3}.
+\]
+约定 $0\log0=0$；另有 $\tau(q)=-\log(p^q+(1-p)^q)/\log3$。均匀情形 $p=1/2$ 退化为单一局部维数 $\log2/\log3$，不能把不同频率继续当作不同维数水平集。
+\subsection{图导向相似系统与压力}\index{图导向相似系统与压力|hyperpage}
+有限强连通有向图的每条边 $e:i\to j$ 对应相似比率 $r_e$。在图导向开集条件下，各顶点吸引子的维数由
+\[
+\rho(A(s))=1,\qquad A(s)_{ij}=\sum_{e:i\to j}r_e^s
+\]
+确定，$\rho$ 为谱半径。更一般的有限型符号系统可用压力
+\[
+P(\phi)=\lim_n\frac1n\log\sum_{|w|=n}\exp\bigl(\sup_{[w]}S_n\phi\bigr)
+\]
+研究；尺度势 $-s\log|T'|$ 的压力零点在适当共形、扩张条件下给维数。
+\section{自仿射、投影与函数图形}
+\subsection{奇异值函数与亲和维数}\index{奇异值函数与亲和维数|hyperpage}
+对可逆压缩矩阵 $A$ 的奇异值 $\alpha_1\ge\cdots\ge\alpha_d>0$，定义
+\[
+\varphi^s(A)=\alpha_1\cdots\alpha_k\alpha_{k+1}^{s-k}\quad(k\le s\le k+1\le d),
+\qquad\varphi^s(A)=|\det A|^{s/d}\quad(s\ge d).
+\]
+对有限仿射 IFS，$P(s)=\lim_n n^{-1}\log\sum_{|w|=n}\varphi^s(A_w)$，其零点为亲和维数 $s_A$，且 $\dim_HK\le\min(d,s_A)$。若所有 $\|A_i\|<1/2$，则对几乎所有平移参数有等号（Falconer--Solomyak 定理），不能据此断言每组平移都达到等号。
+\subsection{Bedford--McMullen地毯}\index{Bedford-McMullen地毯|hyperpage}
+把单位正方形分为 $m\times n$ 网格，$2\le m<n$，每列保留 $N_i$ 块，总数 $N=\sum_iN_i$，非空列数 $N_c$。标准对角仿射构造满足
+\begin{align*}
+\dim_HK&=\frac{\log\sum_iN_i^{\log m/\log n}}{\log m},\\
+\dim_BK&=\frac{\log N_c}{\log m}+\frac{\log(N/N_c)}{\log n},\\
+\dim_AK&=\frac{\log N_c}{\log m}+\frac{\log\max_iN_i}{\log n}.
+\end{align*}
+行列缩放约定必须一致。非空列数相同但各列质量分配不同，Hausdorff 与盒维数就可能不同。
+\subsection{乘积与几乎处处投影}\index{乘积与几乎处处投影|hyperpage}
+对非空紧欧氏集，
+\[
+\dim_HE+\dim_HF\le\dim_H(E\times F)\le\dim_HE+\dim_PF,
+\]
+而上盒维数的乘积上界为两因子上盒维数之和。对 Borel 集 $E\subset\mathbb R^d$，几乎每个 $m$ 维正交投影 $\pi_V$ 满足
+\[
+\dim_H\pi_V(E)=\min(m,\dim_HE).
+\]
+若 $\dim_HE>m$，则几乎每个投影有正 $m$ 维 Lebesgue 测度；结论关于 Grassmann 空间的不变测度，不适用于每个指定方向。
+\subsection{Hölder图形与分数Brown运动}\index{Hölder图形与分数Brown运动|hyperpage}
+若 $f:[0,1]^d\to\mathbb R$ 为 $\alpha$-Hölder，$0<\alpha\le1$，其图形满足
+\[
+d\le\dim_H\operatorname{graph}f\le\overline{\dim}_B\operatorname{graph}f
+\le\min(d/\alpha,d+1-\alpha).
+\]
+一维参数分数 Brown 运动的协方差为 $E[B_H(s)B_H(t)]=\frac12(s^{2H}+t^{2H}-|t-s|^{2H})$，$0<H<1$；其图形 Hausdorff 维数 a.s. 为 $2-H$。普通 Brown 运动对应 $H=1/2$，图形维数为 $3/2$。
+\section{垫片上的能量、微分与谱}
+\subsection{图逼近与重整化能量}\index{图逼近与重整化能量|hyperpage}
+标准 Sierpi\'nski 垫片的相似映射与图逼近顶点为
+\[
+F_i(x)=\frac{x+q_i}{2},\qquad V_0=\{q_0,q_1,q_2\},\qquad
+V_m=\bigcup_{|w|=m}F_w(V_0).
+\]
+对连续 $u$，
+\[
+\mathcal E_m(u)=\left(\frac53\right)^m\sum_{\{x,y\}\in E_m}(u(x)-u(y))^2,
+\qquad\mathcal E(u)=\lim_m\mathcal E_m(u).
+\]
+每条无向边仅计一次。有限能量函数构成能量定义域，$\mathcal E_m$ 随 $m$ 单调不减；$5/3$ 为垫片的特定重整化系数，不是所有分形的通用常数。
+\subsection{调和延拓与电阻度量}\index{调和延拓与电阻度量|hyperpage}
+三角胞腔顶点值为 $a,b,c$，最小能量调和延拓在边 $ab$ 的中点取 $(2a+2b+c)/5$，其他中点循环置换。有效电阻为
+\[
+R(x,y)=\sup_{\mathcal E(u)>0}\frac{|u(x)-u(y)|^2}{\mathcal E(u)},\qquad
+|u(x)-u(y)|^2\le R(x,y)\mathcal E(u).
+\]
+胞腔电阻尺度由 $(3/5)^m$ 控制。调和函数是固定边界能量的唯一极小点；这使用垫片的有限边界结构，而不是欧氏偏导定义。
+\subsection{Laplacian、法导数与Green恒等式}\index{Laplacian、法导数与Green恒等式|hyperpage}
+自然概率测度在每个 $m$ 级胞腔上的质量为 $3^{-m}$。对适当 Laplacian 定义域中的函数，在非边界顶点有
+\[
+\Delta u(x)=\frac32\lim_{m\to\infty}5^m\sum_{y\sim_mx}(u(y)-u(x)).
+\]
+边界法导数为 $\partial_nu(q_i)=\lim_m(5/3)^m[2u(q_i)-u(F_i^mq_j)-u(F_i^mq_k)]$，其中 $\{i,j,k\}=\{0,1,2\}$。弱 Green 公式为
+\[
+\mathcal E(u,v)=-\int v\Delta u\,\mathrm d\mu+\sum_{i=0}^2v(q_i)\partial_nu(q_i).
+\]
+极限存在及函数定义域是公式的一部分；连续性本身不足以定义这些导数。
+\subsection{行走维数、谱维数与热核}\index{行走维数、谱维数与热核|hyperpage}
+标准垫片的 Hausdorff、行走与谱维数为
+\[
+d_f=\frac{\log3}{\log2},\qquad d_w=\frac{\log5}{\log2},\qquad d_s=\frac{2d_f}{d_w}=\frac{2\log3}{\log5}.
+\]
+其保守扩散的热核在小时间满足双侧次 Gaussian 界
+\[
+c_1t^{-d_f/d_w}e^{-c_2(d(x,y)^{d_w}/t)^{1/(d_w-1)}}
+\le p_t(x,y)\le
+c_3t^{-d_f/d_w}e^{-c_4(d(x,y)^{d_w}/t)^{1/(d_w-1)}}.
+\]
+典型位移尺度为 $t^{1/d_w}$；Laplacian 的特征值计数 $N(\lambda)\asymp\lambda^{d_s/2}$，热迹 $\operatorname{Tr}e^{t\Delta}\asymp t^{-d_s/2}$。精细渐近可有对数周期振荡，不能把可比估计改写成固定常数的渐近等号。
+\section{随机、复动力与尺度估计}
+\subsection{Mandelbrot分形渗流}\index{Mandelbrot分形渗流|hyperpage}
+在 $[0,1]^d$ 每步等分成 $m^d$ 块，每块独立以概率 $p$ 保留。第 $n$ 代块数满足 $EN_n=(pm^d)^n$。若 $pm^d>1$，则在非灭绝事件上 a.s.
+\[
+\dim_HK=\dim_BK=d+\frac{\log p}{\log m}.
+\]
+非灭绝具有正概率；次临界和临界非退化情形 a.s. 灭绝。连通性阈值与存活阈值不同，维数公式不保证集合连通。
+\subsection{Julia集、Mandelbrot集与逃逸势}\index{Julia集、Mandelbrot集与逃逸势|hyperpage}
+对次数 $d\ge2$ 多项式 $P$，填充 Julia 集 $K_P=\{z:\{P^n(z)\}\text{ 有界}\}$，Julia 集 $J_P=\partial K_P$。逃逸率为
+\[
+G_P(z)=\lim_{n\to\infty}d^{-n}\log^+|P^n(z)|,\qquad
+G_P(P(z))=dG_P(z).
+\]
+对 $P_c(z)=z^2+c$，Mandelbrot 集为 $\{c:0\in K_{P_c}\}$。轨道超过有效逃逸半径 $\max(2,|c|)$ 后必逃逸；有限次迭代未逃逸只能给数值近似，不能证明参数属于该集合。
+\subsection{分形弦、几何zeta与复维数}\index{分形弦、几何zeta与复维数|hyperpage}
+有界开子集的连通分支长度 $\ell_j$ 给几何 zeta $\zeta_{\mathcal L}(s)=\sum_j\ell_j^s$，在收敛半平面定义。三分 Cantor 弦的长度 $3^{-n}$ 重数为 $2^{n-1}$，故
+\[
+\zeta_{\mathcal L}(s)=\frac1{3^s-2},\quad\operatorname{Re}s>\frac{\log2}{\log3},\qquad
+s_k=\frac{\log2+2\pi ik}{\log3}\quad(k\in\mathbb Z).
+\]
+亚纯延拓的极点称此模型的复维数。非实极点对应尺度振荡，Cantor 弦的临界 Minkowski 内容没有通常的有限正极限。
+\subsection{经验盒斜率、相关和与有限尺度限制}\index{经验盒斜率、相关和与有限尺度限制|hyperpage}
+样本 $x_1,\ldots,x_N$ 的相关和为
+\[
+C_N(r)=\frac2{N(N-1)}\sum_{i<j}\bm1_{\{\|x_i-x_j\|<r\}},\qquad
+\widehat D=\frac{\log N_{r_2}-\log N_{r_1}}{\log(1/r_2)-\log(1/r_1)}.
+\]
+若 $C(r)\asymp r^{D_2}$，可拟合 $\log C_N(r)$ 对 $\log r$ 的斜率估计相关维数。有限样本、噪声、相关数据与尺度区间都会影响结果；任何有限点云的真正 Hausdorff 维数都是零，回归斜率应称有限尺度估计。
+% References: https://rutar.org/papers/gl_assouad_spectrum.pdf
+% https://pi.math.cornell.edu/~Bengal/specdec.html
+% https://arxiv.org/abs/1207.3615
+% https://www.stat.berkeley.edu/~aldous/205B/pitman_yor_guide_bm.pdf
+\section{测度维数、切片与尺度谱}
+\subsection{测度的上、下维数}\index{测度的上、下维数|hyperpage}
+对欧氏 Borel 概率，定义下 Hausdorff 测度维数为 $\inf\{\dim_HE:\mu(E)>0\}$，上维数为 $\inf\{\dim_HE:\mu(E)=1\}$。局部维数满足
+\begin{gather*}
+\underline{\dim}_H\mu=\operatorname*{ess\,inf}_\mu\underline d_\mu(x),\qquad
+\overline{\dim}_H\mu=\operatorname*{ess\,sup}_\mu\underline d_\mu(x),\\
+\underline{\dim}_P\mu=\operatorname*{ess\,inf}_\mu\overline d_\mu(x),\qquad
+\overline{\dim}_P\mu=\operatorname*{ess\,sup}_\mu\overline d_\mu(x).
+\end{gather*}
+Packing 测度维数用相同的正质量或全质量约定定义。精确维测度的这些量相等；没有精确维性时必须说明采用哪一种测度维数。
+\subsection{Hausdorff内容与定量Frostman}\index{Hausdorff内容与定量Frostman|hyperpage}
+去掉直径上限定义 $\mathcal H_\infty^s(E)=\inf_{E\subset\cup U_i}\sum_i(\operatorname{diam}U_i)^s$。对紧集 $E\subset\mathbb R^d$、$0<s\le d$，
+\[
+\mathcal H_\infty^s(E)\asymp
+\sup\{\nu(E):\operatorname{supp}\nu\subset E,\ \nu(B(x,r))\le r^s\}.
+\]
+常数依赖维数及指数，$\nu$ 为有限正测度。内容描述不加微观截断的覆盖成本，不等同于 $\mathcal H^s$ 的数值；该版本使质量分布原理具有定量形式。
+\subsection{切片的Hausdorff余面积上界}\index{切片的Hausdorff余面积上界|hyperpage}
+对 Borel 集 $E\subset\mathbb R^d$、到 $m$ 维平面的正交投影 $\pi$ 及 $m<s\le d$，有覆盖意义的余面积估计
+\[
+\int_{\mathbb R^m}\mathcal H^{s-m}(E\cap\pi^{-1}(a))\,\mathrm da
+\le C_{d,s,m}\mathcal H^s(E).
+\]
+在右端有限时，几乎所有切片具有有限 $\mathcal H^{s-m}$ 测度，因而维数至多 $s-m$。这不是对每个特定切片的结论；投影维数定理与切片上界的量词不同。
+\subsection{Assouad谱的固定尺度比}\index{Assouad谱的固定尺度比|hyperpage}
+对非空紧集 $E$、$0<\theta<1$，定义
+\[
+\dim_A^\theta E=\inf\left\{s:\exists C>0,
+N_{R^{1/\theta}}(E\cap B(x,R))\le C(R/R^{1/\theta})^s,
+\ \forall x\in E,\ 0<R<1\right\}.
+\]
+有 $\overline{\dim}_BE\le\dim_A^\theta E\le\dim_AE$，且 $\lim_{\theta\downarrow0}\dim_A^\theta E=\overline{\dim}_BE$。它只比较指定关系的两尺度；一般 $\theta\uparrow1$ 的准 Assouad 极限不必等于完全 Assouad 维数。
+\section{变尺度构造、重叠与管体积}
+\subsection{均匀分离Moran区间构造}\index{均匀分离Moran区间构造|hyperpage}
+每个第 $n-1$ 级区间保留 $N_n\ge2$ 个相同比率 $r_n$ 的子区间，假设比率一致远离零和一，并有相对父区间长度的统一正间隙。则
+\[
+\dim_HE=\liminf_{n\to\infty}\frac{\sum_{j=1}^n\log N_j}{-\sum_{j=1}^n\log r_j},\qquad
+\overline{\dim}_BE=\limsup_{n\to\infty}\frac{\sum_{j=1}^n\log N_j}{-\sum_{j=1}^n\log r_j}.
+\]
+若比率急剧趋零或分离退化，需重新检查上下盒维数公式；不能把任意非齐次构造都按同一平均对数比处理。
+\subsection{Bernoulli卷积与重叠例外}\index{Bernoulli卷积与重叠例外|hyperpage}
+令 $\xi_n$ 独立等概率取 $0,1$，$\mu_\lambda=\mathcal L(\sum_{n\ge1}\xi_n\lambda^n)$、$0<\lambda<1$。则
+\[
+\widehat\mu_\lambda(t)=\prod_{n\ge1}\frac{1+e^{-it\lambda^n}}2.
+\]
+$\lambda<1/2$ 时为分离 Cantor 测度，维数 $\log2/\log(1/\lambda)$；$\lambda=1/2$ 时为 $[0,1]$ 上均匀分布。$\lambda\in(1/2,1)$ 的几乎所有参数给绝对连续测度，但倒 Pisot 参数可产生奇异测度；几乎处处结论不等于每个参数。
+\subsection{Gibbs柱集与熵维数}\index{Gibbs柱集与熵维数|hyperpage}
+混合有限型符号系统及 Hölder 势 $\phi$ 的 Gibbs 概率满足
+\[
+C^{-1}\le\frac{\mu_\phi([w])}{\exp(S_n\phi(x)-nP(\phi))}\le C
+\quad(x\in[w]),\qquad
+h_{\mu_\phi}=P(\phi)-\int\phi\,\mathrm d\mu_\phi.
+\]
+在共同压缩比 $r$、强分离的相似编码下，推前测度精确维，其维数为 $h_{\mu_\phi}/\log(1/r)$。无分离的重叠会丢失编码信息，不能继续无条件使用熵除以尺度的等式。
+\subsection{三分Cantor集的精确邻域体积}\index{三分Cantor集的精确邻域体积|hyperpage}
+对 $C\subset[0,1]$，记 $V(\varepsilon)=|\{x\in\mathbb R:d(x,C)<\varepsilon\}|$。令 $n=\lfloor\log_3(1/(2\varepsilon))\rfloor$、$0<\varepsilon<1/2$，则
+\[
+V(\varepsilon)=\left(\frac23\right)^n+2^{n+1}\varepsilon.
+\]
+由各级空隙扣除长度可得该式。设 $D=\log2/\log3$，则 $V(\varepsilon)/\varepsilon^{1-D}$ 有对数周期振荡，说明通常 Minkowski 内容极限不存在；上下有限正界仍与盒维数 $D$ 一致。
+\section{垫片谱的递推、核与电阻工具}
+\subsection{Dirichlet谱抽取与例外出生值}\index{Dirichlet谱抽取与例外出生值|hyperpage}
+标准垫片非归一化图算子 $-\Delta_m$ 的非例外特征延拓满足
+\[
+\lambda_{m-1}=\lambda_m(5-\lambda_m),\qquad
+\lambda_m=\frac{5\pm\sqrt{25-4\lambda_{m-1}}}{2}.
+\]
+连续 Laplacian 按本章归一化有 $\lambda=\frac32\lim_m5^m\lambda_m$。出生值 $2,5,6$ 需单独处理，重数由出生层决定；有效谱序列最终取负分支，不能把所有任意符号序列都当作有限连续特征值。
+\subsection{Green与热核的谱级数}\index{Green与热核的谱级数|hyperpage}
+取 Dirichlet 特征基 $-\Delta\varphi_j=\lambda_j\varphi_j$、$\lambda_j>0$，在自然概率测度的 $L^2$ 中正交归一。则
+\[
+(-\Delta)^{-1}f=\sum_j\lambda_j^{-1}\langle f,\varphi_j\rangle\varphi_j,
+\qquad p_D(t,x,y)=\sum_je^{-t\lambda_j}\varphi_j(x)\varphi_j(y).
+\]
+Green 核相应为 $\sum_j\lambda_j^{-1}\varphi_j(x)\varphi_j(y)$，按适当核或算子意义使用。Neumann 问题含常数零模，求逆前必须投影到零均值子空间。
+\subsection{谱zeta与热迹Mellin变换}\index{谱zeta与热迹Mellin变换|hyperpage}
+Dirichlet 谱满足 $N(\Lambda)\asymp\Lambda^{d_s/2}$，故
+\[
+\zeta_\Delta(z)=\sum_j\lambda_j^{-z}\quad(\operatorname{Re}z>d_s/2),\qquad
+\Gamma(z)\zeta_\Delta(z)=\int_0^\infty t^{z-1}\operatorname{Tr}(e^{t\Delta})\,\mathrm dt.
+\]
+这里 $d_s=2\log3/\log5$。热迹的对数周期结构可能对应复平面奇性，但亚纯延拓需要进一步定理，不能由收敛半平面公式单独推出。
+\subsection{有限图电阻与广义逆}\index{有限图电阻与广义逆|hyperpage}
+连通电导图的组合 Laplace 矩阵为 $L$，能量按每条无向边计一次，则
+\[
+R(i,j)=(e_i-e_j)^{\mathsf T}L^\dagger(e_i-e_j)
+=\sum_{\lambda_k>0}\frac{|\phi_k(i)-\phi_k(j)|^2}{\lambda_k}.
+\]
+这里图特征向量按普通欧氏内积归一，$L^\dagger$ 为常数核正交补上的逆。垫片图电阻需乘 $(3/5)^m$ 与本章重整化能量对应；固定边界的 Green 核与自由边界有效电阻须分清。
+\section{随机集合、极性与局部时}
+\subsection{Brown运动的命中与Newton容量}\index{Brown运动的命中与Newton容量|hyperpage}
+对 $d\ge3$、紧集 $K\subset\mathbb R^d$ 及 $x\notin K$，Newton 容量由核 $|x-y|^{2-d}$ 的最小概率能量定义。有
+\[
+P_x(\exists t>0:B_t\in K)>0\iff\operatorname{Cap}_{d-2}(K)>0.
+\]
+因此 $\dim_HK>d-2$ 保证非极性，$\dim_HK<d-2$ 保证极性；临界维数本身不决定答案。此处非极性意为有正命中概率，不能把极性与非极性对调。
+\subsection{Brown轨迹与图形维数}\index{Brown轨迹与图形维数|hyperpage}
+对 $d$ 维标准 Brown 运动，在非退化有限时间区间上 a.s. 有
+\[
+\dim_H B([0,1])=\min(d,2),\qquad
+\dim_H\{(t,B_t):0\le t\le1\}=\min(2,1+d/2).
+\]
+二维轨迹维数为二却有零平面面积；维数等于环境维数不意味着正 Lebesgue 测度。随机过程构造与增量公式见\hyperref[chap:stochastic-processes]{随机过程}。
+\subsection{局部时、占据密度与零点集}\index{局部时、占据密度与零点集|hyperpage}
+一维标准 Brown 运动有局部时 $L_t^a$，满足
+\[
+\int_0^tf(B_s)\,\mathrm ds=\int_{\mathbb R}f(a)L_t^a\,\mathrm da,
+\]
+\[
+|B_t-a|=|B_0-a|+\int_0^t\operatorname{sgn}(B_s-a)\,\mathrm dB_s+L_t^a.
+\]
+这里取对称局部时归一化。由零出发的零点集在 $[0,1]$ 上 a.s. 维数为 $1/2$、Lebesgue 测度为零；$\mathrm dL_t^0$ 支持于零点集，给出其自然随机测度。
+\subsection{随机圆周覆盖的临界幂}\index{随机圆周覆盖的临界幂|hyperpage}
+在单位圆周上，以独立均匀 $\omega_n$ 为左端点放置长度 $\ell_n=a n^{-\alpha}$ 的区间，$a,\alpha>0$。令 $E=\limsup_n[\omega_n,\omega_n+\ell_n]$（模一），则
+\[
+\dim_HE=\min(1,1/\alpha)\quad\text{a.s.}
+\]
+$\alpha\le1$ 时由独立性与 Fubini 得到 $|E|=1$ a.s.；$\alpha>1$ 时 $|E|=0$ 但仍有维数 $1/\alpha$。满测度并不等于每个点都被覆盖无穷多次，后者是更强的随机覆盖问题。
+
+\section{逼近上极限、质量转移与距离奇性补充}
+维数与共形系统参见\cite{falconer}，上极限集合的质量转移参见\cite{mtp}。
+\subsection{Jarník--Besicovitch有理逼近维数}\index{Jarník-Besicovitch有理逼近维数|hyperpage}
+令 $W_\tau$ 为 $[0,1]$ 中满足 $|x-p/q|<q^{-\tau}$ 对无穷多互素整数 $p,q$（$q\ge1$）成立的点。对 $\tau\ge2$，
+\[
+\dim_HW_\tau=\frac2\tau.
+\]
+$\tau=2$ 时满 Lebesgue 测度，$\tau>2$ 时零测但仍有正维数。若把误差定义为 $q^{-1-\tau}$，维数公式相应变为 $2/(1+\tau)$，两种指数约定须分清。
+\subsection{球上极限的质量转移原理}\index{球上极限的质量转移原理|hyperpage}
+设 $B_i=B(x_i,r_i)\subset\mathbb R^d$、$r_i\to0$，$0<s<d$，记 $B_i^{(s)}=B(x_i,r_i^{s/d})$。若对每个球 $B$，
+\[
+|B\cap\limsup_iB_i^{(s)}|=|B|,
+\]
+则 $\mathcal H^s(B\cap\limsup_iB_i)=\mathcal H^s(B)=\infty$。这里先放大较小尺度的球，再将满 Lebesgue 测度结论转为原球的 Hausdorff 测度结论。
+\subsection{到分形集合距离的可积性阈值}\index{到分形集合距离的可积性阈值|hyperpage}
+紧集 $E\subset\mathbb R^d$ 满足 $|E_r|\asymp r^{d-D}$（小 $r>0$），其中 $0\le D<d$、$E_r=\{x:d(x,E)<r\}$。对 $q>0$ 及小 $\varepsilon$，
+\[
+\int_{E_\varepsilon}d(x,E)^{-q}\,\mathrm dx<\infty
+\iff q<d-D.
+\]
+可由层蛋糕积分比较 $\int_0^\varepsilon r^{d-D-q-1}\,\mathrm dr$ 得出；临界指数具有对数发散。仅知道 Hausdorff 维数而无邻域体积的双侧控制，不足以给出该精确阈值。
+\subsection{共形压缩系统的Bowen压力根}\index{共形压缩系统的Bowen压力根|hyperpage}
+有限个单射 $C^{1+\alpha}$ 共形压缩在不变紧集邻域定义，假设有统一压缩、非零导数、有界畸变和强分离。对复合字 $w$ 定义
+\[
+P(s)=\lim_{n\to\infty}\frac1n\log
+\sum_{|w|=n}\sup_{x\in K}\|Df_w(x)\|^s.
+\]
+吸引子 Hausdorff 维数为唯一非负根 $P(s)=0$。相似映射下化为 $\sum_i r_i^s=1$；非共形系统必须考虑奇异值等额外结构。
+\clearpage
+\end{document}

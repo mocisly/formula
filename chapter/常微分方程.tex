@@ -1,0 +1,325 @@
+\documentclass[../main.tex]{subfiles}
+\begin{document}
+本章主要参考\cite{teschl,dlmf}。
+
+\section{一阶微分方程}
+\subsection{可分离变量的微分方程}\index{可分离变量的微分方程|hyperpage}
+\[
+y'=f(x)g(y)\quad\Longrightarrow\quad
+\int\frac{\mathrm dy}{g(y)}=\int f(x)\,\mathrm dx+C\quad(g(y)\ne0).
+\]
+分离时除去的 $g(y_0)=0$ 还给出常值解 $y\equiv y_0$，应另行保留。
+\subsection{齐次微分方程}\index{齐次微分方程|hyperpage}
+\[
+y'=F(y/x),\quad y=vx\quad\Longrightarrow\quad
+x\frac{\mathrm dv}{\mathrm dx}=F(v)-v,\qquad
+\int\frac{\mathrm dv}{F(v)-v}=\ln|x|+C.
+\]
+取 $x\ne0$ 且 $F(v)-v\ne0$；$F(v_0)=v_0$ 对应直线解 $y=v_0x$。
+\subsection{一阶线性微分方程}\index{一阶线性微分方程|hyperpage}
+对连续的 $p,q$，
+\[
+y'+p(x)y=q(x),\qquad
+y=e^{-P(x)}\left[C+\int e^{P(x)}q(x)\,\mathrm dx\right],\quad P'=p.
+\]
+积分因子为 $\mu(x)=e^{P(x)}$，满足 $(\mu y)'=\mu q$。
+\subsection{Bernoulli方程}\index{Bernoulli方程|hyperpage}
+\[
+y'+p(x)y=q(x)y^\alpha,\quad\alpha\ne0,1,\qquad z=y^{1-\alpha}
+\Longrightarrow z'+(1-\alpha)pz=(1-\alpha)q.
+\]
+在实数幂有定义且 $y\ne0$ 的区间内变换；若原方程允许 $y=0$，需单独检查零解。
+\subsection{全微分方程}\index{全微分方程|hyperpage}
+对单连通区域内 $C^1$ 函数，
+\[
+M\,\mathrm dx+N\,\mathrm dy=0,\quad M_y=N_x
+\Longrightarrow \mathrm d\Phi=M\,\mathrm dx+N\,\mathrm dy,\quad \Phi(x,y)=C.
+\]
+若 $(M_y-N_x)/N=h(x)$，则积分因子 $\mu=e^{\int h(x)\,\mathrm dx}$；
+若 $(N_x-M_y)/M=k(y)$，则 $\mu=e^{\int k(y)\,\mathrm dy}$（相应分母非零）。
+\section{高阶微分方程}
+\subsection{解的性质与结构}\index{解的性质与结构|hyperpage}
+对连续系数的线性方程 $L[y]=g$，若 $y_p$ 为一个特解，$y_1,\ldots,y_n$ 为齐次方程的基本解组，则
+\[
+y=y_p+\sum_{i=1}^nC_iy_i,\qquad
+W(y_1,\ldots,y_n)=\det\bigl(y_j^{(i-1)}\bigr)_{i,j=1}^n\ne0.
+\]
+首项系数非零的 $n$ 阶线性方程给定同一点的 $n$ 个初值时有唯一解。
+一般方程 $y'=f(x,y)$ 在 $f$ 连续且对 $y$ 局部 Lipschitz 时，初值问题局部存在唯一解。
+\subsection{不含x型二阶可降阶微分方程的求解步骤}\index{不含x型二阶可降阶微分方程的求解步骤|hyperpage}
+\[
+y''=F(y,y'),\quad p(y)=y',\quad y''=p\frac{\mathrm dp}{\mathrm dy}
+\Longrightarrow p\frac{\mathrm dp}{\mathrm dy}=F(y,p).
+\]
+先解 $p(y)$，再由 $\int\mathrm dy/p(y)=x+C$ 求解；变换在 $y$ 局部单调的区间使用，并检查 $F(c,0)=0$ 对应的常值解。
+\subsection{不含y型二阶可降阶微分方程的求解步骤}\index{不含y型二阶可降阶微分方程的求解步骤|hyperpage}
+\[
+y''=F(x,y'),\quad p(x)=y'\Longrightarrow p'=F(x,p),\qquad
+y=\int p(x)\,\mathrm dx+C.
+\]
+先解一阶方程得到 $p$，再积分；通解通常含两个任意常数。
+\subsection{常系数微分方程}\index{常系数微分方程|hyperpage}
+\[
+a_ny^{(n)}+\cdots+a_1y'+a_0y=0\quad(a_n\ne0),\qquad
+ a_nr^n+\cdots+a_1r+a_0=0.
+\]
+实根 $r$ 重数 $m$ 给出 $x^ke^{rx}$（$0\le k<m$）；共轭根 $\alpha\pm i\beta$（$\beta>0$）重数 $m$ 给出
+\[
+x^ke^{\alpha x}\cos\beta x,\quad x^ke^{\alpha x}\sin\beta x\quad(0\le k<m).
+\]
+非齐次方程加一个特解。若右端为 $e^{\lambda x}P_d(x)$，可设特解 $x^se^{\lambda x}Q_d(x)$，其中 $s$ 为 $\lambda$ 的特征根重数（非根时为零）。
+\subsection{Euler方程的求解}\index{Euler方程的求解|hyperpage}
+在 $x>0$ 或 $x<0$ 上取 $t=\ln|x|$，$y(x)=Y(t)$，则
+\[
+xy'=Y',\qquad x^2y''=Y''-Y',\qquad
+x^ky^{(k)}=D(D-1)\cdots(D-k+1)Y,\quad D=\frac{\mathrm d}{\mathrm dt}.
+\]
+因此 Euler 方程化为常系数方程。二阶齐次方程 $ax^2y''+bxy'+cy=0$ 的指标方程为 $am(m-1)+bm+c=0$；重根时第二解为 $|x|^m\ln|x|$。
+\subsection{差分方程}\index{差分方程|hyperpage}
+\[
+y_{n+1}=ay_n+b\quad\Longrightarrow\quad
+ y_n=\begin{cases}a^ny_0+b(1-a^n)/(1-a),&a\ne1,\\y_0+nb,&a=1.\end{cases}
+\]
+常系数齐次递推 $y_{n+k}+c_1y_{n+k-1}+\cdots+c_ky_n=0$ 的特征方程为
+\[
+r^k+c_1r^{k-1}+\cdots+c_k=0.
+\]
+当 $c_k\ne0$ 时，重数 $m$ 的根 $r$ 对应 $n^jr^n$（$0\le j<m$）；非齐次递推的通解为齐次通解加一个特解。
+\section{初值问题与线性系统}
+\subsection{Picard迭代与Gronwall不等式}\index{Picard迭代与Gronwall不等式|hyperpage}
+初值问题 $y'=f(t,y),y(t_0)=y_0$ 等价于积分方程
+\[
+y(t)=y_0+\int_{t_0}^tf(s,y(s))\,\mathrm ds,\qquad
+y_{k+1}(t)=y_0+\int_{t_0}^tf(s,y_k(s))\,\mathrm ds.
+\]
+若 $f$ 连续且对 $y$ 局部 Lipschitz，则在足够小的时间区间存在唯一解，Picard 迭代可由常值初猜收敛到该解。
+若 $u\ge0$ 连续、$b\ge0$ 连续，$A\ge0$，并且 $u(t)\le A+\int_{t_0}^tb(s)u(s)\,\mathrm ds$（$t\ge t_0$），则
+\[
+u(t)\le A\exp\!\left(\int_{t_0}^tb(s)\,\mathrm ds\right).
+\]
+\subsection{基本矩阵、常数变易与矩阵指数}\index{基本矩阵、常数变易与矩阵指数|hyperpage}
+对连续矩阵 $A(t)$，基本矩阵 $\Phi'=A(t)\Phi$、$\det\Phi\ne0$ 给出
+\[
+y'=A(t)y+g(t)\Longrightarrow
+y(t)=\Phi(t)\left[\Phi(t_0)^{-1}y_0+\int_{t_0}^t\Phi(s)^{-1}g(s)\,\mathrm ds\right].
+\]
+Liouville 公式为
+\[
+\det\Phi(t)=\det\Phi(t_0)\exp\!\left(\int_{t_0}^t\operatorname{tr}A(s)\,\mathrm ds\right).
+\]
+常矩阵情形定义 $e^{At}=\sum_{k=0}^\infty A^kt^k/k!$，并有
+\[
+y(t)=e^{A(t-t_0)}y_0+\int_{t_0}^te^{A(t-s)}g(s)\,\mathrm ds.
+\]
+一般仅在 $AB=BA$ 时可直接使用 $e^{A+B}=e^Ae^B$。
+\subsection{自治系统平衡点与线性化}\index{自治系统平衡点与线性化|hyperpage}
+对 $y'=f(y)$，平衡点满足 $f(y_*)=0$。若 $f\in C^1$，令 $A=Df(y_*)$。若所有特征值实部均负，则 $y_*$ 局部渐近稳定；若至少一个特征值实部为正，则不稳定；其他情形需进一步分析。
+对二维实常系数线性系统，原点渐近稳定当且仅当
+\[
+\operatorname{tr}A<0,\qquad \det A>0.
+\]
+若 $\det A<0$，原点为鞍点。非线性系统遇到零实部特征值时，不能仅凭线性部分判定稳定性。
+\section{Laplace变换}
+\subsection{变换表与初值问题}\index{变换表与初值问题|hyperpage}
+对分段连续、指数阶函数，定义 $Y(s)=\mathcal L[y](s)=\int_0^\infty e^{-st}y(t)\,\mathrm dt$，取 $s$ 在收敛半平面内。
+\begin{align*}
+\mathcal L[1]&=1/s, &\mathcal L[t^n]&=n!/s^{n+1},\\
+\mathcal L[e^{at}]&=1/(s-a), &\mathcal L[\sin at]&=a/(s^2+a^2),\\
+\mathcal L[\cos at]&=s/(s^2+a^2),\\
+\mathcal L[y']&=sY(s)-y(0),\\
+\mathcal L[y'']&=s^2Y(s)-sy(0)-y'(0).
+\end{align*}
+其中 $n\ge0$ 为整数，导数公式要求相应导数也满足变换条件。卷积 $(f*g)(t)=\int_0^tf(t-\tau)g(\tau)\,\mathrm d\tau$ 满足 $\mathcal L[f*g]=\mathcal L[f]\mathcal L[g]$。
+\section{一阶方程的补充模型与变换}
+% References: https://dlmf.nist.gov/1.13
+% https://radon.mat.univie.ac.at/~gerald/ftp/book-ode/
+\subsection{Riccati方程与Clairaut方程}\index{Riccati方程与Clairaut方程|hyperpage}
+设 $y'=a(x)y^2+b(x)y+c(x)$，已知一个特解 $y_p$，取 $y=y_p+1/u$，则
+\[
+u'+(2ay_p+b)u=-a.
+\]
+此变换要求 $u\ne0$，且不包括原特解 $y_p$，应另行保留。若 $a\ne0$，也可令 $y=-v'/(av)$，化为
+\[
+v''-\left(b+\frac{a'}a\right)v'+acv=0\qquad(v\ne0).
+\]
+Clairaut 方程 $y=xy'+f(y')$ 的直线解族为 $y=Cx+f(C)$；若 $f\in C^2$，其包络候选奇解可参数表示为
+\[
+x=-f'(p),\qquad y=f(p)-pf'(p).
+\]
+需在参数曲线能局部表示为函数且满足原方程的区间验证奇解。
+
+\subsection{Logistic模型与有限时间爆破}\index{Logistic模型与有限时间爆破|hyperpage}
+对 $r,K>0$，$y'=ry(1-y/K)$、$y(0)=y_0>0$ 的解为
+\[
+y(t)=\frac K{1+(K/y_0-1)e^{-rt}},\qquad t\ge0.
+\]
+$y\equiv0$ 为另一平衡解，正初值解趋于 $K$。对 $y'=y^p$、$y_0>0$、$p>1$，
+\[
+y(t)=\bigl(y_0^{1-p}-(p-1)t\bigr)^{-1/(p-1)},\qquad
+T_* =\frac{y_0^{1-p}}{p-1}.
+\]
+解在 $0\le t<T_*$ 存在，且 $t\uparrow T_*$ 时趋于无穷。局部存在唯一性不保证全局存在。
+
+\section{二阶线性方程与级数解}
+\subsection{Abel公式、降阶与常数变易}\index{Abel公式、降阶与常数变易|hyperpage}
+对 $y''+p(x)y'+q(x)y=f(x)$，设 $p,q,f$ 连续。两个齐次解的 Wronski 行列式满足
+\[
+W'= -pW,\qquad W(x)=W(x_0)\exp\!\left(-\int_{x_0}^xp(s)\,\mathrm ds\right).
+\]
+已知非零齐次解 $y_1$，可在 $y_1\ne0$ 的区间取第二解
+\[
+y_2(x)=y_1(x)\int^x\frac{e^{-\int^t p(s)\,\mathrm ds}}{y_1(t)^2}\,\mathrm dt.
+\]
+若 $y_1,y_2$ 线性无关，$W=y_1y_2'-y_1'y_2$，则一个非齐次特解为
+\[
+y_p=-y_1\int^x\frac{y_2(t)f(t)}{W(t)}\,\mathrm dt
++y_2\int^x\frac{y_1(t)f(t)}{W(t)}\,\mathrm dt.
+\]
+积分下限改变只会增加齐次解。在非归一化方程 $ay''+by'+cy=g$ 中，应先除以非零的 $a$。
+
+\subsection{普通点幂级数与Frobenius递推}\index{普通点幂级数与Frobenius递推|hyperpage}
+在 $x_0$ 附近 $p,q$ 解析时，方程 $y''+py'+qy=0$ 有两组由初值确定的解析解。令 $t=x-x_0$，$p=\sum p_jt^j$、$q=\sum q_jt^j$、$y=\sum a_jt^j$，则
+\[
+(n+2)(n+1)a_{n+2}
++\sum_{j=0}^n\bigl[p_j(n-j+1)a_{n-j+1}+q_ja_{n-j}\bigr]=0.
+\]
+对正则奇点形式 $t^2y''+tP(t)y'+Q(t)y=0$，其中 $P=\sum P_jt^j$、$Q=\sum Q_jt^j$ 解析，设 $y=t^r\sum_{n\ge0}a_nt^n$、$a_0\ne0$，并记
+\begin{gather*}
+I(r)=r(r-1)+P_0r+Q_0=0,\\
+I(r+n)a_n+\sum_{j=1}^n\bigl[P_j(r+n-j)+Q_j\bigr]a_{n-j}=0\quad(n\ge1).
+\end{gather*}
+指标根之差不是整数时可得两组 Frobenius 解；重根或整数差时第二解可能含 $\ln|t|$，不能直接将零分母递推继续下去。实数幂可先在 $t>0$ 上解释。
+
+\subsection{常见特殊函数方程}\index{常见特殊函数方程|hyperpage}
+以下方程给出常用特殊函数的标准形式，变量范围和参数决定选取哪一组解：
+\begin{gather*}
+x^2y''+xy'+(x^2-\nu^2)y=0
+\quad\text{（Bessel，}\ J_\nu,Y_\nu\text{，}x>0\text{）},\\
+x^2y''+xy'-(x^2+\nu^2)y=0
+\quad\text{（修正Bessel，}\ I_\nu,K_\nu\text{，}x>0\text{）},\\
+(1-x^2)y''-2xy'+\ell(\ell+1)y=0
+\quad\text{（Legendre，}\ P_\ell,Q_\ell\text{，}|x|<1\text{）},\\
+y''-xy=0\quad\text{（Airy，}\operatorname{Ai},\operatorname{Bi}\text{）},\\
+y''-2xy'+2ny=0\quad\text{（Hermite，}n\in\mathbb Z_{\ge0}\text{）},\\
+xy''+(1-x)y'+ny=0\quad\text{（Laguerre，}n\in\mathbb Z_{\ge0}\text{）}.
+\end{gather*}
+Hermite、Laguerre 方程在所列整数参数下各有一个多项式解，不能将单个多项式当作完整基本解组。
+
+\subsection{阻尼振子、稳态响应与共振}\index{阻尼振子、稳态响应与共振|hyperpage}
+对 $m,c,k>0$，$my''+cy'+ky=0$ 的特征根为
+\[
+r_{\pm}=\frac{-c\pm\sqrt{c^2-4mk}}{2m}.
+\]
+$c^2<4mk$ 为欠阻尼，$c^2=4mk$ 为临界阻尼，$c^2>4mk$ 为过阻尼。对外力 $F\cos\omega t$（$F>0,\omega\ge0$），稳态解可写为
+\[
+y_{\rm ss}=A\cos(\omega t-\phi),\qquad
+A=\frac F{\sqrt{(k-m\omega^2)^2+c^2\omega^2}},\quad
+\phi=\operatorname{atan2}(c\omega,k-m\omega^2).
+\]
+若另取无阻尼情形 $c=0$、$\omega=\omega_0=\sqrt{k/m}$，一个共振特解为 $y_p=F t\sin(\omega_0t)/(2m\omega_0)$。共振时不能使用零分母的稳态振幅式。
+
+\section{边值问题与定性分析补充}
+\subsection{Sturm--Liouville正交与Rayleigh商}\index{Sturm-Liouville正交与Rayleigh商|hyperpage}
+设 $p\in C^1[a,b]$、$q,w\in C[a,b]$ 为实函数，$p,w>0$。正则问题
+\[
+-(py')'+qy=\lambda wy
+\]
+配以实分离齐次边界条件 $\alpha_1y(a)+\alpha_2p(a)y'(a)=0$、$\beta_1y(b)+\beta_2p(b)y'(b)=0$，每个系数对不全为零。不同特征值的特征函数满足
+\[
+\int_a^b w(x)y_m(x)y_n(x)\,\mathrm dx=0\qquad(\lambda_m\ne\lambda_n).
+\]
+对 Dirichlet 条件 $y(a)=y(b)=0$，非零特征函数满足
+\[
+\lambda=\frac{\int_a^b[p(y')^2+qy^2]\,\mathrm dx}{\int_a^b wy^2\,\mathrm dx}.
+\]
+第一特征值是该商在非零 $H_0^1(a,b)$ 函数中的最小值。一般 Robin 条件下商中还含边界项，不能直接省去。
+
+\subsection{Dirichlet Green函数与相容条件}\index{Dirichlet Green函数与相容条件|hyperpage}
+对 $L[y]=-(py')'+qy$，取满足左、右端齐次 Dirichlet 条件的齐次解 $u,v$，令 $C=p(x)(u'v-uv')$。若零不是边值问题的特征值，则 $C\ne0$ 且为常数，
+\[
+G(x,s)=\frac{u(\min\{x,s\})v(\max\{x,s\})}{C},\qquad
+y(x)=\int_a^bG(x,s)f(s)\,\mathrm ds.
+\]
+这里 $L[y]=f$，且 $p(s)[G_x(s^+,s)-G_x(s^-,s)]=-1$。若零为特征值，则可解必须满足 $\int_a^b f\phi\,\mathrm dx=0$ 对所有 $L[\phi]=0$ 的齐次边界解成立；可解时一般不唯一。
+
+\subsection{初值依赖与参数灵敏度}\index{初值依赖与参数灵敏度|hyperpage}
+若 $f(t,y,\theta)$ 对 $y,\theta$ 连续可微，则在共同存在区间内，解对初值的导数 $J$ 和对参数的导数 $S$ 满足
+\begin{gather*}
+J'=D_yf(t,y,\theta)J,\qquad J(t_0)=I,\\
+S'=D_yf(t,y,\theta)S+\partial_\theta f(t,y,\theta),\qquad
+S(t_0)=\partial_\theta y_0(\theta).
+\end{gather*}
+若 $f$ 对 $y$ 的 Lipschitz 常数为 $L$，两个同方程解满足
+\[
+\|y(t)-z(t)\|\le e^{L(t-t_0)}\|y(t_0)-z(t_0)\|\qquad(t\ge t_0).
+\]
+若两向量场相差至多 $\varepsilon$，还可加上 $\varepsilon(e^{L(t-t_0)}-1)/L$；$L=0$ 时此项按极限取 $\varepsilon(t-t_0)$。
+
+\subsection{Lyapunov函数与周期线性系统}\index{Lyapunov函数与周期线性系统|hyperpage}
+对 $y'=f(y)$、$f(0)=0$，若 $V\in C^1$ 在原点邻域正定，沿解有
+\[
+\dot V=\nabla V\cdot f\le0,
+\]
+则原点稳定；若 $\dot V$ 负定，则原点渐近稳定。对常矩阵 $A$ 为 Hurwitz 矩阵（所有特征值实部负）的情形，任意 $Q=Q^{\mathsf T}>0$ 对应唯一 $P=P^{\mathsf T}>0$：
+\[
+A^{\mathsf T}P+PA=-Q,\qquad
+P=\int_0^\infty e^{A^{\mathsf T}t}Qe^{At}\,\mathrm dt.
+\]
+对连续 $T$ 周期矩阵 $A(t)$，取基本矩阵 $\Phi(0)=I$，单周期矩阵 $M=\Phi(T)$ 满足 $\Phi(t+T)=\Phi(t)M$。在复数域可写 Floquet 形式
+\[
+\Phi(t)=P(t)e^{tB},\qquad P(t+T)=P(t),\qquad e^{TB}=M.
+\]
+所有 Floquet 乘子的模小于 $1$ 当且仅当零解指数渐近稳定；存在模大于 $1$ 的乘子则不稳定。模为 $1$ 的情况须检查 Jordan 块；非线性推广见第\ref{chap:dynamical-systems}章。
+
+\section{Laplace变换的运算补充}
+\subsection{移位、微分、周期与极限公式}\index{移位、微分、周期与极限公式|hyperpage}
+设各变换在公共右半平面收敛，$F=\mathcal L[f]$、$a\ge0$、$H$ 为单位阶跃函数，则
+\begin{gather*}
+\mathcal L[e^{at}f(t)](s)=F(s-a),\qquad
+\mathcal L[H(t-a)f(t-a)](s)=e^{-as}F(s),\\
+\mathcal L[t^nf(t)](s)=(-1)^nF^{(n)}(s),\qquad
+\mathcal L\!\left[\int_0^t f(u)\,\mathrm du\right](s)=\frac{F(s)}s,\\
+\mathcal L[f^{(n)}](s)=s^nF(s)-\sum_{j=0}^{n-1}s^{n-1-j}f^{(j)}(0^+).
+\end{gather*}
+若 $f$ 为 $T$ 周期且在一周期可积，则
+\[
+F(s)=\frac{\int_0^Te^{-st}f(t)\,\mathrm dt}{1-e^{-sT}}\qquad(\operatorname{Re}s>0).
+\]
+在初值存在且满足变换条件时，$f(0^+)=\lim_{s\to+\infty}sF(s)$。对有理 $F$，若 $sF(s)$ 的所有极点都严格位于左半平面，则终值存在且
+\[
+\lim_{t\to\infty}f(t)=\lim_{s\to0^+}sF(s).
+\]
+右半平面极点或非零纯虚极点会破坏这一充分条件；不能仅凭右侧极限存在就断言终值存在。
+\section{非线性积分界、相位与矩阵演化补充}
+微分方程与渐近方法参见\cite{teschl,dlmf}，矩阵演化参见\cite{geometric}。
+\subsection{Bihari积分不等式与Osgood条件}\index{Bihari积分不等式与Osgood条件|hyperpage}
+若 $u(t)\le a+\int_0^tb(s)g(u(s))\,\mathrm ds$，$a>0$、$b\ge0$ 可积、$g$ 连续正且非减，令 $G(r)=\int_{r_0}^r\mathrm ds/g(s)$，则
+\[
+u(t)\le G^{-1}\left(G(a)+\int_0^tb(s)\,\mathrm ds\right)
+\]
+在右侧有定义的时间内成立。对 $g(0)=0$ 的连续非减模，$\int_{0^+}\mathrm ds/g(s)=\infty$ 是相应零初值比较及唯一性的 Osgood 条件。
+\subsection{Sturm方程的Prüfer相位}\index{Sturm方程的Prüfer相位|hyperpage}
+对实方程 $-y''+q(x)y=\lambda y$ 的非零解，写 $y=\rho\sin\theta$、$y'=\rho\cos\theta$，则
+\[
+\theta'=\cos^2\theta+(\lambda-q)\sin^2\theta,\qquad
+\frac{\rho'}\rho=(1+q-\lambda)\sin\theta\cos\theta.
+\]
+连续选择相位分支时，零点对应 $\theta\in\pi\mathbb Z$。两分量不能同时为零，故 $\rho>0$；任意只取主值反正切会在零点丢失绕行信息。
+\subsection{无转折点的WKB近似}\index{无转折点的WKB近似|hyperpage}
+紧区间上 $Q\in C^3$ 且 $Q\ge q_0>0$，对 $\varepsilon^2y''+Q(x)y=0$，当 $\varepsilon\downarrow0$ 时可选择基本解满足
+\[
+y_\pm(x)=Q(x)^{-1/4}
+\exp\left(\pm\frac{i}{\varepsilon}\int_{x_0}^x\sqrt{Q(s)}\,\mathrm ds\right)
+\bigl(1+O(\varepsilon)\bigr).
+\]
+误差在该紧区间一致。$Q=0$ 的转折点需改用 Airy 等局部模型；$Q<0$ 区间对应实指数行为，不能继续使用振荡相位。
+\subsection{Magnus矩阵指数展开}\index{Magnus矩阵指数展开|hyperpage}
+对 $U'=A(t)U$、$U(0)=I$，写 $U(t)=e^{\Omega(t)}$，前两项为
+\begin{align*}
+\Omega_1(t)&=\int_0^tA(s)\,\mathrm ds,\\
+\Omega_2(t)&=\frac12\int_0^t\int_0^{s_1}
+[A(s_1),A(s_2)]\,\mathrm ds_2\mathrm ds_1.
+\end{align*}
+矩阵交换子为 $[A,B]=AB-BA$。一个常用充分收敛条件是 $\int_0^t\|A(s)\|_2\,\mathrm ds<\pi$；若各时刻矩阵两两可交换，只有第一项便给精确解。
+\clearpage
+\end{document}

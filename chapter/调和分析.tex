@@ -1,0 +1,579 @@
+\documentclass[../main.tex]{subfiles}
+\begin{document}
+本章主要参考\cite{harmonic,hunter}。
+
+\section{傅里叶分析}
+傅里叶分析是调和分析的重要组成部分。本节保留傅里叶级数、傅里叶变换及其基本恒等式，后续各节补充实变量方法、奇异积分、函数空间与群上的分析。
+\label{sec:harmonic-fourier}
+\subsection{Schwartz空间与温和分布}\index{Schwartz空间与温和分布|hyperpage}
+Schwartz 空间由快速衰减的光滑函数组成：
+\[
+\mathcal S(\mathbb R^d)=\{f\in C^\infty:\sup_x|x^\alpha\partial^\beta f(x)|<\infty,
+\ \forall\alpha,\beta\},
+\]
+其中 $\alpha,\beta$ 是非负整数多重指标。以这些上确界半范数定义其拓扑，连续对偶 $\mathcal S'$ 称为温和分布空间，配对不取复共轭。
+\[
+\langle\partial^\alpha T,\phi\rangle=(-1)^{|\alpha|}\langle T,\partial^\alpha\phi\rangle,
+\qquad\langle\widehat T,\phi\rangle=\langle T,\widehat\phi\rangle.
+\]
+沿用本章角频率约定，有
+\[
+\widehat{\delta_0}=1,\qquad\widehat1=(2\pi)^d\delta_0,\qquad
+\widehat{\partial_jT}=i\xi_j\widehat T.
+\]
+$\delta_0$ 满足 $\langle\delta_0,\phi\rangle=\phi(0)$；这些等式按分布意义成立，不能将 $\delta_0$ 当作普通可积函数。
+\subsection{三角级数与收敛}\index{三角级数与收敛|hyperpage}
+周期 $2L$ 的可积函数的 Fourier 系数为
+\[
+a_0=\frac1L\int_{-L}^Lf(x)\,\mathrm dx,\quad
+ a_n=\frac1L\int_{-L}^Lf(x)\cos\frac{n\pi x}L\,\mathrm dx,\quad
+ b_n=\frac1L\int_{-L}^Lf(x)\sin\frac{n\pi x}L\,\mathrm dx.
+\]
+\[
+f(x)\sim\frac{a_0}2+\sum_{n=1}^\infty\left(a_n\cos\frac{n\pi x}L+b_n\sin\frac{n\pi x}L\right).
+\]
+若周期延拓分段 $C^1$，级数在 $x$ 处收敛于 $[f(x+)+f(x-)]/2$；连续点处等于 $f(x)$。
+对平方可积函数，Parseval 等式为
+\[
+\frac1L\int_{-L}^L|f(x)|^2\,\mathrm dx=\frac{|a_0|^2}2+
+\sum_{n=1}^\infty(|a_n|^2+|b_n|^2).
+\]
+\subsection{复指数形式与Fejér求和}\index{复指数形式与Fejér求和|hyperpage}
+对周期 $2L$ 的函数，令
+\[
+c_n=\frac1{2L}\int_{-L}^Lf(x)e^{-in\pi x/L}\,\mathrm dx,\qquad
+f(x)\sim\sum_{n\in\mathbb Z}c_ne^{in\pi x/L}.
+\]
+对 $n\ge1$，$c_0=a_0/2$，$c_n=(a_n-ib_n)/2$，$c_{-n}=(a_n+ib_n)/2$。
+对 $f\in L^2[-L,L]$，部分和在 $L^2$ 中收敛，且
+\[
+\frac1{2L}\int_{-L}^L|f|^2\,\mathrm dx=\sum_{n\in\mathbb Z}|c_n|^2.
+\]
+设 $S_N=\sum_{|n|\le N}c_ne^{in\pi x/L}$，Fejér 平均为 $\sigma_N=(N+1)^{-1}\sum_{k=0}^NS_k$。连续周期函数的 $\sigma_N$ 一致收敛于 $f$；普通部分和不具有这一普遍结论。
+\subsection{变换、反演与常用变换对}\index{变换、反演与常用变换对|hyperpage}
+本章统一使用角频率 $\xi$，定义
+\[
+\widehat f(\xi)=\int_{\mathbb R}f(x)e^{-ix\xi}\,\mathrm dx,\qquad
+f(x)=\frac1{2\pi}\int_{\mathbb R}\widehat f(\xi)e^{ix\xi}\,\mathrm d\xi.
+\]
+对 Schwartz 函数上述反演逐点成立；若 $f,\widehat f\in L^1$，反演给出 $f$ 的连续代表并 a.e. 成立。
+\begin{align*}
+f(x)=e^{-ax^2}\ (a>0)&\Longrightarrow\widehat f(\xi)=\sqrt{\pi/a}\,e^{-\xi^2/(4a)},\\
+f(x)=e^{-a|x|}\ (a>0)&\Longrightarrow\widehat f(\xi)=\frac{2a}{a^2+\xi^2},\\
+f(x)=\bm1_{[-a,a]}(x)\ (a>0)&\Longrightarrow\widehat f(\xi)=\frac{2\sin(a\xi)}\xi.
+\end{align*}
+最后一式在 $\xi=0$ 取连续延拓值 $2a$。不同归一化会改变 $2\pi$ 因子，不能混用。
+\subsection{平移、伸缩与微分}\index{平移、伸缩与微分|hyperpage}
+以下在 Schwartz 类中成立，满足相应可积和边界条件时也可推广：
+\begin{align*}
+\mathcal F[f(x-a)](\xi)&=e^{-ia\xi}\widehat f(\xi),\\
+\mathcal F[e^{iax}f(x)](\xi)&=\widehat f(\xi-a),\\
+\mathcal F[f(ax)](\xi)&=|a|^{-1}\widehat f(\xi/a)\quad(a\ne0),\\
+\mathcal F[f^{(k)}](\xi)&=(i\xi)^k\widehat f(\xi),\\
+\mathcal F[x^kf](\xi)&=i^k\frac{\mathrm d^k\widehat f}{\mathrm d\xi^k}.
+\end{align*}
+\subsection{卷积与Plancherel等式}\index{卷积与Plancherel等式|hyperpage}
+\[
+(f*g)(x)=\int_{\mathbb R}f(x-y)g(y)\,\mathrm dy,\qquad
+\widehat{f*g}=\widehat f\,\widehat g,\qquad
+\widehat{fg}=\frac1{2\pi}(\widehat f*\widehat g).
+\]
+这些公式可先对 Schwartz 函数理解；卷积定理对 $L^1$ 函数仍成立。
+\[
+\int_{\mathbb R}f\overline g\,\mathrm dx
+=\frac1{2\pi}\int_{\mathbb R}\widehat f\,\overline{\widehat g}\,\mathrm d\xi,
+\qquad \|f\|_2^2=\frac1{2\pi}\|\widehat f\|_2^2.
+\]
+Fourier 变换由此延拓到 $L^2$；此时变换与反演通常按 $L^2$ 极限解释，不保证积分绝对收敛。
+\subsection{多维变换与热核}\index{多维变换与热核|hyperpage}
+在 $\mathbb R^d$ 上，$\widehat f(\xi)=\int f(x)e^{-ix\cdot\xi}\,\mathrm dx$，反演因子为 $(2\pi)^{-d}$，且
+\[
+\mathcal F[\Delta f]=- |\xi|^2\widehat f,\qquad
+G_t(x)=(4\pi\kappa t)^{-d/2}e^{-|x|^2/(4\kappa t)},\quad
+\widehat G_t(\xi)=e^{-\kappa t|\xi|^2}\quad(\kappa,t>0).
+\]
+热方程 $u_t=\kappa\Delta u$ 的全空间解可表示为 $u(\cdot,t)=G_t*u_0$；初值的恢复方式取决于 $u_0$ 所在函数空间，见偏微分方程章。
+
+% References: https://www.math.ucla.edu/~tao/247a.1.06f/
+\section{卷积与Lp估计}
+以下默认在 $\mathbb R^d$ 上使用 Lebesgue 测度，Fourier 变换沿用角频率约定；$C$ 表示可依赖维数、指数或算子条件，但不依赖待估函数的正常数。
+\subsection{Young不等式与Hausdorff--Young不等式}\index{Young不等式与Hausdorff-Young不等式|hyperpage}
+对 $1\le p,q,r\le\infty$、$1+1/r=1/p+1/q$，Young 卷积不等式为
+\[
+\|f*g\|_r\le\|f\|_p\|g\|_q.
+\]
+对 $1\le p\le2$、$p'=p/(p-1)$（$p=1$ 时 $p'=\infty$），有
+\[
+\|\widehat f\|_{p'}\le(2\pi)^{d/p'}\|f\|_p.
+\]
+后一式可先对 $L^1\cap L^p$ 函数定义，再由稠密性延拓；$p=2$ 时与本章 Plancherel 归一化一致。一般不能将它扩展为相同形式的 $p>2$ 估计。
+\subsection{强型、弱型与Riesz--Thorin插值}\index{强型、弱型与Riesz-Thorin插值|hyperpage}
+算子 $T$ 为强型 $(p,q)$ 指 $\|Tf\|_q\le C\|f\|_p$。有限 $q$ 时，弱型 $(p,q)$ 指
+\[
+\|Tf\|_{q,\infty}:=\sup_{\lambda>0}\lambda\,|\{x:|Tf(x)|>\lambda\}|^{1/q}
+\le C\|f\|_p.
+\]
+若线性算子在两个端点满足 $\|Tf\|_{q_j}\le M_j\|f\|_{p_j}$（$j=0,1$），$1\le p_j,q_j\le\infty$，则对 $0<\theta<1$，
+\begin{gather*}
+\frac1{p_\theta}=\frac{1-\theta}{p_0}+\frac\theta{p_1},\qquad
+\frac1{q_\theta}=\frac{1-\theta}{q_0}+\frac\theta{q_1},\\
+\|Tf\|_{q_\theta}\le M_0^{1-\theta}M_1^\theta\|f\|_{p_\theta}.
+\end{gather*}
+这里要求端点算子在共同定义域上一致，底层取通常的 $\sigma$-有限测度空间。弱端点的插值需要相应的 Marcinkiewicz 插值定理，不能直接代入上述强型公式。
+\section{极大函数与微分定理}
+\subsection{Hardy--Littlewood极大函数}\index{Hardy-Littlewood极大函数|hyperpage}
+对 $f\in L^1_{\mathrm{loc}}(\mathbb R^d)$，定义中心极大函数
+\[
+Mf(x)=\sup_{r>0}\frac1{|B(x,r)|}\int_{B(x,r)}|f(y)|\,\mathrm dy.
+\]
+它满足弱 $(1,1)$ 及强 $(p,p)$ 估计：
+\[
+|\{Mf>\lambda\}|\le\frac{C_d}{\lambda}\|f\|_1\quad(\lambda>0),\qquad
+\|Mf\|_p\le C_{d,p}\|f\|_p\quad(1<p\le\infty).
+\]
+$M$ 一般不从 $L^1$ 有界映到 $L^1$；$p=\infty$ 时可取常数 $1$。
+\subsection{Lebesgue微分与单位逼近}\index{Lebesgue微分与单位逼近|hyperpage}
+对局部可积 $f$，几乎每个 $x$ 都是 Lebesgue 点：
+\[
+\lim_{r\downarrow0}\frac1{|B(x,r)|}\int_{B(x,r)}|f(y)-f(x)|\,\mathrm dy=0.
+\]
+若 $\phi\in C_c^\infty$ 非负、$\int\phi=1$，$\phi_\varepsilon(x)=\varepsilon^{-d}\phi(x/\varepsilon)$，则
+\[
+\|\phi_\varepsilon*f-f\|_p\to0\quad(f\in L^p,\ 1\le p<\infty).
+\]
+对 $f\in L^1_{\mathrm{loc}}$，卷积在每个 Lebesgue 点收敛于 $f(x)$；有界一致连续函数还具有一致收敛。一般 $L^\infty$ 函数不保证按范数恢复。
+\subsection{Calderón--Zygmund分解}\index{Calderón-Zygmund分解|hyperpage}
+对 $f\in L^1(\mathbb R^d)$、高度 $\lambda>0$，可选两两不交的二进立方体 $Q_j$，使
+\[
+f=g+\sum_jb_j,\qquad
+\|g\|_\infty\le2^d\lambda,\quad\|g\|_1\le\|f\|_1,
+\]
+\[
+\operatorname{supp}b_j\subseteq Q_j,\quad\int b_j=0,\quad
+\sum_j|Q_j|\le\lambda^{-1}\|f\|_1,\quad
+\sum_j\|b_j\|_1\le2\|f\|_1.
+\]
+可取 $g=f$ 于立方体外，在 $Q_j$ 内取平均值 $f_{Q_j}=|Q_j|^{-1}\int_{Q_j}f$，并令 $b_j=(f-f_{Q_j})\bm1_{Q_j}$。消去条件 $\int b_j=0$ 是控制奇异核的关键。
+\section{奇异积分与分数积分}
+\subsection{Hilbert变换与Riesz变换}\index{Hilbert变换与Riesz变换|hyperpage}
+对 $f\in\mathcal S(\mathbb R)$，Hilbert 变换为
+\[
+Hf(x)=\frac1\pi\operatorname{p.v.}\int_{\mathbb R}\frac{f(y)}{x-y}\,\mathrm dy
+=\lim_{\varepsilon\downarrow0}\frac1\pi\int_{|x-y|>\varepsilon}\frac{f(y)}{x-y}\,\mathrm dy.
+\]
+\[
+\widehat{Hf}(\xi)=-i\operatorname{sgn}(\xi)\widehat f(\xi),\qquad
+H^2=-I,\quad H^*=-H\quad\text{（在 }L^2\text{ 上）}.
+\]
+$H$ 在 $L^p$ 上有界（$1<p<\infty$），并为弱型 $(1,1)$。在 $\mathbb R^d$ 上，Riesz 变换定义为
+\[
+\widehat{R_jf}(\xi)=-i\frac{\xi_j}{|\xi|}\widehat f(\xi),\quad\xi\ne0,
+\qquad \sum_{j=1}^dR_j^2=-I\quad\text{（在 }L^2\text{ 上）}.
+\]
+它们同样在 $1<p<\infty$ 时有界；单点 $\xi=0$ 的乘子值不影响 $L^2$ 算子。
+\subsection{Calderón--Zygmund核与有界性}\index{Calderón-Zygmund核与有界性|hyperpage}
+设 $T$ 已在 $L^2$ 上有界，且对光滑紧支撑 $f$、$x\notin\operatorname{supp}f$ 有 $Tf(x)=\int K(x,y)f(y)\,\mathrm dy$。若对某个 $0<\delta\le1$，
+\begin{gather*}
+|K(x,y)|\le C|x-y|^{-d},\\
+|K(x,y)-K(x',y)|+|K(y,x)-K(y,x')|
+\le C\frac{|x-x'|^\delta}{|x-y|^{d+\delta}}
+\end{gather*}
+在 $|x-x'|\le|x-y|/2$ 时成立，则 $T$ 为弱型 $(1,1)$，并满足
+\[
+\|Tf\|_p\le C_p\|f\|_p\quad(1<p<\infty).
+\]
+核的大小估计本身不足以推出有界性；必须保留正则性及 $L^2$ 有界等假设。
+\subsection{Riesz势与Hardy--Littlewood--Sobolev不等式}\index{Riesz势与Hardy-Littlewood-Sobolev不等式|hyperpage}
+对 $0<\alpha<d$，定义分数积分
+\[
+I_\alpha f(x)=c_{d,\alpha}\int_{\mathbb R^d}\frac{f(y)}{|x-y|^{d-\alpha}}\,\mathrm dy,
+\qquad c_{d,\alpha}=\frac{\Gamma((d-\alpha)/2)}{2^\alpha\pi^{d/2}\Gamma(\alpha/2)}.
+\]
+对 Schwartz 函数按温和分布意义有 $\widehat{I_\alpha f}=|\xi|^{-\alpha}\widehat f$。当
+\[
+1<p<d/\alpha,\qquad\frac1q=\frac1p-\frac\alpha d,
+\]
+有 $\|I_\alpha f\|_q\le C_{d,\alpha,p}\|f\|_p$。端点 $p=1$ 对应弱型 $(1,d/(d-\alpha))$，通常不能改成同指数的强型结论。
+\section{Poisson核与端点函数空间}
+\subsection{Poisson半群与调和延拓}\index{Poisson半群与调和延拓|hyperpage}
+在上半空间 $\mathbb R^d\times(0,\infty)$，Poisson 核及其变换为
+\[
+P_t(x)=\frac{\Gamma((d+1)/2)}{\pi^{(d+1)/2}}
+\frac{t}{(t^2+|x|^2)^{(d+1)/2}},\qquad\widehat P_t(\xi)=e^{-t|\xi|}.
+\]
+$\int P_t=1$、$P_t*P_s=P_{t+s}$，$u(x,t)=P_t*f(x)$ 满足
+\[
+\partial_t^2u+\Delta_xu=0,\qquad\partial_tu=-(-\Delta_x)^{1/2}u,
+\]
+其中分数 Laplace 算子按乘子 $|\xi|$ 定义。对 $f\in L^p$、$1\le p<\infty$，$P_t*f\to f$ 于 $L^p$；上述微分公式对光滑数据成立，并可按分布意义推广。
+\subsection{实Hardy空间与原子分解}\index{实Hardy空间与原子分解|hyperpage}
+实 Hardy 空间 $H^1(\mathbb R^d)$ 可由 Poisson 极大函数定义：
+\[
+\|f\|_{H^1}:=\left\|\sup_{t>0}|P_t*f|\right\|_1<\infty.
+\]
+这里可先取 $f\in L^1$，满足此条件的函数构成 $H^1$；它不同于偏微分方程中的 Sobolev 空间 $H^1=W^{1,2}$，需依上下文区分。
+$H^1$ 原子 $a$ 支持于某个立方体 $Q$，满足 $\int a=0$ 和 $\|a\|_\infty\le|Q|^{-1}$。原子分解给出
+\[
+f=\sum_j\lambda_ja_j,\qquad
+\|f\|_{H^1}\asymp\inf\sum_j|\lambda_j|.
+\]
+下确界遍历所有这类分解，级数在 $H^1$ 及 $L^1$ 中收敛；$A\asymp B$ 表示两边可由与函数无关的正常数互相控制。另有 Riesz 变换刻画
+\[
+\|f\|_{H^1}\asymp\|f\|_1+\sum_{j=1}^d\|R_jf\|_1,
+\]
+其中 $R_jf$ 可先按分布定义，右端有限当且仅当 $f\in H^1$。
+\subsection{BMO、John--Nirenberg不等式与对偶}\index{BMO、John-Nirenberg不等式与对偶|hyperpage}
+对局部可积 $b$，定义有界平均振荡半范数
+\[
+\|b\|_{\mathrm{BMO}}=\sup_Q\frac1{|Q|}\int_Q|b-b_Q|\,\mathrm dx,
+\qquad b_Q=\frac1{|Q|}\int_Qb.
+\]
+$Q$ 遍历轴平行立方体。常数的半范数为零，故对偶空间中将相差常数的函数视为同一元素。John--Nirenberg 不等式为
+\[
+|\{x\in Q:|b(x)-b_Q|>\lambda\}|
+\le C_d|Q|\exp\!\left(-\frac{c_d\lambda}{\|b\|_{\mathrm{BMO}}}\right)
+\]
+（$\lambda>0$，$\|b\|_{\mathrm{BMO}}>0$）。端点对偶关系为 $(H^1)^*\cong\mathrm{BMO}/\mathbb C$；积分配对 $\int fb$ 可先对有限原子和定义，再连续延拓，不应默认对任意 $f,b$ 都绝对可积。
+\section{频率分解与Fourier乘子}
+\subsection{Littlewood--Paley分解与Sobolev范数}\index{Littlewood-Paley分解与Sobolev范数|hyperpage}
+取实径向 $\chi\in C_c^\infty$，在 $|\xi|\le1$ 为 $1$、在 $|\xi|\ge2$ 为 $0$，令 $\varphi(\xi)=\chi(\xi)-\chi(2\xi)$。定义
+\[
+\widehat{S_0f}=\chi\widehat f,\qquad
+\widehat{\Delta_jf}=\varphi(2^{-j}\xi)\widehat f\quad(j\ge1),\qquad
+f=S_0f+\sum_{j\ge1}\Delta_jf.
+\]
+对 $f\in\mathcal S$，该恒等式可按温和分布意义理解；对 $1<p<\infty$ 可推广至 $L^p$。平方函数估计为
+\[
+\|f\|_p\asymp
+\left\|\left(|S_0f|^2+\sum_{j\ge1}|\Delta_jf|^2\right)^{1/2}\right\|_p
+\quad(1<p<\infty).
+\]
+对任意实数 $s$，非齐次 Sobolev 范数可写为
+\begin{gather*}
+\|f\|_{H^s}^2=\frac1{(2\pi)^d}\int_{\mathbb R^d}(1+|\xi|^2)^s|\widehat f(\xi)|^2\,\mathrm d\xi,\\
+\|f\|_{H^s}^2\asymp\|S_0f\|_2^2+\sum_{j\ge1}2^{2js}\|\Delta_jf\|_2^2.
+\end{gather*}
+此处 $H^s$ 指 Sobolev 空间；低频项 $S_0f$ 是非齐次范数不可省略的部分。
+\subsection{Mihlin乘子定理}\index{Mihlin乘子定理|hyperpage}
+Fourier 乘子算子定义为 $T_mf=\mathcal F^{-1}(m\widehat f)$。若整数 $N>d/2$，$m\in C^N(\mathbb R^d\setminus\{0\})$，且
+\[
+\sup_{\xi\ne0}|\xi|^{|\alpha|}|\partial^\alpha m(\xi)|\le A
+\quad\text{对所有多重指标 }|\alpha|\le N,
+\]
+则 $\|T_mf\|_p\le C_{d,p,N}A\|f\|_p$ 对 $1<p<\infty$ 成立。可先对 Schwartz 函数定义再延拓；乘子有界本身仅直接保证 $L^2$ 有界，一般不足以保证其他 $L^p$ 有界。
+\section{有限群上的调和分析}
+\subsection{有限Abel群的特征展开}\index{有限Abel群的特征展开|hyperpage}
+设 $G$ 为有限 Abel 群，$\widehat G$ 为其全部复单位圆值特征，使用归一化计数测度：
+\[
+\widehat f(\chi)=\frac1{|G|}\sum_{x\in G}f(x)\overline{\chi(x)},\qquad
+f(x)=\sum_{\chi\in\widehat G}\widehat f(\chi)\chi(x).
+\]
+\[
+\frac1{|G|}\sum_{x\in G}|f(x)|^2=\sum_{\chi\in\widehat G}|\widehat f(\chi)|^2,
+\quad (f*g)(x)=\frac1{|G|}\sum_{y\in G}f(y)g(y^{-1}x),\quad
+\widehat{f*g}=\widehat f\,\widehat g.
+\]
+取 $G=\mathbb Z/N\mathbb Z$，特征为 $\chi_k(n)=e^{2\pi ikn/N}$，即得到离散 Fourier 变换；此处正变换含 $1/N$，其他归一化须同步调整反演公式。
+\par\begin{samepage}
+\subsection{有限非交换群的矩阵Fourier变换}\index{有限非交换群的矩阵Fourier变换|hyperpage}
+设 $G$ 为有限群，$\widehat G$ 此处表示不可约酉表示的等价类，$\pi:G\to U(d_\pi)$，定义
+\[
+\widehat f(\pi)=\frac1{|G|}\sum_{g\in G}f(g)\pi(g)^*.
+\]
+表示论的正交关系给出
+\begin{gather*}
+f(g)=\sum_{\pi\in\widehat G}d_\pi\operatorname{tr}(\widehat f(\pi)\pi(g)),\\
+\frac1{|G|}\sum_{g\in G}|f(g)|^2
+=\sum_{\pi\in\widehat G}d_\pi\|\widehat f(\pi)\|_{\mathrm{HS}}^2,
+\qquad\sum_{\pi\in\widehat G}d_\pi^2=|G|.
+\end{gather*}
+其中 $\|A\|_{\mathrm{HS}}^2=\operatorname{tr}(A^*A)$。Abel 群的不可约表示均为一维，因此上述公式退化为特征展开。
+\par\end{samepage}
+% Further references: https://www.math.ucla.edu/~tao/preprints/chapter.pdf ; https://www.math.ucla.edu/~tao/247a.1.06f/
+\section{经典核、求和与不确定性补充}
+\subsection{Dirichlet核、Fejér核与周期Poisson核}\index{Dirichlet核、Fejér核与周期Poisson核|hyperpage}
+在 $2\pi$ 周期归一化下，卷积取 $(2\pi)^{-1}\int_{-\pi}^\pi$，有
+\begin{align*}
+D_N(t)&=\sum_{|n|\le N}e^{int}=\frac{\sin((N+1/2)t)}{\sin(t/2)},\\
+F_N(t)&=\frac1{N+1}\sum_{k=0}^ND_k(t)
+=\frac1{N+1}\left(\frac{\sin((N+1)t/2)}{\sin(t/2)}\right)^2,\\
+P_r(t)&=\sum_{n\in\mathbb Z}r^{|n|}e^{int}
+=\frac{1-r^2}{1-2r\cos t+r^2}\quad(0\le r<1).
+\end{align*}
+$F_N,P_r\ge0$ 且归一化积分为 $1$，$S_Nf=D_N*f$、$\sigma_Nf=F_N*f$；$\|D_N\|_{L^1(\mathrm dt/2\pi)}\asymp\log(N+2)$。这些正核给出单位逼近；$D_N$ 不具备统一的 $L^1$ 控制。
+\subsection{Poisson求和与Shannon采样}\index{Poisson求和与Shannon采样|hyperpage}
+对 $f\in\mathcal S(\mathbb R)$、$a>0$，角频率约定给出
+\[
+\sum_{n\in\mathbb Z}f(an)=\frac1a\sum_{k\in\mathbb Z}\widehat f(2\pi k/a).
+\]
+若 $f\in L^2(\mathbb R)$ 且 $\operatorname{supp}\widehat f\subseteq[-\pi/h,\pi/h]$，用其连续代表，有采样展开
+\[
+f(x)=\sum_{n\in\mathbb Z}f(nh)\operatorname{sinc}(x/h-n),\qquad
+\operatorname{sinc}t=\frac{\sin\pi t}{\pi t},
+\]
+并有 $\|f\|_2^2=h\sum_n|f(nh)|^2$。级数至少按 $L^2$ 意义收敛，并可推出一致收敛；带宽与采样间距必须同步匹配。
+\subsection{Heisenberg不等式与紧支撑的解析性}\index{Heisenberg不等式与紧支撑的解析性|hyperpage}
+对一维 Schwartz 函数，
+\[
+\|xf\|_2\|f'\|_2\ge\tfrac12\|f\|_2^2,\qquad
+\|xf\|_2\|\xi\widehat f\|_2\ge\tfrac12\|f\|_2\|\widehat f\|_2.
+\]
+平移、调制后可将 $x,\xi$ 换成相应中心化变量；高斯函数达到等号。若 $f\in C_c^\infty(\mathbb R)$、支撑于 $[-R,R]$，则 $\widehat f$ 延拓为整函数，并对每个 $N$ 满足
+\[
+|\widehat f(z)|\le C_N(1+|z|)^{-N}e^{R|\operatorname{Im}z|}.
+\]
+这是 Paley--Wiener 型估计；非零函数及其 Fourier 变换不能同时具有紧支撑。
+\section{加权估计与频率空间补充}
+\subsection{Muckenhoupt权与加权有界性}\index{Muckenhoupt权与加权有界性|hyperpage}
+对正 a.e. 的局部可积权 $w$，$1<p<\infty$ 时定义
+\[
+[w]_{A_p}=\sup_Q\left(\frac1{|Q|}\int_Qw\right)
+\left(\frac1{|Q|}\int_Qw^{-1/(p-1)}\right)^{p-1}<\infty.
+\]
+$A_1$ 可由 $Mw\le Cw$ a.e. 定义。$w(x)=|x|^\alpha$ 属于 $A_p$ 当且仅当 $-d<\alpha<d(p-1)$。极大算子的加权强型判别为
+\[
+M:L^p(w)\to L^p(w)\text{ 有界}\iff w\in A_p,\qquad
+\|Mf\|_{L^p(w)}\le C_{d,p}[w]_{A_p}^{1/(p-1)}\|f\|_{L^p(w)}.
+\]
+具有前述标准核及 $L^2$ 有界性的 Calderón--Zygmund 算子也在 $L^p(w)$ 上有界，常数依赖于权的 $A_p$ 特征量。
+\subsection{Lorentz范数与实插值}\index{Lorentz范数与实插值|hyperpage}
+对递减重排 $f^*$、$0<p<\infty$，定义
+\[
+\|f\|_{L^{p,q}}=\left(\int_0^\infty[t^{1/p}f^*(t)]^q\frac{\mathrm dt}t\right)^{1/q},\quad
+\|f\|_{L^{p,\infty}}=\sup_{t>0}t^{1/p}f^*(t).
+\]
+$L^{p,p}=L^p$，$q_1<q_2$ 时 $L^{p,q_1}\subseteq L^{p,q_2}$。兼容 Banach 空间对的 $K$-泛函为
+\[
+K(t,f;X_0,X_1)=\inf_{f=f_0+f_1}(\|f_0\|_{X_0}+t\|f_1\|_{X_1}).
+\]
+用 $\|t^{-\theta}K(t,f)\|_{L^q(\mathrm dt/t)}$ 定义实插值空间。若 $1\le p_0<p_1\le\infty$、$0<\theta<1$，则
+\[
+(L^{p_0},L^{p_1})_{\theta,q}=L^{p,q},\qquad
+\frac1p=\frac{1-\theta}{p_0}+\frac\theta{p_1},
+\]
+这里为等价范数意义，$q=\infty$ 使用上确界。
+\subsection{Bernstein不等式与Besov空间}\index{Bernstein不等式与Besov空间|hyperpage}
+若 $\operatorname{supp}\widehat f\subseteq\{|\xi|\le C2^j\}$，则对 $1\le p\le q\le\infty$，
+\[
+\|\partial^\alpha f\|_q\le C_\alpha2^{j(|\alpha|+d(1/p-1/q))}\|f\|_p.
+\]
+若支撑位于环带 $c2^j\le|\xi|\le C2^j$，则 $\|(-\Delta)^{s/2}f\|_p\asymp2^{js}\|f\|_p$。沿用本章非齐次分解，
+\[
+\|f\|_{B^s_{p,q}}=\|S_0f\|_p+
+\left(\sum_{j\ge1}(2^{js}\|\Delta_jf\|_p)^q\right)^{1/q}.
+\]
+取 $q=\infty$ 时改为上确界，$B^s_{2,2}=H^s$（等价范数）。对 $s>0$、整数 $m>s$，其范数也等价于
+\[
+\|f\|_p+\left(\int_{|h|<1}\left[|h|^{-s}\|\Delta_h^mf\|_p\right]^q\frac{\mathrm dh}{|h|^d}\right)^{1/q},
+\]
+其中 $\Delta_hf(x)=f(x+h)-f(x)$，$1\le p,q<\infty$。
+\subsection{分数Laplace与非局部能量}\index{分数Laplace与非局部能量|hyperpage}
+对 $0<s<1$、$f\in\mathcal S$，
+\[
+(-\Delta)^sf(x)=c_{d,s}\operatorname{p.v.}\int\frac{f(x)-f(y)}{|x-y|^{d+2s}}\,\mathrm dy,
+\quad c_{d,s}=\frac{4^s\Gamma(d/2+s)}{\pi^{d/2}|\Gamma(-s)|}.
+\]
+其乘子为 $|\xi|^{2s}$，并有能量恒等式
+\[
+\int\overline f(-\Delta)^sf
+=\frac{c_{d,s}}2\iint\frac{|f(x)-f(y)|^2}{|x-y|^{d+2s}}\,\mathrm dx\,\mathrm dy
+=\frac1{(2\pi)^d}\int|\xi|^{2s}|\widehat f|^2.
+\]
+右端连同 $L^2$ 范数刻画 $H^s$；不能忽略 $\mathbb R^d$ 外延方式而直接套用于有边界域。
+\section{振荡、乘积与群展开补充}
+\subsection{振荡积分的消去与驻相法}\index{振荡积分的消去与驻相法|hyperpage}
+若 $\phi$ 为实光滑相位、$a\in C_c^\infty$ 且支撑上 $|\nabla\phi|>0$，反复分部积分给出 $\int e^{i\lambda\phi}a=O_N(\lambda^{-N})$。若支撑内仅一个临界点 $x_0$，且 $\det D^2\phi(x_0)\ne0$，则 $\lambda\to+\infty$ 时
+\[
+\int_{\mathbb R^d}e^{i\lambda\phi(x)}a(x)\,\mathrm dx
+=\left(\frac{2\pi}\lambda\right)^{d/2}
+\frac{e^{i\lambda\phi(x_0)+i\pi\operatorname{sgn}(D^2\phi(x_0))/4}a(x_0)}{\sqrt{|\det D^2\phi(x_0)|}}
++O(\lambda^{-d/2-1}).
+\]
+符号数为正特征值个数减负特征值个数。一维区间上若 $|\phi^{(k)}|\ge1$、$k\ge2$，则 van der Corput 估计为
+\[
+\left|\int_a^be^{i\lambda\phi}v\right|
+\le C_k\lambda^{-1/k}(\|v\|_\infty+\|v'\|_1)\quad(\lambda>0).
+\]
+\subsection{Fourier限制与球面衰减}\index{Fourier限制与球面衰减|hyperpage}
+设 $d\ge2$，$\sigma$ 为单位球面面积测度，则 $|\widehat\sigma(\xi)|\le C(1+|\xi|)^{-(d-1)/2}$。Stein--Tomas 定理为
+\[
+\|\widehat f|_{S^{d-1}}\|_{L^2(\mathrm d\sigma)}\le C\|f\|_{L^p(\mathbb R^d)},\qquad
+1\le p\le\frac{2(d+1)}{d+3}.
+\]
+先对 Schwartz 函数定义限制再延拓；一般 $L^p$ 函数的变换不能直接按任意球面逐点取值。
+\subsection{分数乘积估计}\index{分数乘积估计|hyperpage}
+对 $s>0$、$1<r,p_i,q_i<\infty$、$1/r=1/p_i+1/q_i$，光滑快速衰减函数满足
+\[
+\|J^s(fg)\|_r\le C\bigl(\|J^sf\|_{p_1}\|g\|_{q_1}
++\|f\|_{p_2}\|J^sg\|_{q_2}\bigr),\qquad J^s=(I-\Delta)^{s/2}.
+\]
+特别地 $H^s(\mathbb R^d)$ 在 $s>d/2$ 时为乘法代数：$\|fg\|_{H^s}\le C\|f\|_{H^s}\|g\|_{H^s}$。低频与高频相互作用可通过二进频率分解逐项控制。
+\subsection{紧群上的Peter--Weyl展开}\index{紧群上的Peter-Weyl展开|hyperpage}
+对紧群 $G$ 取总质量 $1$ 的 Haar 测度，$\widehat G$ 为不可约连续酉表示等价类。令
+\[
+\widehat f(\pi)=\int_Gf(g)\pi(g)^*\,\mathrm dg,
+\quad f(g)=\sum_{\pi\in\widehat G}d_\pi\operatorname{tr}(\widehat f(\pi)\pi(g)),
+\]
+则对 $f\in L^2(G)$，展开按 $L^2$ 收敛且
+\[
+\|f\|_2^2=\sum_{\pi\in\widehat G}d_\pi\|\widehat f(\pi)\|_{\rm HS}^2.
+\]
+矩阵系数在连续函数空间中一致稠密；该结论不意味着任意连续函数的普通部分和均一致收敛。交换紧群的所有不可约表示为一维。
+
+% References: https://arxiv.org/abs/1812.00850
+% https://www.math.ucla.edu/~tao/247b.1.07w/notes6.pdf
+% https://markwilliams.web.unc.edu/wp-content/uploads/sites/19674/2022/01/notesonharmonicanalysisB.pdf
+% https://www.math.purdue.edu/~lucier/692/wavelet.pdf
+\section{二进结构、鞅与Carleson嵌入}
+\subsection{Haar基与二进差分}\index{Haar基与二进差分|hyperpage}
+一维二进区间 $I$ 的归一化 Haar 函数为
+\[
+h_I=|I|^{-1/2}(\bm1_{I_L}-\bm1_{I_R}),\qquad
+f=\sum_{I\in\mathcal D}\langle f,h_I\rangle h_I\quad\text{于 }L^2(\mathbb R).
+\]
+它们为 $L^2(\mathbb R)$ 的标准正交基。若 $E_k$ 为长度 $2^{-k}$ 区间上的平均，则 $\Delta_k=E_{k+1}-E_k$。在有限区间或周期域上还需常数低频分量。
+\subsection{二进平方函数与无条件性}\index{二进平方函数与无条件性|hyperpage}
+令 $S_df=(\sum_{k\in\mathbb Z}|\Delta_kf|^2)^{1/2}$，则
+\[
+\|S_df\|_p\asymp\|f\|_p\qquad(1<p<\infty).
+\]
+等价地，任意符号 $\varepsilon_I\in\{-1,1\}$ 的 Haar 乘子满足 $\|\sum_I\varepsilon_I\langle f,h_I\rangle h_I\|_p\le C_p\|f\|_p$。端点 $L^1$ 不能直接保留同样的强型双侧估计。
+\subsection{Doob极大不等式}\index{Doob极大不等式|hyperpage}
+概率空间中，对 $f\in L^p$、$p>1$ 的条件期望鞅 $M_n=E[f\mid\mathcal F_n]$，
+\[
+\left\|\sup_n|M_n|\right\|_p\le\frac p{p-1}\|f\|_p.
+\]
+对非负次鞅的有限终时版本，右端改用终值范数。令 $A=\{\max_{j\le n}|M_j|>\lambda\}$，还有
+\[
+\lambda P(A)\le E[|M_n|\bm1_A].
+\]
+二进平均是相应条件期望模型，概率背景见\hyperref[chap:stochastic-processes]{随机过程}。
+\subsection{Carleson序列嵌入}\index{Carleson序列嵌入|hyperpage}
+若 $a_I\ge0$ 且 $\sum_{I\subset J}a_I\le A|J|$ 对所有二进 $J$ 成立，则
+\[
+\sum_Ia_I|f_I|^2\le4A\|f\|_2^2,\qquad f_I=|I|^{-1}\int_If.
+\]
+特别地，$a_I=|\langle b,h_I\rangle|^2$ 的条件对应二进 BMO，并控制旁积 $\Pi_bf=\sum_If_I\langle b,h_I\rangle h_I$。这是序列的打包条件，不是逐个 $a_I\le A|I|$ 就足够。
+\section{稀疏控制与定量加权估计}
+\subsection{稀疏族与双线性控制}\index{稀疏族与双线性控制|hyperpage}
+称立方体族 $\mathcal S$ 为 $\eta$-稀疏，若存在互不相交 $E_Q\subset Q$ 且 $|E_Q|\ge\eta|Q|$。定义
+\[
+\Lambda_{\mathcal S}(f,g)=\sum_{Q\in\mathcal S}|Q|\langle|f|\rangle_Q\langle|g|\rangle_Q.
+\]
+具有标准大小、Dini 光滑核及 $L^2$ 有界性的 Calderón--Zygmund 算子满足
+\[
+|\langle Tf,g\rangle|\le C\sum_{\ell=1}^{N_d}\Lambda_{\mathcal S_\ell}(f,g),
+\]
+对紧支撑有界测试成立。稀疏族可依赖 $f,g$；不是预先对所有输入固定的同一族。
+\subsection{尖锐Ap幂次与A2定理}\index{尖锐Ap幂次与A2定理|hyperpage}
+上述标准奇异积分对 $1<p<\infty$、$w\in A_p$ 满足
+\[
+\|Tf\|_{L^p(w)}\le C_{T,d,p}[w]_{A_p}^{\max(1,1/(p-1))}\|f\|_{L^p(w)}.
+\]
+特别地，$p=2$ 时为关于 $[w]_{A_2}$ 的线性界。定量常数包含算子核与未加权有界性，不能仅给定任意可测核就使用该公式。
+\subsection{A无穷特征与反向Hölder}\index{A无穷特征与反向Hölder|hyperpage}
+取 Fujii--Wilson 特征 $[w]_{A_\infty}=\sup_Qw(Q)^{-1}\int_QM(w\bm1_Q)$。存在维数常数 $c_d$，使 $0<\varepsilon\le(c_d[w]_{A_\infty})^{-1}$ 时
+\[
+\left(\frac1{|Q|}\int_Qw^{1+\varepsilon}\right)^{1/(1+\varepsilon)}
+\le2\frac1{|Q|}\int_Qw.
+\]
+这刻画权的自改进可积性；不同的 $A_\infty$ 特征定义会改变常数，不能把所有特征量当成数值相同。
+\subsection{Rubio de Francia外推}\index{Rubio de Francia外推|hyperpage}
+若一族非负函数对 $(F,G)$ 在某个 $1<p_0<\infty$ 对所有 $w\in A_{p_0}$ 满足
+\[
+\|F\|_{L^{p_0}(w)}\le C([w]_{A_{p_0}})\|G\|_{L^{p_0}(w)},
+\]
+则对每个 $1<p<\infty$、所有 $w\in A_p$ 有相应 $L^p(w)$ 界，常数对该函数族一致。假设要求遍历全部相应权；只知道一个固定权或未加权指数处的界不足以外推。
+\section{旁积、多线性与交换子}
+\subsection{Bony频率分解}\index{Bony频率分解|hyperpage}
+另选标准非齐次分解 $\Delta_j$、$j\ge-1$，有
+\[
+fg=T_fg+T_gf+R(f,g),\qquad
+T_fg=\sum_j\left(\sum_{k\le j-2}\Delta_kf\right)\Delta_jg,
+\]
+\[
+R(f,g)=\sum_{|j-k|\le1}\Delta_jf\Delta_kg.
+\]
+恒等式先对光滑函数成立，再在适当分布空间中延拓。三项对应低高、高低及相近频率；两个分布的乘积不一定有意义，必须检查这些级数收敛。
+\subsection{Coifman--Meyer双线性乘子}\index{Coifman-Meyer双线性乘子|hyperpage}
+若 $m(\xi,\eta)$ 在原点外光滑，并对所有多重指标的导数满足
+\[
+|\partial_\xi^\alpha\partial_\eta^\beta m(\xi,\eta)|
+\le C_{\alpha,\beta}(|\xi|+|\eta|)^{-|\alpha|-|\beta|},
+\]
+则 $T_m(f,g)=(2\pi)^{-2d}\iint e^{ix\cdot(\xi+\eta)}m\widehat f(\xi)\widehat g(\eta)\,\mathrm d\xi\,\mathrm d\eta$ 满足 $\|T_m(f,g)\|_r\le C\|f\|_p\|g\|_q$，这里取 $1<p,q,r<\infty$、$1/r=1/p+1/q$ 的强型范围。更低的拟 Banach 指数需另述。
+\subsection{BMO交换子估计}\index{BMO交换子估计|hyperpage}
+对标准 Calderón--Zygmund 算子，定义 $[b,T]f=bTf-T(bf)$。当 $b\in\mathrm{BMO}$，
+\[
+\|[b,T]f\|_p\le C_{T,d,p}\|b\|_{\mathrm{BMO}}\|f\|_p\qquad(1<p<\infty).
+\]
+先在适当测试函数上定义再延拓。常数 $b$ 的交换子为零；反向以交换子刻画 BMO 需算子的非退化性，不能对零算子等任意算子断言反向。
+\subsection{Besov乘法代数与低高估计}\index{Besov乘法代数与低高估计|hyperpage}
+对 $s>0$、$1\le p,q\le\infty$，有
+\[
+\|fg\|_{B^s_{p,q}}\le C\bigl(\|f\|_\infty\|g\|_{B^s_{p,q}}+
+\|g\|_\infty\|f\|_{B^s_{p,q}}\bigr).
+\]
+由 $B^s_{p,q}\hookrightarrow L^\infty$（$s>d/p$，以及 $s=d/p,q=1$ 的常用端点）可得相应乘法代数。低频项按非齐次范数保留；齐次空间还需处理多项式自由度。
+\section{时频表示、小波与逐点收敛}
+\subsection{短时Fourier与Moyal恒等式}\index{短时Fourier与Moyal恒等式|hyperpage}
+取非零窗口 $g\in L^2(\mathbb R^d)$，令
+\[
+V_gf(x,\xi)=\int f(t)\overline{g(t-x)}e^{-it\cdot\xi}\,\mathrm dt,
+\quad
+\frac1{(2\pi)^d}\iint|V_gf|^2=\|f\|_2^2\|g\|_2^2.
+\]
+并有弱意义重构 $f(t)=[(2\pi)^d\|g\|_2^2]^{-1}\iint V_gf(x,\xi)g(t-x)e^{it\cdot\xi}\,\mathrm dx\,\mathrm d\xi$。常数对应角频率约定；改用周频率时会改变。
+\subsection{Gabor框架与对偶窗口}\index{Gabor框架与对偶窗口|hyperpage}
+取 $a,b>0$、$m,n\in\mathbb Z^d$。对平移调制原子 $g_{m,n}(t)=e^{i(nb)\cdot t}g(t-ma)$，若
+\[
+A\|f\|_2^2\le\sum_{m,n}|\langle f,g_{m,n}\rangle|^2\le B\|f\|_2^2,
+\qquad0<A\le B<\infty,
+\]
+则框架算子 $Sf=\sum\langle f,g_{m,n}\rangle g_{m,n}$ 可逆，$f=\sum\langle f,g_{m,n}\rangle S^{-1}g_{m,n}$ 于 $L^2$ 无条件收敛。框架可冗余，不要求原子正交；下界缺失时不能直接求逆重构。
+\subsection{小波系数的Besov刻画}\index{小波系数的Besov刻画|hyperpage}
+取紧支撑、$C^N$ 光滑且具有 $N$ 阶消失矩的正交非齐次小波系，系数为低频 $a_k$ 与 $L^2$ 归一化细节 $c_{j,k,\ell}$。对 $0<s<N$、$1\le p,q\le\infty$，
+\[
+\|f\|_{B^s_{p,q}}\asymp\|a\|_{\ell^p}
++\left\|\left\{2^{j(s+d/2-d/p)}\|c_{j,\cdot,\cdot}\|_{\ell^p}\right\}_{j\ge0}\right\|_{\ell^q}.
+\]
+$\ell$ 遍历有限个小波类型，无穷指数改用上确界。小波本身的光滑阶数和消失矩限制允许的 $s$，并非任意固定粗糙小波可刻画全部光滑指数。
+\subsection{Carleson--Hunt极大部分和}\index{Carleson-Hunt极大部分和|hyperpage}
+一维周期 Fourier 部分和 $S_Nf=\sum_{|n|\le N}\widehat f(n)e^{inx}$ 满足
+\[
+\left\|\sup_N|S_Nf|\right\|_{L^p(\mathbb T)}\le C_p\|f\|_{L^p(\mathbb T)}
+\quad(1<p<\infty).
+\]
+从而 $S_Nf\to f$ a.e.。这是普通部分和的深层结论，与 Fejér 平均收敛不同；一般 $L^1$ 函数不能保留这一极大强型界或普遍的 a.e. 收敛结论。
+
+\section{正定函数、整函数与尖锐卷积补充}
+本节说明 Fourier 归一化；解析与振荡工具参见\cite{complex,williams}，尖锐常数参见\cite{beckner}。
+\subsection{Bochner正定函数表示}\index{Bochner正定函数表示|hyperpage}
+连续函数 $\phi:\mathbb R^d\to\mathbb C$ 满足 $\sum_{i,j}c_i\overline{c_j}\phi(x_i-x_j)\ge0$，当且仅当存在唯一有限正 Borel 测度 $\mu$，使
+\[
+\phi(x)=\int_{\mathbb R^d}e^{ix\cdot\xi}\,\mu(\mathrm d\xi).
+\]
+此时 $\mu(\mathbb R^d)=\phi(0)$。再加 $\phi(0)=1$ 即为概率的特征函数；正定条件比逐点非负强，并不要求 $\phi$ 本身取非负实值。
+\subsection{van der Corput导数消去估计}\index{van der Corput导数消去估计|hyperpage}
+若实相位 $\phi\in C^k[a,b]$、$k\ge2$ 且 $|\phi^{(k)}|\ge1$，则
+\[
+\left|\int_a^b e^{i\lambda\phi(t)}\,\mathrm dt\right|
+\le C_k\lambda^{-1/k},\qquad\lambda>0.
+\]
+$k=1$ 时需另加 $\phi'$ 单调。对 $a(t)\in C^1$ 的振幅，可将右端乘 $\|a\|_\infty+\|a'\|_1$；相位导数有零点时应分段或使用其他估计。
+\subsection{一维Paley--Wiener平方可积版本}\index{一维Paley-Wiener平方可积版本|hyperpage}
+采用 $\widehat f(\xi)=\int f(x)e^{-ix\xi}\,\mathrm dx$。$f\in L^2(\mathbb R)$ 的 Fourier 支集在 $[-R,R]$，当且仅当它有指数型不超过 $R$ 的整函数代表；前向延拓为
+\[
+F(z)=\frac1{2\pi}\int_{-R}^R\widehat f(\xi)e^{iz\xi}\,\mathrm d\xi,
+\qquad |F(z)|\le C_f e^{R|\operatorname{Im}z|}.
+\]
+逆向还要求整函数在实轴上的限制属于 $L^2$。这把频带限制与复平面增长联系起来，不是任意整函数的无条件采样定理。
+\subsection{Beckner尖锐Young卷积界}\index{Beckner尖锐Young卷积界|hyperpage}
+对 $1\le p,q,r\le\infty$、$1/p+1/q=1+1/r$，在 $\mathbb R^d$ 有
+\[
+\|f*g\|_r\le\left(\frac{C_pC_q}{C_r}\right)^d\|f\|_p\|g\|_q,
+\quad C_s=\frac{s^{1/(2s)}}{(s')^{1/(2s')}},\quad C_1=C_\infty=1.
+\]
+当三个指数均在内部范围时，适当尺度的 Gaussian 函数达到最佳常数；普通 Young 界中的常数一通常不是最佳常数。这里使用普通 Lebesgue 卷积，不含 Fourier 归一化因子。
+\clearpage
+\end{document}

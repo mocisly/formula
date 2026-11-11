@@ -1,0 +1,242 @@
+\documentclass[../main.tex]{subfiles}
+\begin{document}
+本章主要参考\cite{milneCA,stacks}。
+
+% Reference: https://www.jmilne.org/math/xnotes/CA.pdf
+\section{环与理想}
+\subsection{环、单位与零因子}\index{环、单位与零因子|hyperpage}
+本章环均含单位，同态保持单位；除特别说明均为交换环。加法构成 Abel 群，乘法结合并对加法分配。
+单位群 $R^\times=\{u:\exists v,uv=vu=1\}$。非零元素 $a$ 若存在非零 $b$ 使 $ab=0$，称零因子。非零交换环无零因子时称整环；每个非零元均可逆时称域。
+\[
+(\mathbb Z/n\mathbb Z)^\times=\{\overline a:\gcd(a,n)=1\},\qquad
+|(\mathbb Z/n\mathbb Z)^\times|=\varphi(n)\quad(n\ge2).
+\]
+\subsection{理想、商环与同构定理}\index{理想、商环与同构定理|hyperpage}
+理想 $I$ 为加法子群并满足 $RI\subseteq I$，商环运算由剩余类继承。环同态 $\phi:R\to S$ 满足
+\[
+R/\ker\phi\cong\operatorname{im}\phi.
+\]
+对理想 $I,J$，$(I+J)/J\cong I/(I\cap J)$；这里理想间的同构按未必含单位的环理解。若 $I\subseteq J$，则 $(R/I)/(J/I)\cong R/J$。
+主理想 $(a)=aR$。真理想 $\mathfrak p$ 素当且仅当 $R/\mathfrak p$ 为整环；$\mathfrak m$ 极大当且仅当 $R/\mathfrak m$ 为域。极大理想必素，反向一般不成立。
+\subsection{中国剩余定理与幂等元}\index{中国剩余定理与幂等元|hyperpage}
+若 $I_1,\ldots,I_r$ 两两互素，即 $I_i+I_j=R$（$i\ne j$），则
+\[
+R/\bigcap_iI_i\cong\prod_iR/I_i,\qquad\bigcap_iI_i=\prod_iI_i.
+\]
+幂等元满足 $e^2=e$；交换环中有分解 $R\cong eR\times(1-e)R$，映射 $r\mapsto(er,(1-e)r)$。非平凡幂等元反映环的直积分解。
+\section{多项式与整除}
+\subsection{多项式环、Euclid算法与不可约性}\index{多项式环、Euclid算法与不可约性|hyperpage}
+在域 $F$ 上，对 $g\ne0$，唯一存在 $q,r\in F[x]$ 使 $f=qg+r$、$\deg r<\deg g$ 或 $r=0$，因此 $F[x]$ 为 Euclid 整环。
+\[
+\gcd(f,g)=af+bg\quad(a,b\in F[x]),\qquad
+F[x]/(f)\text{ 为域}\iff f\text{ 在 }F[x]\text{ 中不可约}.
+\]
+不可约判别要求 $f$ 为非常数。对次数 $2$ 或 $3$ 的多项式，不可约当且仅当在 $F$ 中无根；次数更高时无根不足以保证不可约。
+\subsection{Euclid整环、PID与UFD}\index{Euclid整环、PID与UFD|hyperpage}
+Euclid 整环的范函数支持带余除法；PID 指每个理想均主的整环；UFD 指每个非零非单位可唯一分解为不可约元乘积（至相伴与次序）。
+\[
+\text{Euclid整环}\Longrightarrow\text{PID}\Longrightarrow\text{UFD}.
+\]
+UFD 中不可约元恰为素元；若 $R$ 为 UFD，则 $R[x]$ 仍为 UFD。故 $F[x,y]$ 为 UFD，但一般不是 PID，例如理想 $(x,y)$ 不主。
+\subsection{Gauss引理与Eisenstein判别}\index{Gauss引理与Eisenstein判别|hyperpage}
+整数多项式系数最大公因数为 $1$ 时称本原；本原多项式之积仍本原。$\mathbb Z[x]$ 中非常数本原多项式在 $\mathbb Q[x]$ 可约当且仅当它在 $\mathbb Z[x]$ 可分为两个正次数因子。
+若 $f(x)=a_nx^n+\cdots+a_0\in\mathbb Z[x]$，存在素数 $p$ 满足
+\[
+p\nmid a_n,\quad p\mid a_i\ (0\le i<n),\quad p^2\nmid a_0,
+\]
+则 $f$ 在 $\mathbb Q[x]$ 不可约。平移 $x\mapsto x+c$ 有时可使多项式满足此判别。
+\section{链条件、局部化与整扩张}
+\subsection{Noether性、Artin性与根理想}\index{Noether性、Artin性与根理想|hyperpage}
+Noether 环的理想升链稳定，等价于每个理想有限生成；Artin 环的理想降链稳定。交换 Artin 环为 Noether 环，且其素理想均极大。
+\[
+\sqrt I=\{a:\exists m\ge1,\ a^m\in I\}
+=\bigcap_{\mathfrak p\supseteq I,\ \mathfrak p\text{ 素}}\mathfrak p.
+\]
+空交取整个环。幂零根 $\sqrt{(0)}$ 为全部幂零元；Jacobson 根为所有极大理想的交。Hilbert 基定理：$R$ Noether 则 $R[x_1,\ldots,x_n]$ Noether。
+\subsection{局部化与整扩张的基本性质}\index{局部化与整扩张的基本性质|hyperpage}
+对乘法集 $S$，$S^{-1}R$ 将 $S$ 中元素变为单位；素理想 $\mathfrak p$ 处局部化 $R_{\mathfrak p}$ 只保留与该点相容的局部信息，详见代数几何章。
+若 $R\subseteq A$，元素 $\alpha\in A$ 满足首一关系
+\[
+\alpha^n+r_{n-1}\alpha^{n-1}+\cdots+r_0=0\quad(r_i\in R),
+\]
+则称 $\alpha$ 在 $R$ 上整；等价于 $R[\alpha]$ 是有限生成 $R$-模。若 $A$ 为有限生成 $R$-模，则其每个元素在 $R$ 上整；整扩张具有传递性。
+对整环 $R$，若其分式域内所有在 $R$ 上整的元素都属于 $R$，称 $R$ 整闭；UFD 必整闭，反向不总成立。
+\section{理想运算、根与局部环补充}
+\subsection{理想积、商理想与湮灭子}\index{理想积、商理想与湮灭子|hyperpage}
+对理想 $I,J,K\subseteq R$，定义 $IJ$ 为所有有限和 $\sum a_ib_i$（$a_i\in I,b_i\in J$）组成的理想，商理想为 $(I:J)=\{r:rJ\subseteq I\}$，则
+\begin{gather*}
+IJ\subseteq I\cap J,\quad I(J+K)=IJ+IK,\quad
+(I:J+K)=(I:J)\cap(I:K),\\
+(I\cap J:K)=(I:K)\cap(J:K),\qquad
+((I:J):K)=(I:JK).
+\end{gather*}
+若 $I+J=R$，则 $I\cap J=IJ$；一般不能将交写为积。模 $M$ 的湮灭子为 $\operatorname{Ann}_R(M)=\{r:rM=0\}$；特别地 $(0:(a))=\operatorname{Ann}_R(a)$。
+
+对互素正整数 $m,n$，$\mathbb Z/(mn)\cong\mathbb Z/m\times\mathbb Z/n$；但 $\mathbb Z/p^2$ 与 $\mathbb Z/p\times\mathbb Z/p$ 不同构，前者含非零幂零元，后者没有。
+
+\subsection{根理想、Jacobson根与单位判别}\index{根理想、Jacobson根与单位判别|hyperpage}
+常用根运算满足
+\begin{gather*}
+\sqrt{\sqrt I}=\sqrt I,\quad
+\sqrt{I\cap J}=\sqrt{IJ}=\sqrt I\cap\sqrt J,\quad
+\sqrt{I+J}=\sqrt{\sqrt I+\sqrt J},\\
+\operatorname{Nil}(R)=\bigcap_{\mathfrak p\in\operatorname{Spec}R}\mathfrak p,\qquad
+J(R)=\bigcap_{\mathfrak m\text{ 极大}}\mathfrak m.
+\end{gather*}
+交换环中 $a\in J(R)$ 当且仅当 $1-ra\in R^\times$ 对所有 $r\in R$ 成立。幂零元属于 $J(R)$，若 $a^n=0$，则
+\[
+(1-a)^{-1}=1+a+\cdots+a^{n-1}.
+\]
+多项式 $f=a_0+a_1x+\cdots+a_nx^n\in R[x]$ 为单位当且仅当 $a_0$ 为单位、其余系数均幂零；$f$ 幂零当且仅当全部系数幂零。
+
+\subsection{局部环与Nakayama引理}\index{局部环与Nakayama引理|hyperpage}
+非零交换环为局部环当且仅当有唯一极大理想 $\mathfrak m$，此时
+\[
+R^\times=R\setminus\mathfrak m,\qquad k=R/\mathfrak m\text{ 为剩余域}.
+\]
+若 $M$ 为有限生成模、$I\subseteq J(R)$，则
+\[
+IM=M\Longrightarrow M=0,\qquad M=N+IM\Longrightarrow M=N.
+\]
+第二式对任意子模 $N\subseteq M$ 成立。局部环中，有限生成模的最少生成元数为 $\dim_k M/\mathfrak mM$。有限生成条件不可省略，更多模论版本见第\ref{chap:module-theory}章。
+
+\section{局部化、多项式与消元补充}
+\subsection{分式等价、理想对应与局部判别}\index{分式等价、理想对应与局部判别|hyperpage}
+设 $S$ 含 $1$、不含 $0$ 且乘法封闭。局部化的分式等价关系为
+\[
+\frac as=\frac bt\iff\exists u\in S,\quad u(at-bs)=0.
+\]
+环含零因子时不能简化成 $at=bs$。局部化后的零判别为 $a/s=0\iff\exists u\in S,ua=0$，并有
+\begin{gather*}
+\operatorname{Spec}(S^{-1}R)\longleftrightarrow
+\{\mathfrak p\in\operatorname{Spec}R:\mathfrak p\cap S=\varnothing\},\\
+(S^{-1}I)^c=\{r:\exists s\in S,sr\in I\},\qquad
+S^{-1}(R/I)\cong S^{-1}R/S^{-1}I.
+\end{gather*}
+最后一式在左侧用 $S$ 的像局部化；若 $I\cap S\ne\varnothing$，两边均为零环。$R_{\mathfrak p}$ 的唯一极大理想为 $\mathfrak pR_{\mathfrak p}$，剩余域为 $\operatorname{Frac}(R/\mathfrak p)$。一个元素为零、一个模为零，均可通过在全部极大理想处的局部化判别。
+
+\subsection{多项式本原性、有理根与模素数判别}\index{多项式本原性、有理根与模素数判别|hyperpage}
+在 UFD $R$ 上，内容 $c(f)$ 为系数的最大公因子（至相伴），满足 $c(fg)\sim c(f)c(g)$。本原多项式的不可约性可在 $R[x]$ 与其分式域多项式环间比较。
+
+若整数多项式 $a_nx^n+\cdots+a_0$（$a_na_0\ne0$）有既约有理根 $r/s$，$s>0$，则 $r\mid a_0$、$s\mid a_n$。对素数 $p\nmid a_n$，若约化多项式 $\overline f\in\mathbb F_p[x]$ 不可约，则 $f$ 在 $\mathbb Q[x]$ 不可约（先去内容）。反向不成立：不可约多项式可以在某些模数下分裂。
+
+\subsection{结果式、判别式与对称多项式}\index{结果式、判别式与对称多项式|hyperpage}
+对域上次数 $m,n\ge1$ 的多项式 $f=a_m\prod_i(x-\alpha_i)$、$g$，结果式为 Sylvester 矩阵的行列式，并满足
+\[
+\operatorname{Res}(f,g)=a_m^n\prod_{i=1}^m g(\alpha_i),\qquad
+\operatorname{Res}(g,f)=(-1)^{mn}\operatorname{Res}(f,g).
+\]
+其为零当且仅当两者在代数闭包中有公共根。对 $f$ 次数 $n\ge1$，
+\[
+\operatorname{disc}(f)=a_n^{2n-2}\prod_{i<j}(\alpha_i-\alpha_j)^2
+=(-1)^{n(n-1)/2}a_n^{-1}\operatorname{Res}(f,f').
+\]
+判别式非零当且仅当 $f$ 无重根。对首一多项式，系数与初等对称式满足
+\[
+a_{n-k}=(-1)^ke_k(\alpha_1,\ldots,\alpha_n).
+\]
+任意对称多项式可唯一写为初等对称多项式的多项式，系数仍在原系数环中。
+
+\section{链条件、维数与整扩张补充}
+\subsection{准素分解与Artin环分解}\index{准素分解与Artin环分解|hyperpage}
+真理想 $Q$ 为准素指 $ab\in Q$、$a\notin Q$ 时某个 $b^n\in Q$；其根 $\sqrt Q$ 为素理想。Noether 环的任意真理想都有有限准素分解
+\[
+I=Q_1\cap\cdots\cap Q_r.
+\]
+在不可冗余且各 $\sqrt{Q_i}$ 不同的分解中，出现的素理想集合由 $I$ 确定；准素分量本身一般不唯一。$\mathbb Z$ 中 $(n)=\bigcap_{p^a\parallel n}(p^a)$ 是典型例子（$n\ge2$）。
+
+交换 Artin 环只有有限多个极大理想，Jacobson 根幂零。对足够大的 $N$，
+\[
+R\cong\prod_{i=1}^rR/\mathfrak m_i^N\cong\prod_{i=1}^rR_{\mathfrak m_i}.
+\]
+每个因子是局部 Artin 环。约化 Artin 环因此为有限个域的直积，而不一定本身是域。
+
+\subsection{Krull维数与高度定理}\index{Krull维数与高度定理|hyperpage}
+Krull 维数是素理想严格升链长度的上确界：
+\[
+\dim R=\sup\{r:\mathfrak p_0\subsetneq\cdots\subsetneq\mathfrak p_r\},\qquad
+\operatorname{ht}(\mathfrak p)=\dim R_{\mathfrak p}.
+\]
+域维数为零，非域 PID 维数为一，$\dim k[x_1,\ldots,x_n]=n$。Noether 环中，若 $\mathfrak p$ 为含 $r$ 个元素生成的真理想的极小素理想，则 $\operatorname{ht}(\mathfrak p)\le r$（Krull 高度定理）。对非零 Noether 环，$\dim R[x]=\dim R+1$，无穷维时按无穷解释。
+
+若 $A$ 为域 $k$ 上有限生成整代数，则
+\[
+\dim A=\operatorname{trdeg}_k\operatorname{Frac}(A).
+\]
+其几何意义及 Noether 正规化见第\ref{chap:algebraic-geometry}章。
+
+\subsection{整扩张、上升与整闭性}\index{整扩张、上升与整闭性|hyperpage}
+设 $R\subseteq A$ 为整扩张，则每个 $\mathfrak p\in\operatorname{Spec}R$ 都是某个 $\mathfrak q\in\operatorname{Spec}A$ 的收缩（lying over），素理想链可向上提升（going up），并有
+\[
+\dim A=\dim R,\qquad
+\mathfrak q\text{ 极大}\iff\mathfrak q\cap R\text{ 极大}.
+\]
+同一收缩之上的可比较素理想必相等（incomparability）。若 $R$ 整闭且 $A$ 为整环，还可使用下降定理；一般整扩张不能无条件使用下降定理。
+
+若 $A=R[a_1,\ldots,a_n]$ 且各 $a_i$ 整，则 $A$ 为有限 $R$-模。整环 $R$ 的分式域为 $K$，$R$ 的整闭包为 $\{x\in K:x\text{ 在 }R\text{ 上整}\}$，它是子环且整闭。
+
+\section{赋值、完备化与非交换环补充}
+\subsection{离散赋值环与Dedekind整环}\index{离散赋值环与Dedekind整环|hyperpage}
+规范化离散赋值 $v:K^\times\to\mathbb Z$ 为满射，满足 $v(ab)=v(a)+v(b)$、$v(a+b)\ge\min(v(a),v(b))$，约定 $v(0)=+\infty$。其赋值环与极大理想为
+\[
+R=\{x:v(x)\ge0\},\qquad\mathfrak m=\{x:v(x)>0\}=(\pi),\qquad v(\pi)=1.
+\]
+离散赋值环每个非零理想均为 $(\pi^n)$；每个非零元素唯一写成 $u\pi^n$，其中 $u$ 为单位。非域 Noether 整闭的一维整环称 Dedekind 整环，每个非零理想唯一分解为非零素理想之积，且非零素理想处局部化为离散赋值环。
+
+Dedekind 整环的非零分式理想均可逆，$I^{-1}=\{x\in K:xI\subseteq R\}$，$II^{-1}=R$。元素的唯一分解仍可能失败；数域整数环的应用见第\ref{chap:algebraic-number-theory}章。
+
+\subsection{理想进完备化与Krull交定理}\index{理想进完备化与Krull交定理|hyperpage}
+对理想 $I$，$I$ 进完备化为逆极限
+\[
+\widehat R=\varprojlim_nR/I^n
+=\{(r_n):r_{n+1}\equiv r_n\pmod{I^n}\},\qquad r_n\in R/I^n.
+\]
+自然映射 $R\to\widehat R$ 的核为 $\bigcap_n I^n$。Noether 局部环 $(R,\mathfrak m)$ 中，$\bigcap_n\mathfrak m^n=0$（Krull 交定理），故自然映射单射。典型例子为
+\[
+\widehat{\mathbb Z_{(p)}}\cong\mathbb Z_p,\qquad
+\widehat{k[x]_{(x)}}\cong k[[x]].
+\]
+这里两种完备化分别对理想 $(p)$ 与 $(x)$；环已分离并不等于已完备。
+
+\subsection{矩阵环、除环与Wedderburn结构}\index{矩阵环、除环与Wedderburn结构|hyperpage}
+本小节允许非交换环，理想指双边理想。对含单位的环 $R$，矩阵环的每个双边理想均为 $M_n(I)$，且
+\[
+Z(M_n(R))=\{aI_n:a\in Z(R)\},\qquad
+J(M_n(R))=M_n(J(R)).
+\]
+若 $D$ 为除环，则 $M_n(D)$ 为单 Artin 环；单 Artin 环反之均有此形式。半单 Artin 环为有限个矩阵除环的直积
+\[
+R\cong\prod_{i=1}^rM_{n_i}(D_i).
+\]
+这是 Wedderburn--Artin 定理。有限除环一定交换（Wedderburn 小定理），因而为有限域；无限除环则可能非交换，如实四元数环。
+\section{理想滤过、完备化与重数补充}
+本节均取交换含幺 Noether 环，基础和证明参见\cite{milneCA,stacks}。
+\subsection{Artin--Rees交滤过公式}\index{Artin-Rees交滤过公式|hyperpage}
+设 $M$ 有限生成、$N\subseteq M$、$I$ 为理想。存在 $k\ge0$，使对所有 $n\ge k$，
+\[
+I^nM\cap N=I^{n-k}(I^kM\cap N).
+\]
+因此子模从 $M$ 继承的滤过与自身 $I$-进滤过等价。这是完备化保持有限生成模短正合列的关键；无有限性假设时不应直接推广。
+\subsection{Noether环完备化的平坦性}\index{Noether环完备化的平坦性|hyperpage}
+令 $\widehat R=\varprojlim R/I^n$。对有限生成模 $M$，有
+\[
+\widehat M\cong M\otimes_R\widehat R,\qquad
+\widehat R\text{ 是平坦 }R\text{-代数}.
+\]
+若 $I\subseteq\operatorname{Jac}(R)$，则 $\widehat R$ 忠实平坦；局部环的极大理想进完备化满足此条件。平坦与忠实平坦是不同结论。
+\subsection{Hilbert--Samuel长度多项式}\index{Hilbert-Samuel长度多项式|hyperpage}
+对 $d$ 维 Noether 局部环 $(R,\mathfrak m)$ 及 $\mathfrak m$-准素理想 $I$，$\ell_R(R/I^{n+1})$ 在 $n$ 充分大时为次数 $d$ 的多项式。若 $d\ge1$，
+\[
+\ell_R(R/I^{n+1})=\frac{e(I,R)}{d!}n^d+O(n^{d-1}),\qquad e(I,R)\in\mathbb Z_{>0}.
+\]
+零维时长度最终稳定。若 $R$ 为正则局部环且 $I=\mathfrak m$，则对所有 $n\ge0$ 长度恰为 $\binom{n+d}{d}$。
+\subsection{Rees代数与伴随分次环}\index{Rees代数与伴随分次环|hyperpage}
+设 $I$ 为理想，定义
+\[
+\mathcal R(I)=\bigoplus_{n\ge0}I^nt^n\subseteq R[t],\qquad
+\operatorname{gr}_I R=\bigoplus_{n\ge0}I^n/I^{n+1}
+\cong\mathcal R(I)/I\mathcal R(I).
+\]
+Rees 代数记录整个滤过，其 Proj 描述沿 $I$ 的吹起；伴随分次环记录各阶初始项。两者虽相关，却不能把 $t$ 视为总在 $\mathcal R(I)$ 中的独立生成元。
+\clearpage
+\end{document}

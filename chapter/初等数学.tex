@@ -1,0 +1,413 @@
+\documentclass[../main.tex]{subfiles}
+\begin{document}
+本章主要参考\cite{openstax,hlp}。
+
+\section{初等代数}
+本章未另行说明时，变量取实数，数列的项数取正整数；所有分式均要求分母非零。
+\subsection{幂与根式}\index{幂与根式|hyperpage}
+对 $a,b>0$、$\alpha,\beta\in\mathbb R$，有
+\begin{align*}
+a^\alpha a^\beta&=a^{\alpha+\beta}, &
+\frac{a^\alpha}{a^\beta}&=a^{\alpha-\beta},\\
+(a^\alpha)^\beta&=a^{\alpha\beta}, &
+(ab)^\alpha&=a^\alpha b^\alpha, &
+\left(\frac ab\right)^\alpha&=\frac{a^\alpha}{b^\alpha}.
+\end{align*}
+对 $a>0$、$m\in\mathbb Z$、$n\in\mathbb N^*$，有 $a^{m/n}=\sqrt[n]{a^m}$。
+实根式中，偶次根取非负值，奇次根可用于任意实数：
+\begin{align*}
+\sqrt{a^2}&=|a|, & \sqrt[2n]{a^{2n}}&=|a|, &
+\sqrt[2n+1]{a^{2n+1}}&=a,\\
+\sqrt{ab}&=\sqrt a\sqrt b\quad(a,b\ge0), &
+\sqrt{\frac ab}&=\frac{\sqrt a}{\sqrt b}\quad(a\ge0,b>0).
+\end{align*}
+分母有理化的常用公式为
+\[
+\frac1{\sqrt a+\sqrt b}=\frac{\sqrt a-\sqrt b}{a-b}
+\quad(a,b\ge0,\ a\ne b).
+\]
+易错点：$\sqrt{a^2}$ 不可直接写成 $a$；实指数的运算法则在这里以正底数为前提。
+\subsection{指数与对数}\index{指数与对数|hyperpage}
+设 $a>0$、$a\ne1$、$x,y>0$、$r\in\mathbb R$，则
+\begin{align*}
+\log_a1&=0, & \log_aa&=1, & a^{\log_ax}&=x, & \log_a(a^r)&=r,\\
+\log_a(xy)&=\log_ax+\log_ay, &
+\log_a\frac xy&=\log_ax-\log_ay,\\
+\log_a(x^r)&=r\log_ax, &
+\log_ax&=\frac{\ln x}{\ln a}.
+\end{align*}
+若另有 $b>0$、$b\ne1$，则
+\[
+\log_ax=\frac{\log_bx}{\log_ba},\qquad
+\log_ab\,\log_ba=1.
+\]
+当 $a>1$ 时，$a^x$ 与 $\log_ax$ 都严格递增；当 $0<a<1$ 时，两者都严格递减。
+因此，对 $u,v>0$，
+\[
+\log_au<\log_av\iff
+\begin{cases}u<v,&a>1,\\u>v,&0<a<1.\end{cases}
+\]
+\subsection{乘法公式与因式分解}\index{乘法公式与因式分解|hyperpage}
+设 $a,b,c\in\mathbb R$，$n\in\mathbb N^*$。
+\begin{align*}
+(a\pm b)^2&=a^2\pm2ab+b^2, & a^2-b^2&=(a-b)(a+b),\\
+(a\pm b)^3&=a^3\pm3a^2b+3ab^2\pm b^3,\\
+a^3\pm b^3&=(a\pm b)(a^2\mp ab+b^2),\\
+a^n-b^n&=(a-b)\sum_{k=0}^{n-1}a^{n-1-k}b^k,\\
+a^3+b^3+c^3-3abc&=(a+b+c)(a^2+b^2+c^2-ab-bc-ca).
+\end{align*}
+当 $n$ 为奇数时，$a^n+b^n=(a+b)\sum_{k=0}^{n-1}(-1)^ka^{n-1-k}b^k$。
+\subsection{多项式的余式、因式与韦达定理}\index{多项式的余式、因式与韦达定理|hyperpage}
+多项式 $P(x)$ 除以 $x-a$ 的余数为 $P(a)$，因而
+\[
+P(x)=(x-a)Q(x)+P(a),\qquad P(a)=0\iff(x-a)\mid P(x).
+\]
+设 $P(x)=a_nx^n+\cdots+a_1x+a_0$，$a_n\ne0$，其复根按重数计为 $r_1,\ldots,r_n$，则
+\[
+P(x)=a_n\prod_{i=1}^n(x-r_i).
+\]
+韦达定理为
+\[
+\sum_{1\le i_1<\cdots<i_k\le n}r_{i_1}\cdots r_{i_k}
+=(-1)^k\frac{a_{n-k}}{a_n}\quad(1\le k\le n).
+\]
+特别地，
+\[
+\sum_{i=1}^nr_i=-\frac{a_{n-1}}{a_n},\qquad
+\sum_{i<j}r_ir_j=\frac{a_{n-2}}{a_n}\ (n\ge2),\qquad
+\prod_{i=1}^nr_i=(-1)^n\frac{a_0}{a_n}.
+\]
+\subsection{一元二次方程与二次函数}\index{一元二次方程与二次函数|hyperpage}
+设 $f(x)=ax^2+bx+c$，$a\ne0$，$\Delta=b^2-4ac$，则
+\begin{align*}
+f(x)&=a\left(x+\frac b{2a}\right)^2-\frac{\Delta}{4a},\\
+x_{1,2}&=\frac{-b\pm\sqrt\Delta}{2a}, &
+x_1+x_2&=-\frac ba, & x_1x_2&=\frac ca.
+\end{align*}
+实根存在当且仅当 $\Delta\ge0$。在实根存在时，
+\begin{align*}
+f(x)&=a(x-x_1)(x-x_2),\\
+x_1^2+x_2^2&=\frac{b^2-2ac}{a^2}, &
+(x_1-x_2)^2&=\frac\Delta{a^2}.
+\end{align*}
+对称轴为 $x=-b/(2a)$，顶点为 $(-b/(2a),-\Delta/(4a))$。
+当 $a>0$ 时，最小值为 $-\Delta/(4a)$；当 $a<0$ 时，此值为最大值。
+根的符号判据（允许重根）为
+\begin{align*}
+x_1,x_2>0&\iff\Delta\ge0,\quad -b/a>0,\quad c/a>0,\\
+x_1,x_2<0&\iff\Delta\ge0,\quad -b/a<0,\quad c/a>0,\\
+\text{两根异号}&\iff c/a<0.
+\end{align*}
+\subsection{绝对值与基本不等式的解集}\index{绝对值与基本不等式的解集|hyperpage}
+\[
+|x|=\begin{cases}x,&x\ge0,\\-x,&x<0,\end{cases}\qquad
+|xy|=|x||y|,\qquad |x-y|=|y-x|.
+\]
+对 $r>0$，有
+\begin{align*}
+|x-c|<r&\iff c-r<x<c+r,\\
+|x-c|\le r&\iff c-r\le x\le c+r,\\
+|x-c|>r&\iff x<c-r\ \text{或}\ x>c+r,\\
+|x-c|\ge r&\iff x\le c-r\ \text{或}\ x\ge c+r.
+\end{align*}
+若 $a>0$、$x_1<x_2$，则
+\begin{align*}
+a(x-x_1)(x-x_2)\le0&\iff x\in[x_1,x_2],\\
+a(x-x_1)(x-x_2)\ge0&\iff x\in(-\infty,x_1]\cup[x_2,\infty).
+\end{align*}
+当 $a<0$ 时，上述两个不等号的方向对调。对于一般二次式，还需单独考虑重根与无实根的情形。
+分式不等式应按分子、分母零点分区间讨论，并排除分母零点；根式方程平方前应保留定义域与符号条件。
+\subsection{不等式}\index{不等式|hyperpage}
+\begin{align*}
+|a+b|&\le |a|+|b|, & \bigl||a|-|b|\bigr|&\le |a-b|,\\
+\left(\sum_{i=1}^n a_ib_i\right)^2&\le\left(\sum_{i=1}^n a_i^2\right)\left(\sum_{i=1}^n b_i^2\right).
+\end{align*}
+对 $a_i\ge0$，均值不等式为
+\[
+\sqrt[n]{a_1\cdots a_n}\le\frac{a_1+\cdots+a_n}{n}\le\sqrt{\frac{a_1^2+\cdots+a_n^2}{n}}.
+\]
+均值等号当且仅当各 $a_i$ 相等。若 $a_i>0$，还可补入调和平均数：
+\[
+\frac{n}{\sum_{i=1}^n1/a_i}
+\le\sqrt[n]{a_1\cdots a_n}
+\le\frac{a_1+\cdots+a_n}{n}
+\le\sqrt{\frac{a_1^2+\cdots+a_n^2}{n}}.
+\]
+上式各处等号均当且仅当所有 $a_i$ 相等。柯西不等式的等号条件为两向量 $(a_i)$、$(b_i)$ 线性相关。
+对 $a_i>0$、$x_i\in\mathbb R$，有
+\[
+\sum_{i=1}^n\frac{x_i^2}{a_i}\ge
+\frac{(x_1+\cdots+x_n)^2}{a_1+\cdots+a_n},
+\]
+等号当且仅当 $x_1/a_1=\cdots=x_n/a_n$。加权均值不等式为
+\[
+\prod_{i=1}^na_i^{w_i}\le\sum_{i=1}^nw_i a_i
+\quad(a_i>0,\ w_i\ge0,\ \textstyle\sum_iw_i=1),
+\]
+等号当且仅当所有正权重对应的 $a_i$ 相等。另有
+\[
+a^2+b^2+c^2-ab-bc-ca
+=\tfrac12\bigl[(a-b)^2+(b-c)^2+(c-a)^2\bigr]\ge0,
+\]
+等号当且仅当 $a=b=c$。伯努利不等式与指数、对数不等式为
+\begin{align*}
+(1+x)^r&\ge1+rx\quad(x>-1,\ r\ge1),\\
+\ln x&\le x-1\quad(x>0), & e^x&\ge1+x\quad(x\in\mathbb R).
+\end{align*}
+第一式等号当且仅当 $x=0$ 或 $r=1$；后两式等号分别当且仅当 $x=1$、$x=0$。
+\enlargethispage{\baselineskip}
+\subsection{排列、组合与二项式定理}\index{排列、组合与二项式定理|hyperpage}
+对整数 $0\le k\le n$，约定 $0!=1$。
+\begin{align*}
+A_n^k&=\frac{n!}{(n-k)!}, & \binom nk&=\frac{n!}{k!(n-k)!},\\
+\binom nk&=\binom n{n-k}, & \binom nk+\binom n{k+1}&=\binom{n+1}{k+1},\\
+(a+b)^n&=\sum_{k=0}^n\binom nk a^{n-k}b^k,\\
+\sum_{k=0}^n\binom nk&=2^n, & \sum_{k=0}^n(-1)^k\binom nk&=0\quad(n\ge1).
+\end{align*}
+允许重复的有序选取有 $n^k$ 种；从 $n\ge1$ 类对象中可重复选 $k$ 个有 $\binom{n+k-1}{k}$ 种。
+\section{初等函数}
+\subsection{函数的图像变换、奇偶性与周期性}\index{函数的图像变换、奇偶性与周期性|hyperpage}
+设 $g(x)=Af(Bx+C)+D$，其中 $B\ne0$，则图像上的点按下式变换：
+\[
+(u,f(u))\longmapsto\left(\frac{u-C}{B},\,Af(u)+D\right).
+\]
+$g$ 的定义域为 $\{x:Bx+C\in D_f\}$，其中 $D_f$ 为 $f$ 的定义域。
+在关于原点对称的定义域上，
+\[
+f(-x)=f(x)\quad\text{（偶函数）},\qquad
+f(-x)=-f(x)\quad\text{（奇函数）}.
+\]
+周期 $T>0$ 满足 $f(x+T)=f(x)$，并要求定义域在平移 $T$ 后保持不变。
+若 $f$ 的最小正周期为 $T$ 且 $A\ne0$，则 $Af(Bx+C)+D$ 的最小正周期为 $T/|B|$。
+\subsection{复合函数与反函数}\index{复合函数与反函数|hyperpage}
+\[
+(f\circ g)(x)=f(g(x)),\qquad
+D_{f\circ g}=\{x\in D_g:g(x)\in D_f\}.
+\]
+若 $f:D\to R$ 为双射，则反函数 $f^{-1}:R\to D$ 满足
+\[
+f^{-1}(f(x))=x\quad(x\in D),\qquad
+f(f^{-1}(y))=y\quad(y\in R).
+\]
+反函数图像与原函数图像关于直线 $y=x$ 对称。若 $f$、$g$ 为可复合的双射，则
+\[
+(f\circ g)^{-1}=g^{-1}\circ f^{-1}.
+\]
+例如 $a^x$ 与 $\log_ax$ 互为反函数（$a>0$、$a\ne1$）。记号 $f^{-1}$ 表示反函数，不能与倒数 $1/f$ 混淆。
+\section{数列与求和}
+\subsection{常用的几种数列的和}\index{常用的几种数列的和|hyperpage}
+等差数列 $a_k=a_1+(k-1)d$；等比数列 $a_k=a_1q^{k-1}$。
+\begin{align*}
+\sum_{k=1}^n a_k&=\frac{n(a_1+a_n)}2=na_1+\frac{n(n-1)}2d\quad\text{（等差）},\\
+\sum_{k=1}^n a_1q^{k-1}&=\begin{cases}a_1(1-q^n)/(1-q),&q\ne1,\\na_1,&q=1,\end{cases}\\
+\sum_{k=0}^\infty aq^k&=\frac{a}{1-q}\quad(|q|<1),\\
+\sum_{k=1}^n k&=\frac{n(n+1)}2,\qquad \sum_{k=1}^n k^2=\frac{n(n+1)(2n+1)}6,\\
+\sum_{k=1}^n k^3&=\left[\frac{n(n+1)}2\right]^2,\qquad
+\sum_{k=1}^n\frac1{k(k+1)}=1-\frac1{n+1}.
+\end{align*}
+更高次幂的一个常用求和式为
+\[
+\sum_{k=1}^n k^4=\frac{n(n+1)(2n+1)(3n^2+3n-1)}{30}.
+\]
+\subsection{一阶线性递推数列}\index{一阶线性递推数列|hyperpage}
+设 $a_{n+1}=pa_n+q$，$p,q\in\mathbb R$，初值为 $a_1$，则
+\[
+a_n=\begin{cases}
+p^{n-1}a_1+q\dfrac{1-p^{n-1}}{1-p},&p\ne1,\\[4pt]
+a_1+(n-1)q,&p=1.
+\end{cases}
+\]
+其中 $p=0$ 时直接有 $a_n=q$（$n\ge2$）；通式中 $n=1$ 的零次幂取为 $1$。
+当 $p\ne1$ 时，令 $L=q/(1-p)$，则
+\[
+a_{n+1}-L=p(a_n-L),\qquad a_n-L=p^{n-1}(a_1-L).
+\]
+\subsection{错位相减与裂项求和}\index{错位相减与裂项求和|hyperpage}
+对 $q\ne1$，有限的等差乘等比求和为
+\[
+\sum_{k=1}^n kq^{k-1}
+=\frac{1-(n+1)q^n+nq^{n+1}}{(1-q)^2}.
+\]
+$q=0$ 时首项中的 $q^0$ 取为 $1$；$q=1$ 时原和为 $n(n+1)/2$。
+更一般地，对 $q\ne1$，
+\begin{align*}
+\sum_{k=1}^n[\alpha+(k-1)\beta]q^{k-1}
+&=(\alpha-\beta)\frac{1-q^n}{1-q}\\
+&\quad+\beta\frac{1-(n+1)q^n+nq^{n+1}}{(1-q)^2}.
+\end{align*}
+对正整数 $m,n$，裂项公式为
+\[
+\frac1{k(k+m)}=\frac1m\left(\frac1k-\frac1{k+m}\right),
+\]
+\[
+\sum_{k=1}^n\frac1{k(k+m)}
+=\frac1m\left(\sum_{k=1}^m\frac1k-\sum_{k=n+1}^{n+m}\frac1k\right).
+\]
+一般的相消求和式为
+\[
+\sum_{k=1}^n(b_k-b_{k+1})=b_1-b_{n+1}.
+\]
+\clearpage
+\section{平面三角}
+本节角度均用弧度表示；含商的公式要求分母非零。
+\subsection{三角函数之间的关系}\index{三角函数之间的关系|hyperpage}
+\begin{align*}
+\sin^2x+\cos^2x&=1, & 1+\tan^2x&=\sec^2x, & 1+\cot^2x&=\csc^2x,\\
+\tan x&=\frac{\sin x}{\cos x}, & \cot x&=\frac{\cos x}{\sin x},\\
+\sin(\alpha\pm\beta)&=\sin\alpha\cos\beta\pm\cos\alpha\sin\beta,\\
+\cos(\alpha\pm\beta)&=\cos\alpha\cos\beta\mp\sin\alpha\sin\beta,\\
+\tan(\alpha\pm\beta)&=\frac{\tan\alpha\pm\tan\beta}{1\mp\tan\alpha\tan\beta}.
+\end{align*}
+\subsection{诱导公式、周期与三角方程}\index{诱导公式、周期与三角方程|hyperpage}
+对 $k\in\mathbb Z$，有
+\begin{align*}
+\sin(-x)&=-\sin x, & \cos(-x)&=\cos x, & \tan(-x)&=-\tan x,\\
+\sin(x+2k\pi)&=\sin x, & \cos(x+2k\pi)&=\cos x, & \tan(x+k\pi)&=\tan x,\\
+\sin(\pi-x)&=\sin x, & \cos(\pi-x)&=-\cos x, & \tan(\pi-x)&=-\tan x,\\
+\sin(\pi+x)&=-\sin x, & \cos(\pi+x)&=-\cos x, & \tan(\pi+x)&=\tan x,\\
+\sin\left(\frac\pi2-x\right)&=\cos x, &
+\cos\left(\frac\pi2-x\right)&=\sin x, &
+\tan\left(\frac\pi2-x\right)&=\cot x.
+\end{align*}
+当 $A\ne0$、$\omega\ne0$ 时，$A\sin(\omega x+\varphi)$ 与 $A\cos(\omega x+\varphi)$ 的最小正周期为 $2\pi/|\omega|$，$A\tan(\omega x+\varphi)$ 的最小正周期为 $\pi/|\omega|$。
+基本三角方程的通解为
+\begin{align*}
+\sin x=\sin\alpha&\iff x=k\pi+(-1)^k\alpha,\\
+\cos x=\cos\alpha&\iff x=2k\pi\pm\alpha,\\
+\tan x=\tan\alpha&\iff x=k\pi+\alpha\quad(\cos\alpha\ne0),
+\end{align*}
+其中 $k\in\mathbb Z$。方程 $\sin x=c$、$\cos x=c$ 有实解当且仅当 $|c|\le1$。
+\subsection{辅助角公式与三角函数的值域}\index{辅助角公式与三角函数的值域|hyperpage}
+设 $a,b$ 不同时为零，令 $R=\sqrt{a^2+b^2}>0$，选择 $\varphi$ 使
+\[
+\cos\varphi=\frac aR,\qquad \sin\varphi=\frac bR,
+\]
+则
+\[
+a\sin x+b\cos x=R\sin(x+\varphi).
+\]
+当 $x$ 遍历 $\mathbb R$ 时，该式值域为 $[-R,R]$；最大值在 $x+\varphi=\pi/2+2k\pi$ 时取得，最小值在 $x+\varphi=-\pi/2+2k\pi$ 时取得。
+因此，$a\sin x+b\cos x=c$ 有实解当且仅当 $|c|\le R$。
+若 $a=b=0$，则表达式恒为 $0$，方程仅在 $c=0$ 时成立。
+\subsection{倍角三角函数}\index{倍角三角函数|hyperpage}
+\begin{align*}
+\sin2x&=2\sin x\cos x, & \cos2x&=1-2\sin^2x=2\cos^2x-1,\\
+\tan2x&=\frac{2\tan x}{1-\tan^2x},\\
+\sin3x&=3\sin x-4\sin^3x, & \cos3x&=4\cos^3x-3\cos x,\\
+\sin^2\frac x2&=\frac{1-\cos x}2, & \cos^2\frac x2&=\frac{1+\cos x}2,\\
+\tan\frac x2&=\frac{\sin x}{1+\cos x}=\frac{1-\cos x}{\sin x}.
+\end{align*}
+令 $t=\tan(x/2)$，则 $\sin x=2t/(1+t^2)$，$\cos x=(1-t^2)/(1+t^2)$。
+\subsection{降幂公式与三角函数的有限求和}\index{降幂公式与三角函数的有限求和|hyperpage}
+\begin{align*}
+\sin^4x&=\frac{3-4\cos2x+\cos4x}{8},\\
+\cos^4x&=\frac{3+4\cos2x+\cos4x}{8},\\
+\sin^2x\cos^2x&=\frac{1-\cos4x}{8}.
+\end{align*}
+设 $n\in\mathbb N^*$。当 $\sin(d/2)\ne0$ 时，
+\begin{align*}
+\sum_{k=0}^{n-1}\sin(a+kd)
+&=\frac{\sin(nd/2)}{\sin(d/2)}\sin\left(a+\frac{n-1}{2}d\right),\\
+\sum_{k=0}^{n-1}\cos(a+kd)
+&=\frac{\sin(nd/2)}{\sin(d/2)}\cos\left(a+\frac{n-1}{2}d\right).
+\end{align*}
+当 $d\in2\pi\mathbb Z$ 时，上述两个和分别为 $n\sin a$ 与 $n\cos a$。
+\subsection{三角函数的和差化积与积化和差公式}\index{三角函数的和差化积与积化和差公式|hyperpage}
+\begin{align*}
+\sin\alpha+\sin\beta&=2\sin\frac{\alpha+\beta}2\cos\frac{\alpha-\beta}2,\\
+\sin\alpha-\sin\beta&=2\cos\frac{\alpha+\beta}2\sin\frac{\alpha-\beta}2,\\
+\cos\alpha+\cos\beta&=2\cos\frac{\alpha+\beta}2\cos\frac{\alpha-\beta}2,\\
+\cos\alpha-\cos\beta&=-2\sin\frac{\alpha+\beta}2\sin\frac{\alpha-\beta}2,\\
+\sin\alpha\cos\beta&=\tfrac12[\sin(\alpha+\beta)+\sin(\alpha-\beta)],\\
+\cos\alpha\cos\beta&=\tfrac12[\cos(\alpha+\beta)+\cos(\alpha-\beta)],\\
+\sin\alpha\sin\beta&=\tfrac12[\cos(\alpha-\beta)-\cos(\alpha+\beta)].
+\end{align*}
+\subsection{边角关系}\index{边角关系|hyperpage}
+三角形内角 $A+B+C=\pi$，对边为 $a,b,c$，面积为 $\Delta$，外接圆、内切圆半径为 $R,r$，半周长 $s=(a+b+c)/2$。
+\begin{align*}
+\frac a{\sin A}&=\frac b{\sin B}=\frac c{\sin C}=2R,\\
+c^2&=a^2+b^2-2ab\cos C,\\
+\Delta&=\tfrac12ab\sin C=\frac{abc}{4R}=rs=\sqrt{s(s-a)(s-b)(s-c)}.
+\end{align*}
+\subsection{反三角函数}\index{反三角函数|hyperpage}
+主值范围为 $\arcsin x\in[-\pi/2,\pi/2]$，$\arccos x\in[0,\pi]$，$\arctan x\in(-\pi/2,\pi/2)$，$\operatorname{arccot}x\in(0,\pi)$。
+\begin{align*}
+\arcsin x+\arccos x&=\frac\pi2\quad(|x|\le1),\\
+\arctan x+\operatorname{arccot}x&=\frac\pi2\quad(x\in\mathbb R),\\
+\sin(\arcsin x)&=x, & \cos(\arcsin x)&=\sqrt{1-x^2}\quad(|x|\le1),\\
+\sin(\arctan x)&=\frac{x}{\sqrt{1+x^2}}, & \cos(\arctan x)&=\frac1{\sqrt{1+x^2}}.
+\end{align*}
+\section{复数}
+本节 $z,w$ 等变量取复数；$i^2=-1$。
+\subsection{复数的运算、乘方与开方}\index{复数的运算、乘方与开方|hyperpage}
+设 $z=a+bi$，$a,b\in\mathbb R$，$\overline z=a-bi$，则
+\[
+|z|=\sqrt{a^2+b^2},\quad z\overline z=|z|^2,\quad
+\frac{z_1}{z_2}=\frac{z_1\overline z_2}{|z_2|^2}\quad(z_2\ne0).
+\]
+非零复数的三角式与指数式为 $z=r(\cos\theta+i\sin\theta)=re^{i\theta}$，其中 $r=|z|>0$，辐角相差 $2k\pi$。
+\[
+z_1z_2=r_1r_2e^{i(\theta_1+\theta_2)},\qquad
+z^n=r^n(\cos n\theta+i\sin n\theta)\quad(n\in\mathbb Z).
+\]
+对正整数 $n$，$w^n=z\ne0$ 的 $n$ 个不同根为
+\[
+w_k=\sqrt[n]r\left[\cos\frac{\theta+2k\pi}{n}
++i\sin\frac{\theta+2k\pi}{n}\right],\quad k=0,\ldots,n-1.
+\]
+易错点：辐角具有多值性，开方应列出全部根；$z=0$ 时只有根 $w=0$。
+\subsection{共轭、模与单位根}\index{共轭、模与单位根|hyperpage}
+\begin{align*}
+\operatorname{Re}z&=\frac{z+\overline z}{2}, &
+\operatorname{Im}z&=\frac{z-\overline z}{2i},\\
+\overline{z+w}&=\overline z+\overline w, &
+\overline{zw}&=\overline z\,\overline w, & |zw|&=|z||w|,\\
+|z+w|^2&=|z|^2+|w|^2+2\operatorname{Re}(z\overline w),\\
+|z+w|^2+|z-w|^2&=2|z|^2+2|w|^2.
+\end{align*}
+复数模的三角不等式为
+\[
+\bigl||z|-|w|\bigr|\le|z+w|\le|z|+|w|.
+\]
+右侧等号当且仅当 $z\overline w$ 为非负实数；左侧等号当且仅当 $z\overline w$ 为非正实数（均包含零向量情形）。
+设 $n\in\mathbb N^*$、$\omega=e^{2\pi i/n}$，则 $n$ 次单位根为 $1,\omega,\ldots,\omega^{n-1}$，并有
+\[
+x^n-1=\prod_{k=0}^{n-1}(x-\omega^k),\qquad
+\sum_{k=0}^{n-1}\omega^{mk}=
+\begin{cases}n,&n\mid m,\\0,&n\nmid m,\end{cases}\quad m\in\mathbb Z.
+\]
+当 $n\ge2$ 时，全部 $n$ 次单位根之和为 $0$；当 $n=1$ 时，此和为 $1$。
+\section{对称不等式与有序求和补充}
+有限和不等式的使用条件参见\cite{hlp}；以下各式按实数及所列正性条件使用。
+\subsection{重排不等式与极值配对}\index{重排不等式与极值配对|hyperpage}
+若 $a_1\le\cdots\le a_n$、$b_1\le\cdots\le b_n$，对任意排列 $\sigma$，
+\[
+\sum_{i=1}^na_ib_{n+1-i}\le\sum_{i=1}^na_ib_{\sigma(i)}
+\le\sum_{i=1}^na_ib_i.
+\]
+同序配对使乘积和最大，逆序配对使其最小；两列均严格递增时，左右等号分别只对应逆序与同序排列。
+\subsection{Chebyshev求和不等式}\index{Chebyshev求和不等式|hyperpage}
+两列实数同序时，
+\[
+\frac1n\sum_i a_ib_i\ge
+\left(\frac1n\sum_i a_i\right)\left(\frac1n\sum_i b_i\right),\qquad
+n\sum_i a_ib_i-\sum_i a_i\sum_i b_i
+=\sum_{i<j}(a_i-a_j)(b_i-b_j).
+\]
+异序时不等号反向。右侧恒等式也直接给出等号条件；不能省略同序或异序假设。
+\subsection{三元Schur不等式}\index{三元Schur不等式|hyperpage}
+对 $a,b,c\ge0$，有
+\[
+a^3+b^3+c^3+3abc
+\ge a^2b+a^2c+b^2a+b^2c+c^2a+c^2b.
+\]
+等价地，令 $p=a+b+c$、$q=ab+bc+ca$、$r=abc$，则 $p^3+9r\ge4pq$。等号在三数相等，或一数为零而另两数相等时成立。
+\subsection{加权幂平均数的单调性}\index{加权幂平均数的单调性|hyperpage}
+设 $a_i>0$、$w_i>0$、$\sum_iw_i=1$，定义
+\[
+M_t=\left(\sum_iw_i a_i^t\right)^{1/t}\ (t\ne0),\qquad
+M_0=\prod_i a_i^{w_i}.
+\]
+若 $s<t$，则 $M_s\le M_t$；等号当且仅当所有 $a_i$ 相等。并有 $\lim_{t\to-\infty}M_t=\min_i a_i$、$\lim_{t\to+\infty}M_t=\max_i a_i$，负指数要求严格正值。
+\clearpage
+\end{document}

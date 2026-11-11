@@ -1,0 +1,478 @@
+\documentclass[../main.tex]{subfiles}
+\begin{document}
+本章主要参考\cite{wasserman}。
+
+\section{数理统计的基本概念}
+设 $X_1,\ldots,X_n$ 为来自总体 $X$ 的独立同分布样本，定义
+\[
+\overline X=\frac1n\sum_{i=1}^nX_i,\qquad
+S^2=\frac1{n-1}\sum_{i=1}^n(X_i-\overline X)^2,\qquad S=\sqrt{S^2}\quad(n\ge2).
+\]
+当总体均值 $\mu$、方差 $\sigma^2$ 存在时，$E[\overline X]=\mu$，$\operatorname{Var}(\overline X)=\sigma^2/n$，$E[S^2]=\sigma^2$。
+本章统一使用下侧分位数：对连续分布 $G$，$G(q_p)=p$。记标准正态、$t$、$\chi^2$ 和 $F$ 分布的分位数为
+\[
+z_p=\Phi^{-1}(p),\quad t_p(\nu),\quad\chi^2_p(\nu),\quad F_p(\nu_1,\nu_2),\qquad0<p<1.
+\]
+\subsection{正态总体的常用样本分布}\index{正态总体的常用样本分布|hyperpage}
+设 $X_i\overset{\mathrm{iid}}\sim N(\mu,\sigma^2)$，$\sigma>0$，则
+\[
+\overline X\sim N(\mu,\sigma^2/n),\qquad
+\frac{\sqrt n(\overline X-\mu)}\sigma\sim N(0,1),\qquad
+\frac{(n-1)S^2}{\sigma^2}\sim\chi^2(n-1).
+\]
+$\overline X$ 与 $S^2$ 独立，因此
+\[
+T=\frac{\sqrt n(\overline X-\mu)}S\sim t(n-1).
+\]
+三种常用分布的构造：若 $Z_i\overset{\mathrm{iid}}\sim N(0,1)$，则 $\sum_{i=1}^\nu Z_i^2\sim\chi^2(\nu)$；若 $Z\sim N(0,1)$ 与 $U\sim\chi^2(\nu)$ 独立，则 $Z/\sqrt{U/\nu}\sim t(\nu)$；若 $U\sim\chi^2(\nu_1),V\sim\chi^2(\nu_2)$ 独立，则
+\[
+\frac{U/\nu_1}{V/\nu_2}\sim F(\nu_1,\nu_2),\qquad
+F_p(\nu_1,\nu_2)=\frac1{F_{1-p}(\nu_2,\nu_1)}.
+\]
+对两个独立正态样本（容量 $n_1,n_2\ge2$），
+\[
+\frac{S_1^2/\sigma_1^2}{S_2^2/\sigma_2^2}\sim F(n_1-1,n_2-1).
+\]
+若总体方差相等，令
+\[
+S_p^2=\frac{(n_1-1)S_1^2+(n_2-1)S_2^2}{n_1+n_2-2},\quad \nu=n_1+n_2-2,
+\]
+则 $[(\overline X_1-\overline X_2)-(\mu_1-\mu_2)]/[S_p\sqrt{1/n_1+1/n_2}]\sim t(\nu)$。
+\section{参数估计}
+估计量 $\widehat\theta$ 的偏差与均方误差为
+\[
+\operatorname{Bias}(\widehat\theta)=E[\widehat\theta]-\theta,\qquad
+\operatorname{MSE}(\widehat\theta)=\operatorname{Var}(\widehat\theta)+\operatorname{Bias}(\widehat\theta)^2.
+\]
+矩估计令样本矩等于总体矩；极大似然估计取
+\[
+\widehat\theta_{\mathrm{MLE}}\in\operatorname*{arg\,max}_{\theta}L(\theta),\quad
+L(\theta)=\prod_{i=1}^nf(x_i;\theta),\quad
+\ell(\theta)=\sum_{i=1}^n\ln f(x_i;\theta).
+\]
+内部可微极值可由 $\ell'(\theta)=0$ 寻找，并需检查边界及最大性。正态总体中 $\widehat\mu_{\mathrm{MLE}}=\overline X$，$\widehat{\sigma^2}_{\mathrm{MLE}}=n^{-1}\sum_i(X_i-\overline X)^2$。
+\subsection{常见总体的矩估计与极大似然估计}\index{常见总体的矩估计与极大似然估计|hyperpage}
+以下样本均独立同分布，$\overline X=n^{-1}\sum_iX_i$。矩估计通过 $E_\theta[X]=\overline X$ 等矩方程求参数。
+\begin{center}
+\begin{tabular}{c|c|c}
+总体与未知参数 & 矩估计 & 极大似然估计\\\hline
+$\operatorname{Bernoulli}(p)$ & $\widehat p=\overline X$ & $\widehat p=\overline X$\\
+$\operatorname{Bin}(m,p)$，$m$ 已知 & $\widehat p=\overline X/m$ & $\widehat p=\overline X/m$\\
+$\operatorname{Poisson}(\lambda)$ & $\widehat\lambda=\overline X$ & $\widehat\lambda=\overline X$\\
+$\operatorname{Exp}(\lambda)$，率参数 & $\widehat\lambda=1/\overline X$ & $\widehat\lambda=1/\overline X$\\
+$U(0,\theta)$ & $\widehat\theta=2\overline X$ & $\widehat\theta=X_{(n)}$
+\end{tabular}
+\end{center}
+其中 $X_{(n)}=\max_iX_i$；均匀分布的似然采用支持集 $0\le x\le\theta$ 的常用版本。
+对 $U(0,\theta)$，$E[X_{(n)}]=n\theta/(n+1)$，故 $(n+1)X_{(n)}/n$ 是无偏估计。
+对正态总体，均值和方差的矩估计与极大似然估计相同，方差分母为 $n$；无偏样本方差的分母为 $n-1$。
+易错点：边界样本可能只在参数空间的闭包上达到似然最大值，如全零 Bernoulli 样本在 $p=0$ 处。
+\subsection{单个正态总体的均值和方差、两个正态总体的均值差和方差比的区间估计}\index{单个正态总体的均值和方差、两个正态总体的均值差和方差比的区间估计|hyperpage}
+以下均为置信水平 $1-\alpha$ 的双侧区间，$0<\alpha<1$；两个样本均假定相互独立。
+
+\paragraph{单个正态总体的均值}
+方差已知时，$\mu$ 的置信区间为
+\[
+\left[\overline X-z_{1-\alpha/2}\frac\sigma{\sqrt n},\quad
+\overline X+z_{1-\alpha/2}\frac\sigma{\sqrt n}\right].
+\]
+方差未知时，将 $\sigma$ 替换为 $S$，使用 $t$ 分位数：
+\[
+\left[\overline X-t_{1-\alpha/2}(n-1)\frac S{\sqrt n},\quad
+\overline X+t_{1-\alpha/2}(n-1)\frac S{\sqrt n}\right].
+\]
+\paragraph{单个正态总体的方差}
+总体均值未知、用 $S^2$ 估计时，$\sigma^2$ 的区间为
+\[
+\left[\frac{(n-1)S^2}{\chi^2_{1-\alpha/2}(n-1)},\quad
+\frac{(n-1)S^2}{\chi^2_{\alpha/2}(n-1)}\right].
+\]
+标准差区间对两端开平方；若均值 $\mu$ 已知，可用 $\sum_i(X_i-\mu)^2$ 替代分子、自由度改为 $n$。
+\paragraph{两个正态总体的均值差}
+记 $D=\overline X_1-\overline X_2$。方差均已知时，区间为
+\[
+\left[D-z_{1-\alpha/2}\sqrt{\frac{\sigma_1^2}{n_1}+\frac{\sigma_2^2}{n_2}},\quad
+D+z_{1-\alpha/2}\sqrt{\frac{\sigma_1^2}{n_1}+\frac{\sigma_2^2}{n_2}}\right].
+\]
+方差未知但相等时，令 $\nu=n_1+n_2-2$，使用合并方差 $S_p^2$：
+\[
+\left[D-t_{1-\alpha/2}(\nu)S_p\sqrt{\frac1{n_1}+\frac1{n_2}},\quad
+D+t_{1-\alpha/2}(\nu)S_p\sqrt{\frac1{n_1}+\frac1{n_2}}\right].
+\]
+未知且不假定相等时，Welch 近似区间为 $[D-t_{1-\alpha/2}(\nu_W)s_D,\ D+t_{1-\alpha/2}(\nu_W)s_D]$，其中
+\[
+s_D=\sqrt{\frac{S_1^2}{n_1}+\frac{S_2^2}{n_2}},\qquad
+\nu_W=\frac{(S_1^2/n_1+S_2^2/n_2)^2}
+{(S_1^2/n_1)^2/(n_1-1)+(S_2^2/n_2)^2/(n_2-1)}.
+\]
+\paragraph{两个正态总体的方差比}
+$\theta=\sigma_1^2/\sigma_2^2$ 的置信区间为
+\[
+\left[\frac{S_1^2/S_2^2}{F_{1-\alpha/2}(n_1-1,n_2-1)},\quad
+\frac{S_1^2/S_2^2}{F_{\alpha/2}(n_1-1,n_2-1)}\right].
+\]
+\subsection{单侧置信区间与样本量计算}\index{单侧置信区间与样本量计算|hyperpage}
+以下置信水平为 $1-\alpha$。对正态总体均值，令 $s_\mu=\sigma/\sqrt n$、$c=z_{1-\alpha}$（方差已知），或 $s_\mu=S/\sqrt n$、$c=t_{1-\alpha}(n-1)$（方差未知）。单侧下限与上限分别为
+\[
+\mu\in[\overline X-cs_\mu,+\infty),\qquad
+\mu\in(-\infty,\overline X+cs_\mu].
+\]
+均值未知时，正态总体方差的单侧区间为
+\[
+\sigma^2\in\left[\frac{(n-1)S^2}{\chi^2_{1-\alpha}(n-1)},+\infty\right),\qquad
+\sigma^2\in\left(0,\frac{(n-1)S^2}{\chi^2_\alpha(n-1)}\right].
+\]
+若正态总体标准差 $\sigma$ 已知，要求双侧均值区间半宽不超过 $d>0$，需取
+\[
+n\ge\left(\frac{z_{1-\alpha/2}\sigma}{d}\right)^2,
+\qquad n_{\min}=\left\lceil\frac{z_{1-\alpha/2}^2\sigma^2}{d^2}\right\rceil.
+\]
+Bernoulli 比例的大样本 Wald 区间与规划样本量近似为
+\[
+\widehat p\pm z_{1-\alpha/2}\sqrt{\frac{\widehat p(1-\widehat p)}n},\qquad
+n\approx\left\lceil\frac{z_{1-\alpha/2}^2p_*(1-p_*)}{d^2}\right\rceil.
+\]
+$p_*$ 为事先规划值；未知时取 $p_*=1/2$ 使规划方差最大。该近似要求成功与失败计数均充分大，接近边界或小样本时不宜用 Wald 区间。
+\section{假设检验}
+原假设 $H_0$ 与备择假设 $H_1$ 通过拒绝域 $W$ 检验。第一类错误为 $H_0$ 真却拒绝，显著性水平控制为 $P_\theta(W)\le\alpha$（所有 $\theta\in H_0$）；第二类错误为 $H_1$ 真却未拒绝，功效为 $1-\beta(\theta)$。
+$p$ 值不大于 $\alpha$ 时拒绝 $H_0$。
+\subsection{单个及两个正态总体的均值和方差的假设检验}\index{单个及两个正态总体的均值和方差的假设检验|hyperpage}
+以下统计量的分布均在 $H_0$ 下成立；$\alpha$ 为显著性水平，默认双侧备择。
+\paragraph{单总体均值 $H_0:\mu=\mu_0$}
+方差已知时用 $Z$ 检验，未知时用 $t$ 检验：
+\[
+Z=\frac{\overline X-\mu_0}{\sigma/\sqrt n}\sim N(0,1),\quad |Z|>z_{1-\alpha/2};
+\qquad T=\frac{\overline X-\mu_0}{S/\sqrt n}\sim t(n-1),\quad |T|>t_{1-\alpha/2}(n-1).
+\]
+分号后各不等式为相应拒绝条件。
+\paragraph{单总体方差 $H_0:\sigma^2=\sigma_0^2$}
+均值未知时令 $Q=(n-1)S^2/\sigma_0^2\sim\chi^2(n-1)$，拒绝条件为
+\[
+Q<\chi^2_{\alpha/2}(n-1)\quad\text{或}\quad Q>\chi^2_{1-\alpha/2}(n-1).
+\]
+若均值已知，改用 $Q=\sum_i(X_i-\mu)^2/\sigma_0^2$，自由度改为 $n$。
+\paragraph{两总体均值差 $H_0:\mu_1-\mu_2=\delta_0$}
+对独立样本，令 $D=\overline X_1-\overline X_2$。两方差已知时
+\[
+Z=\frac{D-\delta_0}{\sqrt{\sigma_1^2/n_1+\sigma_2^2/n_2}}\sim N(0,1),\qquad
+|Z|>z_{1-\alpha/2}.
+\]
+两方差未知但相等时
+\[
+T=\frac{D-\delta_0}{S_p\sqrt{1/n_1+1/n_2}}\sim t(n_1+n_2-2),\qquad
+|T|>t_{1-\alpha/2}(n_1+n_2-2).
+\]
+未知且不假定相等时，用 Welch 统计量 $T_W=(D-\delta_0)/s_D\approx t(\nu_W)$，近似拒绝条件为 $|T_W|>t_{1-\alpha/2}(\nu_W)$。
+配对样本应先取差值 $D_i=X_i-Y_i$，假定差值为独立同分布正态样本，使用单样本统计量 $T=(\overline D-\delta_0)/(S_D/\sqrt n)\sim t(n-1)$。
+\paragraph{两总体方差比 $H_0:\sigma_1^2/\sigma_2^2=\theta_0$}
+对独立正态样本，
+\[
+F=\frac{S_1^2/S_2^2}{\theta_0}\sim F(n_1-1,n_2-1).
+\]
+双侧拒绝条件为 $F<F_{\alpha/2}(n_1-1,n_2-1)$ 或 $F>F_{1-\alpha/2}(n_1-1,n_2-1)$；方差相等检验取 $\theta_0=1$。
+\paragraph{单侧备择的拒绝域}
+均值或均值差的右侧备择（参数大于原假设值）取 $Z>z_{1-\alpha}$ 或 $T>t_{1-\alpha}(\nu)$；左侧备择取 $Z<z_\alpha$ 或 $T<t_\alpha(\nu)$。
+方差或方差比的右侧备择取统计量大于相应分布的 $1-\alpha$ 分位数；左侧备择取小于 $\alpha$ 分位数。自由度与上文对应。
+\subsection{卡方拟合优度检验与列联表独立性检验}\index{卡方拟合优度检验与列联表独立性检验|hyperpage}
+\paragraph{拟合优度检验}
+将独立观测分为 $k$ 个互斥完备类别，观察频数为 $O_i$，原假设下概率为 $p_i>0$，期望频数为 $E_i=np_i$，则
+\[
+Q=\sum_{i=1}^k\frac{(O_i-E_i)^2}{E_i}\xrightarrow{d}\chi^2(k-1).
+\]
+若 $r$ 个独立参数由这些分类频数按极大似然法估计，且满足通常的可识别性与正则条件，自由度改为 $k-1-r>0$。
+在显著性水平 $\alpha$ 下，$Q>\chi^2_{1-\alpha}(\nu)$ 时拒绝原假设。
+\paragraph{独立性检验}
+对 $a\times b$ 列联表，观察频数 $O_{ij}$，行、列合计为 $O_{i\cdot},O_{\cdot j}$，总数为 $n$。独立性原假设下
+\[
+E_{ij}=\frac{O_{i\cdot}O_{\cdot j}}n,\qquad
+Q=\sum_{i=1}^a\sum_{j=1}^b\frac{(O_{ij}-E_{ij})^2}{E_{ij}}
+\xrightarrow{d}\chi^2((a-1)(b-1)).
+\]
+这是大样本近似；应检查期望频数（常用简便要求为各格至少约 $5$），稀疏类别可在有实际依据时合并；零边际类别应先移除。
+\section{线性回归}
+\subsection{一元线性回归的估计与平方和分解}\index{一元线性回归的估计与平方和分解|hyperpage}
+模型为 $Y_i=\beta_0+\beta_1x_i+\varepsilon_i$，$x_i$ 是固定设计点，误差相互独立、均值为零、方差为 $\sigma^2$。令
+\[
+S_{xx}=\sum_i(x_i-\overline x)^2>0,\quad
+S_{xy}=\sum_i(x_i-\overline x)(Y_i-\overline Y),\quad
+S_{yy}=\sum_i(Y_i-\overline Y)^2.
+\]
+最小二乘估计、拟合值与残差为
+\[
+\widehat\beta_1=S_{xy}/S_{xx},\quad
+\widehat\beta_0=\overline Y-\widehat\beta_1\overline x,\quad
+\widehat Y_i=\widehat\beta_0+\widehat\beta_1x_i,\quad e_i=Y_i-\widehat Y_i.
+\]
+\begin{gather*}
+\mathrm{SSE}=\sum_i e_i^2=S_{yy}-\frac{S_{xy}^2}{S_{xx}},\qquad
+\mathrm{SSR}=\sum_i(\widehat Y_i-\overline Y)^2=\frac{S_{xy}^2}{S_{xx}},\\
+\mathrm{SST}=S_{yy}=\mathrm{SSR}+\mathrm{SSE},\quad
+s^2=\frac{\mathrm{SSE}}{n-2}\quad(n>2),\quad
+R^2=1-\frac{\mathrm{SSE}}{\mathrm{SST}}\quad(\mathrm{SST}>0).
+\end{gather*}
+含截距时有 $\sum_i e_i=0$、$\sum_i x_i e_i=0$。易错点：上述平方和分解和 $R^2$ 性质以模型含截距为前提。
+\subsection{回归系数检验、均值区间与预测区间}\index{回归系数检验、均值区间与预测区间|hyperpage}
+进一步假定 $\varepsilon_i\overset{\mathrm{iid}}\sim N(0,\sigma^2)$，$n>2$，则
+\[
+\operatorname{Var}(\widehat\beta_1)=\frac{\sigma^2}{S_{xx}},\quad
+\operatorname{Var}(\widehat\beta_0)=\sigma^2\left(\frac1n+\frac{\overline x^2}{S_{xx}}\right),\quad
+\operatorname{Cov}(\widehat\beta_0,\widehat\beta_1)=-\frac{\sigma^2\overline x}{S_{xx}}.
+\]
+检验 $H_0:\beta_1=b_1$ 时，
+\[
+T=\frac{\widehat\beta_1-b_1}{s/\sqrt{S_{xx}}}\sim t(n-2),\qquad
+|T|>t_{1-\alpha/2}(n-2)\ \Longrightarrow\text{拒绝 }H_0.
+\]
+斜率置信区间为 $\widehat\beta_1\pm t_{1-\alpha/2}(n-2)s/\sqrt{S_{xx}}$；截距置信区间以其相应标准误代替。
+在 $x_0$ 处令 $\widehat y_0=\widehat\beta_0+\widehat\beta_1x_0$、$h_0=1/n+(x_0-\overline x)^2/S_{xx}$，则置信水平 $1-\alpha$ 下，
+\begin{align*}
+E[Y\mid x_0]\text{ 的置信区间： }&\quad\widehat y_0\pm t_{1-\alpha/2}(n-2)s\sqrt{h_0},\\
+Y_{\mathrm{new}}\text{ 的预测区间： }&\quad\widehat y_0\pm t_{1-\alpha/2}(n-2)s\sqrt{1+h_0}.
+\end{align*}
+新观测须服从同一模型并独立于原样本；预测区间包含新观测自身的误差，因此比均值区间宽。
+检验 $H_0:\beta_1=0$ 也可用 $F=(\mathrm{SSR}/1)/(\mathrm{SSE}/(n-2))\sim F(1,n-2)$，且此时 $F=T^2$。
+% References: https://www.stat.umn.edu/geyer/5421/notes/likelihood.html
+% https://online.stat.psu.edu/stat462/node/90/
+\section{估计理论与渐近推断}
+\subsection{充分统计量、指数族与无偏改进}\index{充分统计量、指数族与无偏改进|hyperpage}
+对有共同控制测度的模型，因子分解准则为
+\[
+f_\theta(\bm x)=g_\theta(T(\bm x))h(\bm x)
+\quad\Longleftrightarrow\quad T\text{ 为充分统计量}.
+\]
+若 $E_\theta[u(T)]=0$ 对所有 $\theta$ 成立只能推出 $u(T)=0$ 几乎处处，则称 $T$ 完备。对有有限方差的无偏估计 $U$，充分统计量 $T$ 给出 Rao--Blackwell 改进
+\[
+\widetilde U=E[U\mid T],\qquad E[\widetilde U]=E[U],\qquad
+\operatorname{Var}(\widetilde U)\le\operatorname{Var}(U).
+\]
+若 $T$ 还完备，则其任意无偏函数估计为唯一的最小方差无偏估计（Lehmann--Scheffé 定理）。指数族写为
+\[
+f_\eta(x)=h(x)\exp(\eta^{\mathsf T}T(x)-A(\eta)),\qquad
+E_\eta[T]=\nabla A(\eta),\quad\operatorname{Cov}_\eta(T)=\nabla^2A(\eta).
+\]
+矩公式在自然参数空间内部可微且可交换微分积分时成立；独立样本的 $\sum_iT(X_i)$ 充分。自然参数集合含非空开集的满指数族还具有相应的完备性结论。
+
+\subsection{得分、Fisher信息与Cramér--Rao界}\index{得分、Fisher信息与Cramér-Rao界|hyperpage}
+对参数 $\theta\in\mathbb R^p$，定义样本得分与信息矩阵
+\begin{gather*}
+U_n(\theta)=\nabla_\theta\ell_n(\theta),\qquad
+I_n(\theta)=E_\theta[U_nU_n^{\mathsf T}],\\
+E_\theta[U_n]=0,\qquad I_n(\theta)=-E_\theta[\nabla_\theta^2\ell_n(\theta)].
+\end{gather*}
+后两式要求共同支持集及可交换微分积分等正则条件；独立同分布样本有 $I_n=nI_1$。对无偏估计 $\widehat g$ 估计实函数 $g(\theta)$，若 $I_n$ 可逆，
+\[
+\operatorname{Var}_\theta(\widehat g)\ge
+\nabla g(\theta)^{\mathsf T}I_n(\theta)^{-1}\nabla g(\theta).
+\]
+标量参数、偏差 $b(\theta)=E[\widehat\theta]-\theta$ 时，下界为 $(1+b'(\theta))^2/I_n(\theta)$。对 $\theta=(\psi,\lambda)$ 分块，消去干扰参数后的有效信息为
+\[
+I_{\psi\cdot\lambda}=I_{\psi\psi}-I_{\psi\lambda}I_{\lambda\lambda}^{-1}I_{\lambda\psi}.
+\]
+支持集依赖参数的均匀分布模型不能直接套用常规信息恒等式和下界。
+
+\subsection{极大似然渐近正态性与三类检验}\index{极大似然渐近正态性与三类检验|hyperpage}
+在可识别、真参数为内点、信息正定及常规光滑性条件下，
+\[
+\sqrt n(\widehat\theta-\theta_0)\xrightarrow d N_p(0,I_1(\theta_0)^{-1}).
+\]
+对标量点假设 $H_0:\theta=\theta_0$，记 $I_n$ 为样本总信息，则 Wald、得分与似然比统计量为
+\begin{gather*}
+W=(\widehat\theta-\theta_0)^2 I_n(\widehat\theta),\qquad
+S=U_n(\theta_0)^2/I_n(\theta_0),\\
+\mathrm{LR}=2[\ell_n(\widehat\theta)-\ell_n(\theta_0)]
+\xrightarrow d\chi_1^2.
+\end{gather*}
+在上述条件下三者均趋于 $\chi_1^2$。对嵌套正则模型，自由参数维数之差为 $r$ 时，似然比极限为 $\chi_r^2$（Wilks 定理）。边界参数、混合模型及不可识别模型可能改变极限分布。
+
+\subsection{Neyman--Pearson引理与功效}\index{Neyman-Pearson引理与功效|hyperpage}
+检验两个简单假设 $f_0$ 对 $f_1$，水平 $\alpha$ 的最强检验在 $f_1/f_0>c$ 时拒绝，在相等处可随机化，使 $E_0[\phi]=\alpha$。功效函数为 $\pi(\theta)=E_\theta[\phi]$。
+
+正态总体已知 $\sigma$，右侧均值检验拒绝条件为 $\overline X>\mu_0+z_{1-\alpha}\sigma/\sqrt n$。在真实均值 $\mu$ 下，
+\[
+\pi(\mu)=1-\Phi\!\left(z_{1-\alpha}-\frac{(\mu-\mu_0)\sqrt n}{\sigma}\right).
+\]
+希望对 $\mu_1>\mu_0$ 达到功效 $1-\beta$ 时，可取
+\[
+n\ge\left[\frac{\sigma(z_{1-\alpha}+z_{1-\beta})}{\mu_1-\mu_0}\right]^2.
+\]
+这是已知方差、单侧检验的规划式，不是任意检验的统一样本量公式。
+
+\section{比例、计数与非参数推断}
+\subsection{Wilson、Clopper--Pearson与Poisson区间}\index{Wilson、Clopper-Pearson与Poisson区间|hyperpage}
+设 $X=x\sim\operatorname{Bin}(n,p)$，$\widehat p=x/n$、$z=z_{1-\alpha/2}$。Wilson 区间为
+\[
+\frac{\widehat p+z^2/(2n)\ \pm\ z\sqrt{\widehat p(1-\widehat p)/n+z^2/(4n^2)}}{1+z^2/n}.
+\]
+它由得分检验反演得到，仍是近似区间。Clopper--Pearson 等尾精确区间为
+\[
+[p_L,p_U]=[B^{-1}_{\alpha/2}(x,n-x+1),\ B^{-1}_{1-\alpha/2}(x+1,n-x)],
+\]
+其中 $B^{-1}_q(a,b)$ 为 Beta$(a,b)$ 分位数；$x=0$ 时取 $p_L=0$，$x=n$ 时取 $p_U=1$，其余端点按式计算。由于离散性，覆盖率通常至少为名义水平。
+
+若 $X=x\sim\operatorname{Poisson}(\lambda)$，则精确区间为
+\[
+\lambda\in\left[\tfrac12\chi^2_{\alpha/2}(2x),\ \tfrac12\chi^2_{1-\alpha/2}(2x+2)\right],
+\]
+$x=0$ 时下限另取零。若观察时长为 $T>0$、均值为率 $r$ 乘以 $T$，将端点除以 $T$ 得率区间。
+
+\subsection{经验分布、KS统计量与DKW界}\index{经验分布、KS统计量与DKW界|hyperpage}
+经验分布函数为 $F_n(x)=n^{-1}\sum_i\mathbf1_{\{X_i\le x\}}$。对独立同分布样本，
+\[
+P\!\left(\sup_x|F_n(x)-F(x)|>\varepsilon\right)\le2e^{-2n\varepsilon^2}.
+\]
+因此取 $\varepsilon=\sqrt{\ln(2/\alpha)/(2n)}$，$[\max(0,F_n-\varepsilon),\min(1,F_n+\varepsilon)]$ 为至少 $1-\alpha$ 的同时置信带。单样本 Kolmogorov--Smirnov 统计量为
+\[
+D_n=\sup_x|F_n(x)-F_0(x)|,\qquad
+P(\sqrt nD_n\le t)\to1-2\sum_{k\ge1}(-1)^{k-1}e^{-2k^2t^2}\quad(t>0).
+\]
+后式要求原假设 $F_0$ 连续且完全指定；若由同一数据估计参数，不能直接沿用该零分布。
+
+\subsection{符号、秩和与置换检验}\index{符号、秩和与置换检验|hyperpage}
+对来自连续总体的独立样本，在中位数为 $m_0$ 的原假设下，符号统计量 $B=\sum_i\mathbf1_{\{X_i>m_0\}}\sim\operatorname{Bin}(n,1/2)$。有等于 $m_0$ 的观测时须规定删零或其他处理方式。
+
+两个独立连续同分布样本量为 $m,n$，无并列秩。合并排序后，第一个样本的秩和为 $W$，Mann--Whitney 统计量为 $U=W-m(m+1)/2$，则
+\[
+E[U]=mn/2,\qquad\operatorname{Var}(U)=mn(m+n+1)/12.
+\]
+在同分布零假设下，精确置换分布来自所有 $\binom{m+n}m$ 个标签划分；并列值时方差需修正。置换检验依赖零假设下的可交换性，不能仅凭两总体均值相等就保证精确性。
+
+\subsection{Bootstrap与Jackknife}\index{Bootstrap与Jackknife|hyperpage}
+非参数 Bootstrap 从经验分布 $F_n$ 有放回抽取 $n$ 个观测，形成 $B$ 个重复估计 $\widehat\theta_b^*$。估计偏差与标准误为
+\[
+\widehat{\operatorname{bias}}_* =\overline\theta^*-\widehat\theta,\qquad
+\widehat{\operatorname{se}}_* =\left[\frac1{B-1}\sum_{b=1}^B(\widehat\theta_b^*-\overline\theta^*)^2\right]^{1/2}.
+\]
+百分位区间取 Bootstrap 分布的 $\alpha/2$ 与 $1-\alpha/2$ 分位数；基本区间取 $[2\widehat\theta-q^*_{1-\alpha/2},2\widehat\theta-q^*_{\alpha/2}]$。有效性依赖统计量和抽样模型，不能保证任意非光滑统计量都适用。
+
+删去第 $i$ 个样本得到 $\widehat\theta_{(-i)}$，令 $\overline\theta_{(-)}=n^{-1}\sum_i\widehat\theta_{(-i)}$，Jackknife 为
+\[
+\widehat\theta_J=n\widehat\theta-(n-1)\overline\theta_{(-)},\qquad
+\widehat{\operatorname{Var}}_J=\frac{n-1}n\sum_i(\widehat\theta_{(-i)}-\overline\theta_{(-)})^2.
+\]
+
+\section{回归、方差分析与模型选择补充}
+\subsection{一般线性模型、GLS与线性约束}\index{一般线性模型、GLS与线性约束|hyperpage}
+设 $\bm Y=X\beta+\varepsilon$，$X$ 为 $n\times p$ 满列秩固定设计矩阵，$n>p$。若 $E[\varepsilon]=0$、$\operatorname{Cov}(\varepsilon)=\sigma^2I$，则
+\begin{gather*}
+\widehat\beta=(X^{\mathsf T}X)^{-1}X^{\mathsf T}\bm Y,\qquad
+\operatorname{Cov}(\widehat\beta)=\sigma^2(X^{\mathsf T}X)^{-1},\\
+H=X(X^{\mathsf T}X)^{-1}X^{\mathsf T},\quad \widehat{\bm Y}=H\bm Y,\quad
+e=(I-H)\bm Y,\quad s^2=e^{\mathsf T}e/(n-p).
+\end{gather*}
+若误差为正态，则 $\widehat\beta$ 与 $s^2$ 独立，$(n-p)s^2/\sigma^2\sim\chi^2_{n-p}$。对满行秩 $r\times p$ 矩阵 $R$，检验 $R\beta=r_0$ 时
+\[
+F=\frac{(R\widehat\beta-r_0)^{\mathsf T}[R(X^{\mathsf T}X)^{-1}R^{\mathsf T}]^{-1}(R\widehat\beta-r_0)}{r s^2}
+\sim F(r,n-p).
+\]
+若 $\operatorname{Cov}(\varepsilon)=\sigma^2\Omega$、$\Omega>0$ 已知，则广义最小二乘为
+\[
+\widehat\beta_{\rm GLS}=(X^{\mathsf T}\Omega^{-1}X)^{-1}X^{\mathsf T}\Omega^{-1}\bm Y,
+\quad \operatorname{Cov}(\widehat\beta_{\rm GLS})=\sigma^2(X^{\mathsf T}\Omega^{-1}X)^{-1}.
+\]
+岭回归取 $(X^{\mathsf T}X+\lambda I)^{-1}X^{\mathsf T}\bm Y$（$\lambda>0$），引入偏差以降低方差；若截距不惩罚，应改用相应的半正定惩罚矩阵。
+
+\subsection{单因素方差分析与多元均值检验}\index{单因素方差分析与多元均值检验|hyperpage}
+对 $k$ 个独立正态组，组内共用方差，组样本量 $n_j$、总量 $N$，定义
+\begin{gather*}
+\mathrm{SSB}=\sum_j n_j(\overline Y_j-\overline Y)^2,\qquad
+\mathrm{SSW}=\sum_j\sum_i(Y_{ij}-\overline Y_j)^2,\\
+\mathrm{SST}=\mathrm{SSB}+\mathrm{SSW},\qquad
+F=\frac{\mathrm{SSB}/(k-1)}{\mathrm{SSW}/(N-k)}\sim F(k-1,N-k)
+\quad(H_0:\mu_1=\cdots=\mu_k).
+\end{gather*}
+多元正态样本 $\bm X_i\sim N_p(\mu,\Sigma)$，$n>p$，$S$ 为无偏样本协方差矩阵，则在 $H_0:\mu=\mu_0$ 下，Hotelling 统计量满足
+\[
+T^2=n(\overline{\bm X}-\mu_0)^{\mathsf T}S^{-1}(\overline{\bm X}-\mu_0),\qquad
+\frac{n-p}{p(n-1)}T^2\sim F(p,n-p).
+\]
+
+\subsection{广义线性模型与Logistic回归}\index{广义线性模型与Logistic回归|hyperpage}
+指数离散族模型写为 $f(y;\theta,\phi)=\exp\{[y\theta-b(\theta)]/a(\phi)+c(y,\phi)\}$，有
+\[
+E[Y]=b'(\theta)=\mu,\qquad\operatorname{Var}(Y)=a(\phi)b''(\theta),\qquad
+g(\mu_i)=x_i^{\mathsf T}\beta.
+\]
+对独立 Bernoulli 响应，Logistic 模型及似然导数为
+\begin{gather*}
+p_i=\frac{e^{x_i^{\mathsf T}\beta}}{1+e^{x_i^{\mathsf T}\beta}},\qquad
+\ell(\beta)=\sum_i[y_ix_i^{\mathsf T}\beta-\ln(1+e^{x_i^{\mathsf T}\beta})],\\
+U=X^{\mathsf T}(y-p),\qquad I=X^{\mathsf T}WX,\quad W_{ii}=p_i(1-p_i),\\
+\beta_{\rm new}=\beta+(X^{\mathsf T}WX)^{-1}X^{\mathsf T}(y-p).
+\end{gather*}
+完全分离时有限 MLE 可能不存在。Poisson 回归取 $\ln\mu_i=x_i^{\mathsf T}\beta$，此时 $W_{ii}=\mu_i$，得分为 $X^{\mathsf T}(y-\mu)$。残差偏差为 $D=2(\ell_{\rm saturated}-\ell_{\rm fitted})$。
+
+\subsection{AIC、BIC与多重检验}\index{AIC、BIC与多重检验|hyperpage}
+对同一数据、同一响应似然的候选模型，参数数为 $p$、最大对数似然为 $\ell(\widehat\theta)$，
+\[
+\mathrm{AIC}=2p-2\ell(\widehat\theta),\qquad
+\mathrm{BIC}=p\ln n-2\ell(\widehat\theta).
+\]
+通常选择较小者；二者目标不同，不能把数值差直接解释为检验 $p$ 值。对 $m$ 个有效 $p$ 值，Bonferroni 在每项 $p_i\le\alpha/m$ 时拒绝，控制族错误率不超过 $\alpha$，不要求独立。
+
+将 $p$ 值排序为 $p_{(1)}\le\cdots\le p_{(m)}$，Benjamini--Hochberg 程序取
+\[
+k=\max\{i:p_{(i)}\le iq/m\},\qquad
+\operatorname{FDR}=E\!\left[\frac{V}{\max(R,1)}\right].
+\]
+若集合为空则不拒绝，否则拒绝前 $k$ 项。$V$ 为错误拒绝数，$R$ 为总拒绝数；在独立有效 $p$ 值下 FDR 不超过 $q$。任意依赖下可将阈值改为 $iq/(mH_m)$，$H_m=\sum_{j=1}^m1/j$（Benjamini--Yekutieli）。
+
+\section{贝叶斯估计与共轭更新}
+\subsection{后验、损失与共轭分布}\index{后验、损失与共轭分布|hyperpage}
+先验为 $\pi(\theta)$、似然为 $L(\theta)$，则
+\[
+\pi(\theta\mid x)=\frac{L(\theta)\pi(\theta)}{\int L(u)\pi(u)\,\mathrm du},\qquad
+p(y\mid x)=\int p(y\mid\theta)\pi(\theta\mid x)\,\mathrm d\theta.
+\]
+归一化积分须有限且非零。平方损失的 Bayes 估计为后验均值，绝对损失为后验中位数；MAP 为后验密度的最大点，通常依赖参数化。
+\begin{gather*}
+p\sim\operatorname{Beta}(a,b),\quad X\mid p\sim\operatorname{Bin}(n,p)
+\Longrightarrow p\mid X=x\sim\operatorname{Beta}(a+x,b+n-x),\\
+\lambda\sim\operatorname{Gamma}(a,b),\quad X_i\mid\lambda\overset{\rm iid}\sim\operatorname{Poisson}(\lambda)
+\Longrightarrow\lambda\mid\bm X\sim\operatorname{Gamma}(a+\sum_iX_i,b+n).
+\end{gather*}
+Gamma 使用形状--率参数。已知方差的正态均值模型，若 $\mu\sim N(m_0,\tau_0^2)$、$X_i\mid\mu\sim N(\mu,\sigma^2)$ 条件独立，则
+\[
+\tau_n^{-2}=\tau_0^{-2}+n/\sigma^2,\qquad
+m_n=\tau_n^2(m_0/\tau_0^2+n\overline X/\sigma^2),\qquad
+\mu\mid\bm X\sim N(m_n,\tau_n^2).
+\]
+后验可信区间描述给定数据后的参数概率，频率学置信区间描述重复抽样覆盖率，解释应区分。
+
+\section{非参数平滑、隐变量与稀疏估计补充}
+统计推断基础参见\cite{wasserman}，稀疏回归参见\cite{sparsity}。
+\subsection{核密度估计的偏差、方差与带宽}\index{核密度估计的偏差、方差与带宽|hyperpage}
+一维独立同分布样本密度为 $f\in W^{2,2}(\mathbb R)$，$\widehat f_h(x)=(nh)^{-1}\sum_iK((x-X_i)/h)$。取非负对称核 $K\in L^1\cap L^2$，$\int K=1$、$0<\mu_2(K)=\int u^2K(u)\,\mathrm du<\infty$，记 $R(g)=\int g^2$。当 $h\to0$、$nh\to\infty$，
+\[
+\operatorname{MISE}(\widehat f_h)=\frac{R(K)}{nh}
++\frac{h^4\mu_2(K)^2}{4}R(f'')+o((nh)^{-1}+h^4).
+\]
+故二阶光滑情形的最优阶为 $h\asymp n^{-1/5}$、误差阶 $n^{-4/5}$。边界附近的普通对称核有额外偏差，需要边界修正。
+\subsection{估计方程的夹心协方差}\index{估计方程的夹心协方差|hyperpage}
+若 $\widehat\theta$ 解 $\sum_i\psi(X_i,\theta)=0$，真参数满足 $\mathbb E\psi(X,\theta_0)=0$。在一致性、可微性及相应中心极限条件下，令
+\[
+A=\mathbb E\,D_\theta\psi(X,\theta_0),\qquad
+B=\mathbb E[\psi(X,\theta_0)\psi(X,\theta_0)^{\mathsf T}],
+\]
+若 $A$ 可逆，则 $\sqrt n(\widehat\theta-\theta_0)\Rightarrow N(0,A^{-1}BA^{-\mathsf T})$。模型正确的极大似然下可化为逆 Fisher 信息；模型失配时一般需保留夹心形式。
+\subsection{EM算法的辅助函数与单调性}\index{EM算法的辅助函数与单调性|hyperpage}
+观测为 $x$、隐变量为 $Z$，定义
+\[
+Q(\theta\mid\theta^{(k)})=
+\mathbb E_{\theta^{(k)}}[\log p_\theta(x,Z)\mid x].
+\]
+若下一步使 $Q$ 不减，则在条件密度存在、相关积分有限和通常公共支集条件下，
+\[
+\ell(\theta^{(k+1)})-\ell(\theta^{(k)})
+\ge Q(\theta^{(k+1)}\mid\theta^{(k)})-Q(\theta^{(k)}\mid\theta^{(k)})\ge0.
+\]
+只提高辅助函数即可得到广义 EM；似然单调不保证到达全局极大，也不保证参数序列本身收敛。
+\newpage
+\subsection{Lasso基本不等式与兼容性界}\index{Lasso基本不等式与兼容性界|hyperpage}
+设 $Y=X\beta^*+\varepsilon$，$\widehat\beta$ 最小化 $\|Y-X\beta\|_2^2/(2n)+\lambda\|\beta\|_1$。令 $S=\operatorname{supp}\beta^*$、$s=|S|$、$\delta=\widehat\beta-\beta^*$。若 $\lambda\ge2\|X^{\mathsf T}\varepsilon/n\|_\infty$，则
+\[
+\frac{\|X\delta\|_2^2}{2n}+\frac\lambda2\|\delta_{S^c}\|_1
+\le\frac{3\lambda}{2}\|\delta_S\|_1.
+\]
+若在锥 $\|v_{S^c}\|_1\le3\|v_S\|_1$ 上有 $\|v_S\|_1\le\sqrt{s}\|Xv\|_2/(\sqrt n\kappa)$，则 $\|X\delta\|_2^2/n\le9\lambda^2s/\kappa^2$。设计矩阵的兼容性是该稀疏预测界的附加条件。
+\clearpage
+\end{document}

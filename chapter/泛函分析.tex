@@ -1,0 +1,394 @@
+\documentclass[../main.tex]{subfiles}
+\begin{document}
+本章主要参考\cite{brezis}。
+
+% Reference: https://ocw.mit.edu/courses/18-102-introduction-to-functional-analysis-spring-2021/resources/lecture-notes/
+\section{赋范空间与有界算子}
+\subsection{Banach空间与算子范数}\index{Banach空间与算子范数|hyperpage}
+范数满足正定性、齐次性和三角不等式；完备赋范空间称为 Banach 空间。$L^p$（$1\le p\le\infty$）、$\ell^p$ 及配备上确界范数的 $C[a,b]$ 均为 Banach 空间。
+线性算子 $T:X\to Y$ 连续当且仅当有界：
+\[
+\|T\|=\sup_{\|x\|\le1}\|Tx\|<\infty,\qquad
+\|Tx\|\le\|T\|\|x\|,\quad\|ST\|\le\|S\|\|T\|.
+\]
+连续线性泛函构成对偶空间 $X^*$，其范数为 $\|\varphi\|=\sup_{\|x\|\le1}|\varphi(x)|$。
+\subsection{Hahn--Banach与三个基本定理}\index{Hahn-Banach与三个基本定理|hyperpage}
+赋范空间的子空间 $M$ 上任意有界线性泛函 $\varphi$ 都可延拓为 $\widetilde\varphi\in X^*$，且 $\|\widetilde\varphi\|=\|\varphi\|$。
+\paragraph{一致有界原理} 若 $X$ 为 Banach 空间，$T_\alpha\in\mathcal L(X,Y)$ 且对每个 $x$ 有 $\sup_\alpha\|T_\alpha x\|<\infty$，则 $\sup_\alpha\|T_\alpha\|<\infty$。
+\paragraph{开映射定理} Banach 空间之间的有界线性满射为开映射；有界线性双射的逆也有界。
+\paragraph{闭图像定理} Banach 空间之间的线性算子 $T:X\to Y$ 若在整个 $X$ 上定义，则有界当且仅当图像在 $X\times Y$ 中闭。
+\subsection{强收敛与弱收敛}\index{强收敛与弱收敛|hyperpage}
+\[
+x_n\to x\text{ 强收敛}\iff\|x_n-x\|\to0,\qquad
+x_n\rightharpoonup x\iff\varphi(x_n)\to\varphi(x)\quad(\forall\varphi\in X^*).
+\]
+强收敛蕴含弱收敛；弱收敛序列有界，且 $\|x\|\le\liminf_n\|x_n\|$。
+在 Hilbert 空间中，弱收敛加上范数收敛 $\|x_n\|\to\|x\|$ 蕴含强收敛。
+\section{Hilbert空间}
+\subsection{内积、投影与Riesz表示}\index{内积、投影与Riesz表示|hyperpage}
+本章复内积约定对第一变量线性、对第二变量共轭线性：
+\[
+\langle x,y\rangle=\overline{\langle y,x\rangle},\quad
+\|x\|^2=\langle x,x\rangle,\quad
+|\langle x,y\rangle|\le\|x\|\|y\|.
+\]
+完备内积空间称为 Hilbert 空间。对闭线性子空间 $M$，每个 $x$ 唯一分解为
+\[
+x=P_Mx+(x-P_Mx),\quad P_Mx\in M,\quad x-P_Mx\in M^\perp.
+\]
+$P_Mx$ 是 $M$ 中距 $x$ 最近的点。对任意 $\varphi\in H^*$，存在唯一 $y\in H$ 使 $\varphi(x)=\langle x,y\rangle$，且 $\|\varphi\|=\|y\|$。
+\subsection{正交展开与伴随算子}\index{正交展开与伴随算子|hyperpage}
+对可数标准正交组 $\{e_n\}$，Bessel 不等式为 $\sum_n|\langle x,e_n\rangle|^2\le\|x\|^2$。若其张成空间稠密，则
+\[
+x=\sum_n\langle x,e_n\rangle e_n,\qquad
+\|x\|^2=\sum_n|\langle x,e_n\rangle|^2,
+\]
+级数按范数收敛。Hilbert 空间上的有界算子伴随满足
+\[
+\langle Tx,y\rangle=\langle x,T^*y\rangle,\quad
+\|T^*\|=\|T\|,\quad\|T^*T\|=\|T\|^2,\quad(ST)^*=T^*S^*.
+\]
+$T=T^*$ 称为自伴，$T^*T=TT^*=I$ 称为酉算子。
+\section{谱与变分方法}
+\subsection{Neumann级数与紧自伴算子}\index{Neumann级数与紧自伴算子|hyperpage}
+若 $X$ 为 Banach 空间，$\|T\|<1$，则
+\[
+(I-T)^{-1}=\sum_{n=0}^\infty T^n,\qquad\|(I-T)^{-1}\|\le\frac1{1-\|T\|}.
+\]
+在复 Banach 空间上，$\sigma(T)=\{\lambda\in\mathbb C:\lambda I-T\text{ 无有界逆}\}$，并有
+\[
+r(T)=\sup_{\lambda\in\sigma(T)}|\lambda|=\lim_{n\to\infty}\|T^n\|^{1/n}\le\|T\|.
+\]
+紧算子将有界序列映为有收敛子列的序列。可分 Hilbert 空间上的紧自伴算子有标准正交特征基，特征值为实数，非零特征值仅能在零处聚集；包含核的基后可写
+\[
+Tx=\sum_n\lambda_n\langle x,e_n\rangle e_n.
+\]
+\subsection{Lax--Milgram定理}\index{Lax-Milgram定理|hyperpage}
+在实 Hilbert 空间 $H$ 上，若双线性型 $a$ 有界且强制，即
+\[
+|a(u,v)|\le M\|u\|\|v\|,\qquad a(v,v)\ge\alpha\|v\|^2\quad(\alpha>0),
+\]
+则对任意 $\ell\in H^*$，存在唯一 $u\in H$ 满足
+\[
+a(u,v)=\ell(v)\quad(\forall v\in H),\qquad\|u\|\le\|\ell\|/\alpha.
+\]
+若 $a$ 还对称，则该解唯一极小化 $J(v)=\tfrac12a(v,v)-\ell(v)$。
+\section{对偶、弱紧性与非线性微分}
+\subsection{弱星拓扑、Banach--Alaoglu与自反性}\index{弱星拓扑、Banach-Alaoglu与自反性|hyperpage}
+对 $X^*$ 中的泛函，弱星收敛由原空间的点测试：
+\[
+\varphi_\alpha\overset{*}{\rightharpoonup}\varphi
+\iff\varphi_\alpha(x)\to\varphi(x)\quad(\forall x\in X).
+\]
+这里用网而非仅用序列描述一般拓扑。Banach--Alaoglu 定理：$X^*$ 的闭单位球在弱星拓扑下紧；$X$ 可分时，该球的弱星拓扑可度量化，故每个有界泛函序列有弱星收敛子列。
+自然嵌入 $J:X\to X^{**}$ 定为 $(Jx)(\varphi)=\varphi(x)$，且 $\|Jx\|=\|x\|$。Banach 空间 $X$ 称自反当且仅当 $J$ 满射；等价于其闭单位球弱紧。自反 Banach 空间中的有界序列有弱收敛子列。
+\subsection{Lp对偶与弱下半连续极小化}\index{Lp对偶与弱下半连续极小化|hyperpage}
+在 $\sigma$-有限测度空间上，对 $1<p<\infty$、$1/p+1/q=1$，
+\[
+(L^p)^*\cong L^q,\qquad\varphi_g(f)=\int fg\,\mathrm d\mu,
+\qquad\|\varphi_g\|=\|g\|_q.
+\]
+采用复线性泛函时，此配对不取共轭，故 $g\mapsto\varphi_g$ 为线性等距同构。$L^p$（$1<p<\infty$）自反；$(L^1)^*\cong L^\infty$，但一般 $(L^\infty)^*$ 大于 $L^1$。
+在实自反 Banach 空间上，若 $J:X\to\mathbb R$ 弱序列下半连续且强制（$\|x\|\to\infty$ 时 $J(x)\to\infty$），则 $J$ 取得全局最小值。若还严格凸，则极小点唯一。连续凸函数是弱下半连续的，故这是变分法中的常用存在性条件。
+\subsection{Fréchet导数与变分公式}\index{Fréchet导数与变分公式|hyperpage}
+对实 Banach 空间之间的映射 $F$，若存在有界线性算子 $DF(x)$ 使
+\[
+F(x+h)=F(x)+DF(x)[h]+o(\|h\|),
+\]
+则称 $F$ 在 $x$ 处 Fréchet 可微；链式法则为 $D(G\circ F)(x)=DG(F(x))\circ DF(x)$。
+方向导数 $D_G F(x)[h]=\lim_{t\to0}[F(x+th)-F(x)]/t$ 即使处处存在，也未必给出 Fréchet 导数。
+设 $L\in C^2$，对固定端点的光滑函数 $u$，泛函 $J(u)=\int_a^bL(x,u,u')\,\mathrm dx$ 的一阶变分为
+\[
+DJ(u)[v]=\int_a^b(L_uv+L_{u'}v')\,\mathrm dx,
+\quad v(a)=v(b)=0.
+\]
+光滑驻点满足 Euler--Lagrange 方程 $L_u-\frac{\mathrm d}{\mathrm dx}L_{u'}=0$；驻点不一定是极小点。
+\section{一般谱理论与演化方程}
+\subsection{Fredholm择一与预解式}\index{Fredholm择一与预解式|hyperpage}
+若 $K$ 是 Hilbert 空间上的紧算子，则 $I-K$ 的像闭，核有限维，且
+\[
+\operatorname{Ran}(I-K)=\ker(I-K^*)^\perp,
+\qquad\dim\ker(I-K)=\dim\ker(I-K^*).
+\]
+因此 $u-Ku=f$ 可解当且仅当 $f$ 与 $\ker(I-K^*)$ 正交；$I-K$ 单射当且仅当它可逆。
+对有界算子 $T$，$R(\lambda,T)=(\lambda I-T)^{-1}$ 在预解集内满足
+\[
+R(\lambda,T)-R(\mu,T)=(\mu-\lambda)R(\lambda,T)R(\mu,T).
+\]
+\subsection{有界自伴算子的谱测度}\index{有界自伴算子的谱测度|hyperpage}
+复 Hilbert 空间上的有界自伴算子 $T$ 存在唯一投影值谱测度 $E$，使
+\[
+T=\int_{\sigma(T)}\lambda\,\mathrm dE(\lambda),\qquad
+f(T)=\int_{\sigma(T)}f(\lambda)\,\mathrm dE(\lambda).
+\]
+对连续 $f$，$\|f(T)\|=\max_{\lambda\in\sigma(T)}|f(\lambda)|$；谱包含于实轴。一般自伴算子可能具有连续谱，不能总写成特征向量的离散求和。紧自伴算子的展开是这一理论的特殊情形。
+\subsection{强连续半群与生成元}\index{强连续半群与生成元|hyperpage}
+强连续半群满足 $S(0)=I$、$S(t+s)=S(t)S(s)$ 及 $S(t)x\to x$（$t\downarrow0$）。生成元为
+\[
+Ax=\lim_{h\downarrow0}\frac{S(h)x-x}{h},\qquad
+D(A)=\{x:\text{上述范数极限存在}\}.
+\]
+生成元通常无界且定义域稠密。抽象初值问题 $u'=Au+f$ 的温和解公式为
+\[
+u(t)=S(t)u_0+\int_0^tS(t-s)f(s)\,\mathrm ds.
+\]
+对 $u_0\in X$、$f\in C([0,T];X)$，该式有意义；要得到经典可微解，还需定义域和正则性条件。若 $A$ 有界，则 $S(t)=e^{tA}$。
+% Further reference: https://math.mit.edu/~rbm/18-102-S18/Lectures.html
+\section{空间结构与对偶计算补充}
+\subsection{商空间、湮灭子与距离公式}\index{商空间、湮灭子与距离公式|hyperpage}
+若 $M$ 是 Banach 空间 $X$ 的闭子空间，则 $X/M$ 完备，且
+\[
+\|x+M\|_{X/M}=\inf_{m\in M}\|x-m\|,\qquad
+\operatorname{dist}(x,M)=\sup_{\substack{\varphi\in M^\perp\\\|\varphi\|\le1}}|\varphi(x)|.
+\]
+这里 $M^\perp=\{\varphi\in X^*: \varphi|_M=0\}$，并有等距同构 $(X/M)^*\cong M^\perp$、$M^*\cong X^*/M^\perp$。对任意子空间，$\overline M={}^{\perp}(M^\perp)$；闭性不可省略。
+\subsection{典型空间的对偶与Riesz测度表示}\index{典型空间的对偶与Riesz测度表示|hyperpage}
+对 $1\le p<\infty$、$1/p+1/q=1$，$ (\ell^p)^*=\ell^q$；另有 $c_0^*=\ell^1$，但 $(\ell^\infty)^*$ 一般大于 $\ell^1$。若 $K$ 为紧 Hausdorff 空间，则
+\[
+C(K)^*\cong\mathcal M(K),\qquad
+\varphi(f)=\int_K f\,\mathrm d\nu,\qquad \|\varphi\|=|\nu|(K),
+\]
+其中 $\mathcal M(K)$ 为有限正则复（或实符号）Borel 测度；正泛函对应正测度。对局部紧 Hausdorff 空间，将 $C(K)$ 改成 $C_0(X)$ 得相应结论。
+\subsection{凸组合、弱闭包与弱紧性判据}\index{凸组合、弱闭包与弱紧性判据|hyperpage}
+赋范空间中凸集的范数闭包与弱闭包相同。若 $x_n\rightharpoonup x$，Mazur 引理给出有限尾部凸组合
+\[
+y_n\in\operatorname{conv}\{x_n,x_{n+1},\ldots\},\qquad\|y_n-x\|\to0.
+\]
+Banach 空间中，集合弱紧当且仅当弱序列紧（Eberlein--Šmulian）；相对弱紧版本对应每个序列存在弱收敛到空间内某点的子列。$\ell^1$ 的弱收敛序列自动范数收敛（Schur 性质）。一致凸 Banach 空间自反。
+\section{算子、紧性与谱的计算补充}
+\subsection{算子拓扑、闭值域与伴随}\index{算子拓扑、闭值域与伴随|hyperpage}
+算子范数收敛蕴含强算子收敛，后者蕴含弱算子收敛：
+\[
+T_nx\to Tx\ (\forall x),\qquad
+\varphi(T_nx)\to\varphi(Tx)\ (\forall x,\varphi).
+\]
+Banach 对偶算子为 $T'\varphi=\varphi\circ T$，$\|T'\|=\|T\|$。对 Hilbert 空间算子，
+\[
+\overline{\operatorname{Ran}T}=(\ker T^*)^\perp,\qquad
+\ker T=(\operatorname{Ran}T^*)^\perp.
+\]
+值域闭当且仅当存在 $c>0$ 使 $\|Tx\|\ge c\|x\|$ 对 $x\perp\ker T$ 成立；也等价于 $\operatorname{Ran}T^*$ 闭。
+\subsection{紧算子的奇异值与Schatten类}\index{紧算子的奇异值与Schatten类|hyperpage}
+Hilbert 空间之间的紧算子有奇异值展开
+\[
+Tx=\sum_{n}s_n\langle x,v_n\rangle u_n,\qquad s_1\ge s_2\ge\cdots\downarrow0.
+\]
+其中 $s_n$ 为 $|T|=(T^*T)^{1/2}$ 的非零特征值，按重数排列，$u_n,v_n$ 分别正交。有限秩截断满足
+\[
+\inf_{\operatorname{rank}F<n}\|T-F\|=s_n.
+\]
+定义 $\|T\|_{\mathcal S_p}=(\sum_ns_n^p)^{1/p}$。Hilbert--Schmidt 算子满足 $\|T\|_{\mathcal S_2}^2=\sum_n\|Te_n\|^2$；迹类满足
+\[
+\operatorname{tr}T=\sum_n\langle Te_n,e_n\rangle,\quad
+|\operatorname{tr}T|\le\|T\|_{\mathcal S_1},\quad
+\operatorname{tr}(AT)=\operatorname{tr}(TA)
+\]
+（$A$ 有界、$T$ 迹类）。积分核 $k\in L^2(X\times X)$ 给出的算子为 Hilbert--Schmidt，范数平方等于 $\iint|k|^2$。
+\subsection{极分解与谱映射}\index{极分解与谱映射|hyperpage}
+每个有界 Hilbert 空间算子可写为
+\[
+T=U|T|,\qquad |T|=(T^*T)^{1/2},
+\]
+$U$ 为初始空间 $\overline{\operatorname{Ran}|T|}$ 上等距的部分等距算子，取 $\ker U=\ker T$ 时唯一。正规算子满足 $TT^*=T^*T$，具有复平面上的谱测度表示；特别地
+\[
+\|T\|=r(T),\qquad \sigma(p(T))=p(\sigma(T)).
+\]
+多项式谱映射对一般有界算子也成立；连续函数演算的范数等式需要正规性。
+\subsection{Riesz投影与Fredholm指标}\index{Riesz投影与Fredholm指标|hyperpage}
+若闭曲线 $\Gamma$ 位于预解集内并隔开一部分谱，定义
+\[
+P=\frac1{2\pi i}\int_\Gamma(zI-T)^{-1}\,\mathrm dz,\qquad P^2=P,\quad PT=TP.
+\]
+Hilbert 空间上的 Fredholm 算子有闭值域且核、余核有限维，指标为
+\[
+\operatorname{ind}T=\dim\ker T-\dim\ker T^*.
+\]
+指标在紧扰动下不变，$\operatorname{ind}(ST)=\operatorname{ind}S+\operatorname{ind}T$；等价地，Fredholm 算子在模紧算子意义下可逆（Atkinson 定理）。
+\section{无界算子与演化补充}
+\subsection{闭算子、图范数与无界谱定理}\index{闭算子、图范数与无界谱定理|hyperpage}
+稠密定义算子 $A:D(A)\subset H\to H$ 的伴随定义域由 $x\mapsto\langle Ax,y\rangle$ 在 $H$ 范数下有界确定。对称性为 $A\subseteq A^*$，自伴性为 $A=A^*$，包括定义域相等。闭算子的定义域在图范数
+\[
+\|x\|_A=(\|x\|^2+\|Ax\|^2)^{1/2}
+\]
+下完备。自伴算子可写 $A=\int\lambda\,\mathrm dE(\lambda)$，且
+\[
+D(A)=\left\{x:\int\lambda^2\,\mathrm d\langle E(\lambda)x,x\rangle<\infty\right\},\qquad
+\|Ax\|^2=\int\lambda^2\,\mathrm d\langle E(\lambda)x,x\rangle.
+\]
+这里 $\langle E(\cdot)x,x\rangle$ 为正标量测度；无界函数演算必须同时给出定义域。
+\subsection{Hille--Yosida与Stone定理}\index{Hille-Yosida与Stone定理|hyperpage}
+稠密定义闭算子 $A$ 生成收缩强连续半群，当且仅当 $(0,\infty)\subset\rho(A)$ 且
+\[
+\|R(\lambda,A)^n\|\le\lambda^{-n}\quad(\lambda>0,\ n\ge1).
+\]
+若 $\|S(t)\|\le Me^{\omega t}$，则对 $\operatorname{Re}\lambda>\omega$ 有
+\[
+R(\lambda,A)x=\int_0^\infty e^{-\lambda t}S(t)x\,\mathrm dt.
+\]
+Stone 定理：Hilbert 空间上的强连续酉群唯一表示为 $U(t)=e^{itB}$，其中 $B$ 自伴，生成元为 $iB$。对 $B\ge0$，$e^{-tB}$ 为收缩半群。
+\subsection{不动点与Galerkin误差}\index{不动点与Galerkin误差|hyperpage}
+Banach 压缩映射 $T$、压缩常数 $q<1$ 的迭代满足
+\[
+\|x_n-x_*\|\le\frac{q^n}{1-q}\|x_1-x_0\|,\qquad
+\|x_n-x_*\|\le\frac q{1-q}\|x_n-x_{n-1}\|.
+\]
+连续紧映射将非空闭有界凸集映入自身时存在不动点（Schauder）。对 Lax--Milgram 问题及闭有限维子空间 $V_h$ 的 Galerkin 解，Céa 引理为
+\[
+\|u-u_h\|\le\frac M\alpha\inf_{v_h\in V_h}\|u-v_h\|.
+\]
+若双线性型对称正定，则在能量范数 $\|v\|_a=\sqrt{a(v,v)}$ 中误差恰等于最佳逼近误差。
+
+% References: https://math.jhu.edu/~sire/brezis.pdf
+% https://numa.jku.at/teaching/courses/2023w/monotone-special/
+\section{双对偶、极点与Banach空间几何}
+\subsection{Goldstine弱星稠密性}\index{Goldstine弱星稠密性|hyperpage}
+自然等距嵌入 $J:X\to X^{**}$ 满足
+\[
+\overline{J(B_X)}^{\,\sigma(X^{**},X^*)}=B_{X^{**}}.
+\]
+因此每个双对偶单位球元素可被原空间单位球中的网弱星逼近；一般不能把网替换成序列，也不能把弱星稠密提升为范数稠密。$X$ 自反时 $J(B_X)=B_{X^{**}}$。
+\subsection{Krein--Milman极点表示}\index{Krein-Milman极点表示|hyperpage}
+Hausdorff 局部凸空间中的非空紧凸集 $K$ 满足
+\[
+K=\overline{\operatorname{conv}}\operatorname{ext}K.
+\]
+闭包采用给定局部凸拓扑，$\operatorname{ext}K$ 为极点集。紧性不可用有界性替代；在双对偶或对偶球上应用时应明确所用的弱或弱星拓扑。
+\subsection{James范数取得判据}\index{James范数取得判据|hyperpage}
+Banach 空间 $X$ 自反，当且仅当每个 $\varphi\in X^*$ 均在闭单位球上取得范数，即存在 $x\in B_X$ 使
+\[
+|\varphi(x)|=\|\varphi\|.
+\]
+更一般地，非空闭有界凸集弱紧当且仅当每个连续实线性泛函在其上取得上确界。这是关于所有泛函的判据，单个泛函取得范数不能推出自反性。
+\subsection{一致凸模与Banach--Saks平均}\index{一致凸模与Banach-Saks平均|hyperpage}
+定义
+\[
+\delta_X(\varepsilon)=\inf_{\substack{\|x\|,\|y\|\le1\\\|x-y\|\ge\varepsilon}}
+\left(1-\left\|\frac{x+y}2\right\|\right).
+\]
+一致凸性要求 $\delta_X(\varepsilon)>0$（$0<\varepsilon\le2$）。在一致凸 Banach 空间中，弱收敛序列 $x_n\rightharpoonup x$ 可选取子列使 $\|N^{-1}\sum_{j=1}^Nx_{n_j}-x\|\to0$（Banach--Saks）；这比允许任意系数的 Mazur 凸组合更具体。$L^p$ 的定量模可由\hyperref[chap:real-analysis]{实分析}的 Clarkson 不等式估计。
+\section{单调算子与非线性演化}\label{sec:fa-monotone}
+本节的 Hilbert 空间取实空间，Banach 对偶配对记 $\langle\cdot,\cdot\rangle$。
+\subsection{Minty极大性与预解算子}\index{Minty极大性与预解算子|hyperpage}
+多值算子 $A:H\rightrightarrows H$ 单调指 $\langle a-b,x-y\rangle\ge0$ 对所有 $(x,a),(y,b)\in\operatorname{graph}A$ 成立。Minty 判别为
+\[
+A\text{ 极大单调}\iff\operatorname{Ran}(I+\lambda A)=H\quad(\lambda>0).
+\]
+此时 $J_\lambda=(I+\lambda A)^{-1}$ 为全域单值映射，满足 $\|J_\lambda x-J_\lambda y\|^2\le\langle J_\lambda x-J_\lambda y,x-y\rangle$。极大性是图像不能再作单调扩张，不是逐点取最大值。
+\subsection{Browder--Minty满射定理}\index{Browder-Minty满射定理|hyperpage}
+设 $X$ 自反，$A:X\to X^*$ 在有界集上有界、单调且半连续，并满足
+\[
+\frac{\langle Ax,x\rangle}{\|x\|}\longrightarrow\infty\quad(\|x\|\to\infty).
+\]
+半连续指 $t\mapsto\langle A(x+ty),z\rangle$ 连续。则每个 $f\in X^*$ 存在 $u$ 使 $Au=f$；若严格单调，解唯一。它推广了线性强制性框架，但不能只保留单调性而删去强制性。
+\subsection{Yosida逼近与最小范数值}\index{Yosida逼近与最小范数值|hyperpage}
+对极大单调 $A$，定义
+\[
+A_\lambda=\frac{I-J_\lambda}\lambda,\qquad
+A_\lambda x\in A(J_\lambda x),\qquad\operatorname{Lip}(A_\lambda)\le\lambda^{-1}.
+\]
+$A_\lambda$ 单调且全域单值。对 $x\in D(A)$，$A_\lambda x\to A^0x$（$\lambda\downarrow0$），其中 $A^0x$ 为闭凸集 $Ax$ 的最小范数元素。逼近在 $J_\lambda x$ 处取原算子的值，不应写成总有 $A_\lambda x\in Ax$。
+\subsection{隐式Euler与非线性收缩半群}\index{隐式Euler与非线性收缩半群|hyperpage}
+极大单调 $A$ 生成方程 $u'+Au\ni0$ 的收缩半群，对 $u_0\in\overline{D(A)}$，
+\[
+S(t)u_0=\lim_{n\to\infty}\left(I+\frac tnA\right)^{-n}u_0,\qquad
+\|S(t)x-S(t)y\|\le\|x-y\|.
+\]
+该极限给出温和解；更强的时间可微性需初值位于定义域等附加条件。$A=\partial f$ 时回到凸能量梯度流，算法形式见\hyperref[chap:convex-analysis]{凸分析}。
+\section{闭型、耗散与解析半群}
+\subsection{闭二次型的表示定理}\index{闭二次型的表示定理|hyperpage}
+设 $q$ 为稠密定义的非负对称闭型，其定义域 $V$ 在 $\|u\|_q^2=\|u\|^2+q(u,u)$ 下完备。存在唯一非负自伴 $A$ 使
+\[
+V=D(A^{1/2}),\qquad q(u,v)=\langle A^{1/2}u,A^{1/2}v\rangle.
+\]
+并且 $u\in D(A)$ 当且仅当存在 $f\in H$ 使 $q(u,v)=\langle f,v\rangle$ 对所有 $v\in V$ 成立，此时 $Au=f$。型定义域与算子定义域一般不同。
+\subsection{Lumer--Phillips耗散判据}\index{Lumer-Phillips耗散判据|hyperpage}
+Hilbert 空间中的稠密定义闭算子 $A$ 生成收缩强连续半群，当且仅当
+\[
+\operatorname{Re}\langle Ax,x\rangle\le0,\qquad
+\operatorname{Ran}(\lambda I-A)=H
+\]
+对某个 $\lambda>0$ 成立。此时对所有 $\lambda>0$ 均有 $\|(\lambda I-A)^{-1}\|\le1/\lambda$。符号约定为 $u'=Au$；若写成 $u'+Bu=0$，相应使用 $B$ 的增生性。
+\subsection{扇形算子与解析平滑化}\index{扇形算子与解析平滑化|hyperpage}
+若 $-A$ 生成有界解析半群，且 $A$ 为适当的正扇形算子，则对 $\alpha>0$、$t>0$，
+\[
+\|A^\alpha e^{-tA}\|\le C_\alpha t^{-\alpha}.
+\]
+分数幂可用扇形预解式的积分演算定义；例如 $0<\alpha<1$、$x\in D(A)$ 时，
+\[
+A^\alpha x=\frac{\sin\pi\alpha}{\pi}\int_0^\infty
+t^{\alpha-1}A(tI+A)^{-1}x\,\mathrm dt.
+\]
+这里需满足正扇形预解界及稠密定义等条件；一般强连续半群并不具有解析平滑化。
+\subsection{强预解收敛与乘积逼近}\index{强预解收敛与乘积逼近|hyperpage}
+若 $A_n,A$ 为非负自伴算子，对某个 $\lambda>0$ 有 $(\lambda+A_n)^{-1}x\to(\lambda+A)^{-1}x$ 对所有 $x$ 成立，则
+\[
+e^{-tA_n}x\to e^{-tA}x
+\]
+在每个有界 $t\ge0$ 区间一致强收敛。对有界算子 $B,C$，还有范数意义的 Trotter 公式 $e^{t(B+C)}=\lim_n(e^{tB/n}e^{tC/n})^n$；无界情形必须另查生成元、定义域与闭包条件。
+\section{算子理想、张量与代数表示}
+\subsection{Schatten乘积与迹配对}\index{Schatten乘积与迹配对|hyperpage}
+若 $1\le p,q,r\le\infty$、$1/r=1/p+1/q$，则
+\[
+\|AB\|_{\mathcal S_r}\le\|A\|_{\mathcal S_p}\|B\|_{\mathcal S_q}.
+\]
+$\mathcal S_\infty$ 在此以有界算子的算子范数解释。$1<p<\infty$ 时 $\mathcal S_p^*=\mathcal S_{p'}$，配对为 $\operatorname{tr}(AB)$（复线性约定）；迹类的对偶为全部有界算子，而不是仅紧算子。
+\subsection{迹类Fredholm行列式}\index{迹类Fredholm行列式|hyperpage}
+迹类 $T$ 的行列式定义为
+\[
+\det(I+zT)=\prod_j(1+z\lambda_j(T)),
+\]
+特征值按代数重数计。它为整函数，且在 $I+zT$ 可逆时
+\[
+\frac{\mathrm d}{\mathrm dz}\log\det(I+zT)
+=\operatorname{tr}((I+zT)^{-1}T).
+\]
+零点检测相应不可逆性；一般 Hilbert--Schmidt 算子需要正则化行列式，不能直接套用迹类乘积。
+\subsection{投射与内射张量范数}\index{投射与内射张量范数|hyperpage}
+对有限张量 $u=\sum_jx_j\otimes y_j$，定义
+\begin{gather*}
+\|u\|_\pi=\inf_{u=\sum_jx_j\otimes y_j}\sum_j\|x_j\|\|y_j\|,\\
+\|u\|_\varepsilon=\sup_{\|\varphi\|,\|\psi\|\le1}
+\left|\sum_j\varphi(x_j)\psi(y_j)\right|\le\|u\|_\pi.
+\end{gather*}
+完备化给出不同的 Banach 张量积；$X\widehat\otimes_\pi Y$ 的对偶为有界双线性型。仅写代数张量和而不给范数，不能确定其完备化空间。
+\subsection{C星代数与GNS表示}\index{C星代数与GNS表示|hyperpage}
+复 Banach 星代数满足 $\|a^*a\|=\|a\|^2$ 时为 C 星代数。对含单位元的代数，正状态 $\varphi(1)=1$ 满足
+\[
+|\varphi(b^*a)|^2\le\varphi(a^*a)\varphi(b^*b).
+\]
+GNS 构造给出 Hilbert 空间、星表示 $\pi$ 及循环单位向量 $\xi$，使 $\varphi(a)=\langle\pi(a)\xi,\xi\rangle$。表示可能有核；忠实性需要额外条件，不能从正性单独推出。
+
+\section{本质谱、框架与稳定性条件补充}
+算子理论基础参见\cite{brezis}，正算子幂的序关系参见\cite{bhatia}。
+\subsection{Weyl本质谱与奇异序列}\index{Weyl本质谱与奇异序列|hyperpage}
+自伴算子 $A$ 的本质谱按“谱中删去孤立有限重特征值”定义。则 $\lambda\in\sigma_{\rm ess}(A)$ 当且仅当存在 $u_n\in D(A)$，使
+\[
+\|u_n\|=1,\qquad u_n\rightharpoonup0,\qquad
+\|(A-\lambda)u_n\|\longrightarrow0.
+\]
+有界紧自伴扰动 $K$ 不改变本质谱：$\sigma_{\rm ess}(A+K)=\sigma_{\rm ess}(A)$。去掉弱趋零条件得到的是一般谱的近似特征向量判据。
+\subsection{Hilbert框架与对偶重建}\index{Hilbert框架与对偶重建|hyperpage}
+可分 Hilbert 空间中，若 $0<a\le b<\infty$ 且
+\[
+a\|x\|^2\le\sum_n|\langle x,f_n\rangle|^2\le b\|x\|^2,
+\]
+则 $(f_n)$ 为框架。框架算子 $Sx=\sum_n\langle x,f_n\rangle f_n$ 有界正可逆，且
+\[
+x=\sum_n\langle x,f_n\rangle S^{-1}f_n.
+\]
+采用内积对第一变量线性的约定，级数在范数中收敛。框架可以冗余，系数不必唯一；当 $a=b=1$ 时称 Parseval 框架。
+\subsection{Babuška--Nečas下确界上确界条件}\index{Babuška-Nečas下确界上确界条件|hyperpage}
+实 Hilbert 空间 $X,Y$ 上的有界双线性型 $b$，若
+\[
+\inf_{x\ne0}\sup_{y\ne0}\frac{|b(x,y)|}{\|x\|\|y\|}\ge\beta>0,
+\qquad \{y:b(x,y)=0\ \forall x\}=\{0\},
+\]
+则对每个 $\ell\in Y^*$，存在唯一 $u\in X$ 满足 $b(u,y)=\ell(y)$，且 $\|u\|\le\beta^{-1}\|\ell\|$。只保留第一条件保证像闭且单射，第二条件才排除余核。
+\subsection{Löwner--Heinz正算子幂单调性}\index{Löwner-Heinz正算子幂单调性|hyperpage}
+有界自伴算子满足 $0\preceq A\preceq B$ 时，对 $0\le\alpha\le1$，谱演算给出
+\[
+A^\alpha\preceq B^\alpha.
+\]
+端点零次幂取恒等算子；$0<\alpha<1$ 可由正预解式积分证明。一般 $\alpha>1$ 不保持算子序，即使标量函数 $t^\alpha$ 在正半轴递增也不足够。
+\clearpage
+\end{document}

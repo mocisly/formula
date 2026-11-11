@@ -1,0 +1,262 @@
+\documentclass[../main.tex]{subfiles}
+\begin{document}
+本章主要参考\cite{milneANT}。
+
+% Reference: https://www.jmilne.org/math/CourseNotes/ANT.pdf
+\section{数域与代数整数}
+\subsection{域扩张、嵌入与整数环}\index{域扩张、嵌入与整数环|hyperpage}
+数域 $K$ 是 $\mathbb Q$ 的有限扩张，次数 $n=[K:\mathbb Q]$。若 $\mathbb Q\subseteq F\subseteq K$，则
+\[
+[K:\mathbb Q]=[K:F][F:\mathbb Q].
+\]
+数域可写为 $K=\mathbb Q(\alpha)$。代数整数是某个首一整系数多项式的根，$K$ 中全部代数整数构成整数环 $\mathcal O_K$；$\mathcal O_K\cap\mathbb Q=\mathbb Z$。
+$K$ 有 $n$ 个嵌入 $\sigma:K\hookrightarrow\mathbb C$，其中 $r_1$ 个实嵌入及 $r_2$ 对共轭复嵌入满足 $n=r_1+2r_2$。
+\subsection{迹、范数与极小多项式}\index{迹、范数与极小多项式|hyperpage}
+\[
+\operatorname{Tr}_{K/\mathbb Q}(\alpha)=\sum_\sigma\sigma(\alpha),\qquad
+N_{K/\mathbb Q}(\alpha)=\prod_\sigma\sigma(\alpha).
+\]
+迹对加法线性，范数对乘法可乘。若 $\alpha$ 的首一极小多项式为 $x^d+c_{d-1}x^{d-1}+\cdots+c_0$，$m=[K:\mathbb Q(\alpha)]$，则
+\[
+\operatorname{Tr}_{K/\mathbb Q}(\alpha)=-mc_{d-1},\qquad
+N_{K/\mathbb Q}(\alpha)=((-1)^dc_0)^m.
+\]
+对 $\alpha\in\mathcal O_K$，迹、范数均为整数；非零 $\alpha$ 为单位当且仅当 $N_{K/\mathbb Q}(\alpha)=\pm1$。
+\section{判别式与二次数域}
+\subsection{整基、判别式与指标}\index{整基、判别式与指标|hyperpage}
+$\mathcal O_K$ 是秩 $n$ 的自由 $\mathbb Z$-模；其一组 $\mathbb Z$-基称为整基。对 $\mathbb Q$-基 $\omega_1,\ldots,\omega_n$，
+\[
+\operatorname{disc}(\omega_1,\ldots,\omega_n)
+=\det(\operatorname{Tr}_{K/\mathbb Q}(\omega_i\omega_j))
+=\det(\sigma_i(\omega_j))^2.
+\]
+整基判别式为数域判别式 $D_K$。若 $A\subseteq\mathcal O_K$ 是有限指标的秩 $n$ 整数子环，则
+\[
+\operatorname{disc}(A)=[\mathcal O_K:A]^2D_K.
+\]
+一般 $\mathcal O_K$ 不一定由一个代数整数生成，不能默认 $\mathcal O_K=\mathbb Z[\alpha]$。
+\subsection{二次数域的整数环}\index{二次数域的整数环|hyperpage}
+设 $d\ne0,1$ 为无平方因子的整数，$K=\mathbb Q(\sqrt d)$，则
+\[
+\mathcal O_K=\begin{cases}\mathbb Z[(1+\sqrt d)/2],&d\equiv1\pmod4,\\
+\mathbb Z[\sqrt d],&d\equiv2,3\pmod4,\end{cases}\qquad
+D_K=\begin{cases}d,&d\equiv1\pmod4,\\4d,&d\equiv2,3\pmod4.\end{cases}
+\]
+\[
+\operatorname{Tr}(a+b\sqrt d)=2a,\qquad N(a+b\sqrt d)=a^2-db^2\quad(a,b\in\mathbb Q).
+\]
+例如 $\mathbb Q(i)$ 的整数环为 $\mathbb Z[i]$，判别式为 $-4$。
+\section{理想与素数分解}
+\subsection{理想范数与唯一分解}\index{理想范数与唯一分解|hyperpage}
+整数环 $\mathcal O_K$ 是 Dedekind 环，每个非零整理想唯一分解为非零素理想的乘积。理想范数为
+\[
+N\mathfrak a=|\mathcal O_K/\mathfrak a|,\quad
+N(\mathfrak a\mathfrak b)=N\mathfrak a\,N\mathfrak b,\quad
+N((\alpha))=|N_{K/\mathbb Q}(\alpha)|\quad(\alpha\ne0).
+\]
+这里 $\mathfrak a,\mathfrak b$ 为非零整理想。元素的唯一分解可能失败，理想的唯一分解仍成立。
+\subsection{分歧指数、剩余次数与Dedekind分解法}\index{分歧指数、剩余次数与Dedekind分解法|hyperpage}
+对有理素数 $p$，
+\[
+p\mathcal O_K=\prod_{i=1}^g\mathfrak p_i^{e_i},\qquad
+f_i=[\mathcal O_K/\mathfrak p_i:\mathbb F_p],\quad
+N\mathfrak p_i=p^{f_i},\quad\sum_{i=1}^ge_if_i=n.
+\]
+某个 $e_i>1$ 称 $p$ 分歧；恰当且仅当 $p\mid D_K$。$g=n$ 且所有 $e_i=f_i=1$ 称完全分裂；$g=1,e_1=1,f_1=n$ 称惰性。
+若 $K=\mathbb Q(\alpha)$、$\alpha\in\mathcal O_K$，且 $p\nmid[\mathcal O_K:\mathbb Z[\alpha]]$，将极小多项式模 $p$ 分解为
+\[
+\overline f(x)=\prod_i\overline F_i(x)^{e_i}
+\quad\Longrightarrow\quad
+\mathfrak p_i=(p,F_i(\alpha)),\qquad f_i=\deg\overline F_i.
+\]
+其中 $\overline F_i$ 两两不同、首一不可约，$F_i$ 为整系数提升，$f_i$ 仍表示剩余次数。整基指标被 $p$ 整除时，不能直接套用此分解法。
+\section{几何嵌入、类群与单位}
+\subsection{Minkowski嵌入与类数界}\index{Minkowski嵌入与类数界|hyperpage}
+选取每对复嵌入中的一个 $\tau_j$，使用未缩放实坐标嵌入
+\[
+\iota(\alpha)=(\sigma_1(\alpha),\ldots,\sigma_{r_1}(\alpha),
+\operatorname{Re}\tau_1(\alpha),\operatorname{Im}\tau_1(\alpha),\ldots)\in\mathbb R^n.
+\]
+非零整理想的像为满秩格，其余体积为
+\[
+\det\iota(\mathfrak a)=2^{-r_2}\sqrt{|D_K|}\,N\mathfrak a.
+\]
+复坐标若改乘 $\sqrt2$，余体积因子会改变，不能混用。
+非零分式理想构成群 $I_K$，非零主分式理想构成子群 $P_K$，理想类群 $\operatorname{Cl}(K)=I_K/P_K$ 有限，其阶 $h_K$ 为类数。每个类都含满足
+\[
+N\mathfrak a\le\left(\frac4\pi\right)^{r_2}\frac{n!}{n^n}\sqrt{|D_K|}
+\]
+的非零整理想。$h_K=1$ 当且仅当 $\mathcal O_K$ 为主理想整环，也等价于其为唯一分解整环。
+\subsection{Dirichlet单位定理与对数嵌入}\index{Dirichlet单位定理与对数嵌入|hyperpage}
+令 $\mu_K$ 为 $K$ 中单位根组成的有限群，则
+\[
+\mathcal O_K^\times\cong\mu_K\times\mathbb Z^{r_1+r_2-1}.
+\]
+单位群的自由秩为 $r_1+r_2-1$。加权对数嵌入为
+\[
+\ell(u)=(\ln|\sigma_i(u)|,\ 2\ln|\tau_j(u)|)_{i,j},\qquad
+\sum_k\ell(u)_k=\ln|N(u)|=0.
+\]
+其核为 $\mu_K$，像为零和超平面中的满秩格。实二次数域有一个基本单位；虚二次数域的单位群有限。
+\section{Dedekind zeta函数}
+\subsection{Euler乘积与解析类数公式}\index{Euler乘积与解析类数公式|hyperpage}
+对 $\operatorname{Re}s>1$，
+\[
+\zeta_K(s)=\sum_{0\ne\mathfrak a\subseteq\mathcal O_K}(N\mathfrak a)^{-s}
+=\prod_{\mathfrak p}(1-(N\mathfrak p)^{-s})^{-1}.
+\]
+$\zeta_K$ 在 $s=1$ 有一阶极点，留数为
+\[
+\operatorname*{Res}_{s=1}\zeta_K(s)
+=\frac{2^{r_1}(2\pi)^{r_2}h_KR_K}{w_K\sqrt{|D_K|}},\qquad w_K=|\mu_K|.
+\]
+$R_K$ 为调节子：取单位自由部分的一组基，组成加权对数矩阵，删去任一行后的方阵行列式绝对值即为 $R_K$；自由秩为零时约定 $R_K=1$。
+\section{理想、判别式与分歧补充}
+\subsection{分式理想的赋值运算}\index{分式理想的赋值运算|hyperpage}
+非零分式理想唯一写为 $\mathfrak a=\prod_{\mathfrak p}\mathfrak p^{v_{\mathfrak p}(\mathfrak a)}$，仅有限多个指数非零。于是
+\begin{gather*}
+v_{\mathfrak p}(\mathfrak a\mathfrak b)=v_{\mathfrak p}(\mathfrak a)+v_{\mathfrak p}(\mathfrak b),\qquad
+v_{\mathfrak p}(\mathfrak a^{-1})=-v_{\mathfrak p}(\mathfrak a),\\
+v_{\mathfrak p}(\mathfrak a+\mathfrak b)=\min(v_{\mathfrak p}\mathfrak a,v_{\mathfrak p}\mathfrak b),\quad
+v_{\mathfrak p}(\mathfrak a\cap\mathfrak b)=\max(v_{\mathfrak p}\mathfrak a,v_{\mathfrak p}\mathfrak b).
+\end{gather*}
+包含关系反向对应指数大小：$\mathfrak a\subseteq\mathfrak b\iff v_{\mathfrak p}\mathfrak a\ge v_{\mathfrak p}\mathfrak b$。互素整理想的中国剩余同构为
+\[
+\mathcal O_K/\prod_i\mathfrak a_i\cong\prod_i(\mathcal O_K/\mathfrak a_i).
+\]
+\subsection{余不同、不同与判别式塔公式}\index{余不同、不同与判别式塔公式|hyperpage}
+有限数域扩张 $L/K$ 的余不同为
+\[
+\mathfrak D_{L/K}^{-1}=\{x\in L:\operatorname{Tr}_{L/K}(x\mathcal O_L)\subseteq\mathcal O_K\},\qquad
+\mathfrak d_{L/K}=N_{L/K}(\mathfrak D_{L/K}).
+\]
+对塔 $L/K/F$，$\mathfrak D_{L/F}=\mathfrak D_{L/K}\,\mathfrak D_{K/F}\mathcal O_L$。特别地
+\[
+|D_L|=|D_K|^{[L:K]}N_{K/\mathbb Q}(\mathfrak d_{L/K}).
+\]
+若 $\mathcal O_L=\mathcal O_K[\alpha]$、$f$ 为 $\alpha$ 在 $K$ 上的首一极小多项式，则 $\mathfrak D_{L/K}=(f'(\alpha))$；单生成整数环条件不可省略。
+\subsection{分解群、惯性群与Frobenius}\index{分解群、惯性群与Frobenius|hyperpage}
+设 $L/K$ 为有限 Galois 扩张，$\mathfrak P\mid\mathfrak p$，分解群 $D_{\mathfrak P}=\{g:g\mathfrak P=\mathfrak P\}$，惯性群为其在剩余域上作用的核。有
+\[
+1\to I_{\mathfrak P}\to D_{\mathfrak P}\to
+\operatorname{Gal}(\kappa(\mathfrak P)/\kappa(\mathfrak p))\to1,
+\quad |I|=e,\quad|D|=ef,\quad efg=[L:K].
+\]
+未分歧时算术 Frobenius 满足 $\operatorname{Frob}_{\mathfrak P}(x)\equiv x^{N\mathfrak p}\pmod{\mathfrak P}$。换上方素理想只改变其共轭类；阿贝尔扩张中得到确定的群元素。
+\subsection{Chebotarev与二次分裂判别}\index{Chebotarev与二次分裂判别|hyperpage}
+对上述 Galois 群 $G$ 的共轭类并 $C$，未分歧素理想中 Frobenius 属于 $C$ 的自然密度为 $|C|/|G|$。完全分裂素理想的密度为 $1/[L:K]$。
+
+二次域判别式 $D$ 对应本原二次特征 $\chi_D(n)=(D/n)$（Kronecker 符号）。对有理素数 $p$，
+\[
+\chi_D(p)=1\Rightarrow p\text{ 分裂},\quad
+\chi_D(p)=-1\Rightarrow p\text{ 惰性},\quad
+\chi_D(p)=0\Rightarrow p\text{ 分歧}.
+\]
+使用 Kronecker 符号可同时处理 $p=2$；只用奇素数 Legendre 符号时应单独讨论二。
+\section{局部域、赋值与高度补充}
+\subsection{p进数、Hensel提升与Newton迭代}\index{p进数、Hensel提升与Newton迭代|hyperpage}
+对有理数定义 $|x|_p=p^{-v_p(x)}$，完备化得 $\mathbb Q_p$，整数环 $\mathbb Z_p=\{x:|x|_p\le1\}$。超度量不等式为 $|x+y|_p\le\max(|x|_p,|y|_p)$。若 $f\in\mathbb Z_p[x]$，$f(a)\equiv0\pmod p$、$f'(a)\not\equiv0\pmod p$，则有唯一根 $\alpha\equiv a\pmod p$。更强的充分条件为
+\[
+v_p(f(a))>2v_p(f'(a)),\qquad
+a_{n+1}=a_n-\frac{f(a_n)}{f'(a_n)}\longrightarrow\alpha.
+\]
+幂级数与极限均按 $p$ 进度量解释，不是实数绝对值收敛。
+\subsection{完备化分解与局部次数}\index{完备化分解与局部次数|hyperpage}
+数域在有理素数处有
+\[
+K\otimes_{\mathbb Q}\mathbb Q_p\cong\prod_{\mathfrak p\mid p}K_{\mathfrak p},\qquad
+[K_{\mathfrak p}:\mathbb Q_p]=e_{\mathfrak p}f_{\mathfrak p},\qquad
+\sum_{\mathfrak p\mid p}[K_{\mathfrak p}:\mathbb Q_p]=[K:\mathbb Q].
+\]
+有限 $p$ 进扩张的整数环为完备 DVR，极大理想由一致化元 $\pi$ 生成，剩余域有限。局部域 $L/K$ 中，未分歧等价于 $e=1$，完全分歧为 $f=1$；剩余特征不整除 $e$ 时为温和分歧。Galois 情形的不同指数满足
+\[
+v_L(\mathfrak D_{L/K})=\sum_{i\ge0}(|G_i|-1),
+\]
+其中 $G_i$ 为下标编号的分歧群，$G_0$ 为惯性群。
+\subsection{乘积公式与绝对高度}\index{乘积公式与绝对高度|hyperpage}
+对 $\alpha\in K^\times$，在实位取通常绝对值、复位每对取模平方、有限位取 $|\alpha|_{\mathfrak p}=(N\mathfrak p)^{-v_{\mathfrak p}(\alpha)}$，则
+\[
+\prod_v|\alpha|_v=1,\qquad
+H(\alpha)=\prod_v\max(1,|\alpha|_v)^{1/[K:\mathbb Q]}.
+\]
+$H$ 与包含 $\alpha$ 的数域选择无关，$h=\log H$ 满足
+\[
+h(\alpha\beta)\le h(\alpha)+h(\beta),\quad
+h(\alpha+\beta)\le h(\alpha)+h(\beta)+\log2,\quad
+h(\alpha^m)=|m|h(\alpha)\ (\alpha\ne0).
+\]
+Northcott 定理：次数和高度同时有界的代数数只有有限多个；非零代数数高度为零当且仅当是单位根。
+\subsection{S单位与理想类群的局部化}\index{S单位与理想类群的局部化|hyperpage}
+有限素理想集 $S_f$ 对应 $S$ 整数环 $\mathcal O_{K,S}=\{x:v_{\mathfrak p}(x)\ge0,\ \mathfrak p\notin S_f\}$。其单位群满足
+\[
+\mathcal O_{K,S}^\times\cong\mu_K\times\mathbb Z^{r_1+r_2-1+|S_f|}.
+\]
+局部化类群为 $\operatorname{Cl}(\mathcal O_{K,S})\cong\operatorname{Cl}(K)/\langle[\mathfrak p]:\mathfrak p\in S_f\rangle$；因而把类群的一组素理想生成元变为可逆后，可消去类群。
+\section{显式数域、L函数与类域补充}
+\subsection{二次型、类数与L值}\index{二次型、类数与L值|hyperpage}
+负基本判别式 $D$ 的本原正定二元二次型 $ax^2+bxy+cy^2$、$b^2-4ac=D$，在 $SL_2(\mathbb Z)$ 等价下的类与二次域理想类对应。约化型可取 $|b|\le a\le c$，并有
+\[
+a\le\sqrt{|D|/3},\qquad
+L(1,\chi_D)=\frac{2\pi h_K}{w_K\sqrt{|D|}}\quad(D<0).
+\]
+边界等号需选一致的符号约定避免重复计数。实二次域的对应公式为 $L(1,\chi_D)=2h_KR_K/\sqrt D$，此处为通常理想类数与单位调节子。
+\subsection{分圆整数环与素理想行为}\index{分圆整数环与素理想行为|hyperpage}
+对 $K=\mathbb Q(\zeta_m)$、$m\ge2$，$\mathcal O_K=\mathbb Z[\zeta_m]$、次数 $\varphi(m)$。若 $p\nmid m$，则未分歧且所有剩余次数均为
+\[
+f=\operatorname{ord}_m(p),\qquad g=\varphi(m)/f,\qquad
+p\text{ 完全分裂}\iff p\equiv1\pmod m.
+\]
+对奇素数 $\ell$，在 $\mathbb Q(\zeta_\ell)$ 中 $\ell\mathcal O_K=(1-\zeta_\ell)^{\ell-1}$，这里表示主理想等式（生成元间允许单位因子）。分圆域的判别式公式见域论章；素数整除导子时须另查分歧。
+\subsection{Dedekind完成函数与二次分解}\index{Dedekind完成函数与二次分解|hyperpage}
+令 $\Gamma_\mathbb R(s)=\pi^{-s/2}\Gamma(s/2)$、$\Gamma_\mathbb C(s)=2(2\pi)^{-s}\Gamma(s)$，则
+\[
+\Lambda_K(s)=|D_K|^{s/2}\Gamma_\mathbb R(s)^{r_1}\Gamma_\mathbb C(s)^{r_2}\zeta_K(s),\qquad
+\Lambda_K(s)=\Lambda_K(1-s).
+\]
+完成函数在 $0,1$ 有简单极点；乘 $s(s-1)$ 后为整函数。二次域有 $\zeta_K(s)=\zeta(s)L(s,\chi_D)$；局部 Euler 因子分别记录分裂、惰性和分歧行为。
+\subsection{Hilbert类域与Artin互反}\index{Hilbert类域与Artin互反|hyperpage}
+数域 $K$ 的 Hilbert 类域 $H$ 为最大处处未分歧阿贝尔扩张（实位也不变成复位），满足
+\[
+\operatorname{Gal}(H/K)\cong\operatorname{Cl}(K),\qquad[H:K]=h_K.
+\]
+同构由未分歧素理想映到算术 Frobenius 的 Artin 映射给出，故 $\mathfrak p$ 在 $H$ 中完全分裂当且仅当其理想类为平凡类。一般带分歧阿贝尔扩张由射线类群控制；在 $K=\mathbb Q$ 上，Kronecker--Weber 定理断言每个有限阿贝尔扩张包含于某个分圆域。
+
+\section{局部符号、范数与判别式补充}
+局部整体与互反理论参见\cite{milneANT,milneCFT}。本节局部域的特征不为二。
+\subsection{有理数域的Hilbert符号显式式}\index{有理数域的Hilbert符号显式式|hyperpage}
+对 $a,b\in\mathbb Q_v^*$，定义 $(a,b)_v=1$ 当且仅当 $z^2=ax^2+by^2$ 有非零局部解，否则取 $-1$。奇素数 $p$ 处写 $a=p^\alpha u,b=p^\beta v$，则
+\[
+(a,b)_p=(-1)^{\alpha\beta(p-1)/2}
+\left(\frac{u}{p}\right)^\beta\left(\frac{v}{p}\right)^\alpha.
+\]
+二进处 $u,v$ 为奇单位时，记 $\epsilon(u)=(u-1)/2$、$\omega(u)=(u^2-1)/8$ 按模二取值，则
+\[
+(a,b)_2=(-1)^{\epsilon(u)\epsilon(v)+\alpha\omega(v)+\beta\omega(u)}.
+\]
+实处仅当 $a,b$ 都为负时取 $-1$。单位的 Legendre 符号按模 $p$ 的非零剩余类理解。
+\subsection{Hilbert互反与Hasse--Minkowski原理}\index{Hilbert互反与Hasse-Minkowski原理|hyperpage}
+对 $a,b\in\mathbb Q^*$，所有位置上满足
+\[
+\prod_v(a,b)_v=1,
+\]
+其中仅有限个因子不为一。非退化有理二次型 $q$ 满足局部整体原理：
+\[
+q\text{ 在 }\mathbb Q\text{ 上有非零零点}
+\iff q\text{ 在每个 }\mathbb Q_p\text{ 及 }\mathbb R\text{ 上有非零零点}.
+\]
+必须包含实位置；正定二次型已在实处阻碍非零零点。这里研究齐次各向同性，不是任意整系数方程的整数可解性原则。
+\subsection{Abel扩张的导子判别式公式}\index{Abel扩张的导子判别式公式|hyperpage}
+有限 Abel 扩张 $K/\mathbb Q$ 的角色群可对应于本原 Dirichlet 特征，令 $f_\chi$ 为对应导子。则
+\[
+|D_K|=\prod_{\chi\in\widehat{\operatorname{Gal}(K/\mathbb Q)}}f_\chi.
+\]
+平凡角色的导子为一。相应分解为 $\zeta_K(s)=\prod_\chi L(s,\chi)$，各因子采用本原角色；非本原角色会带来缺失 Euler 因子。
+\subsection{循环扩张的Hasse范数定理}\index{循环扩张的Hasse范数定理|hyperpage}
+若 $L/K$ 为数域的有限循环扩张，$a\in K^*$，则
+\[
+a\in N_{L/K}(L^*)
+\iff \forall v,\quad a\in N_{L_w/K_v}(L_w^*),\qquad w\mid v.
+\]
+右侧检查全部有限及无限位置；Galois 性使选择哪个 $w$ 不影响范数子群。一般非循环扩张可能出现局部处处为范数而全局不是范数的阻碍。
+\clearpage
+\end{document}

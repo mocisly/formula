@@ -1,3 +1,28 @@
+## Project build output and temporary working directories:
+/build/
+/tmp/
+/temp/
+
+## Python caches and local environments:
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+
+## Operating system and editor temporary files:
+.DS_Store
+Thumbs.db
+Desktop.ini
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+
+## Keep the published handbook; source PDFs/EPS images are not globally ignored:
+!/main.pdf
+
 ## Core latex/pdflatex auxiliary files:
 *.aux
 *.lof

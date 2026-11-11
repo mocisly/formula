@@ -1,0 +1,526 @@
+\documentclass[../main.tex]{subfiles}
+\begin{document}
+本章主要参考\cite{durrett}。
+
+\section{随机事件与概率}
+\subsection{事件的运算}\index{事件的运算|hyperpage}
+样本空间为 $\Omega$，不可能事件为 $\varnothing$，补事件为 $A^c=\Omega\setminus A$。
+\[
+A\cup B=\{A\text{ 或 }B\text{ 发生}\},\quad A\cap B=\{A,B\text{ 同时发生}\},\quad
+A\setminus B=A\cap B^c.
+\]
+\[
+(A\cup B)^c=A^c\cap B^c,\quad (A\cap B)^c=A^c\cup B^c,\quad
+A\cap(B\cup C)=(A\cap B)\cup(A\cap C).
+\]
+互斥指 $A\cap B=\varnothing$，独立指 $P(A\cap B)=P(A)P(B)$；两者含义不同。
+\subsection{概率公式}\index{概率公式|hyperpage}
+\begin{align*}
+P(\Omega)&=1, & P(A^c)&=1-P(A),\\
+P(A\cup B)&=P(A)+P(B)-P(A\cap B),\\
+P(A\mid B)&=\frac{P(A\cap B)}{P(B)}\quad(P(B)>0),\\
+P(A\cap B)&=P(B)P(A\mid B)=P(A)P(B\mid A).
+\end{align*}
+若 $\{B_i\}$ 是有限或可数的互斥完备事件组，且 $P(B_i)>0$，则
+\[
+P(A)=\sum_iP(B_i)P(A\mid B_i),\qquad
+P(B_j\mid A)=\frac{P(B_j)P(A\mid B_j)}{\sum_iP(B_i)P(A\mid B_i)}\quad(P(A)>0).
+\]
+\subsection{古典概型及其概率分布}\index{古典概型及其概率分布|hyperpage}
+有限等可能样本空间中，$P(A)=|A|/|\Omega|$。
+从 $N$ 个对象（其中 $M$ 个为目标）中不放回抽取 $n$ 个，目标个数 $X$ 满足超几何分布：
+\[
+P(X=k)=\frac{\binom Mk\binom{N-M}{n-k}}{\binom Nn},\quad
+\max(0,n-N+M)\le k\le\min(n,M),\quad k\in\mathbb Z.
+\]
+\section{随机变量及其概率分布}
+\subsection{一维连续型随机变量}\index{一维连续型随机变量|hyperpage}
+分布函数 $F_X(x)=P(X\le x)$ 单调不减、右连续，且 $F_X(-\infty)=0,F_X(+\infty)=1$。
+有概率密度 $f_X$ 时，
+\[
+f_X(x)\ge0,\quad\int_{-\infty}^{\infty}f_X(x)\,\mathrm dx=1,\quad
+F_X(x)=\int_{-\infty}^xf_X(t)\,\mathrm dt,\quad
+P(a<X\le b)=F_X(b)-F_X(a).
+\]
+此时 $P(X=x)=0$；$F'_X=f_X$ 在密度连续点成立。
+\subsection{常见分布}\index{常见分布|hyperpage}
+以下离散分布在所列整数范围外概率为零；连续分布在所列支持集外密度为零。
+\begin{align*}
+X\sim\operatorname{Bernoulli}(p):\quad&P(X=k)=p^k(1-p)^{1-k}, &&k=0,1,\\
+X\sim\operatorname{Bin}(n,p):\quad&P(X=k)=\binom nkp^k(1-p)^{n-k}, &&k=0,\ldots,n,\\
+X\sim\operatorname{Poisson}(\lambda):\quad&P(X=k)=e^{-\lambda}\lambda^k/k!, &&k=0,1,\ldots,\\
+X\sim\operatorname{Geom}(p):\quad&P(X=k)=p(1-p)^{k-1}, &&k=1,2,\ldots.
+\end{align*}
+其中 $0<p<1$，$\lambda>0$；几何分布计数首次成功的试验次数。
+\begin{align*}
+X\sim U(a,b):\quad&f(x)=\frac1{b-a}, &&a<x<b,\\
+X\sim\operatorname{Exp}(\lambda):\quad&f(x)=\lambda e^{-\lambda x}, &&x>0,\\
+X\sim N(\mu,\sigma^2):\quad&f(x)=\frac1{\sqrt{2\pi}\sigma}
+ e^{-(x-\mu)^2/(2\sigma^2)}, &&x\in\mathbb R,\\
+X\sim\operatorname{Gamma}(\alpha,\lambda):\quad&f(x)=\frac{\lambda^\alpha}{\Gamma(\alpha)}x^{\alpha-1}e^{-\lambda x}, &&x>0.
+\end{align*}
+参数满足 $a<b$，$\sigma>0$，$\alpha,\lambda>0$；Gamma 使用形状--率参数，$\Gamma(\alpha)=\int_0^\infty t^{\alpha-1}e^{-t}\,\mathrm dt$。
+\subsection{重要公式}\index{重要公式|hyperpage}
+记 $\Phi(z)=\int_{-\infty}^z(2\pi)^{-1/2}e^{-t^2/2}\,\mathrm dt$。若 $X\sim N(\mu,\sigma^2)$，则
+\[
+Z=\frac{X-\mu}{\sigma}\sim N(0,1),\quad
+P(a<X\le b)=\Phi\!\left(\frac{b-\mu}{\sigma}\right)-\Phi\!\left(\frac{a-\mu}{\sigma}\right),\quad
+\Phi(-z)=1-\Phi(z).
+\]
+对指数分布或上述几何分布，有无记忆性
+\[
+P(X>s+t\mid X>s)=P(X>t).
+\]
+指数情形 $s,t\ge0$；几何情形 $s,t$ 为非负整数。
+\subsection{随机变量函数的概率分布}\index{随机变量函数的概率分布|hyperpage}
+设 $Y=g(X)$，通用方法为 $F_Y(y)=P(g(X)\le y)$。若 $g$ 严格单调且反函数可微，
+\[
+f_Y(y)=f_X(g^{-1}(y))\left|\frac{\mathrm d}{\mathrm dy}g^{-1}(y)\right|.
+\]
+若有有限个可微单调分支，则在各正则原像 $x_i$ 上求和：
+\[
+f_Y(y)=\sum_{g(x_i)=y}\frac{f_X(x_i)}{|g'(x_i)|}.
+\]
+例如 $Y=X^2$ 时，$f_Y(y)=[f_X(\sqrt y)+f_X(-\sqrt y)]/(2\sqrt y)$（$y>0$）。
+\section{多维随机变量及其分布}
+\subsection{多维随机变量及其分布，二维离散型随机变量的概率分布、边缘分布和条件分布}\index{多维随机变量及其分布，二维离散型随机变量的概率分布、边缘分布和条件分布|hyperpage}
+\[
+F_{X,Y}(x,y)=P(X\le x,Y\le y),\qquad p_{ij}=P(X=x_i,Y=y_j),\quad
+\sum_{i,j}p_{ij}=1.
+\]
+\[
+p_{i\cdot}=\sum_jp_{ij},\qquad p_{\cdot j}=\sum_ip_{ij},\qquad
+P(X=x_i\mid Y=y_j)=\frac{p_{ij}}{p_{\cdot j}}\quad(p_{\cdot j}>0).
+\]
+边缘分布函数 $F_X(x)=F_{X,Y}(x,+\infty)$，$F_Y(y)=F_{X,Y}(+\infty,y)$。
+\subsection{二维连续型随机变量的概率密度、边缘概率密度和条件密度}\index{二维连续型随机变量的概率密度、边缘概率密度和条件密度|hyperpage}
+\[
+f_{X,Y}\ge0,\quad\iint_{\mathbb R^2}f_{X,Y}\,\mathrm dx\,\mathrm dy=1,\quad
+P((X,Y)\in D)=\iint_D f_{X,Y}(x,y)\,\mathrm dx\,\mathrm dy.
+\]
+\[
+\begin{gathered}
+f_X(x)=\int_{-\infty}^{\infty}f_{X,Y}(x,y)\,\mathrm dy,\qquad
+f_Y(y)=\int_{-\infty}^{\infty}f_{X,Y}(x,y)\,\mathrm dx,\\
+f_{X\mid Y}(x\mid y)=\frac{f_{X,Y}(x,y)}{f_Y(y)}\quad(f_Y(y)>0).
+\end{gathered}
+\]
+\subsection{随机变量的独立性和不相关性，常用随机变量的分布}\index{随机变量的独立性和不相关性，常用随机变量的分布|hyperpage}
+\[
+X\perp Y\iff F_{X,Y}(x,y)=F_X(x)F_Y(y)\quad(\forall x,y).
+\]
+离散情形等价于 $p_{ij}=p_{i\cdot}p_{\cdot j}$；有密度时等价于 $f_{X,Y}=f_Xf_Y$ 几乎处处成立。
+二阶矩有限时，独立蕴含 $\operatorname{Cov}(X,Y)=0$，反之一般不成立。
+二维正态分布密度为
+\[
+f(x,y)=\frac{\exp\!\left\{-\dfrac{u^2-2\rho uv+v^2}{2(1-\rho^2)}\right\}}
+ {2\pi\sigma_X\sigma_Y\sqrt{1-\rho^2}},\quad
+u=\frac{x-\mu_X}{\sigma_X},\quad v=\frac{y-\mu_Y}{\sigma_Y},\quad |\rho|<1.
+\]
+其中 $\sigma_X,\sigma_Y>0$。对联合正态变量，不相关等价于独立；仅各自边缘正态不足以推出该结论。
+\subsection{两个及两个以上随机变量简单函数的分布}\index{两个及两个以上随机变量简单函数的分布|hyperpage}
+独立连续变量之和 $Z=X+Y$ 的密度为卷积
+\[
+f_Z(z)=\int_{-\infty}^{\infty}f_X(x)f_Y(z-x)\,\mathrm dx.
+\]
+一般二维连续情形（无需独立），乘积与商的密度为
+\[
+f_{XY}(z)=\int_{-\infty}^{\infty}f_{X,Y}(x,z/x)\frac{\mathrm dx}{|x|},\qquad
+f_{X/Y}(z)=\int_{-\infty}^{\infty}|y|f_{X,Y}(zy,y)\,\mathrm dy.
+\]
+乘积公式积分忽略 $x=0$ 的零测点；商要求 $P(Y=0)=0$。
+独立变量 $X_1,\ldots,X_n$ 满足
+\[
+F_{\max X_i}(x)=\prod_iF_i(x),\qquad
+F_{\min X_i}(x)=1-\prod_i[1-F_i(x)].
+\]
+独立正态变量的线性组合仍正态：$\sum_i a_iX_i\sim N(\sum_i a_i\mu_i,\sum_i a_i^2\sigma_i^2)$（方差正时）。
+\subsection{常见分布的可加性}\index{常见分布的可加性|hyperpage}
+以下各组均假定随机变量相互独立：
+\begin{align*}
+X_i\sim\operatorname{Bin}(n_i,p)&\Longrightarrow\sum_iX_i\sim\operatorname{Bin}\left(\sum_in_i,p\right),\\
+X_i\sim\operatorname{Poisson}(\lambda_i)&\Longrightarrow\sum_iX_i\sim\operatorname{Poisson}\left(\sum_i\lambda_i\right),\\
+X_i\sim\operatorname{Gamma}(\alpha_i,\lambda)&\Longrightarrow\sum_iX_i\sim\operatorname{Gamma}\left(\sum_i\alpha_i,\lambda\right),\\
+X_i\sim\chi^2(\nu_i)&\Longrightarrow\sum_iX_i\sim\chi^2\left(\sum_i\nu_i\right).
+\end{align*}
+这里 Gamma 使用率参数，$\chi^2(\nu)=\operatorname{Gamma}(\nu/2,1/2)$。
+易错点：二项分布须有相同成功概率，Gamma 分布须有相同率参数；仅有边缘分布而无独立性时不能直接使用。
+\section{随机变量的数字特征}
+\subsection{随机变量的数学期望（均值）方差和标准差性质}\index{随机变量的数学期望（均值）方差和标准差性质|hyperpage}
+\[
+\begin{gathered}
+E[X]=\sum_kx_kp_k\quad\text{或}\quad\int_{-\infty}^{\infty}xf(x)\,\mathrm dx,\\
+\operatorname{Var}(X)=E[(X-E[X])^2]=E[X^2]-E[X]^2,\qquad
+\sigma_X=\sqrt{\operatorname{Var}(X)}.
+\end{gathered}
+\]
+期望公式要求绝对可积，方差性质要求二阶矩有限。
+\[
+E[aX+bY+c]=aE[X]+bE[Y]+c,\qquad
+\operatorname{Var}(aX+b)=a^2\operatorname{Var}(X).
+\]
+\begin{center}
+\begin{tabular}{c|c|c}
+分布 & $E[X]$ & $\operatorname{Var}(X)$\\\hline
+$\operatorname{Bernoulli}(p)$ & $p$ & $p(1-p)$\\
+$\operatorname{Bin}(n,p)$ & $np$ & $np(1-p)$\\
+$\operatorname{Poisson}(\lambda)$ & $\lambda$ & $\lambda$\\
+$\operatorname{Geom}(p)$ & $1/p$ & $(1-p)/p^2$\\
+$U(a,b)$ & $(a+b)/2$ & $(b-a)^2/12$\\
+$\operatorname{Exp}(\lambda)$ & $1/\lambda$ & $1/\lambda^2$\\
+$N(\mu,\sigma^2)$ & $\mu$ & $\sigma^2$\\
+$\operatorname{Gamma}(\alpha,\lambda)$ & $\alpha/\lambda$ & $\alpha/\lambda^2$
+\end{tabular}
+\end{center}
+超几何分布的均值为 $nM/N$，方差为 $n(M/N)(1-M/N)(N-n)/(N-1)$（$N>1$）。
+\subsection{随机变量函数的数学期望，矩，协方差，相关系数的数学特征}\index{随机变量函数的数学期望，矩，协方差，相关系数的数学特征|hyperpage}
+\[
+E[g(X,Y)]=\sum_{i,j}g(x_i,y_j)p_{ij}
+\quad\text{或}\quad\iint g(x,y)f_{X,Y}(x,y)\,\mathrm dx\,\mathrm dy.
+\]
+$k$ 阶原点矩为 $E[X^k]$，中心矩为 $E[(X-E[X])^k]$（存在时）。
+\begin{align*}
+\operatorname{Cov}(X,Y)&=E[(X-E[X])(Y-E[Y])]=E[XY]-E[X]E[Y],\\
+\rho_{X,Y}&=\frac{\operatorname{Cov}(X,Y)}{\sigma_X\sigma_Y},\quad |\rho_{X,Y}|\le1\quad(\sigma_X\sigma_Y>0),\\
+\operatorname{Var}\left(\sum_i a_iX_i\right)&=\sum_i a_i^2\operatorname{Var}(X_i)
++2\sum_{i<j}a_ia_j\operatorname{Cov}(X_i,X_j).
+\end{align*}
+独立且期望存在时 $E[XY]=E[X]E[Y]$。全期望与全方差公式为
+\[
+E[X]=E[E[X\mid Y]],\qquad
+\operatorname{Var}(X)=E[\operatorname{Var}(X\mid Y)]+\operatorname{Var}(E[X\mid Y]).
+\]
+\subsection{条件期望与协方差矩阵}\index{条件期望与协方差矩阵|hyperpage}
+离散情形 $E[X\mid Y=y_j]=\sum_i x_iP(X=x_i\mid Y=y_j)$；有条件密度时
+\[
+E[X\mid Y=y]=\int_{-\infty}^{\infty}xf_{X\mid Y}(x\mid y)\,\mathrm dx.
+\]
+若相关期望存在，对可测函数 $h$ 有
+\[
+E[h(Y)X\mid Y]=h(Y)E[X\mid Y],\qquad
+X\perp Y\Longrightarrow E[X\mid Y]=E[X].
+\]
+设随机向量 $\bm X$ 二阶矩有限，均值 $\bm\mu=E[\bm X]$，则
+\[
+\Sigma=E[(\bm X-\bm\mu)(\bm X-\bm\mu)^{\mathsf T}],\quad
+\Sigma_{ij}=\operatorname{Cov}(X_i,X_j),\quad \Sigma\succeq0.
+\]
+对常数矩阵 $A$ 和向量 $\bm b$，
+\[
+E[A\bm X+\bm b]=A\bm\mu+\bm b,\qquad
+\operatorname{Cov}(A\bm X+\bm b)=A\Sigma A^{\mathsf T}.
+\]
+\subsection{矩母函数与特征函数}\index{矩母函数与特征函数|hyperpage}
+定义 $M_X(t)=E[e^{tX}]$（在期望有限处），$\varphi_X(t)=E[e^{itX}]$（对所有实数 $t$ 存在）。
+若 $M_X$ 在零的某邻域内有限，则 $M_X^{(k)}(0)=E[X^k]$；若 $E|X|^k<\infty$，则 $\varphi_X^{(k)}(0)=i^kE[X^k]$。
+\[
+\varphi_{aX+b}(t)=e^{itb}\varphi_X(at),\qquad
+\varphi_{X+Y}(t)=\varphi_X(t)\varphi_Y(t)\quad(X\perp Y).
+\]
+\begin{align*}
+X\sim\operatorname{Bin}(n,p):&\quad M_X(t)=(1-p+pe^t)^n,\\
+X\sim\operatorname{Poisson}(\lambda):&\quad M_X(t)=\exp[\lambda(e^t-1)],\\
+X\sim N(\mu,\sigma^2):&\quad M_X(t)=\exp(\mu t+\sigma^2t^2/2),\\
+X\sim\operatorname{Gamma}(\alpha,\lambda):&\quad M_X(t)=(1-t/\lambda)^{-\alpha}\quad(t<\lambda).
+\end{align*}
+前三式对所有实数 $t$ 成立。特征函数唯一确定分布；矩母函数在零邻域存在时也唯一确定分布。
+\section{大数定律和中心极限定理}
+\subsection{Chebyshev不等式，Chebyshev大数定律}\index{Chebyshev不等式，Chebyshev大数定律|hyperpage}
+若 $E[X]=\mu$、$\operatorname{Var}(X)=\sigma^2<\infty$，则
+\[
+P(|X-\mu|\ge\varepsilon)\le\frac{\sigma^2}{\varepsilon^2}\quad(\varepsilon>0).
+\]
+若 $X_i$ 两两不相关且方差一致有界，则
+\[
+\frac1n\sum_{i=1}^n(X_i-E[X_i])\xrightarrow{P}0,\qquad
+P\!\left(\left|\frac1n\sum_{i=1}^n(X_i-E[X_i])\right|\ge\varepsilon\right)
+\le\frac{\sum_{i=1}^n\operatorname{Var}(X_i)}{n^2\varepsilon^2}\to0.
+\]
+\subsection{Bernoulli大数定律，Khinchin大数定律}\index{Bernoulli大数定律，Khinchin大数定律|hyperpage}
+独立重复 Bernoulli 试验成功次数 $S_n$ 满足
+\[
+S_n/n\xrightarrow{P}p,\qquad
+P(|S_n/n-p|\ge\varepsilon)\le\frac{p(1-p)}{n\varepsilon^2}.
+\]
+Khinchin 大数定律：$X_i$ 独立同分布且 $E|X_i|<\infty$，则 $\overline X_n=n^{-1}\sum_iX_i\xrightarrow{P}E[X_1]$，无需有限方差。
+\subsection{De Moivre--Laplace定理，Lindeberg--Lévy定理}\index{De Moivre-Laplace定理，Lindeberg-Lévy定理|hyperpage}
+对 $S_n\sim\operatorname{Bin}(n,p)$，$0<p<1$，
+\[
+\frac{S_n-np}{\sqrt{np(1-p)}}\xrightarrow{d}N(0,1).
+\]
+独立同分布的 $X_i$ 满足 $E[X_i]=\mu$、$0<\operatorname{Var}(X_i)=\sigma^2<\infty$ 时，
+\[
+\frac{\sum_{i=1}^nX_i-n\mu}{\sigma\sqrt n}
+=\frac{\sqrt n(\overline X_n-\mu)}\sigma\xrightarrow{d}N(0,1).
+\]
+二项概率的连续性修正近似（整数 $a\le b$）为
+\[
+P(a\le S_n\le b)\approx
+\Phi\!\left(\frac{b+1/2-np}{\sqrt{np(1-p)}}\right)
+-\Phi\!\left(\frac{a-1/2-np}{\sqrt{np(1-p)}}\right).
+\]
+\section{补充分布族与多维变换}
+% References: https://ocw.mit.edu/courses/6-436j-fundamentals-of-probability-fall-2018/pages/lecture-notes/
+% https://online.stat.psu.edu/stat505/Lesson06
+\subsection{负二项、多项与Beta分布}\index{负二项、多项与Beta分布|hyperpage}
+独立 Bernoulli$(p)$ 试验中，得到第 $r$ 次成功时的总试验次数 $N$ 满足（$r\ge1$ 为整数，$0<p<1$）
+\[
+P(N=k)=\binom{k-1}{r-1}p^r(1-p)^{k-r},\quad k=r,r+1,\ldots,
+\qquad E[N]=\frac rp,\quad\operatorname{Var}(N)=\frac{r(1-p)}{p^2}.
+\]
+若计数成功前的失败次数，应改用 $N-r$。若 $\bm X\sim\operatorname{Multinomial}(n;p_1,\ldots,p_k)$，$p_i>0$、$\sum p_i=1$，则
+\begin{gather*}
+P(X_1=n_1,\ldots,X_k=n_k)=\frac{n!}{\prod_i n_i!}\prod_i p_i^{n_i},\quad
+n_i\ge0,\quad\sum_i n_i=n,\\
+E[X_i]=np_i,\quad\operatorname{Var}(X_i)=np_i(1-p_i),\quad
+\operatorname{Cov}(X_i,X_j)=-np_ip_j\quad(i\ne j).
+\end{gather*}
+对 $\alpha,\beta>0$，Beta$(\alpha,\beta)$ 密度与矩为
+\begin{gather*}
+f(x)=\frac{x^{\alpha-1}(1-x)^{\beta-1}}{B(\alpha,\beta)}\quad(0<x<1),\qquad
+B(\alpha,\beta)=\frac{\Gamma(\alpha)\Gamma(\beta)}{\Gamma(\alpha+\beta)},\\
+E[X]=\frac\alpha{\alpha+\beta},\qquad
+\operatorname{Var}(X)=\frac{\alpha\beta}{(\alpha+\beta)^2(\alpha+\beta+1)}.
+\end{gather*}
+若 $U,V$ 独立，分别为同率的 Gamma$(\alpha,\lambda)$ 与 Gamma$(\beta,\lambda)$，则 $U/(U+V)\sim\operatorname{Beta}(\alpha,\beta)$，并与 $U+V$ 独立。
+
+\subsection{Dirichlet分布与Gamma归一化}\index{Dirichlet分布与Gamma归一化|hyperpage}
+设 $\alpha_i>0$、$\alpha_0=\sum_{i=1}^k\alpha_i$，$k\ge2$。Dirichlet$(\alpha_1,\ldots,\alpha_k)$ 定义于 $x_i>0$、$\sum_i x_i=1$，相对于前 $k-1$ 个坐标的密度为
+\begin{gather*}
+f(x_1,\ldots,x_{k-1})=\frac{\Gamma(\alpha_0)}{\prod_i\Gamma(\alpha_i)}\prod_{i=1}^k x_i^{\alpha_i-1},
+\qquad x_k=1-\sum_{i<k}x_i,\\
+E[X_i]=\frac{\alpha_i}{\alpha_0},\quad
+\operatorname{Var}(X_i)=\frac{\alpha_i(\alpha_0-\alpha_i)}{\alpha_0^2(\alpha_0+1)},\\
+\operatorname{Cov}(X_i,X_j)=-\frac{\alpha_i\alpha_j}{\alpha_0^2(\alpha_0+1)}\quad(i\ne j).
+\end{gather*}
+若 $G_i$ 独立且 $G_i\sim\operatorname{Gamma}(\alpha_i,\lambda)$，则 $(G_i/\sum_jG_j)_i$ 为该 Dirichlet 向量，并与总和独立。坐标和恒为 $1$，所以其全维协方差矩阵奇异。
+
+\subsection{对数正态、Weibull、Pareto与Cauchy分布}\index{对数正态、Weibull、Pareto与Cauchy分布|hyperpage}
+若 $\ln X\sim N(\mu,\sigma^2)$，$\sigma>0$，则
+\[
+f_X(x)=\frac{e^{-(\ln x-\mu)^2/(2\sigma^2)}}{x\sigma\sqrt{2\pi}}\quad(x>0),\qquad
+E[X^r]=e^{r\mu+r^2\sigma^2/2}\quad(r\in\mathbb R).
+\]
+其方差为 $(e^{\sigma^2}-1)e^{2\mu+\sigma^2}$；正参数处的矩母函数发散，不能由所有矩存在推出矩母函数存在。
+
+Weibull 分布取形状 $k>0$、尺度 $\eta>0$，则
+\begin{gather*}
+P(X>x)=e^{-(x/\eta)^k}\quad(x\ge0),\qquad
+f(x)=\frac k\eta(x/\eta)^{k-1}e^{-(x/\eta)^k}\quad(x>0),\\
+E[X^r]=\eta^r\Gamma(1+r/k)\quad(r>-k).
+\end{gather*}
+Pareto 分布取 $x_m,\alpha>0$，则
+\[
+P(X>x)=(x_m/x)^\alpha\quad(x\ge x_m),\qquad
+E[X^r]=\frac{\alpha x_m^r}{\alpha-r}\quad(r<\alpha).
+\]
+Cauchy$(x_0,\gamma)$（$\gamma>0$）密度为 $\gamma/[\pi((x-x_0)^2+\gamma^2)]$，特征函数为 $e^{itx_0-\gamma|t|}$；均值与方差不存在。独立标准正态变量之比为标准 Cauchy 分布。
+
+\subsection{Jacobian变换、分位数与次序统计量}\index{Jacobian变换、分位数与次序统计量|hyperpage}
+若 $\bm Y=T(\bm X)$ 为 $d$ 维可微一一变换且 Jacobian 非零，则
+\[
+f_{\bm Y}(\bm y)=f_{\bm X}(T^{-1}\bm y)\left|\det DT^{-1}(\bm y)\right|.
+\]
+多分支情形对各正则原像求和。对任意分布函数 $F$，广义分位数 $F^{-1}(u)=\inf\{x:F(x)\ge u\}$ 满足 $F^{-1}(U)\sim F$（$U\sim U(0,1)$）。若 $F$ 连续，则 $F(X)\sim U(0,1)$。
+
+设 $X_1,\ldots,X_n$ 独立同分布，连续密度为 $f$、分布函数为 $F$，从小到大排序为 $X_{(1)},\ldots,X_{(n)}$，则
+\begin{gather*}
+P(X_{(k)}\le x)=\sum_{j=k}^n\binom nj F(x)^j[1-F(x)]^{n-j},\\
+f_{X_{(k)}}(x)=\frac{n!}{(k-1)!(n-k)!}F(x)^{k-1}[1-F(x)]^{n-k}f(x),\\
+f_{X_{(1)},\ldots,X_{(n)}}(x_1,\ldots,x_n)=n!\prod_{j=1}^nf(x_j)
+\quad(x_1<\cdots<x_n).
+\end{gather*}
+特别地，$U_{(k)}\sim\operatorname{Beta}(k,n+1-k)$，其均值为 $k/(n+1)$，方差为 $k(n+1-k)/[(n+1)^2(n+2)]$。
+
+\subsection{多元正态、条件分布与二次型}\index{多元正态、条件分布与二次型|hyperpage}
+若 $\bm X\sim N_d(\bm\mu,\Sigma)$、$\Sigma>0$，则
+\begin{gather*}
+f(\bm x)=\frac{\exp[-\tfrac12(\bm x-\bm\mu)^{\mathsf T}\Sigma^{-1}(\bm x-\bm\mu)]}
+{(2\pi)^{d/2}(\det\Sigma)^{1/2}},\\
+\varphi_{\bm X}(\bm t)=\exp(i\bm t^{\mathsf T}\bm\mu-\tfrac12\bm t^{\mathsf T}\Sigma\bm t),\qquad
+A\bm X+\bm b\sim N(A\bm\mu+\bm b,A\Sigma A^{\mathsf T}).
+\end{gather*}
+特征函数与线性变换公式也适用于半正定协方差的退化正态，但此时不一定有全维密度。将向量分块，若 $\Sigma_{22}$ 可逆，
+\begin{gather*}
+E[\bm X_1\mid\bm X_2=\bm x_2]
+=\bm\mu_1+\Sigma_{12}\Sigma_{22}^{-1}(\bm x_2-\bm\mu_2),\\
+\operatorname{Cov}(\bm X_1\mid\bm X_2)
+=\Sigma_{11}-\Sigma_{12}\Sigma_{22}^{-1}\Sigma_{21}.
+\end{gather*}
+该条件分布仍为正态。若 $\bm Z\sim N_d(0,I)$、$A=A^{\mathsf T}$，则
+\[
+E[\bm Z^{\mathsf T}A\bm Z]=\operatorname{tr}A,\qquad
+\operatorname{Var}(\bm Z^{\mathsf T}A\bm Z)=2\operatorname{tr}(A^2).
+\]
+若另有 $A^2=A$、$\operatorname{rank}A=r$，则 $\bm Z^{\mathsf T}A\bm Z\sim\chi_r^2$；一般对称矩阵的二次型不一定为卡方分布。
+
+\section{期望、变换与随机和补充}
+\subsection{尾积分、条件期望与投影}\index{尾积分、条件期望与投影|hyperpage}
+对 $X\ge0$、$r>0$，允许两边为无穷，有
+\[
+E[X^r]=r\int_0^\infty t^{r-1}P(X>t)\,\mathrm dt.
+\]
+对非负整数值变量 $N$，$E[N]=\sum_{k\ge1}P(N\ge k)$。对可积变量与子 $\sigma$ 代数 $\mathcal G\subseteq\mathcal H$，
+\begin{gather*}
+E[E[X\mid\mathcal H]\mid\mathcal G]=E[X\mid\mathcal G],\qquad
+E[E[X\mid\mathcal G]\mid\mathcal H]=E[X\mid\mathcal G],\\
+\operatorname{Cov}(X,Y)=E[\operatorname{Cov}(X,Y\mid\mathcal G)]
++\operatorname{Cov}(E[X\mid\mathcal G],E[Y\mid\mathcal G]).
+\end{gather*}
+协方差式要求二阶矩有限。若 $X\in L^2$，则 $E[X\mid\mathcal G]$ 是 $L^2(\mathcal G)$ 中使均方误差最小的随机变量，并满足
+\[
+E[(X-Z)^2]=E[(X-E[X\mid\mathcal G])^2]
++E[(E[X\mid\mathcal G]-Z)^2]\quad(Z\in L^2(\mathcal G)).
+\]
+
+\subsection{概率生成函数、随机和与累积量}\index{概率生成函数、随机和与累积量|hyperpage}
+对非负整数值变量 $N$，概率生成函数 $G_N(z)=E[z^N]$ 在 $|z|\le1$ 有定义；相关矩有限时
+\[
+E[N]=G_N'(1^-),\qquad
+\operatorname{Var}(N)=G_N''(1^-)+G_N'(1^-)-G_N'(1^-)^2.
+\]
+若 $N$ 与独立同分布的 $X_i$ 序列独立，$S_N=\sum_{i=1}^NX_i$，空和为零，则
+\begin{gather*}
+E[S_N]=E[N]E[X_1],\\
+\operatorname{Var}(S_N)=E[N]\operatorname{Var}(X_1)+\operatorname{Var}(N)E[X_1]^2,\\
+\varphi_{S_N}(t)=G_N(\varphi_X(t)).
+\end{gather*}
+前两式分别要求相应绝对矩与二阶矩有限。若 $N\sim\operatorname{Poisson}(\lambda)$，则
+\[
+\varphi_{S_N}(t)=e^{\lambda(\varphi_X(t)-1)},\qquad
+\operatorname{Var}(S_N)=\lambda E[X_1^2].
+\]
+若矩母函数在零邻域存在，累积量生成函数为 $K_X(t)=\ln M_X(t)$；独立和满足 $K_{X+Y}=K_X+K_Y$，前四个累积量为
+\[
+\kappa_1=E[X],\quad\kappa_2=\operatorname{Var}(X),\quad
+\kappa_3=E[(X-E[X])^3],\quad
+\kappa_4=E[(X-E[X])^4]-3\operatorname{Var}(X)^2.
+\]
+
+\subsection{特征函数反演与连续性定理}\index{特征函数反演与连续性定理|hyperpage}
+采用 $\varphi_X(t)=E[e^{itX}]$。若 $\varphi_X\in L^1(\mathbb R)$，则分布有连续密度
+\[
+f_X(x)=\frac1{2\pi}\int_{\mathbb R}e^{-itx}\varphi_X(t)\,\mathrm dt.
+\]
+若分布函数在 $a<b$ 处连续，则 Lévy 反演式为
+\[
+F(b)-F(a)=\lim_{T\to\infty}\frac1{2\pi}\int_{-T}^T
+\frac{e^{-ita}-e^{-itb}}{it}\varphi_X(t)\,\mathrm dt.
+\]
+$t=0$ 处按连续极限解释。Lévy 连续性定理说明：$X_n\xrightarrow d X$ 当且仅当 $\varphi_{X_n}(t)\to\varphi_X(t)$ 对所有实数 $t$ 成立；若只知特征函数逐点趋于 $\varphi$，还须 $\varphi$ 在零点连续，才能保证它是某分布的特征函数并推出弱收敛。
+
+\section{概率不等式与集中界}
+\subsection{矩不等式与单侧界}\index{矩不等式与单侧界|hyperpage}
+若相关期望存在，凸函数 $\psi$ 满足 Jensen 不等式 $\psi(E[X])\le E[\psi(X)]$，并有条件形式。对 $a>0$、$p>0$，
+\[
+P(|X|\ge a)\le\frac{E|X|^p}{a^p}.
+\]
+对共轭指数 $p,q>1$、$1/p+1/q=1$，Hölder 不等式为 $E|XY|\le(E|X|^p)^{1/p}(E|Y|^q)^{1/q}$。若 $E[X]=\mu$、$\operatorname{Var}(X)=\sigma^2$，Cantelli 单侧界为
+\[
+P(X-\mu\ge t)\le\frac{\sigma^2}{\sigma^2+t^2}\qquad(t>0).
+\]
+若 $X\ge0$、$0<E[X^2]<\infty$、$0\le\theta<1$，Paley--Zygmund 下界为
+\[
+P(X>\theta E[X])\ge(1-\theta)^2\frac{E[X]^2}{E[X^2]}.
+\]
+
+\subsection{Chernoff、Hoeffding与Bernstein界}\index{Chernoff、Hoeffding与Bernstein界|hyperpage}
+对 $t>0$，Chernoff 方法给出
+\[
+P(X\ge a)\le\inf_{t>0}\{e^{-ta}M_X(t)\},
+\]
+其中只取矩母函数有限的 $t$。若 $X_i$ 独立且 $a_i\le X_i\le b_i$ 几乎处处，$S=\sum_iX_i$，则
+\[
+P(|S-E[S]|\ge u)\le2\exp\!\left(-\frac{2u^2}{\sum_i(b_i-a_i)^2}\right)\quad(u>0).
+\]
+分母为零时 $S$ 为常数，应单独处理。若 $X_i$ 独立、均值为零、$|X_i|\le M$、$v=\sum_iE[X_i^2]>0$，则 Bernstein 界为
+\[
+P\!\left(\sum_iX_i\ge u\right)\le
+\exp\!\left(-\frac{u^2}{2(v+Mu/3)}\right)\qquad(u>0).
+\]
+若 $X-E[X]$ 满足 $E[e^{t(X-E[X])}]\le e^{\sigma^2t^2/2}$（所有实数 $t$），则称为次 Gaussian，且 $P(|X-E[X]|\ge u)\le2e^{-u^2/(2\sigma^2)}$（$\sigma>0$）。
+
+\section{收敛方式与极限定理补充}
+\subsection{收敛关系与Borel--Cantelli引理}\index{收敛关系与Borel-Cantelli引理|hyperpage}
+对 $p>0$，$L^p$ 收敛指 $E|X_n-X|^p\to0$。常用蕴含关系为
+\[
+X_n\xrightarrow{\rm a.s.}X\ \Longrightarrow\ X_n\xrightarrow P X\ \Longrightarrow\ X_n\xrightarrow d X,
+\qquad X_n\xrightarrow{L^p}X\ \Longrightarrow\ X_n\xrightarrow P X.
+\]
+反向一般不成立；依分布收敛到常数则可推出依概率收敛。若 $X_n\xrightarrow P X$ 且 $\{X_n\}$ 一致可积，则 $X_n\to X$ 于 $L^1$；$\sup_nE|X_n|^{1+\delta}<\infty$（某 $\delta>0$）是充分的一致可积条件。
+
+令 $\limsup A_n=\bigcap_m\bigcup_{n\ge m}A_n$ 表示事件无穷多次发生，则
+\begin{gather*}
+\sum_nP(A_n)<\infty\Longrightarrow P(\limsup A_n)=0,\\
+\{A_n\}\text{ 相互独立且 }\sum_nP(A_n)=\infty
+\Longrightarrow P(\limsup A_n)=1.
+\end{gather*}
+第二式不能不加条件地去掉独立性；第一式不要求独立。
+
+\subsection{稀有事件与Poisson近似}\index{稀有事件与Poisson近似|hyperpage}
+若 $X_n\sim\operatorname{Bin}(n,p_n)$ 且 $np_n\to\lambda\in(0,\infty)$，则 $X_n\xrightarrow d\operatorname{Poisson}(\lambda)$。更一般地，对独立 Bernoulli$(p_i)$ 变量的和 $S$，令 $\lambda=\sum_i p_i>0$，有总变差界
+\[
+d_{\rm TV}(\mathcal L(S),\operatorname{Poisson}(\lambda))\le\sum_i p_i^2,
+\qquad d_{\rm TV}(P,Q)=\sup_A|P(A)-Q(A)|.
+\]
+这是 Le Cam 型界，显示近似误差受单次事件概率平方和控制；不要求所有 $p_i$ 相同。
+
+\subsection{强大数律、Lindeberg条件与Berry--Esseen界}\index{强大数律、Lindeberg条件与Berry-Esseen界|hyperpage}
+独立同分布的 $X_i$ 若 $E|X_1|<\infty$，则强大数律为 $n^{-1}\sum_{i=1}^nX_i\to E[X_1]$ 几乎处处。对独立非同分布变量，$\sum_n\operatorname{Var}(X_n)/n^2<\infty$ 是使中心化平均几乎处处趋于零的充分条件。
+
+对每行相互独立、均值为零、二阶矩有限的三角阵列 $X_{n,k}$，令 $s_n^2=\sum_kE[X_{n,k}^2]>0$。若对每个 $\varepsilon>0$，
+\[
+\frac1{s_n^2}\sum_kE\!\left[X_{n,k}^2\mathbf1_{\{|X_{n,k}|>\varepsilon s_n\}}\right]\to0,
+\]
+则 $\sum_kX_{n,k}/s_n\xrightarrow d N(0,1)$（Lindeberg 中心极限定理）。对独立同分布变量，若均值 $\mu$、方差 $\sigma^2>0$、$\rho=E|X_1-\mu|^3<\infty$，则存在通用常数 $C$ 使
+\[
+\sup_x\left|P\!\left(\frac{\sum_{i=1}^nX_i-n\mu}{\sigma\sqrt n}\le x\right)-\Phi(x)\right|
+\le\frac{C\rho}{\sigma^3\sqrt n}.
+\]
+
+\subsection{连续映射、Slutsky与Delta方法}\index{连续映射、Slutsky与Delta方法|hyperpage}
+若 $X_n\xrightarrow d X$，$g$ 在 $X$ 几乎必然取值处连续，则 $g(X_n)\xrightarrow d g(X)$。若另有 $Y_n\xrightarrow P c$，则
+\[
+X_n+Y_n\xrightarrow d X+c,\qquad X_nY_n\xrightarrow d cX,\qquad
+X_n/Y_n\xrightarrow d X/c\quad(c\ne0).
+\]
+若 $\sqrt n(T_n-\theta)\xrightarrow d N(0,\sigma^2)$，$g$ 在 $\theta$ 可微，则
+\[
+\sqrt n\bigl(g(T_n)-g(\theta)\bigr)\xrightarrow d N(0,g'(\theta)^2\sigma^2).
+\]
+当 $g'(\theta)=0$ 时，该尺度下极限可能退化；若 $g$ 二阶连续可微且 $g''(\theta)\ne0$，则 $n(g(T_n)-g(\theta))\xrightarrow d \tfrac12g''(\theta)\sigma^2\chi_1^2$。统计应用见第\ref{chap:mathematical-statistics}章。
+\section{独立函数集中、迭代对数与大偏差补充}
+极限定理参见\cite{durrett}，独立变量函数的集中工具参见\cite{massart}。
+\subsection{Efron--Stein方差界}\index{Efron-Stein方差界|hyperpage}
+独立随机变量 $X_1,\ldots,X_n$，$Z=f(X)$ 平方可积。用独立同分布副本替换第 $i$ 个分量得到 $X^{(i)}$，则
+\[
+\operatorname{Var}Z\le\frac12\sum_{i=1}^n
+\mathbb E\bigl(f(X)-f(X^{(i)})\bigr)^2.
+\]
+等价右端为逐坐标条件方差之和。该界处理非线性统计量，不要求 $f$ 是变量之和；坐标独立性不能随意换成不相关。
+\subsection{McDiarmid有界差分界}\index{McDiarmid有界差分界|hyperpage}
+若改变第 $i$ 个坐标最多使 $f$ 改变 $c_i$，其余坐标固定，且各坐标独立，则
+\[
+\mathbb P(f-\mathbb Ef\ge t)\le
+\exp\left(-\frac{2t^2}{\sum_i c_i^2}\right),\qquad t>0.
+\]
+双侧事件 $|f-\mathbb Ef|\ge t$ 的右端再乘二。差分界需对允许取值上的全部坐标替换成立；不能仅由样本中观察到的小变化推断该保证。
+\subsection{独立同分布和的迭代对数律}\index{独立同分布和的迭代对数律|hyperpage}
+若 $X_i$ 独立同分布，均值 $\mu$、方差 $0<\sigma^2<\infty$，$S_n=\sum_{i=1}^nX_i$，则几乎必然
+\[
+\limsup_{n\to\infty}\frac{S_n-n\mu}{\sigma\sqrt{2n\log\log n}}=1,
+\qquad
+\liminf_{n\to\infty}\frac{S_n-n\mu}{\sigma\sqrt{2n\log\log n}}=-1.
+\]
+这是单条样本路径的极限振幅，尺度不同于中心极限定理中的 $\sqrt n$；只在 $n$ 足够大、双重对数为正时使用分母。
+\subsection{Cramér大偏差率函数}\index{Cramér大偏差率函数|hyperpage}
+若实值 $X_i$ 独立同分布，矩母函数在零点某邻域有限，令 $\Lambda(\theta)=\log\mathbb Ee^{\theta X_1}$、$I(x)=\sup_\theta(\theta x-\Lambda(\theta))$。对 Borel 集 $B$，
+\begin{gather*}
+-\inf_{x\in B^\circ}I(x)
+\le\liminf_n\frac1n\log\mathbb P(S_n/n\in B)\\
+\le\limsup_n\frac1n\log\mathbb P(S_n/n\in B)
+\le-\inf_{x\in\overline B}I(x).
+\end{gather*}
+空集下确界取 $+\infty$。该结果补足 Chernoff 上界的指数渐近下界；若上下确界不相等，不应把两个极限界强行写成单个等式。
+\clearpage
+\end{document}

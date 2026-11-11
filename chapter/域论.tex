@@ -1,0 +1,237 @@
+\documentclass[../main.tex]{subfiles}
+\begin{document}
+本章主要参考\cite{milneFT}。
+
+% Reference: https://www.jmilne.org/math/CourseNotes/FT.pdf
+\section{域扩张与代数元}
+\subsection{特征、素域与扩张次数}\index{特征、素域与扩张次数|hyperpage}
+域的特征为 $0$ 或素数 $p$；相应素域为 $\mathbb Q$ 或 $\mathbb F_p$。扩张 $E/F$ 是包含域 $F$ 的域 $E$，次数 $[E:F]=\dim_FE$。有限塔满足
+\[
+[E:F]=[E:K][K:F]\quad(F\subseteq K\subseteq E).
+\]
+有限扩张必为代数扩张，代数扩张未必有限。
+\subsection{极小多项式与单扩张}\index{极小多项式与单扩张|hyperpage}
+$\alpha$ 在 $F$ 上代数时，其首一极小多项式 $m_{\alpha,F}$ 唯一且不可约，并有
+\[
+F[\alpha]=F(\alpha)\cong F[x]/(m_{\alpha,F}),\qquad
+[F(\alpha):F]=\deg m_{\alpha,F}.
+\]
+若次数为 $d$，则 $1,\alpha,\ldots,\alpha^{d-1}$ 构成一组 $F$-基。超越元的情形 $F(\alpha)\cong F(t)$，此时 $F[\alpha]$ 不等于 $F(\alpha)$。
+\subsection{分裂域、代数闭包与超越基}\index{分裂域、代数闭包与超越基|hyperpage}
+多项式的分裂域是由其全部根生成的最小扩张，至 $F$-同构唯一。代数闭包 $\overline F$ 是代数且代数闭的扩张，至 $F$-同构唯一，但同构一般不唯一。
+若 $T\subset E$ 代数无关且 $E/F(T)$ 代数，则 $T$ 为超越基；所有超越基的基数相同，称超越次数。
+\[
+\operatorname{trdeg}_F F(t_1,\ldots,t_r)=r
+\quad(t_i\text{ 代数无关}).
+\]
+\section{可分性、正规性与有限域}
+\subsection{可分多项式与本原元}\index{可分多项式与本原元|hyperpage}
+不可约多项式 $f$ 可分当且仅当它在分裂域中无重根，等价于 $\gcd(f,f')=1$。特征零域及有限域为完美域，其代数扩张均可分。
+有限可分扩张 $E/F$ 有本原元：$E=F(\alpha)$。在特征 $p$ 的非完美域上可能有不可分扩张，例如 $x^p-t\in\mathbb F_p(t)[x]$ 的导数为零且不可约。
+\subsection{有限域的结构与子域}\index{有限域的结构与子域|hyperpage}
+有限域的阶必为 $q=p^n$；对每个素数幂存在唯一的 $\mathbb F_q$（至同构）。
+\[
+\mathbb F_q^\times\text{ 为 }(q-1)\text{ 阶循环群},\qquad
+x^q=x\quad(\forall x\in\mathbb F_q).
+\]
+$\mathbb F_{p^n}$ 含 $p^d$ 元子域当且仅当 $d\mid n$，存在时唯一。Frobenius 映射 $\sigma(x)=x^p$ 生成
+\[
+\operatorname{Gal}(\mathbb F_{p^n}/\mathbb F_p)\cong\mathbb Z/n\mathbb Z.
+\]
+对扩张 $\mathbb F_{q^m}/\mathbb F_q$，
+\[
+\operatorname{Tr}(a)=\sum_{i=0}^{m-1}a^{q^i},\qquad
+N(a)=a^{(q^m-1)/(q-1)}\quad(a\ne0),\qquad N(0)=0.
+\]
+\section{Galois理论基础}
+\subsection{正规扩张与Galois群}\index{正规扩张与Galois群|hyperpage}
+有限代数扩张正规指 $F$ 上任一不可约多项式只要在 $E$ 有一个根，就在 $E$ 完全分裂；等价于 $E$ 是某个 $F$ 上多项式的分裂域。
+有限扩张为 Galois 当且仅当正规且可分，此时
+\[
+G=\operatorname{Gal}(E/F)=\operatorname{Aut}_F(E),\qquad |G|=[E:F].
+\]
+一般有限扩张只有 $|\operatorname{Aut}_F(E)|\le[E:F]$；不能单凭次数相等的候选列表而忽略自同构是否保持全部代数关系。
+\subsection{Galois基本对应}\index{Galois基本对应|hyperpage}
+对有限 Galois 扩张 $E/F$，中间域 $K$ 与子群 $H\le G$ 反向一一对应：
+\[
+K\longleftrightarrow\operatorname{Gal}(E/K),\qquad
+H\longleftrightarrow E^H=\{x:\sigma(x)=x,\ \forall\sigma\in H\}.
+\]
+\[
+[E:E^H]=|H|,\qquad[E^H:F]=[G:H].
+\]
+$K/F$ 为 Galois 当且仅当 $\operatorname{Gal}(E/K)\trianglelefteq G$，此时 $\operatorname{Gal}(K/F)\cong G/\operatorname{Gal}(E/K)$。
+\subsection{圆分域与根式可解性}\index{圆分域与根式可解性|hyperpage}
+取本原 $n$ 次单位根 $\zeta_n$，圆分多项式满足
+\[
+x^n-1=\prod_{d\mid n}\Phi_d(x),\qquad
+\deg\Phi_n=\varphi(n),\qquad
+\operatorname{Gal}(\mathbb Q(\zeta_n)/\mathbb Q)\cong(\mathbb Z/n\mathbb Z)^\times.
+\]
+上式群同构通常取 $n\ge2$，对应 $a:\zeta_n\mapsto\zeta_n^a$。在特征零域上，多项式根式可解当且仅当其分裂域的 Galois 群可解；可解群指其导出列最终为平凡群。
+一般五次方程不能用根式统一求解，但某些具体五次多项式仍可根式求解。
+\section{可分度、迹与范数补充}
+\subsection{嵌入数、纯不可分性与本原元}\index{嵌入数、纯不可分性与本原元|hyperpage}
+有限扩张的可分度为 $[E:F]_s=\#\operatorname{Hom}_F(E,\overline F)$，并有
+\[
+[E:F]=[E:F]_s[E:F]_i.
+\]
+特征零时不可分度为 $1$；特征 $p>0$ 时不可分度为 $p$ 的幂。纯不可分扩张中每个元素的某个 $p$ 次幂迭代属于底域，即 $\alpha^{p^r}\in F$；有限纯不可分扩张仅有一个到底域代数闭包的嵌入。
+
+特征 $p$ 的域完美当且仅当 Frobenius 满射，即 $F=F^p$。不可约多项式导数为零时，其非零项次数均为 $p$ 的倍数，可写为 $g(x^p)$；不能仅由 $f'=0$ 推出 $f$ 在原域中为某多项式的 $p$ 次幂。
+
+若 $E=F(\alpha,\beta)$ 可分且 $F$ 无限，则除有限多个 $c\in F$ 外均有 $E=F(\alpha+c\beta)$。有限域扩张也为单扩张，可由非零乘法群的生成元生成。
+
+\subsection{乘法矩阵、迹范数与塔公式}\index{乘法矩阵、迹范数与塔公式|hyperpage}
+对有限扩张 $E/F$，$\alpha\in E$ 的乘法映射 $m_\alpha(x)=\alpha x$ 为 $F$ 线性映射，定义
+\[
+\operatorname{Tr}_{E/F}(\alpha)=\operatorname{tr}(m_\alpha),\qquad
+N_{E/F}(\alpha)=\det(m_\alpha).
+\]
+迹对加法线性、范数对乘法可乘。若极小多项式为 $x^d+c_{d-1}x^{d-1}+\cdots+c_0$，$s=[E:F(\alpha)]$，则
+\[
+\operatorname{Tr}_{E/F}(\alpha)=-s c_{d-1},\qquad
+N_{E/F}(\alpha)=((-1)^dc_0)^s.
+\]
+对有限塔 $E/K/F$，
+\[
+\operatorname{Tr}_{E/F}=\operatorname{Tr}_{K/F}\circ\operatorname{Tr}_{E/K},\qquad
+N_{E/F}=N_{K/F}\circ N_{E/K}.
+\]
+若 $E/F$ 可分，取全部 $n=[E:F]$ 个嵌入 $\sigma_i$，则迹与范数分别为 $\sum_i\sigma_i(\alpha)$、$\prod_i\sigma_i(\alpha)$；不可分时不能漏掉重数。
+
+\subsection{迹配对、判别式与正规基}\index{迹配对、判别式与正规基|hyperpage}
+有限扩张的迹配对 $(x,y)\mapsto\operatorname{Tr}_{E/F}(xy)$ 非退化当且仅当扩张可分。对可分扩张的一组 $F$ 基 $b_1,\ldots,b_n$，
+\[
+\operatorname{disc}(b_1,\ldots,b_n)
+=\det(\operatorname{Tr}(b_ib_j))=\det(\sigma_i(b_j))^2\ne0.
+\]
+换基矩阵为 $C$ 时，判别式乘以 $(\det C)^2$，所以判别式的平方类与基选择无关。对有限 Galois 扩张，存在 $\alpha$ 使 $\{\sigma(\alpha):\sigma\in G\}$ 为一组基（正规基定理）；普通本原元未必生成正规基。
+
+\section{有限域与Galois结构的计算补充}
+\subsection{有限域的交、合成与不可约多项式计数}\index{有限域的交、合成与不可约多项式计数|hyperpage}
+在同一个代数闭包中，
+\begin{gather*}
+\mathbb F_{q^m}\cap\mathbb F_{q^n}=\mathbb F_{q^{\gcd(m,n)}},\qquad
+\mathbb F_{q^m}\mathbb F_{q^n}=\mathbb F_{q^{\operatorname{lcm}(m,n)}},\\
+x^{q^n}-x=\prod_{\substack{f\text{ 首一不可约于 }\mathbb F_q[x]\\\deg f\mid n}}f(x).
+\end{gather*}
+每个因子只出现一次，因为导数为 $-1$。首一 $n$ 次不可约多项式的个数为
+\[
+I_q(n)=\frac1n\sum_{d\mid n}\mu(d)q^{n/d},\qquad n\ge1.
+\]
+这里 $\mu$ 为 Möbius 函数。对 $\mathbb F_{q^m}/\mathbb F_q$，迹映射满射且核大小为 $q^{m-1}$；非零范数映射也满射，每个非零纤维大小为 $(q^m-1)/(q-1)$。
+
+\subsection{有限Galois对应的交与合成运算}\index{有限Galois对应的交与合成运算|hyperpage}
+设 $E/F$ 有限 Galois，$G=\operatorname{Gal}(E/F)$，$H_1,H_2\le G$。对应的反序关系可计算为
+\[
+E^{\langle H_1,H_2\rangle}=E^{H_1}\cap E^{H_2},\qquad
+E^{H_1\cap H_2}=E^{H_1}E^{H_2}.
+\]
+对同一上域中的任意有限扩张 $K/F,L/F$，有 $[KL:F]\le[K:F][L:F]$；等号成立称在此情形线性无交。若两者都为有限 Galois 扩张，则
+\[
+[KL:F]\,[K\cap L:F]=[K:F][L:F].
+\]
+因此在该 Galois 条件下，交为 $F$ 等价于线性无交；两个任意非正规扩张交为底域不足以直接套用这个结论。
+
+\subsection{Artin定理、Hilbert定理90与无限Galois群}\index{Artin定理、Hilbert定理90与无限Galois群|hyperpage}
+若 $H$ 是域 $E$ 的有限自同构群，则 $E/E^H$ 为有限 Galois 扩张，并有 $[E:E^H]=|H|$。对不同域嵌入 $\sigma_i:E\to L$，它们作为 $E$ 上函数在 $L$ 上线性无关（Dedekind 独立性）。
+
+若 $E/F$ 为循环扩张，$G=\langle\sigma\rangle$，则 Hilbert 定理90为
+\begin{gather*}
+N_{E/F}(a)=1\iff a=b/\sigma(b)\quad\text{某 }b\in E^\times,\\
+\operatorname{Tr}_{E/F}(a)=0\iff a=b-\sigma(b)\quad\text{某 }b\in E.
+\end{gather*}
+无限 Galois 扩张的 Galois 群带 Krull 拓扑，为有限 Galois 群的逆极限
+\[
+\operatorname{Gal}(E/F)\cong\varprojlim_{K/F\text{ 有限Galois}}\operatorname{Gal}(K/F).
+\]
+中间域对应闭子群；任意子群 $H$ 与其闭包具有相同不动域，所以无限情形不能忽略闭性。
+
+\section{圆分、根式与作图补充}
+\subsection{圆分多项式与低次Galois群判别}\index{圆分多项式与低次Galois群判别|hyperpage}
+对 $n\ge1$，圆分多项式满足 Möbius 反演式
+\[
+\Phi_n(x)=\prod_{d\mid n}(x^d-1)^{\mu(n/d)}.
+\]
+右端按有理函数化简为整系数首一多项式。对 $n>1$，$\Phi_n(1)=p$（$n=p^a$ 为素数幂）或 $1$（其他情形）。对 $n\ge3$，
+\[
+[\mathbb Q(\zeta_n+\zeta_n^{-1}):\mathbb Q]=\varphi(n)/2.
+\]
+它是圆分域的最大实子域。对特征不为 $2$ 的域上可分不可约 $n$ 次多项式，Galois 群在根上为传递子群，且
+\[
+G_f\subseteq A_n\iff\operatorname{disc}(f)\text{ 在底域中为平方}.
+\]
+特别地，不可约可分三次多项式的群为 $A_3\cong C_3$ 或 $S_3$，由判别式平方类区分。
+
+\subsection{Kummer与Artin--Schreier扩张}\index{Kummer与Artin-Schreier扩张|hyperpage}
+若 $\operatorname{char}F\nmid n$、$F$ 含全部 $n$ 次单位根、$a\in F^\times$，取 $\alpha^n=a$，则 $F(\alpha)$ 已为 $x^n-a$ 的分裂域，并有
+\[
+\operatorname{Gal}(F(\alpha)/F)\hookrightarrow\mu_n,\qquad
+\sigma\longmapsto\sigma(\alpha)/\alpha.
+\]
+故该群循环，扩张次数整除 $n$，但未必等于 $n$。例如 $a$ 已为 $n$ 次幂时扩张可平凡。
+
+在特征 $p$ 的域中，$x^p-x-a$ 要么在 $F$ 中已有根并完全分裂，要么不可约。后一情形 $E=F(\alpha)$ 为 $p$ 次循环扩张，全部自同构为
+\[
+\sigma_c(\alpha)=\alpha+c,\qquad c\in\mathbb F_p,
+\qquad \operatorname{Gal}(E/F)\cong(\mathbb F_p,+).
+\]
+不可约条件等价于 $a\notin\{b^p-b:b\in F\}$。
+
+\subsection{尺规作图与二次扩张塔}\index{尺规作图与二次扩张塔|hyperpage}
+实数 $\alpha$ 可从单位线段尺规作出，当且仅当存在实数域中的扩张塔
+\[
+\mathbb Q=F_0\subseteq F_1\subseteq\cdots\subseteq F_r,\qquad
+[F_i:F_{i-1}]=2,\qquad\alpha\in F_r.
+\]
+因此可作数的次数必为 $2$ 的幂，但仅次数为 $2$ 的幂并不充分。正 $n$ 边形（$n\ge3$）可尺规作出当且仅当
+\[
+n=2^ap_1\cdots p_s,
+\]
+其中 $a\ge0$，$p_i$ 为互不相同的 Fermat 素数，即 $p_i=2^{2^{m_i}}+1$ 且为素数。此处素数不能重复取幂。
+
+\section{超越扩张与有理函数域补充}
+\subsection{超越次数、代数无关与Lüroth定理}\index{超越次数、代数无关与Lüroth定理|hyperpage}
+对域塔 $F\subseteq K\subseteq E$，超越次数满足基数加法公式
+\[
+\operatorname{trdeg}_F E=\operatorname{trdeg}_F K+\operatorname{trdeg}_K E.
+\]
+有限生成域扩张可取有限超越基 $t_1,\ldots,t_r$，使 $E/F(t_1,\ldots,t_r)$ 有限代数。这里超越次数并非向量空间维数，纯超越扩张可有有限超越次数而无限扩张次数。
+
+Lüroth 定理：若 $F\subsetneq K\subseteq F(t)$，则 $K=F(u)$，其中 $u$ 为某个非恒定有理函数。若 $u=P(t)/Q(t)$，$P,Q$ 互素，则
+\[
+[F(t):F(u)]=\max\{\deg P,\deg Q\}.
+\]
+该次数包括不可分度；在正特征中不能总把它等同于可分嵌入数。
+
+\section{线性不交、有限域方程与下降补充}
+域扩张与有限可分代数参见\cite{milneFT}。
+\subsection{线性不交与合成域的次数}\index{线性不交与合成域的次数|hyperpage}
+共同扩域中的有限扩张 $L/K$ 与 $M/K$ 线性不交，当且仅当自然乘法映射 $L\otimes_KM\to LM$ 为单射；此时它是同构，且
+\[
+[LM:K]=[L:K][M:K],\qquad [LM:M]=[L:K].
+\]
+若 $L/K$ 为有限 Galois 扩张，线性不交等价于 $L\cap M=K$。没有 Galois 等附加条件时，仅交域为 $K$ 不足以推出次数相乘。
+\subsection{有限域Artin--Schreier方程的迹判据}\index{有限域Artin-Schreier方程的迹判据|hyperpage}
+在 $\mathbb F_{q^n}$ 上考虑 $x^q-x=a$，把它视为 $\mathbb F_q$-线性映射。其核为 $\mathbb F_q$，像为迹零空间，故
+\[
+x^q-x=a\text{ 有解}\iff
+\operatorname{Tr}_{\mathbb F_{q^n}/\mathbb F_q}(a)=0.
+\]
+有解时恰有 $q$ 个解，构成 $x_0+\mathbb F_q$。任意 $q$ 为素数幂均成立；不能只依赖 $n$ 在特征下是否为零来判断满射。
+\subsection{有限Galois扩张的半线性下降}\index{有限Galois扩张的半线性下降|hyperpage}
+令 $L/K$ 有限 Galois、群为 $G$，$V$ 为有限维 $L$-空间，带满足 $\sigma(av)=\sigma(a)\sigma(v)$ 的 $G$-半线性作用。则
+\[
+L\otimes_KV^G\longrightarrow V,\quad a\otimes v\longmapsto av
+\]
+为 $L$-线性同构，故 $\dim_KV^G=\dim_LV$。这里是半线性作用；若改为普通 $L$-线性作用，不变子空间一般不满足此维数公式。
+\subsection{可分多项式的分裂代数}\index{可分多项式的分裂代数|hyperpage}
+若 $f\in K[x]$ 为首一可分多项式，分裂域为 $L$，互异根为 $\alpha_1,\ldots,\alpha_n$，则
+\[
+(K[x]/(f))\otimes_KL\cong\prod_{i=1}^nL,
+\qquad g\longmapsto(g(\alpha_1),\ldots,g(\alpha_n)).
+\]
+相应本原幂等元为 $e_i(x)=\prod_{j\ne i}(x-\alpha_j)/(\alpha_i-\alpha_j)$。可分性保证分母非零；重根情形保留幂零元，不能分裂成域的直积。
+\clearpage
+\end{document}

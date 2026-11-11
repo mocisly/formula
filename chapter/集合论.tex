@@ -1,0 +1,249 @@
+\documentclass[../main.tex]{subfiles}
+\begin{document}
+本章主要参考\cite{weiss}。
+
+\section{集合与映射}
+\subsection{集合运算与指标族}\index{集合运算与指标族|hyperpage}
+对全集 $U$ 中的集合，$A^c=U\setminus A$，对称差为 $A\triangle B=(A\setminus B)\cup(B\setminus A)$。
+\begin{gather*}
+A\subseteq B\iff\forall x\,(x\in A\Rightarrow x\in B),\qquad
+A=B\iff A\subseteq B\text{ 且 }B\subseteq A,\\
+\left(\bigcup_{i\in I}A_i\right)^c=\bigcap_{i\in I}A_i^c,\qquad
+\left(\bigcap_{i\in I}A_i\right)^c=\bigcup_{i\in I}A_i^c.
+\end{gather*}
+约定 $\bigcup_{i\in\varnothing}A_i=\varnothing$、$\bigcap_{i\in\varnothing}A_i=U$。幂集 $\mathcal P(A)=\{B:B\subseteq A\}$，笛卡尔积 $A\times B=\{(a,b):a\in A,b\in B\}$。
+\subsection{映射、像与原像}\index{映射、像与原像|hyperpage}
+设 $f:X\to Y$，$A_i\subseteq X$，$B_i\subseteq Y$，则
+\begin{gather*}
+f\!\left(\bigcup_iA_i\right)=\bigcup_if(A_i),\qquad
+f\!\left(\bigcap_iA_i\right)\subseteq\bigcap_if(A_i),\\
+f^{-1}\!\left(\bigcup_iB_i\right)=\bigcup_if^{-1}(B_i),\qquad
+f^{-1}\!\left(\bigcap_iB_i\right)=\bigcap_if^{-1}(B_i),\\
+f^{-1}(Y\setminus B)=X\setminus f^{-1}(B),\qquad
+A\subseteq f^{-1}(f(A)),\quad f(f^{-1}(B))=B\cap f(X).
+\end{gather*}
+像的交集包含式对非空指标族成立；一般不等于等号。单射指 $f(x_1)=f(x_2)\Rightarrow x_1=x_2$，满射指 $f(X)=Y$，双射同时满足二者。$f$ 为双射时才有双侧逆映射。
+\section{关系与序}
+\subsection{等价关系与商集}\index{等价关系与商集|hyperpage}
+关系 $\sim$ 为等价关系当且仅当满足自反性、对称性和传递性。等价类与商集为
+\[
+[x]=\{y\in X:y\sim x\},\qquad X/{\sim}=\{[x]:x\in X\},\qquad
+[x]=[y]\iff x\sim y.
+\]
+等价类构成 $X$ 的划分；反之任一划分唯一确定等价关系。若 $f:X\to Y$，关系 $x\sim y\iff f(x)=f(y)$ 使 $X/{\sim}$ 与 $f(X)$ 自然双射。
+\subsection{偏序、全序与良序}\index{偏序、全序与良序|hyperpage}
+偏序 $\le$ 满足自反、反对称和传递；全序还要求任意两元素可比；良序要求每个非空子集有最小元。
+\[
+s=\sup A\iff (\forall a\in A,\ a\le s)\quad\text{且}\quad
+(\forall b,\ [\forall a\in A,\ a\le b]\Rightarrow s\le b).
+\]
+极大元只要求没有严格更大的元素，最大元则须大于等于所有元素；二者在偏序中不可混淆。
+\section{基数与可数性}
+\subsection{等势、Cantor定理与可数集}\index{等势、Cantor定理与可数集|hyperpage}
+$|A|=|B|$ 表示存在双射 $A\to B$；$|A|\le|B|$ 表示存在单射 $A\to B$。Cantor--Bernstein 定理说明双向存在单射就存在双射。
+\[
+|A|<|\mathcal P(A)|,\qquad
+|\mathbb N|=|\mathbb Z|=|\mathbb Q|=\aleph_0,\qquad
+|\mathbb R|=2^{\aleph_0}>\aleph_0.
+\]
+有限集或与 $\mathbb N$ 等势的集合称至多可数集。在通常的选择公理背景下，可数个至多可数集之并仍至多可数；$\mathbb R$ 不可数。
+\subsection{基数运算与函数集合}\index{基数运算与函数集合|hyperpage}
+用不交并定义基数加法，笛卡尔积定义乘法，函数集合定义幂：
+\[
+|A|+|B|=|A\sqcup B|,\quad |A|\,|B|=|A\times B|,\quad
+|B|^{|A|}=|B^A|,\quad 2^{|A|}=|\mathcal P(A)|.
+\]
+在选择公理下，对无限基数 $\kappa$，$\kappa+\kappa=\kappa\cdot\kappa=\kappa$。有限组合计数不应直接套用无限基数的消去规律。
+\section{序数与公理化基础}
+\subsection{序数与超限归纳}\index{序数与超限归纳|hyperpage}
+序数描述良序的序型，最小无限序数为 $\omega$。序数加法对应良序的首尾拼接，一般不交换：
+\[
+1+\omega=\omega<\omega+1,\qquad 2\cdot\omega=\omega<\omega\cdot2.
+\]
+超限归纳原理：若对每个序数 $\alpha$，由 $P(\beta)$ 对所有 $\beta<\alpha$ 成立可推出 $P(\alpha)$，则 $P$ 对所有序数成立。使用时分别检查零、后继与极限阶段。
+\subsection{选择公理、Zorn引理与ZFC}\index{选择公理、Zorn引理与ZFC|hyperpage}
+选择公理说明任意非空集合族 $\{A_i\}_{i\in I}$ 存在选择函数 $c$，满足 $c(i)\in A_i$。
+在 ZF 中，它等价于良序定理及 Zorn 引理：非空偏序集中若每条链都有上界，则存在极大元。
+ZF 的基本公理包括外延、空集、配对、并集、幂集、无穷、分离模式、替换模式与正则公理；加选择公理得到 ZFC。
+集合描述应在既有集合中使用分离，而不能假定任意性质都定义一个集合；这避免了 $\{x:x\notin x\}$ 一类悖论。
+\section{集合运算、极限与映射补充}
+% Reference: https://math.ucla.edu/~marks/notes/set_theory_notes.pdf
+\subsection{对称差、像原像与函数集合}\index{对称差、像原像与函数集合|hyperpage}
+对称差构成交换群，且与交集满足分配律：
+\begin{gather*}
+A\triangle B=B\triangle A,\quad (A\triangle B)\triangle C=A\triangle(B\triangle C),\\
+A\triangle A=\varnothing,\quad A\triangle\varnothing=A,\quad
+A\cap(B\triangle C)=(A\cap B)\triangle(A\cap C).
+\end{gather*}
+由此 $\mathcal P(U)$ 在对称差与交集下构成布尔环。对任意映射 $f:X\to Y$，集合像与原像满足伴随关系
+\[
+f(A)\subseteq B\iff A\subseteq f^{-1}(B),\qquad
+f(f^{-1}(B))=B\cap f(X).
+\]
+若 $f$ 单射，则 $f(A\cap C)=f(A)\cap f(C)$、$f(A\setminus C)=f(A)\setminus f(C)$；一般仅有 $f(A)\setminus f(C)\subseteq f(A\setminus C)$。
+
+用 $C^A$ 表示从 $A$ 到 $C$ 的全部函数，则有自然双射
+\[
+C^{A\sqcup B}\cong C^A\times C^B,\qquad
+(C^B)^A\cong C^{A\times B},\qquad
+(A\times B)^C\cong A^C\times B^C.
+\]
+第二式对应把二元函数逐个固定第一变量；集合的双射在这里与代数同构的概念有区别。
+
+\subsection{集合列的上极限与下极限}\index{集合列的上极限与下极限|hyperpage}
+对集合列 $A_n\subseteq U$，定义
+\begin{gather*}
+\limsup_nA_n=\bigcap_{m\ge1}\bigcup_{n\ge m}A_n
+=\{x:x\text{ 属于无穷多个 }A_n\},\\
+\liminf_nA_n=\bigcup_{m\ge1}\bigcap_{n\ge m}A_n
+=\{x:x\text{ 从某项起始终属于 }A_n\},\\
+\liminf_nA_n\subseteq\limsup_nA_n,\qquad
+(\limsup_nA_n)^c=\liminf_n A_n^c.
+\end{gather*}
+上下极限相等时定义集合极限。若 $A_n\uparrow$，极限为 $\bigcup_nA_n$；若 $A_n\downarrow$，极限为 $\bigcap_nA_n$。特征函数满足
+\[
+\mathbf1_{\limsup A_n}=\limsup_n\mathbf1_{A_n},\qquad
+\mathbf1_{\liminf A_n}=\liminf_n\mathbf1_{A_n}.
+\]
+概率测度对递增事件满足 $P(\bigcup_nA_n)=\lim_nP(A_n)$，对递减事件也有对应交集公式；一般测度的递减连续性还要求某一项测度有限，见第\ref{chap:real-analysis}章。
+
+\subsection{可数编码与连续统的典型表示}\index{可数编码与连续统的典型表示|hyperpage}
+令 $\mathbb N_0=\{0,1,\ldots\}$，Cantor 配对函数给出双射
+\[
+\pi(m,n)=\frac{(m+n)(m+n+1)}2+n:\mathbb N_0^2\to\mathbb N_0.
+\]
+因此有限长自然数序列集 $\bigcup_{k<\omega}\mathbb N_0^k$ 可数。无限序列的基数则为
+\[
+|\{0,1\}^{\mathbb N}|=|\mathcal P(\mathbb N)|=|\mathbb R|
+=|\mathbb N^{\mathbb N}|=|\mathbb R^{\mathbb N}|=2^{\aleph_0}.
+\]
+所有实数函数的集合具有更大基数 $|\mathbb R^{\mathbb R}|=2^{2^{\aleph_0}}$。有限长序列的可数性不能延伸为所有无限序列可数。
+
+\section{基数算术与共尾性补充}
+\subsection{基数幂、无穷求和与König定理}\index{基数幂、无穷求和与König定理|hyperpage}
+本节采用选择公理。基数满足
+\begin{gather*}
+\kappa^{\lambda+\mu}=\kappa^\lambda\kappa^\mu,\qquad
+(\kappa^\lambda)^\mu=\kappa^{\lambda\mu},\qquad
+(\kappa\lambda)^\mu=\kappa^\mu\lambda^\mu,\\
+\kappa+\lambda=\kappa\lambda=\max\{\kappa,\lambda\}
+\quad(\kappa,\lambda\text{ 无限}),\\
+\kappa^n=\kappa\quad(\kappa\text{ 无限},\ 1\le n<\omega),\qquad
+2^\kappa\le\lambda^\kappa\le(2^\kappa)^\kappa=2^\kappa
+\quad(2\le\lambda\le2^\kappa,\ \kappa\text{ 无限}).
+\end{gather*}
+最后一行给出 $\lambda^\kappa=2^\kappa$。基数零次幂统一为 $1$，包括 $0^0=1$，因为空集上恰有一个到空集的函数。
+
+任意指标集上的基数和与积对应不交并与选择函数集。若 $I\ne\varnothing$ 且每个 $\kappa_i<\lambda_i$，König 定理为
+\[
+\sum_{i\in I}\kappa_i<\prod_{i\in I}\lambda_i.
+\]
+不等号并非来自逐项严格大小的普通实数估计，而是无穷基数算术的结构结论。
+
+\subsection{共尾性、正则基数与奇异基数}\index{共尾性、正则基数与奇异基数|hyperpage}
+对极限序数 $\alpha$，$\operatorname{cf}(\alpha)$ 是其共尾子集的最小基数；共尾指对每个 $\beta<\alpha$，存在子集元素 $\gamma\ge\beta$。约定 $\operatorname{cf}(0)=0$、$\operatorname{cf}(\alpha+1)=1$。例如
+\[
+\operatorname{cf}(\omega)=\aleph_0,\qquad
+\operatorname{cf}(\aleph_\omega)=\aleph_0,\qquad
+\aleph_\omega=\sup_{n<\omega}\aleph_n.
+\]
+无限基数 $\kappa$ 若 $\operatorname{cf}(\kappa)=\kappa$ 称正则，否则称奇异。无限共尾性本身为正则基数。König 定理还推出
+\[
+\kappa^{\operatorname{cf}(\kappa)}>\kappa,\qquad
+\operatorname{cf}(2^\kappa)>\kappa\quad(\kappa\text{ 无限}).
+\]
+特别地，连续统不能具有可数共尾性。对正则无限基数 $\kappa$，少于 $\kappa$ 个、每个大小小于 $\kappa$ 的集合之并仍小于 $\kappa$；奇异基数不能无条件使用这一结论。
+
+\subsection{Aleph、Beth与连续统假设}\index{Aleph、Beth与连续统假设|hyperpage}
+$\aleph_0$ 是最小无限基数，$\aleph_{\alpha+1}$ 是 $\aleph_\alpha$ 的后继基数，极限阶段取上确界。Beth 递归为
+\[
+\beth_0=\aleph_0,\qquad\beth_{\alpha+1}=2^{\beth_\alpha},\qquad
+\beth_\lambda=\sup_{\alpha<\lambda}\beth_\alpha\quad(\lambda\text{ 极限}).
+\]
+连续统假设 CH 为 $2^{\aleph_0}=\aleph_1$，广义连续统假设 GCH 为所有无限基数 $\kappa$ 都满足 $2^\kappa=\kappa^+$。不能将 CH 或 GCH 当作 ZFC 的推论；若 ZFC 一致，则 CH 及其否定均不能由 ZFC 判定。
+
+\section{序数递归与集合的秩}
+\subsection{序数的集合表示与运算递归}\index{序数的集合表示与运算递归|hyperpage}
+von Neumann 序数满足 $\alpha=\{\beta:\beta<\alpha\}$，故 $\alpha<\beta\iff\alpha\in\beta$，后继为 $\alpha+1=\alpha\cup\{\alpha\}$。序数加法、乘法对右变量递归：
+\begin{gather*}
+\alpha+0=\alpha,\quad\alpha+(\beta+1)=(\alpha+\beta)+1,\quad
+\alpha+\lambda=\sup_{\beta<\lambda}(\alpha+\beta),\\
+\alpha\cdot0=0,\quad\alpha(\beta+1)=\alpha\beta+\alpha,\quad
+\alpha\lambda=\sup_{\beta<\lambda}\alpha\beta\quad(\lambda\text{ 为非零极限}).
+\end{gather*}
+对 $\alpha>0$，序数幂满足 $\alpha^0=1$、$\alpha^{\beta+1}=\alpha^\beta\alpha$、$\alpha^\lambda=\sup_{\beta<\lambda}\alpha^\beta$。有
+\[
+\alpha(\beta+\gamma)=\alpha\beta+\alpha\gamma,\qquad
+\alpha^{\beta+\gamma}=\alpha^\beta\alpha^\gamma,\qquad
+(\alpha^\beta)^\gamma=\alpha^{\beta\gamma}\quad(\alpha>0).
+\]
+乘法通常不右分配，例如 $(1+1)\omega=\omega$，而 $\omega+\omega>\omega$；序数算术与基数算术不能混用。
+
+\subsection{Cantor标准形与超限递归}\index{Cantor标准形与超限递归|hyperpage}
+每个非零序数唯一写为有限项 Cantor 标准形
+\[
+\alpha=\omega^{\beta_1}n_1+\cdots+\omega^{\beta_k}n_k,
+\qquad\beta_1>\cdots>\beta_k,\quad n_i\in\mathbb N^*.
+\]
+比较两个序数时先比较最高不同指数，再比较对应有限系数。超限递归原则允许由既有初段唯一确定下一值：
+\[
+F(\alpha)=G(F|_\alpha).
+\]
+这与只证明性质的超限归纳不同，递归用于构造对象。对集合上的良基关系 $R$，相应的秩可递归定义为
+\[
+\operatorname{rank}_R(x)=\sup\{\operatorname{rank}_R(y)+1:yRx\}.
+\]
+空集的上确界为零；良基性保证递归不会沿无穷下降链循环。
+
+\subsection{累积层级、传递闭包与Mostowski塌缩}\index{累积层级、传递闭包与Mostowski塌缩|hyperpage}
+累积层级及集合的秩定义为
+\begin{gather*}
+V_0=\varnothing,\quad V_{\alpha+1}=\mathcal P(V_\alpha),\quad
+V_\lambda=\bigcup_{\alpha<\lambda}V_\alpha,\\
+\operatorname{rank}(x)=\sup_{y\in x}(\operatorname{rank}(y)+1),\qquad
+x\in V_{\operatorname{rank}(x)+1},\quad x\subseteq V_{\operatorname{rank}(x)}.
+\end{gather*}
+每个集合在某一层中出现，但全体集合 $V$ 是真类。令 $T_0=x$、$T_{n+1}=\bigcup T_n$，则 $\operatorname{TC}(x)=\bigcup_{n<\omega}T_n$ 是包含 $x$ 为子集的最小传递集合。
+
+若集合上的关系 $R$ 良基且外延，即不同元素有不同的 $R$ 前驱集合，则 Mostowski 塌缩给出唯一同构到某传递集合，递归式为
+\[
+\pi(x)=\{\pi(y):yRx\}.
+\]
+良基性与外延性缺一不可；仅为任意偏序的集合不能直接按此式认作传递集合。
+
+\subsection{Hartogs数与选择公理的等价形式}\index{Hartogs数与选择公理的等价形式|hyperpage}
+任意集合 $A$ 都存在不能单射入 $A$ 的序数；最小的这种序数称 Hartogs 数 $h(A)$。在选择公理下，$h(A)=|A|^+$，并有
+\[
+\text{选择公理}\iff\text{任意集合可良序化}\iff\text{Zorn引理}
+\iff\text{任意非空集合族的笛卡尔积非空}.
+\]
+选择公理还等价于每个满射都有右逆；单射定义域非空时可在通常集合论中构造左逆，但满射的全局选取涉及选择。可数选择与依赖选择是较弱原则，不能不加说明地用它们替代完整选择公理。
+\section{正规函数、闭无界集与组合引理补充}
+本节在 ZFC 下工作，涉及不可数正则基数的结果参见\cite{jech}。
+\subsection{正规函数的固定点迭代}\index{正规函数的固定点迭代|hyperpage}
+序数类上的正规函数 $f$ 严格递增，并在非零极限序数处满足 $f(\lambda)=\sup_{\alpha<\lambda}f(\alpha)$。从任意 $\alpha_0$ 出发令 $\alpha_{n+1}=f(\alpha_n)$，则
+\[
+\beta=\sup_{n<\omega}\alpha_n,\qquad f(\beta)=\beta.
+\]
+若迭代提前不变亦成立，$\beta$ 为不小于 $\alpha_0$ 的最小固定点。例如 $\varepsilon_0=\sup\{\omega,\omega^\omega,\omega^{\omega^\omega},\ldots\}$ 满足 $\omega^{\varepsilon_0}=\varepsilon_0$。
+\subsection{闭无界集的交与对角交}\index{闭无界集的交与对角交|hyperpage}
+令 $\kappa$ 为不可数正则基数。集合 $C\subseteq\kappa$ 若无界，并包含自身小于 $\kappa$ 的极限点，称为 club。少于 $\kappa$ 个 club 的交仍为 club；对序列 $(C_\xi)_{\xi<\kappa}$，
+\[
+\mathop{\triangle}_{\xi<\kappa}C_\xi
+=\{\alpha<\kappa:\forall\xi<\alpha,\ \alpha\in C_\xi\}
+\]
+仍为 club。长度为 $\kappa$ 的普通交不一定无界，对角交中的限制 $\xi<\alpha$ 不能删去。
+\subsection{Fodor压低引理}\index{Fodor压低引理|hyperpage}
+若 $S\subseteq\kappa\setminus\{0\}$ 与每个 club 相交，称为平稳集。对回归函数 $f:S\to\kappa$，即 $f(\alpha)<\alpha$，存在平稳子集 $S_0$ 及 $\gamma<\kappa$，使
+\[
+\forall\alpha\in S_0,\qquad f(\alpha)=\gamma.
+\]
+证明用到 club 的对角交。仅有 $S$ 无界不足以推出结论；这里同样要求 $\kappa$ 不可数且正则。
+\subsection{有限集合族的Delta系统引理}\index{有限集合族的Delta系统引理|hyperpage}
+任意不可数的互异有限集合族 $\mathcal A$ 都有不可数子族 $\mathcal B$ 及一个有限根 $r$，使
+\[
+A\cap B=r\qquad(A,B\in\mathcal B,\ A\ne B).
+\]
+去掉根后各集合两两不交。有限性是关键：对于一般可数集合族成员，不能原样套用这一不可数子族结论。
+\clearpage
+\end{document}

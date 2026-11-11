@@ -1,0 +1,229 @@
+\documentclass[../main.tex]{subfiles}
+\begin{document}
+本章主要参考\cite{topology}。
+
+% Reference: https://pi.math.cornell.edu/~hatcher/Top/TopNotes.pdf
+\section{拓扑、连续与构造}
+\subsection{开集、拓扑基与闭包}\index{开集、拓扑基与闭包|hyperpage}
+拓扑 $\mathcal T$ 包含 $\varnothing,X$，对任意并及有限交封闭。拓扑基 $\mathcal B$ 覆盖 $X$，且任意 $x\in B_1\cap B_2$ 都有 $B_3\in\mathcal B$ 满足 $x\in B_3\subseteq B_1\cap B_2$。
+\[
+\overline A=\bigcap_{A\subseteq F,\ F\text{ 闭}}F,\qquad
+A^\circ=\bigcup_{U\subseteq A,\ U\text{ 开}}U,\qquad
+\partial A=\overline A\setminus A^\circ.
+\]
+$x\in\overline A$ 当且仅当每个含 $x$ 的开邻域都与 $A$ 相交。
+\subsection{连续映射、同胚与网收敛}\index{连续映射、同胚与网收敛|hyperpage}
+\[
+f:X\to Y\text{ 连续}\iff f^{-1}(V)\text{ 对每个开 }V\subseteq Y\text{ 都开}
+\iff f(\overline A)\subseteq\overline{f(A)}\quad(\forall A\subseteq X).
+\]
+双射 $f$ 若 $f,f^{-1}$ 都连续，则为同胚。连续双射一般未必是同胚；但紧空间到 Hausdorff 空间的连续双射必为同胚。
+网 $x_\alpha\to x$ 指每个 $x$ 的邻域最终包含全部 $x_\alpha$。一般空间需用网刻画闭包与连续性；在第一可数空间中可以用序列。
+\subsection{子空间、积空间与商空间}\index{子空间、积空间与商空间|hyperpage}
+子空间拓扑为 $\mathcal T_A=\{U\cap A:U\in\mathcal T\}$。积拓扑的基本开集为 $\prod_iU_i$，其中仅有限个 $U_i$ 不等于整个因子。
+对满射 $q:X\to Y$，商拓扑定义为
+\[
+V\subseteq Y\text{ 开}\iff q^{-1}(V)\text{ 开}.
+\]
+此时 $g:Y\to Z$ 连续当且仅当 $g\circ q$ 连续。商映射可能破坏 Hausdorff 性，不能默认任意粘合都产生 Hausdorff 空间。
+\section{紧致与连通}
+\subsection{紧致性、积定理与度量判别}\index{紧致性、积定理与度量判别|hyperpage}
+紧空间指任一开覆盖都有有限子覆盖。紧空间的闭子集紧，紧集的连续像紧；Hausdorff 空间中的紧集闭。
+在选择公理下，任意多个紧空间的积仍紧（Tychonoff 定理）。在度量空间中，
+\[
+\text{紧致}\iff\text{序列紧致}\iff\text{完备且全有界}.
+\]
+全有界指任意 $\varepsilon>0$ 都可用有限个半径 $\varepsilon$ 的球覆盖。$\mathbb R^n$ 的子集紧致当且仅当闭且有界；一般赋范空间中闭有界不保证紧致。
+\subsection{连通、道路连通与连通分支}\index{连通、道路连通与连通分支|hyperpage}
+连通空间不能写为两个不交非空开集之并；等价于仅有 $\varnothing,X$ 同时开闭。道路连通要求任意两点可由连续路径 $[0,1]\to X$ 相连。
+\[
+\text{道路连通}\Longrightarrow\text{连通},\qquad
+A\text{ 连通}\Longrightarrow\overline A\text{ 连通}.
+\]
+连续像保持连通性及道路连通性。连通分支为极大连通子集并且闭；连通不一定道路连通。实直线中的连通子集恰为区间（包括单点）。
+\subsection{局部紧性与单点紧化}\index{局部紧性与单点紧化|hyperpage}
+局部紧 Hausdorff 空间中，每个点有紧邻域。若 $X$ 非紧且局部紧 Hausdorff，则单点紧化 $X^*=X\cup\{\infty\}$ 的新增点邻域可取
+\[
+\{\infty\}\cup(X\setminus K),\qquad K\subset X\text{ 紧}.
+\]
+所得 $X^*$ 紧致且 Hausdorff，并有 $(\mathbb R^n)^*\cong S^n$（$n\ge1$）。
+\section{分离性与可度量化}
+\subsection{分离公理、Urysohn与Tietze定理}\index{分离公理、Urysohn与Tietze定理|hyperpage}
+$T_0$ 指不同点可由开集区分；$T_1$ 指单点集闭；Hausdorff（$T_2$）指不同点有不交开邻域。
+采用含 $T_1$ 的约定：正则（$T_3$）可分离点与不含它的闭集；正规（$T_4$）可分离两不交闭集。
+\[
+T_4\Longrightarrow T_3\Longrightarrow T_2\Longrightarrow T_1\Longrightarrow T_0.
+\]
+正规空间中，任意不交闭集 $A,B$ 都存在连续 $u:X\to[0,1]$ 使 $u|_A=0,u|_B=1$（Urysohn 引理）。闭集 $A$ 上任意连续 $f:A\to[-1,1]$ 可延拓为整个 $X$ 上的同值域连续函数（Tietze 定理）。
+\subsection{可数性与Urysohn度量化定理}\index{可数性与Urysohn度量化定理|hyperpage}
+第一可数指每个点有可数邻域基；第二可数指整个拓扑有可数基。可分指存在可数稠密子集。
+第二可数蕴含第一可数及可分；对度量空间，可分与第二可数等价。
+\[
+X\text{ 正则、}T_1\text{ 且第二可数}\Longrightarrow X\text{ 可度量化}.
+\]
+可度量化不等于某个已选度量完备；完备性还依赖具体度量或额外结构。
+\section{Baire空间}
+\subsection{Baire纲定理}\index{Baire纲定理|hyperpage}
+若任意可数个稠密开集的交仍稠密，称为空间具有 Baire 性质。完备度量空间以及局部紧 Hausdorff 空间均为 Baire 空间。
+\[
+U_n\text{ 开且稠密}\Longrightarrow\bigcap_{n=1}^\infty U_n\text{ 稠密}.
+\]
+等价地，非空开集不能包含于可数个无处稠密集之并。此处 Baire 空间性质不要与集合论中的 Baire 空间 $\mathbb N^{\mathbb N}$ 的专名混淆。
+\section{闭包、收敛与空间构造补充}
+\subsection{内部、导集、边界与子空间}\index{内部、导集、边界与子空间|hyperpage}
+对任意拓扑空间 $X$ 中的集合，常用恒等式为
+\begin{gather*}
+\overline{A\cup B}=\overline A\cup\overline B,\quad
+(A\cap B)^\circ=A^\circ\cap B^\circ,\quad
+(X\setminus A)^\circ=X\setminus\overline A,\\
+\partial A=\overline A\cap\overline{X\setminus A},\qquad
+\partial A=\partial(X\setminus A),\qquad
+\overline A=A\cup A'.
+\end{gather*}
+这里导集 $A'$ 由每个去心邻域均与 $A$ 相交的点组成。一般仅有 $\overline{\bigcup_iA_i}\supseteq\bigcup_i\overline{A_i}$，无限并不能无条件交换闭包。子空间 $Y\subseteq X$ 中，
+\[
+\overline A^{\,Y}=Y\cap\overline A^{\,X}\quad(A\subseteq Y).
+\]
+相对内部与边界应由子空间拓扑计算，通常不能直接用 $Y\cap A_X^\circ$ 代替 $A_Y^\circ$。
+
+\subsection{网、滤子与超滤子}\index{网、滤子与超滤子|hyperpage}
+一般空间中，$x\in\overline A$ 当且仅当存在取值于 $A$ 的网收敛至 $x$；映射连续当且仅当保持所有收敛网。第一可数空间中可将这里的网改为序列。
+
+真滤子 $\mathcal F\subseteq\mathcal P(X)$ 不含空集，对有限交及向上包含封闭；若包含点 $x$ 的全部邻域，则记 $\mathcal F\to x$。超滤子是极大真滤子，等价于
+\[
+\forall A\subseteq X,\quad A\in\mathcal U\text{ 或 }X\setminus A\in\mathcal U,
+\]
+且二者不能同时出现。在通常的选择公理背景下，
+\[
+X\text{ 紧致}\iff X\text{ 上每个超滤子均有极限},\qquad
+X\text{ Hausdorff}\iff\text{任意收敛网的极限唯一}.
+\]
+Hausdorff 空间中，收敛滤子的极限同样唯一；一般紧空间的极限未必唯一。
+
+\subsection{积、余积、粘合与商的连续性}\index{积、余积、粘合与商的连续性|hyperpage}
+积拓扑具有泛性质
+\[
+f:Z\to\prod_iX_i\text{ 连续}\iff\pi_i\circ f\text{ 对所有 }i\text{ 连续}.
+\]
+积内网收敛等价于逐坐标收敛。非空集合因子的积满足
+\[
+\overline{\prod_iA_i}=\prod_i\overline{A_i}.
+\]
+有限乘积还有 $(A\times B)^\circ=A^\circ\times B^\circ$；无限乘积中即使各因子开，其积也可能没有内部，因为基本开集只能限制有限多个坐标。
+
+不交并拓扑中，$U\subseteq\bigsqcup_iX_i$ 开当且仅当各 $U\cap X_i$ 在 $X_i$ 中开。若 $X=A\cup B$，$A,B$ 均闭，且连续映射 $f_A,f_B$ 在交上相等，则粘合为连续映射；开覆盖上的粘合也成立。闭覆盖情形可推广到局部有限闭覆盖，但不能任意推广到无限闭覆盖。
+
+\section{紧致、连通与度量结构补充}
+\subsection{有限交性质、紧致性与Lebesgue数}\index{有限交性质、紧致性与Lebesgue数|hyperpage}
+空间紧致当且仅当每个具有有限交性质的闭集族有非空总交，其中有限交性质指每个有限子族交非空。紧空间中，嵌套非空闭集的交非空。
+
+紧度量空间的任意开覆盖存在 Lebesgue 数 $\delta>0$，使直径小于 $\delta$ 的任意非空子集都包含在某个覆盖成员中。其上的连续映射到度量空间一致连续：
+\[
+\forall\varepsilon>0\ \exists\delta>0,\quad
+d_X(x,y)<\delta\Longrightarrow d_Y(f(x),f(y))<\varepsilon.
+\]
+一般紧空间中的序列可能没有收敛子列，但每个网都有收敛子网；应区分紧致、序列紧致与可数紧致。
+
+\subsection{连通集的并交与局部道路连通}\index{连通集的并交与局部道路连通|hyperpage}
+若连通集族 $\{A_i\}$ 的总交非空，则 $\bigcup_iA_i$ 连通。非空连通空间的任意积连通；道路连通空间的积也道路连通。对 Hausdorff 空间中的嵌套非空紧连通集，
+\[
+K_1\supseteq K_2\supseteq\cdots\quad\Longrightarrow\quad
+\bigcap_{n\ge1}K_n\text{ 非空且连通}.
+\]
+一般连通集的交未必连通，紧致性条件不能省略。局部道路连通空间的道路分支开，且与连通分支相同；因此连通且局部道路连通蕴含道路连通。
+
+\subsection{等价度量、积度量与完备化}\index{等价度量、积度量与完备化|hyperpage}
+若 $d$ 为度量，$\widetilde d=d/(1+d)$ 为有界度量，给出相同拓扑且保持 Cauchy 序列。对可数个度量空间，
+\[
+d((x_i),(y_i))=\sum_{i=1}^\infty2^{-i}\min\{1,d_i(x_i,y_i)\}
+\]
+诱导积拓扑；各因子完备时该度量完备。无限个因子的上确界度量一般给出更强拓扑，不能与积拓扑混同。
+
+完备化可由 Cauchy 序列的等价类构造，关系为 $(x_n)\sim(y_n)\iff d(x_n,y_n)\to0$，并令
+\[
+\widehat d([(x_n)],[(y_n)])=\lim_{n\to\infty}d(x_n,y_n).
+\]
+常值序列给出原空间的等距稠密嵌入；完备化在保持原空间嵌入的意义下等距唯一。
+
+\subsection{全有界性、覆盖数与紧嵌入判别}\index{全有界性、覆盖数与紧嵌入判别|hyperpage}
+令 $N(X,\varepsilon)$ 为以半径 $\varepsilon$ 的开球覆盖 $X$ 所需的最少球数，无有限覆盖时取无穷。则
+\[
+X\text{ 全有界}\iff N(X,\varepsilon)<\infty\quad(\forall\varepsilon>0).
+\]
+全有界空间中每个序列都有 Cauchy 子列，且全有界蕴含有界，可逆命题一般不成立。度量空间中的子集 $A$ 在完备环境空间中相对紧当且仅当 $A$ 全有界；相对紧表示闭包紧。
+
+对度量空间中非空不交闭集 $A,B$，连续分离函数可显式取
+\[
+u(x)=\frac{d(x,A)}{d(x,A)+d(x,B)},\qquad u|_A=0,\quad u|_B=1.
+\]
+即使两集合的距离为零，逐点分母仍正，因为两者均闭且不交。
+
+\section{分离、紧化与函数空间补充}
+\subsection{完全正则与Stone--Čech紧化}\index{完全正则与Stone-Čech紧化|hyperpage}
+完全正则 $T_1$ 空间（Tychonoff 空间）要求每个点与不含它的闭集可用连续 $[0,1]$ 值函数分离。它等价于可嵌入某个立方体 $[0,1]^I$。Hausdorff 紧空间完全正则。
+
+对 Tychonoff 空间 $X$，Stone--Čech 紧化 $\beta X$ 为包含 $X$ 为稠密子空间的紧 Hausdorff 空间；对任意紧 Hausdorff 空间 $K$，每个连续 $f:X\to K$ 唯一延拓为
+\[
+\overline f:\beta X\to K,\qquad\overline f|_X=f.
+\]
+这一定义通过泛性质确定紧化至同胚。单点紧化通常没有这个针对所有紧目标空间的延拓性质。
+
+\subsection{仿紧性与单位分解}\index{仿紧性与单位分解|hyperpage}
+开覆盖若每个点有邻域仅与有限多个成员相交，称局部有限；仿紧空间要求每个开覆盖都有局部有限开加细。每个度量空间以及每个紧 Hausdorff 空间均仿紧。
+
+仿紧 Hausdorff 空间的任意开覆盖 $\{U_i\}$ 存在从属于它的连续单位分解：
+\[
+0\le\phi_j\le1,\qquad \sum_j\phi_j(x)=1,\qquad
+\operatorname{supp}\phi_j\subseteq U_{i(j)}.
+\]
+支集族局部有限，因此逐点求和在某邻域实际只有有限项。指标集允许先细化；不能把任意可数函数族的点态和自动当作连续函数。光滑流形上的光滑版本见第\ref{chap:differential-topology}章。
+
+\subsection{紧开拓扑与Arzelà--Ascoli定理}\index{紧开拓扑与Arzelà-Ascoli定理|hyperpage}
+连续函数空间 $C(X,Y)$ 的紧开拓扑由子基
+\[
+[K,U]=\{f:f(K)\subseteq U\},\qquad K\subseteq X\text{ 紧},\quad U\subseteq Y\text{ 开}
+\]
+生成。若 $X$ 局部紧 Hausdorff，则评价映射 $(f,x)\mapsto f(x)$ 连续，并有连续性的指数律
+\[
+F:Z\times X\to Y\text{ 连续}\iff
+\widetilde F:Z\to C(X,Y)\text{ 连续},\qquad \widetilde F(z)(x)=F(z,x).
+\]
+若 $K$ 为紧度量空间，$\mathcal F\subset C(K,\mathbb R)$ 在一致范数下相对紧当且仅当逐点有界且等度连续：
+\[
+\forall\varepsilon>0\ \exists\delta>0,\quad
+d(x,y)<\delta\Longrightarrow |f(x)-f(y)|<\varepsilon\quad(\forall f\in\mathcal F).
+\]
+在此条件下，$\mathcal F$ 本身再闭即可紧致。逐个函数连续不等于整个族等度连续。
+
+\subsection{无处稠密集、第一纲集与Baire性质}\index{无处稠密集、第一纲集与Baire性质|hyperpage}
+$A$ 无处稠密当且仅当 $(\overline A)^\circ=\varnothing$；第一纲集为可数个无处稠密集之并。$\mathbb Q$ 在 $\mathbb R$ 中稠密且为第一纲集，因此第一纲不等同于不稠密。
+
+集合 $A$ 具有 Baire 性质指存在开集 $U$ 使 $A\triangle U$ 为第一纲集。它不同于空间是 Baire 空间的性质；所有 Borel 集合均具有 Baire 性质。在非空完备度量空间中，整个空间不可能是自身的第一纲集。
+\section{紧空间的表示、商与集合空间补充}
+本节采用 Hausdorff 空间及通常积拓扑，参见\cite{topology}。
+\subsection{紧度量空间嵌入Hilbert立方体}\index{紧度量空间嵌入Hilbert立方体|hyperpage}
+若 $(K,d)$ 非空紧致，取可数稠密点列 $(a_n)$，则
+\[
+\Phi(x)=\left(\frac{d(x,a_n)}{1+d(x,a_n)}\right)_{n\ge1}
+\]
+是 $K$ 到 $[0,1]^{\mathbb N}$ 的拓扑嵌入。立方体可用 $D(u,v)=\sum_{n\ge1}2^{-n}|u_n-v_n|$ 度量；紧性使连续单射自动成为到像上的同胚。
+\subsection{紧Hausdorff空间的闭等价关系商}\index{紧Hausdorff空间的闭等价关系商|hyperpage}
+紧 Hausdorff 空间 $K$ 上的等价关系 $R\subseteq K\times K$ 满足
+\[
+K/R\text{ 为 Hausdorff}\iff R\text{ 在 }K\times K\text{ 中闭}.
+\]
+此时商映射闭且商空间紧。仅要求每个等价类闭不够；判据要求整个关系在乘积空间中闭。
+\subsection{真映射与闭映射判据}\index{真映射与闭映射判据|hyperpage}
+连续映射 $f:X\to Y$ 的紧集原像均紧，称为真映射。在 $X,Y$ 局部紧 Hausdorff 的条件下，
+\[
+f\text{ 真}\iff f\text{ 闭且每个纤维 }f^{-1}(y)\text{ 紧}.
+\]
+真映射复合仍真。真映射不要求满射；例如闭子空间的包含映射是真映射。
+\subsection{Hausdorff度量与Blaschke紧性}\index{Hausdorff度量与Blaschke紧性|hyperpage}
+对紧度量空间 $K$ 的非空紧子集，定义
+\[
+d_H(A,B)=\max\left\{\sup_{a\in A}d(a,B),\sup_{b\in B}d(b,A)\right\}.
+\]
+全部非空紧子集在此度量下构成紧空间。因此任意非空紧集序列有 Hausdorff 收敛子列；极限仍非空紧，不能仅按逐点成员关系理解集合收敛。
+\clearpage
+\end{document}

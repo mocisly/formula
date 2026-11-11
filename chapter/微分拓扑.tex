@@ -1,0 +1,219 @@
+\documentclass[../main.tex]{subfiles}
+\begin{document}
+本章主要参考\cite{lee,hatcher}。
+
+% Reference: https://www.math.ru.nl/~mueger/diff_notes.pdf
+\section{光滑流形与映射}
+\subsection{流形、切空间与微分}\index{流形、切空间与微分|hyperpage}
+除特别说明，流形均为 Hausdorff、第二可数、无边界的有限维光滑流形。$n$ 维流形局部同胚于 $\mathbb R^n$，坐标变换光滑。切空间可用曲线速度或点处导子定义：
+\[
+T_pM=\operatorname{span}\left\{\left.\frac\partial{\partial x^i}\right|_p\right\}_{i=1}^n,
+\qquad dF_p:T_pM\to T_{F(p)}N,
+\qquad d(G\circ F)_p=dG_{F(p)}\circ dF_p.
+\]
+切向量分量在换坐标时满足 $v^{\prime i}=\sum_j(\partial x^{\prime i}/\partial x^j)v^j$。
+\subsection{秩定理、浸入、浸没与嵌入}\index{秩定理、浸入、浸没与嵌入|hyperpage}
+若光滑 $F:M^m\to N^n$ 在某点邻域内秩恒为 $r$，则在适当局部坐标中
+\[
+F(x^1,\ldots,x^m)=(x^1,\ldots,x^r,0,\ldots,0).
+\]
+$\operatorname{rank}dF=m$ 称浸入，$\operatorname{rank}dF=n$ 称浸没。嵌入是到像上为同胚的单射浸入；单射浸入不一定是嵌入，但紧流形到 Hausdorff 流形的单射浸入必为嵌入。
+同维情形若 $dF_p$ 可逆，则 $F$ 在 $p$ 附近为微分同胚，这是流形上的逆函数定理。
+\subsection{正则值定理与Sard定理}\index{正则值定理与Sard定理|hyperpage}
+$y\in N$ 为 $F$ 的正则值指对每个 $p\in F^{-1}(y)$，$dF_p$ 满射。此时
+\[
+F^{-1}(y)\text{ 为 }(m-n)\text{ 维子流形},\qquad
+T_p(F^{-1}(y))=\ker dF_p,
+\]
+前者在原像非空时解释。Sard 定理：光滑映射的临界值集在目标的局部坐标中为零测集；因此几乎每个目标值均为正则值。临界点集本身未必零测。
+\section{横截性与整体结构}
+\subsection{横截原像与交截维数}\index{横截原像与交截维数|hyperpage}
+对嵌入子流形 $S\subseteq N$，定义
+\[
+F\pitchfork S\iff dF_p(T_pM)+T_{F(p)}S=T_{F(p)}N
+\quad(\forall p\in F^{-1}(S)).
+\]
+若横截，则 $F^{-1}(S)$ 为子流形，余维等于 $\operatorname{codim}_N S$。在 $M$ 内横截相交的子流形 $A,B$ 满足
+\[
+T_p(A\cap B)=T_pA\cap T_pB,\qquad
+\dim(A\cap B)=\dim A+\dim B-\dim M
+\]
+（交非空时）。横截性将交截问题转化为稳定的维数计数。
+\subsection{Whitney嵌入与管状邻域}\index{Whitney嵌入与管状邻域|hyperpage}
+每个光滑 $n$ 维流形（$n\ge1$）均可光滑嵌入 $\mathbb R^{2n}$。对 Riemann 流形中的紧嵌入子流形 $S$，法丛为
+\[
+\nu S=\{(p,v):p\in S,\ v\in(T_pS)^\perp\subset T_pM\}.
+\]
+指数映射 $(p,v)\mapsto\exp_p(v)$ 在零截面的某邻域上为到 $S$ 的管状邻域的微分同胚。选取度量是构造工具，结论描述的是微分拓扑结构。
+\section{定向、度数与微分形式}
+\subsection{映射度数与同伦不变性}\index{映射度数与同伦不变性|hyperpage}
+设 $F:M\to N$ 为同维连通、闭、定向流形间的光滑映射，$y$ 为正则值，则
+\[
+\deg F=\sum_{p\in F^{-1}(y)}\operatorname{sgn}(dF_p),
+\qquad \int_MF^*\omega=(\deg F)\int_N\omega
+\]
+对目标上的光滑最高次形式 $\omega$ 成立。符号按源与目标的定向取值；度数与正则值选择无关，且同伦不变。
+\[
+\deg(\operatorname{id})=1,\qquad\deg(G\circ F)=\deg G\deg F.
+\]
+非紧流形可对适当的真映射定义度数，但不能不加条件地沿用上述积分公式。
+\subsection{外微分、Stokes公式与de Rham上同调}\index{外微分、Stokes公式与de Rham上同调|hyperpage}
+对 $k$ 次形式 $\alpha$、任意形式 $\beta$，
+\[
+d^2=0,\quad d(\alpha\wedge\beta)=d\alpha\wedge\beta+(-1)^k\alpha\wedge d\beta,
+\quad d(F^*\alpha)=F^*(d\alpha).
+\]
+定向带边界流形上的 Stokes 公式为 $\int_Md\eta=\int_{\partial M}\eta$，要求 $\eta$ 为紧支撑的 $(n-1)$ 次形式（紧 $M$ 时无此支撑限制），边界取外法向优先的诱导定向。
+\[
+H^k_{\mathrm{dR}}(M)=\frac{\ker(d:\Omega^k\to\Omega^{k+1})}{\operatorname{im}(d:\Omega^{k-1}\to\Omega^k)}
+\cong H^k(M;\mathbb R).
+\]
+右端为奇异上同调。Lie 导数满足 Cartan 公式 $\mathcal L_X\alpha=d(\iota_X\alpha)+\iota_X(d\alpha)$。
+\section{临界点与Euler示性数}
+\subsection{Morse引理与Morse不等式}\index{Morse引理与Morse不等式|hyperpage}
+临界点 $p$ 满足 $df_p=0$；Hessian 非退化时称为非退化临界点。若负特征值个数为 $\lambda$，则局部坐标中
+\[
+f=f(p)-(x^1)^2-\cdots-(x^\lambda)^2
++(x^{\lambda+1})^2+\cdots+(x^n)^2.
+\]
+在紧无边界流形上，若 $f$ 为 Morse 函数，$m_k$ 为指标 $k$ 的临界点数，$b_k=\dim H_k(M;\mathbb Q)$，则
+\[
+m_k\ge b_k,\qquad\sum_{k=0}^n(-1)^km_k=\chi(M).
+\]
+\subsection{向量场指标与Poincaré--Hopf定理}\index{向量场指标与Poincaré-Hopf定理|hyperpage}
+在定向局部坐标中，向量场 $X$ 的孤立零点 $p$ 的指标是小球面上归一化映射 $X/\|X\|:S^{n-1}\to S^{n-1}$ 的度数。非退化零点有
+\[
+\operatorname{ind}_pX=\operatorname{sgn}\det(DX_p).
+\]
+对闭定向光滑流形上只有孤立零点的光滑向量场，
+\[
+\sum_{X(p)=0}\operatorname{ind}_pX=\chi(M).
+\]
+因此 $\chi(M)\ne0$ 时不存在处处非零的切向量场；例如偶维球面 $S^{2m}$（$m\ge1$）的每个连续切向量场必有零点。
+\section{光滑构造与纤维结构补充}
+\subsection{单位分解、丛的拼接与法丛}\index{单位分解、丛的拼接与法丛|hyperpage}
+光滑流形的局部有限开覆盖有从属光滑单位分解 $\rho_i\ge0$、$\sum_i\rho_i=1$、$\operatorname{supp}\rho_i\subset U_i$。因此局部度量可拼为 $g=\sum_i\rho_ig_i$。秩 $r$ 向量丛的过渡函数满足
+\[
+g_{ij}:U_i\cap U_j\to GL_r(\mathbb R),\quad g_{ii}=I,\quad
+g_{ij}g_{jk}=g_{ik}.
+\]
+改变平凡化给出 $g'_{ij}=h_ig_{ij}h_j^{-1}$。对嵌入 $i:S\hookrightarrow M$，有正合列 $0\to TS\to i^*TM\to\nu S\to0$，选度量后分裂为 $i^*TM\cong TS\oplus\nu S$。
+\subsection{Frobenius可积性与叶状结构}\index{Frobenius可积性与叶状结构|hyperpage}
+恒秩 $r$ 光滑分布 $D\subset TM$ 可局部表示为坐标切平面，当且仅当其截面对 Lie 括号封闭：
+\[
+X,Y\in\Gamma(D)\Longrightarrow[X,Y]\in\Gamma(D).
+\]
+此时存在局部坐标使 $D=\operatorname{span}(\partial_1,\ldots,\partial_r)$，积分叶维数为 $r$。余维一分布 $D=\ker\alpha$、$\alpha$ 处处非零时，可积条件等价于 $\alpha\wedge\mathrm d\alpha=0$。若 $[X,Y]=0$，相应局部流在共同定义处交换。
+\subsection{真浸没与Ehresmann纤维化}\index{真浸没与Ehresmann纤维化|hyperpage}
+真映射指紧集的原像紧。光滑满射 $f:M\to N$ 若为真浸没，则是局部平凡光滑纤维丛：每个 $y$ 附近有
+\[
+f^{-1}(U)\cong U\times F,\qquad f\leftrightarrow\operatorname{pr}_1.
+\]
+因此在连通底空间上纤维彼此微分同胚。真单射浸入是嵌入。删去真性后，浸没可能因纤维从无穷远消失而失去局部平凡性。
+\section{横截、交数与度数补充}
+\subsection{参数横截与有限正则性Sard条件}\index{参数横截与有限正则性Sard条件|hyperpage}
+若光滑 $F:M\times P\to N$ 横截于子流形 $S$，则对几乎每个参数 $p\in P$，$F_p:M\to N$ 横截于 $S$。一般横截映射在适当光滑函数空间中形成剩余集；紧源情况下，对闭子流形的横截性对足够小 $C^1$ 扰动稳定。
+
+对 $C^k$ 映射 $M^m\to N^n$，Sard 定理的标准充分条件为 $k>\max(m-n,0)$。低正则性下临界值可能有正测度，不能只凭一阶可微性使用 Sard。
+\subsection{有向交数、零截面与自交}\index{有向交数、零截面与自交|hyperpage}
+定向流形 $M^n$ 中互补维的闭定向子流形 $A^p,B^{n-p}$ 横截时，交点有限且
+\[
+A\cdot B=\sum_{x\in A\cap B}\varepsilon_x
+=\langle\operatorname{PD}[A]\smile\operatorname{PD}[B],[M]\rangle.
+\]
+符号按切空间定向比较定义。秩 $r$ 定向丛的横截截面零集代表 Euler 类的 Poincaré 对偶；若 $S\subset M$ 的法丛定向且维数适合，自交数为 $S\cdot S=\langle e(\nu S),[S]\rangle$。无定向时可改用模二交数。
+\subsection{度数、零点与边界消去}\index{度数、零点与边界消去|hyperpage}
+若 $F:\overline\Omega\to\mathbb R^n$ 光滑、$0\notin F(\partial\Omega)$ 且零点正则，则
+\[
+\deg(F,\Omega,0)=\sum_{F(x)=0}\operatorname{sgn}\det DF(x).
+\]
+该度数等于边界映射 $F/\|F\|:\partial\Omega\to S^{n-1}$ 的度数，沿避免边界零点的同伦保持不变；非零度数保证域内有零点。对闭定向奇数维流形，Poincaré 对偶给出 $\chi(M)=0$，因而 Euler 特征不构成非零向量场的阻碍。
+\subsection{同伦算子与Poincaré引理}\index{同伦算子与Poincaré引理|hyperpage}
+对光滑同伦 $H:M\times[0,1]\to N$，定义 $K\alpha=\int_0^1\iota_{\partial_t}H^*\alpha\,\mathrm dt$，则
+\[
+H_1^*\alpha-H_0^*\alpha=\mathrm dK\alpha+K\mathrm d\alpha.
+\]
+星形域上，每个正次数闭形式均恰当；径向收缩给出 $k$ 次形式的局部原函数
+\[
+(K\alpha)_x(v_1,\ldots,v_{k-1})
+=\int_0^1t^{k-1}\alpha_{tx}(x,v_1,\ldots,v_{k-1})\,\mathrm dt.
+\]
+局部闭即恰当不意味着全局恰当，例如穿孔平面上的 $(-y\,\mathrm dx+x\,\mathrm dy)/(x^2+y^2)$。
+\section{Morse理论与整体不变量补充}
+\subsection{柄附着与强Morse不等式}\index{柄附着与强Morse不等式|hyperpage}
+紧流形上跨过唯一指标 $\lambda$ 的非退化临界值时，次水平集的同伦型由附着一个 $\lambda$ 胞腔改变；微分拓扑上对应附着柄 $D^\lambda\times D^{n-\lambda}$。强 Morse 不等式为
+\[
+\sum_{j=0}^k(-1)^{k-j}m_j\ge\sum_{j=0}^k(-1)^{k-j}b_j,
+\]
+在 $k=n$ 取等号。等价地，Morse 多项式与 Poincaré 多项式满足
+\[
+\sum_km_kt^k=\sum_kb_kt^k+(1+t)Q(t),\qquad Q(t)\text{ 的系数非负整数}.
+\]
+若无临界值，适当紧次水平带在梯度流作用下为乘积。
+\subsection{Morse--Smale复形}\index{Morse-Smale复形|hyperpage}
+负梯度流 $\dot x=-\nabla f$ 满足 $\dot f=-|\nabla f|^2$。Morse 临界点的下降流形维数为指标 $\lambda$，上升流形维数为 $n-\lambda$。若所有稳定与不稳定流形横截，则从 $p$ 到 $q$ 的非参数轨线模空间维数为
+\[
+\dim\mathcal M(p,q)=\lambda(p)-\lambda(q)-1.
+\]
+在 $\mathbb F_2$ 上令 $C_k$ 由指标 $k$ 临界点生成，边界为 $\partial p=\sum_{\lambda(q)=k-1}\#_2\mathcal M(p,q)\,q$，则 $\partial^2=0$，该复形同调同构于 $H_*(M;\mathbb F_2)$（闭流形及相应完备流条件下）。
+\subsection{Chern--Weil与四维示性数}\index{Chern-Weil与四维示性数|hyperpage}
+向量丛联络局部写为 $\nabla=\mathrm d+A$，曲率 $\Omega=\mathrm dA+A\wedge A$，满足 $\mathrm d_\nabla\Omega=0$。酉联络给出闭微分形式
+\[
+c(E,\nabla)=\det\left(I+\frac{i}{2\pi}\Omega\right),\qquad
+c_1=\frac i{2\pi}\operatorname{tr}\Omega.
+\]
+其 de Rham 类与联络选择无关，对应整数 Chern 类的实像。实正交联络满足
+\[
+p_1=-\frac1{8\pi^2}\operatorname{tr}(\Omega\wedge\Omega).
+\]
+闭定向四维流形的 Hirzebruch 公式为
+\[
+\operatorname{sign}(M)=\tfrac13\langle p_1(TM),[M]\rangle.
+\]
+符号数为实中维交叉形式的正特征值数减负特征值数。
+\subsection{配边与Pontryagin--Thom观点}\index{配边与Pontryagin-Thom观点|hyperpage}
+闭定向 $n$ 维流形若为紧定向 $(n+1)$ 维流形的定向边界，称零配边。边界必须具有为零的全部 Pontryagin 数和 Stiefel--Whitney 数。带稳定标架的流形配边与稳定同伦群对应：
+\[
+\Omega_n^{\rm fr}\cong\pi_n^S=\underset{k\to\infty}{\operatorname{colim}}\pi_{n+k}(S^k).
+\]
+几何构造由管状邻域塌缩产生球面映射；一般定向配边与标架配边使用不同附加结构，不能混用。
+\subsection{辛与接触结构的局部标准形}\index{辛与接触结构的局部标准形|hyperpage}
+辛形式 $\omega$ 满足 $\mathrm d\omega=0$ 且非退化，故维数为偶数。Darboux 定理给出局部坐标
+\[
+\omega=\sum_{i=1}^n\mathrm dq_i\wedge\mathrm dp_i.
+\]
+接触形式在 $2n+1$ 维上满足 $\alpha\wedge(\mathrm d\alpha)^n\ne0$，其局部标准形为 $\alpha=\mathrm dz-\sum_i p_i\,\mathrm dq_i$（允许乘非零光滑因子）。Reeb 场由 $\alpha(R)=1$、$\iota_R\mathrm d\alpha=0$ 唯一确定；接触超平面分布不满足 Frobenius 可积性。
+
+\section{辛同伦、接触动力与链环补充}
+光滑结构参见\cite{lee,hatcher}，辛与接触结构参见\cite{symplectic}。
+\subsection{Moser同伦方法}\index{Moser同伦方法|hyperpage}
+闭流形上一光滑族辛形式 $\omega_t$ 满足 $\dot\omega_t=\mathrm d\eta_t$。通过非退化性解向量场
+\[
+\iota_{X_t}\omega_t=-\eta_t,
+\]
+其流 $\varphi_t$ 满足 $\varphi_t^*\omega_t=\omega_0$。因为 $\frac{\mathrm d}{\mathrm dt}\varphi_t^*\omega_t=\varphi_t^*(\dot\omega_t+\mathcal L_{X_t}\omega_t)=0$。非紧空间还须保证向量场流存在于所需时间。
+\subsection{Hamilton群作用的辛约化}\index{Hamilton群作用的辛约化|hyperpage}
+紧 Lie 群 $G$ 在 $2n$ 维辛流形上作 Hamilton 作用，等变动量映射为 $\mu:M\to\mathfrak g^*$。若零为正则值且作用在 $\mu^{-1}(0)$ 上自由，则
+\[
+M_{\rm red}=\mu^{-1}(0)/G,\qquad
+\dim M_{\rm red}=2n-2\dim G,\qquad
+\pi^*\omega_{\rm red}=i^*\omega.
+\]
+$i$ 为包含映射。若作用不自由，商可能有奇点或仅为 orbifold，不能继续无条件称为光滑辛流形。
+\subsection{接触Hamilton向量场}\index{接触Hamilton向量场|hyperpage}
+接触形式 $\alpha$ 的 Reeb 场为 $R$。给定光滑函数 $H$，约定接触 Hamilton 场由
+\[
+\alpha(X_H)=H,\qquad
+\iota_{X_H}\mathrm d\alpha=(RH)\alpha-\mathrm dH
+\]
+唯一确定，从而 $\mathcal L_{X_H}\alpha=(RH)\alpha$、$X_HH=H(RH)$。其流保持接触超平面分布；只有 $RH=0$ 等条件下才严格保持所选形式。
+\subsection{Gauss链环数积分}\index{Gauss链环数积分|hyperpage}
+两条不相交、定向、光滑闭曲线 $C_1,C_2\subset\mathbb R^3$ 的链环数可计算为
+\[
+\operatorname{Lk}(C_1,C_2)=\frac1{4\pi}
+\oint_{C_1}\oint_{C_2}
+\frac{(x-y)\cdot(\mathrm dx\times\mathrm dy)}{|x-y|^3}.
+\]
+结果为整数，在保持两曲线不交的同伦中不变；反转任意一条定向使其变号。相交时核奇异，不能把原积分直接当作链环不变量。
+\clearpage
+\end{document}
